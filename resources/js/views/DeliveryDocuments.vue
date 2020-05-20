@@ -35,15 +35,7 @@ export default {
             messages: {},
             data: {},
             list: [],
-            formOptions: {
-                inline: true,
-                submitBtnText: "Search",
-                forms: [
-                    { prop: "nro_doc", label: "Nro_doc", width: 140 },
-                    { prop: "fecha", label: "Fecha", width: 140 },
-                    { prop: "responsable", label: "Responsable", width: 140 }
-                ]
-            },
+            
             columns: [
                 {
                     prop: "nro_doc",
@@ -51,12 +43,14 @@ export default {
                     width: 140,
                     slotName: "nro_doc"
                 },
-                { prop: "fecha", label: "Fecha", width: 140 },
-                { prop: "responsable", label: "Resposable", width: 180 }
+                { prop: "fecha_doc", label: "Fecha", width: 140 },
+                { prop: "responsable", label: "Resposable", width: 180 },
+                { prop: "ofc_des", label: "Oficina", width: 180 }
             ]
         };
     },
     created() {
+        var app = this;
         axios
             .get("/api/DeliveryDocuments")
             .then(response => {
@@ -78,6 +72,7 @@ export default {
         },
         redirectVUE(scope) {
             console.log(scope);
+            this.$store.state.encargado = scope;
             this.$router.push({ name: "editdeliverydocument" });
         }
     }

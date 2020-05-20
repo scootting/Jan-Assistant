@@ -67,7 +67,12 @@ Vue is a progressive framework for building user interfaces.
 - Use to components table and pagination into View Persons.
 - Use to library LengthAwarePaginator from Laravel to set data returns.
 
-1.9.0
+1.8.0
+- Created EditDeliveryDocument. 
+- Retrieve information from deliverydocuments.
+- Add new functions editActivo and getInfoEncargado in the model DeliveryDocuments.
+- Use to component el-form, el-row, el-col and el-form-item to design the form.
+- Use to component el-dialog for the asset form into View EdirDeliveryDocument.
 
 
 ## Contributing

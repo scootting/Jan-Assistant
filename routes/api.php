@@ -31,6 +31,7 @@ Route::group([
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     Route::post('years', 'GeneralController@registerUserYears');
     Route::get('DeliveryDocuments','DeliveryDocumentsController@getListDeliveryDocument');
+    Route::post('editDocument','DeliveryDocumentsController@getDocumentsByInCharge');
     //Route::post('token', 'GeneralController@checkTokenUser');
     Route::post('persons', 'GeneralController@getPersonsByDescription');
     /*

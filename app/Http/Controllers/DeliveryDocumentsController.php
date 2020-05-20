@@ -16,4 +16,11 @@ class DeliveryDocumentsController extends Controller
         $data = DeliveryDocuments::getListDocuments();
         return json_encode($data);
     }
+    public function getDocumentsByInCharge(Request $request)
+    {
+        $result['listActivos']= DeliveryDocuments::editActivo($request->nro_doc);
+        $result['encargado'] = DeliveryDocuments::getInfoEncargado($request->nro_doc);
+        //dd($result);
+        return json_encode($result);
+    }
 }
