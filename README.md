@@ -67,6 +67,7 @@ Vue is a progressive framework for building user interfaces.
 - Use to components table and pagination into View Persons.
 - Use to library LengthAwarePaginator from Laravel to set data returns.
 
+1.9.0
 
 
 ## Contributing
