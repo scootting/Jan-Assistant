@@ -4004,6 +4004,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DocumentoDeCompra",
   data: function data() {
@@ -4012,35 +4014,22 @@ __webpack_require__.r(__webpack_exports__);
       messages: {},
       data: {},
       list: [],
-      formOptions: {
-        inline: true,
-        submitBtnText: "Search",
-        forms: [{
-          prop: "nro_doc",
-          label: "Nro_doc",
-          width: 140
-        }, {
-          prop: "fecha",
-          label: "Fecha",
-          width: 140
-        }, {
-          prop: "responsable",
-          label: "Responsable",
-          width: 140
-        }]
-      },
       columns: [{
         prop: "nro_doc",
         label: "Nro_doc",
         width: 140,
         slotName: "nro_doc"
       }, {
-        prop: "fecha",
+        prop: "fecha_doc",
         label: "Fecha",
         width: 140
       }, {
         prop: "responsable",
         label: "Resposable",
+        width: 180
+      }, {
+        prop: "ofc_des",
+        label: "Oficina",
         width: 180
       }]
     };
@@ -4048,6 +4037,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    var app = this;
     axios.get("/api/DeliveryDocuments").then(function (response) {
       console.log(response);
       app.list = response.data;
@@ -4067,6 +4057,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     redirectVUE: function redirectVUE(scope) {
       console.log(scope);
+      this.$store.state.encargado = scope;
       this.$router.push({
         name: "editdeliverydocument"
       });
@@ -4101,18 +4092,207 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ActivosFijos",
+  name: "ActivosFijos :3",
   data: function data() {
     return {
-      messages: {},
-      data: {}
+      info: {},
+      tableData: [],
+      formEdit: false,
+      data: {},
+      encargadoForm: {
+        id: this.$store.state.encargado.nro_doc,
+        fecha_doc: this.$store.state.encargado.fecha_doc,
+        estado: "",
+        responsable: this.$store.state.encargado.responsable,
+        cargores: ""
+      },
+      editForm: {
+        cantidad: "",
+        descripcion: "",
+        det_des: "",
+        uni_med: "",
+        id_partida: "",
+        id_contable: "",
+        vida_util: "",
+        pre_uni: "",
+        importe: "",
+        proveedor: "",
+        nro_fac: "",
+        t_adqui: "",
+        id: ""
+      }
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log("mensaje de recuperacion de datos desde DeliveryDocuments: ", this.$store.state.encargado);
+  },
+  created: function created() {
+    var _this = this;
+
+    var app = this;
+    axios.post("/api/editDocument", {
+      nro_doc: app.encargadoForm.id
+    }).then(function (response) {
+      app.info = response.data;
+      app.tableData = app.info.listActivos;
+      app.encargadoForm.cargores = app.info.encargado.cargores;
+      app.encargadoForm.estado = app.info.encargado.estado;
+      console.log("info prueba 4:", response.data);
+    })["catch"](function (error) {
+      _this.error = error;
+
+      _this.$notify.error({
+        title: "Error",
+        message: _this.error.message
+      });
+    });
+  },
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    editActive: function editActive(activo) {
+      console.log("activo: ", activo);
+      this.formEdit = true;
+      var atrib = Object.keys(this.editForm);
+
+      for (var i = 0; i < atrib.length; i++) {
+        this.editForm[atrib[i]] = activo[atrib[i]];
+      }
+
+      console.log("editForm: ", this.editForm);
     }
   }
 });
@@ -6656,7 +6836,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.el-card[data-v-43953a47]{\n    background: #FFFFFF;\n    /*\n    background: #DEDFD9;\n    background: #EBEEF4;\n    background: #d3dce6;\n    */\n}\n.el-form[data-v-43953a47]{\n    padding-left: 120px;\n    padding-right: 120px;\n    padding-top: 60px;\n}\n", ""]);
+exports.push([module.i, "\n.el-card[data-v-43953a47]{\r\n    background: #FFFFFF;\r\n    /*\r\n    background: #DEDFD9;\r\n    background: #EBEEF4;\r\n    background: #d3dce6;\r\n    */\n}\n.el-form[data-v-43953a47]{\r\n    padding-left: 120px;\r\n    padding-right: 120px;\r\n    padding-top: 60px;\n}\r\n", ""]);
 
 // exports
 
@@ -6675,7 +6855,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
 
 // module
-exports.push([module.i, "\nhtml, body {\n  font-family: 'Roboto Condensed', sans-serif;\n  /*background: #102a43;*/\n  background: #d8ebb5;\n  background: #faf5e4;\n  background: #263f44;\n  background: #F0AB00;\n  background: #E5E5E7;\n  background: #162530;\n  background: #2c3e50;\n  /*#015668; */\n  margin: 0;\n  padding: 0;\n  background-size: contain;\n}\n#app {\n  font-family: 'Roboto Condensed', sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: left;\n  color: #000;\n}\nbutton, input, select, textarea\n{\n  font-family: inherit;\n  font-size: inherit;\n  line-height: inherit;\n  color: inherit;\n}\n\n/*\naxios.interceptors.response.use(function (response) {\n  return response;\n}, function (error) {\n\n  const originalRequest = error.config;\n\n  if (error.response.status === 401 && !originalRequest._retry) {\n\n    originalRequest._retry = true;\n\n    const refreshToken = window.localStorage.getItem('refreshToken');\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\n      .then(({data}) => {\n        window.localStorage.setItem('token', data.token);\n        window.localStorage.setItem('refreshToken', data.refreshToken);\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\n        return axios(originalRequest);\n      });\n  }\n\n  return Promise.reject(error);\n});\n*/ \n\n", ""]);
+exports.push([module.i, "\nhtml, body {\r\n  font-family: 'Roboto Condensed', sans-serif;\r\n  /*background: #102a43;*/\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #F0AB00;\r\n  background: #E5E5E7;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  font-family: 'Roboto Condensed', sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton, input, select, textarea\r\n{\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/ \r\n\r\n", ""]);
 
 // exports
 
@@ -6694,7 +6874,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
 
 // module
-exports.push([module.i, "\nhtml,\nbody {\n  font-family: \"Roboto Condensed\", sans-serif;\n}\n#app {\n  font-family: \"Roboto Condensed\", sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: left;\n}\nbutton,\ninput,\nselect,\ntextarea {\n  font-family: inherit;\n  font-size: inherit;\n  line-height: inherit;\n  color: inherit;\n}\n.el-aside {\n  color: #333;\n}\n\n/* estilos revisados y aprobados*/\n.el-header {\n  color: #333;\n  line-height: 60px;\n  padding-left: 224px;\n}\n.el-dropdown {\n  color: #000a;\n  padding: 0px 18px;\n}\n.el-dropdown-link {\n  cursor: pointer;\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\n  font-size: 12px;\n}\n/* estilos revisados y aprobados para el card */\n#level {\n  display: flex !important;\n  align-items: center;\n  justify-content: space-between;\n}\n.el-breadcrumb {\n  align-items: center;\n  justify-content: flex-start;\n  font-size: 22px !important;\n}\n#right-button {\n  align-items: right;\n  justify-content: flex-end;\n}\n\n/*\n      options: [\n            {\n              \"title\" : \"contabilidad\",\n              \"icon\"  : \"el-icon-notebook-2\",\n              \"groups\": [\n                {\n                  \"title\" : \"recursos propios\",  \n                  \"items\" :[\n                    {\n                      \"view\" : \"assets\",\n                      \"title\": \"activos fijos\"\n                    }\n                  ]\n                }\n              ],\n            },\n            {\n              \"title\" : \"bienes e inventarios\",\n              \"icon\"  : \"el-icon-notebook-2\",\n              \"groups\": [],\n            },\n            {\n              \"title\" : \"tesoro\",\n              \"icon\"  : \"el-icon-back\",\n              \"groups\": [],\n            },\n            {\n              \"title\" : \"aplicacion\",\n              \"icon\"  : \"el-icon-setting\",\n              \"groups\": [\n                {\n                  \"title\" : \"recursos propios\",  \n                  \"items\" :[\n                    {\n                      \"view\" : \"profiles\",\n                      \"title\": \"perfiles\"\n                    },\n                    {\n                      \"view\" : \"profiles\",\n                      \"title\": \"lionel\"\n                    }\n                  ]\n                }\n              ],\n            },\n          ]      \n  */\n/*\n         * obtener el reporte generado desde REST API de JasperReport Server\n         */\n/*\n        presionar(index) {\n            let app = this;\n            axios({\n                url: \"/reporte\",\n                method: \"GET\",\n                responseType: \"blob\" // important\n            }).then(response => {\n                const blob = new Blob([response.data], {\n                    type: \"application/pdf\"\n                });\n                const objectUrl = window.URL.createObjectURL(blob);\n                console.log(objectUrl);\n                window.open(objectUrl);\n            });\n        }*/\n", ""]);
+exports.push([module.i, "\nhtml,\r\nbody {\r\n  font-family: \"Roboto Condensed\", sans-serif;\n}\n#app {\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #333;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 22px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n\r\n/*\r\n      options: [\r\n            {\r\n              \"title\" : \"contabilidad\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"assets\",\r\n                      \"title\": \"activos fijos\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n            {\r\n              \"title\" : \"bienes e inventarios\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"tesoro\",\r\n              \"icon\"  : \"el-icon-back\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"aplicacion\",\r\n              \"icon\"  : \"el-icon-setting\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"perfiles\"\r\n                    },\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"lionel\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n          ]      \r\n  */\r\n/*\r\n         * obtener el reporte generado desde REST API de JasperReport Server\r\n         */\r\n/*\r\n        presionar(index) {\r\n            let app = this;\r\n            axios({\r\n                url: \"/reporte\",\r\n                method: \"GET\",\r\n                responseType: \"blob\" // important\r\n            }).then(response => {\r\n                const blob = new Blob([response.data], {\r\n                    type: \"application/pdf\"\r\n                });\r\n                const objectUrl = window.URL.createObjectURL(blob);\r\n                console.log(objectUrl);\r\n                window.open(objectUrl);\r\n            });\r\n        }*/\r\n", ""]);
 
 // exports
 
@@ -6713,7 +6893,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
 
 // module
-exports.push([module.i, "\nhtml[data-v-63cd6604],\nbody[data-v-63cd6604] {\n    font-family: \"Roboto Condensed\", sans-serif;\n}\n#app[data-v-63cd6604] {\n    font-family: \"Roboto Condensed\", sans-serif;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-align: left;\n    /*color: #2c3e50;\n  */\n}\nbutton[data-v-63cd6604],\ninput[data-v-63cd6604],\nselect[data-v-63cd6604],\ntextarea[data-v-63cd6604] {\n    font-family: inherit;\n    font-size: inherit;\n    line-height: inherit;\n    color: inherit;\n}\n.el-aside[data-v-63cd6604] {\n    color: #333;\n}\n\n/* estilos revisados y aprobados*/\n.el-header[data-v-63cd6604] {\n    color: #333;\n    line-height: 60px;\n    padding: 0px;\n}\n.el-row[data-v-63cd6604] {\n    margin-bottom: 20px;\n}\n.el-col[data-v-63cd6604] {\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-63cd6604] {\n    background: #99a9bf;\n}\n.bg-purple[data-v-63cd6604] {\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-63cd6604] {\n    background: #e5e9f2;\n}\n.grid-content[data-v-63cd6604] {\n    border-radius: 4px;\n    min-height: 36px;\n}\n.row-bg[data-v-63cd6604] {\n    padding: 10px 0;\n    background-color: #f9fafc;\n}\n", ""]);
+exports.push([module.i, "\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\r\n    font-family: \"Roboto Condensed\", sans-serif;\n}\n#app[data-v-63cd6604] {\r\n    font-family: \"Roboto Condensed\", sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    text-align: left;\r\n    /*color: #2c3e50;\r\n  */\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n    font-family: inherit;\r\n    font-size: inherit;\r\n    line-height: inherit;\r\n    color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n    color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header[data-v-63cd6604] {\r\n    color: #333;\r\n    line-height: 60px;\r\n    padding: 0px;\n}\n.el-row[data-v-63cd6604] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-63cd6604] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-63cd6604] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-63cd6604] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-63cd6604] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-63cd6604] {\r\n    border-radius: 4px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-63cd6604] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
 
 // exports
 
@@ -6732,7 +6912,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.login .el-card[data-v-12f5395a] {\n  display: flex;\n  justify-content: center;\n}\n.clearfix[data-v-12f5395a]:before,\n.clearfix[data-v-12f5395a]:after {\n  display: table;\n  content: \"\";\n}\n.clearfix[data-v-12f5395a]:after {\n  clear: both;\n}\n/*estilo aprobado para su uso*/\n.login-button[data-v-12f5395a] {\n  width: 100%;\n  margin-top: 20px;\n}\n.header[data-v-12f5395a],\n.footer[data-v-12f5395a] {\n  padding: 20px 20px;\n  color: #f0f4f8;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n.version {\n    font-family: \"Open Sans\";\n    padding: 0 10px;\n    color: #9fb3c8;\n    font-size: 12px;\n    margin-top: 5px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.login .el-card[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\n}\n.clearfix[data-v-12f5395a]:before,\r\n.clearfix[data-v-12f5395a]:after {\r\n  display: table;\r\n  content: \"\";\n}\n.clearfix[data-v-12f5395a]:after {\r\n  clear: both;\n}\r\n/*estilo aprobado para su uso*/\n.login-button[data-v-12f5395a] {\r\n  width: 100%;\r\n  margin-top: 20px;\n}\n.header[data-v-12f5395a],\r\n.footer[data-v-12f5395a] {\r\n  padding: 20px 20px;\r\n  color: #f0f4f8;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\n.version {\r\n    font-family: \"Open Sans\";\r\n    padding: 0 10px;\r\n    color: #9fb3c8;\r\n    font-size: 12px;\r\n    margin-top: 5px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -84400,8 +84580,7 @@ var render = function() {
                 type: "local",
                 data: _vm.list,
                 "page-sizes": [5, 10, 15],
-                columns: _vm.columns,
-                "form-options": _vm.formOptions
+                columns: _vm.columns
               },
               scopedSlots: _vm._u([
                 {
@@ -84439,10 +84618,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878& ***!
+  \******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -84457,7 +84636,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
+      _c("el-card", { staticClass: "box-card bg-purple" }, [
         _c(
           "div",
           {
@@ -84468,15 +84647,641 @@ var render = function() {
           [_c("span", [_vm._v("Documento Editado")])]
         ),
         _vm._v(" "),
-        _c("h1", [_vm._v("Documento # ")]),
-        _vm._v(" "),
-        _c("h5", [
-          _vm._v(
-            "\n            esta pagina aun esta en desarrollo, haremos lo posible para que este funcional en el menor tiempo posible.\n            "
-          ),
-          _c("p", [_vm._v("Gracias")])
-        ])
-      ])
+        _c(
+          "div",
+          [
+            _c(
+              "el-form",
+              {
+                ref: "encargadoForm",
+                attrs: { model: _vm.encargadoForm, "label-width": "120px" }
+              },
+              [
+                _c(
+                  "el-row",
+                  [
+                    _c("el-col", { attrs: { span: 6 } }, [
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "el-form-item",
+                            { attrs: { label: "N°", prop: "id" } },
+                            [
+                              _c("el-input", {
+                                model: {
+                                  value: _vm.encargadoForm.id,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.encargadoForm, "id", $$v)
+                                  },
+                                  expression: "encargadoForm.id"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("el-col", { attrs: { span: 8 } }, [
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "el-form-item",
+                            { attrs: { label: "Fecha", prop: "fecha" } },
+                            [
+                              _c(
+                                "el-col",
+                                { attrs: { span: 11 } },
+                                [
+                                  _c(
+                                    "el-form-item",
+                                    { attrs: { prop: "fecha_doc" } },
+                                    [
+                                      _c("el-date-picker", {
+                                        staticStyle: { width: "100%" },
+                                        attrs: {
+                                          type: "date",
+                                          placeholder: "Pick a date"
+                                        },
+                                        model: {
+                                          value: _vm.encargadoForm.fecha_doc,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.encargadoForm,
+                                              "fecha_doc",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "encargadoForm.fecha_doc"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "el-col",
+                      { attrs: { span: 6 } },
+                      [
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "Estado", prop: "estado" } },
+                          [
+                            _c("el-input", {
+                              model: {
+                                value: _vm.encargadoForm.estado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.encargadoForm, "estado", $$v)
+                                },
+                                expression: "encargadoForm.estado"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-row",
+                  [
+                    _c(
+                      "el-col",
+                      { attrs: { span: 8 } },
+                      [
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "Con Destino", required: "" } },
+                          [
+                            _c("el-input", {
+                              model: {
+                                value: _vm.encargadoForm.dest,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.encargadoForm, "dest", $$v)
+                                },
+                                expression: "encargadoForm.dest"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-row",
+                  [
+                    _c(
+                      "el-col",
+                      { attrs: { span: 8 } },
+                      [
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              label: "Responsable",
+                              prop: "responsable",
+                              required: ""
+                            }
+                          },
+                          [
+                            _c("el-input", {
+                              model: {
+                                value: _vm.encargadoForm.responsable,
+                                callback: function($$v) {
+                                  _vm.$set(
+                                    _vm.encargadoForm,
+                                    "responsable",
+                                    $$v
+                                  )
+                                },
+                                expression: "encargadoForm.responsable"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-row",
+                  [
+                    _c(
+                      "el-col",
+                      { attrs: { span: 8 } },
+                      [
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              label: "Cargo Responsable",
+                              prop: "cargores",
+                              required: ""
+                            }
+                          },
+                          [
+                            _c("el-input", {
+                              model: {
+                                value: _vm.encargadoForm.cargores,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.encargadoForm, "cargores", $$v)
+                                },
+                                expression: "encargadoForm.cargores"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("el-button", [_vm._v("Guardar/Actualizar")])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "el-table",
+              {
+                staticClass: "bg-purple",
+                staticStyle: { width: "100%" },
+                attrs: { data: _vm.tableData, height: "250" }
+              },
+              [
+                _c("el-table-column", {
+                  attrs: { prop: "cantidad", label: "Cantidad", width: "70" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "uni_med", label: "Uni.Med.", width: "70" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "descripcion",
+                    label: "Descripción",
+                    width: "120"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "des_det",
+                    label: "Descripcion Detallada",
+                    width: "120"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "id_partida",
+                    label: "ID Partida",
+                    width: "80"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "id_contable",
+                    label: "ID Contable",
+                    width: "80"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "vida_util", label: "Vida Util", width: "40" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "pre_uni",
+                    label: "Precio Unitario",
+                    width: "50"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "importe", label: "Importe", width: "50" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "proveedor", label: "Proveedor", width: "80" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "nro_fac", label: "N° Factura", width: "60" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "tipo_adq",
+                    label: "Tipo Adquisición",
+                    width: "60"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "id", label: "Id", width: "40" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { fixed: "left", label: " ", width: "50" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "el-button",
+                            { attrs: { type: "text", size: "small" } },
+                            [_vm._v("Quitar")]
+                          ),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "text", size: "small" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.editActive(scope.row)
+                                }
+                              }
+                            },
+                            [_vm._v("Editar")]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "Detalle de Entrega de Activo",
+            visible: _vm.formEdit,
+            width: "60%",
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.formEdit = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              ref: "editForm",
+              attrs: { model: _vm.editForm, "label-width": "150px" }
+            },
+            [
+              _c(
+                "el-row",
+                [
+                  _c(
+                    "el-col",
+                    { attrs: { span: 11 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Proveedor", prop: "proveedor" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.proveedor,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "proveedor", $$v)
+                              },
+                              expression: "editForm.proveedor"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("el-input", {
+                            attrs: { placeholder: "buscar" },
+                            model: {
+                              value: _vm.editForm.prov,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "prov", $$v)
+                              },
+                              expression: "editForm.prov"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Uni. Med", prop: "uni_med" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.uni_med,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "uni_med", $$v)
+                              },
+                              expression: "editForm.uni_med"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 11 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            label: "descripcion",
+                            prop: "descripcion",
+                            width: "180px"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea" },
+                            model: {
+                              value: _vm.editForm.descripcion,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "descripcion", $$v)
+                              },
+                              expression: "editForm.descripcion"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-row",
+                [
+                  _c(
+                    "el-col",
+                    { attrs: { span: 11 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Cantidad", prop: "cantidad" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.cantidad,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "cantidad", $$v)
+                              },
+                              expression: "editForm.cantidad"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Partida", required: "" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.id_partida,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "id_partida", $$v)
+                              },
+                              expression: "editForm.id_partida"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-row",
+                [
+                  _c(
+                    "el-col",
+                    { attrs: { span: 11 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Grupo Contable", required: "" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.id_contable,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "id_contable", $$v)
+                              },
+                              expression: "editForm.id_contable"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Vida Util", required: "" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.vida_util,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "vida_util", $$v)
+                              },
+                              expression: "editForm.vida_util"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Precion Unitario", required: "" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.pre_uni,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "pre_uni", $$v)
+                              },
+                              expression: "editForm.pre_uni"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "Nro Factura", prop: "nro_fac" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.editForm.nro_fac,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "nro_fac", $$v)
+                              },
+                              expression: "editForm.nro_fac"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 11 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            label: "Descripcion Detallada",
+                            prop: "descripcion"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea" },
+                            model: {
+                              value: _vm.editForm.des_det,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "des_det", $$v)
+                              },
+                              expression: "editForm.des_det"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                [
+                  _c("el-button", { attrs: { type: "primary" } }, [
+                    _vm._v("Aceptar")
+                  ]),
+                  _vm._v(" "),
+                  _c("el-button", [_vm._v("Cancelar")])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -101629,6 +102434,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+/* Para cambiar los estilos descomente la siguiente linea */
+//import "../sass/app.scss";
+
  //import axios from 'axios';
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(element_ui__WEBPACK_IMPORTED_MODULE_4___default.a, {
@@ -102296,7 +103104,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true& */ "./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true&");
+/* harmony import */ var _EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditDeliveryDocument.vue?vue&type=template&id=79cd1878& */ "./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&");
 /* harmony import */ var _EditDeliveryDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditDeliveryDocument.vue?vue&type=script&lang=js& */ "./resources/js/views/EditDeliveryDocument.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -102308,11 +103116,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _EditDeliveryDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "79cd1878",
+  null,
   null
   
 )
@@ -102338,19 +103146,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true&":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true& ***!
-  \************************************************************************************************/
+/***/ "./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditDeliveryDocument.vue?vue&type=template&id=79cd1878& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditDeliveryDocument.vue?vue&type=template&id=79cd1878&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

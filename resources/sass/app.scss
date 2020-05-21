@@ -1,6 +1,28 @@
 //
-$primary: #7ccc63;	        //(124,204,99)
-$secondary: #f39c12;	    //(243,156,18)
-$button: #bdc3c7;	        //(189,195,199)
-$menu: #e74c3c;	            //(231,76,60)
-$backgroud: #2c3e50;	    //(44,62,80)
+/*
+$primary: #7ccc63;	        //(124;204;99)
+$secondary: #f39c12;	    //(243;156;18)
+$button: #bdc3c7;	        //(189;195;199)
+$menu: #e74c3c;	            //(231;76;60)
+$backgroud: #2c3e50;	    //(44;62;80)
+*/
+
+/* Color del tema */
+//$--color-primary: teal;
+$--color-primary:#115293;
+$--color-warning:#F57C00;
+$--color-danger:#9A0036;
+$--color-info:#1976D2;
+$--color-text-primary:#303030;
+$--color-text-regular:#303030;
+$--color-text-secondary:#424242;
+$--color-text-placeholder:#424242;
+$--border-color-base:#303030;
+$--border-color-light:#424242;
+
+
+/* Ubicación de la fuente, obligatoria */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+
+@import "~element-ui/packages/theme-chalk/src/index";

@@ -13,7 +13,6 @@
                     :data="list"
                     :page-sizes="[5, 10, 15]"
                     :columns="columns"
-                    :form-options="formOptions"
                 >
                     <template slot="nro_doc" slot-scope="scope">
                         <el-button @click="redirectVUE(scope.row)">{{
@@ -23,6 +22,9 @@
                 </el-search-table-pagination>
             </div>
         </el-card>
+        <!--
+                    :form-options="formOptions"
+         -->
     </div>
 </template>
 

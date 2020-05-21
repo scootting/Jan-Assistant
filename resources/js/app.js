@@ -7,6 +7,8 @@ import App from "./views/App";
 
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+/* Para cambiar los estilos descomente la siguiente linea */
+//import "../sass/app.scss";
 import locale from "element-ui/lib/locale/lang/es";
 //import axios from 'axios';
 
