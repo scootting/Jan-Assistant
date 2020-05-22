@@ -41,12 +41,29 @@ class General extends Model
         return $data;
     }
 
-    public static function SearchPersons($description){
+    public static function GetPersonsByDescription($description){
         $query = "select * from public.personas where paterno ='".$description."'";
-
         \Log::info("Query: ".$query);
-
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
+
+    public static function AddPerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
+        $query = "";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }    
+
+    public static function UpdatePerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
+        $query = "";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }    
+
+    public static function GetPersonByIdentityCard($identityCard){
+        $query = "";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }    
+
 }

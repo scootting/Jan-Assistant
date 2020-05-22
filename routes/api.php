@@ -33,7 +33,14 @@ Route::group([
     Route::get('DeliveryDocuments','DeliveryDocumentsController@getListDeliveryDocument');
     Route::post('editDocument','DeliveryDocumentsController@getDocumentsByInCharge');
     //Route::post('token', 'GeneralController@checkTokenUser');
+    
+// *** - rutas para crear, editar, mostrar, buscar e imprimir a una persona - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');
+    Route::get('person/add','GeneralController@addPerson');
+    Route::post('person','GeneralController@storePerson');    
+    Route::get('person/edit/{id}','GeneralController@editPerson');    
+    Route::get('person/show/{id}','GeneralController@showPerson');    
+
     /*
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');

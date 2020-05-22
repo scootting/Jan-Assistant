@@ -23,10 +23,6 @@ class GeneralController extends Controller
             'user' => $data
         );        
         return json_encode($response); 
-        /*
-        return response()->json($response)->header('Authorization', 'Bearer '.$token)
-        ->header('Accept', 'application/json');
-        */
     } 
 
     //  * Quitar el registro de un usuario en el recurso.    
@@ -57,11 +53,11 @@ class GeneralController extends Controller
 
     public function getPersonsByDescription(Request $request){
         $descripcion = $request->get('descripcion'); // '' cadena vacia
+        $parametro = $request->get('parametro');
         $descripcion = 'ROJAS';
-        $data = General::SearchPersons($descripcion);
-        \Log::info("Requesta: ".$request);
+        $data = General::GetPersonsByDescription($descripcion);
+        //\Log::info("Requesta: ".$request);
         
-        //$page = 1;//Paginator::resolveCurrentPage() ?: 1;//$page = 1;
         $page = ($request->get('page')? $request->get('page'): 1);
         $perPage = 10;
 
