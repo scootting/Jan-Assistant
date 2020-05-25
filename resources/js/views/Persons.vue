@@ -59,14 +59,14 @@
                     <el-table-column align="right" width="180">
                         <template slot-scope="scope">
                             <el-button
-                                @click="initEditPerson(scope.$index)"
+                                @click="initEditPerson(scope.$index, scope.row)"
                                 type="primary"
                                 size="mini"
                                 plain
                                 >Editar</el-button
                             >
                             <el-button
-                                @click="initShowPerson(scope.$index)"
+                                @click="initShowPerson(scope.$index, scope.row)"
                                 type="danger"
                                 plain
                                 size="mini"
@@ -147,7 +147,7 @@ export default {
                 .then(response => {
                     app.loading = false;
                     app.people = Object.values(response.data.data);
-                    app.pagination = response.data; //console.log(response);
+                    app.pagination = response.data; 
                 })
                 .catch(error => {
                     console.log(error);
@@ -156,7 +156,16 @@ export default {
         initAddPerson() {
             this.$router.push({ name: "addperson" });
         },
+        initEditPerson(index, row){
+            console.log(index, row);
+            let personal = row.nro_dip;
+            this.$router.push({ name: 'editperson', params: { id: personal.trim() }})
 
+        },
+        initShowPerson(index, row){
+            let personal = row.nro_dip;
+            //router.push({ name: 'editperson', params: { userId: personal }})
+        }
     }
 };
 </script>

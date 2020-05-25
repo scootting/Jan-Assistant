@@ -47,6 +47,8 @@ class GeneralController extends Controller
 
     public function registerUserYears(Request $request){
         $usuario = $request->get('usuario');
+        //\Log::info("entra aca para su prueba".$usuario);
+
         $years = General::SearchUserYears($usuario);
         return json_encode($years);
     }
@@ -56,7 +58,6 @@ class GeneralController extends Controller
         $parametro = $request->get('parametro');
         $descripcion = 'ROJAS';
         $data = General::GetPersonsByDescription($descripcion);
-        //\Log::info("Requesta: ".$request);
         
         $page = ($request->get('page')? $request->get('page'): 1);
         $perPage = 10;
@@ -68,19 +69,41 @@ class GeneralController extends Controller
             $page,
             ['path' => url('api/persons')]
         );
-        //\Log::info("Data Personas: ".$paginate);
-        /*
-        return json_encode([
-            'pagination' => [
-                'total' => $items->total(),
-                'per_page' => $items->perPage(),
-                'current_page' => $items->currentPage(),
-                'last_page' => $items->lastPage(),
-                'from' => $items->firstItem(),
-                'to' => $items->lastItem()
-            ],
-            'data' => $items]);*/
         return json_encode($paginate);
     }
 
+    //  * Obtener una persona de el recurso utilizado.
+    //  * {id: numero de carnet de identidad}    
+    public function getPersonById($id){        
+        $data = General::GetPersonByIdentityCard($id);
+        //\Log::info($data);
+        return json_encode($data);
+    } 
+    public function storePerson(Request $request){
+        $persona = $request->get('persona');
+        // Input::get('personal');
+        $personal = $persona['personal'];
+        $nombres = $persona['nombres'];
+        $paterno = $persona['paterno'];
+        $materno = $persona['materno'];
+        $sexo = $persona['sexo'];
+        $nacimiento = $persona['nacimiento'];
+
+        $marcador = $request->get('marker');
+
+        switch ($marcador) {
+            case 'registrar':
+                $data = General::AddPerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+                # code...
+                break;
+            case 'editar':
+                # code...
+                $data = General::UpdatePerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+            break;
+            default:
+                # code...
+                break;
+        }
+        return json_encode($data);
+    }
 }

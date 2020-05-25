@@ -11,6 +11,7 @@ import Assets from './views/FixedAssets'
 import Users from './views/Users'
 import Persons from './views/Persons'
 import AddPerson from './views/AddPerson'
+import EditPerson from './views/EditPerson'
 import Welcome from './views/Welcome'
 import DeliveryDocuments from './views/DeliveryDocuments'
 import Home from './views/Home'
@@ -52,7 +53,9 @@ const router = new VueRouter({
             { path: 'deliverydocuments', name: 'deliverydocuments', component: DeliveryDocuments }, //deliverydocument
             { path: 'users', name: 'users', component: Users },
             { path: 'persons', name: 'persons', component: Persons },
-            { path: 'persons/add', name: 'addperson', component: AddPerson },
+            { path: 'person/add', name: 'addperson', component: AddPerson },
+            { path: 'person/:id', name: 'editperson', component: EditPerson },
+            { path: 'person/show/:id', name: 'editperson', component: EditPerson },
             { path: 'welcome', name: 'welcome', component: Welcome },
             { path: 'inventory', name: 'inventory', component: Inventory },
             { path: 'editdeliverydocument', name: 'editdeliverydocument', component: EditDeliveryDocument}

@@ -38,8 +38,8 @@ Route::group([
     Route::post('persons', 'GeneralController@getPersonsByDescription');
     Route::get('person/add','GeneralController@addPerson');
     Route::post('person','GeneralController@storePerson');    
-    Route::get('person/edit/{id}','GeneralController@editPerson');    
-    Route::get('person/show/{id}','GeneralController@showPerson');    
+    //Route::get('person/edit/{id}','GeneralController@editPerson');    
+    Route::get('person/{id}','GeneralController@getPersonById');    
 
     /*
     Route::post('logout', 'AuthController@logout');

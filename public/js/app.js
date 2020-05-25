@@ -3586,76 +3586,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AniadirPersona",
   data: function data() {
     return {
       messages: {},
-      data: {},
       person: {
-        nro_dip: "",
+        personal: "",
         nombres: "",
         paterno: "",
         materno: "",
-        fec_nacimiento: "",
-        id_sexo: "M"
+        nacimiento: "",
+        sexo: "M"
       },
       rules: {
-        nro_dip: [{
+        personal: [{
           required: true,
           message: "El campo no puede estar vacio",
           trigger: "blur"
@@ -3685,7 +3630,7 @@ __webpack_require__.r(__webpack_exports__);
           message: "el tamaño no puede ser menos de 2 o mas de 100",
           trigger: "blur"
         }],
-        fec_nacimiento: [{
+        nacimiento: [{
           required: true,
           message: "El campo no puede estar vacio",
           trigger: "blur"
@@ -3700,32 +3645,30 @@ __webpack_require__.r(__webpack_exports__);
       alert("bienvenido al modulo");
     },
     savePerson: function savePerson() {
-      alert("hola");
-      /*
-      event.preventDefault();
       var app = this;
-      var newPerson = app.person;
-      axios
-          .post("/persona", newPerson)
-          .then(function(response) {
-              alert("se ha creado el registro de la persona");
-          })
-          .catch(function(response) {
-              console.log(response);
-              alert("no se puede crear el registro de la persona");
-          });*/
+      var newPerson = app.person; //console.log("REGISTRAR");
+
+      axios.post("/api/person", {
+        persona: newPerson,
+        marker: "registrar"
+      }).then(function (response) {
+        alert("se ha creado el registro de la persona");
+      })["catch"](function (response) {
+        console.log(response);
+        alert("no se puede crear el registro de la persona");
+      });
     },
     noPerson: function noPerson() {
-      this.$router.push("/");
+      this.$router.push("/api");
     },
     resetPerson: function resetPerson() {
       /*
-      (this.person.nro_dip = ""),
-          (this.person.nombres = ""),
-          (this.person.paterno = ""),
-          (this.person.materno = ""),
-          (this.person.fec_nacimiento = ""),
-          (this.person.id_sexo = "M");*/
+            (this.person.nro_dip = ""),
+                (this.person.nombres = ""),
+                (this.person.paterno = ""),
+                (this.person.materno = ""),
+                (this.person.fec_nacimiento = ""),
+                (this.person.id_sexo = "M");*/
     }
   }
 });
@@ -4299,6 +4242,158 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditPerson.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AniadirPersona",
+  data: function data() {
+    return {
+      person: {
+        'marker': 'editar'
+      },
+      rules: {
+        personal: [{
+          required: true,
+          message: "El campo no puede estar vacio",
+          trigger: "blur"
+        }, {
+          min: 2,
+          max: 100,
+          message: "el tamaño no puede ser menos de 2 o mas de 100",
+          trigger: "blur"
+        }],
+        nombres: [{
+          required: true,
+          message: "El campo no puede estar vacio",
+          trigger: "blur"
+        }, {
+          min: 2,
+          max: 100,
+          message: "el tamaño no puede ser menos de 2 o mas de 100",
+          trigger: "blur"
+        }],
+        materno: [{
+          required: true,
+          message: "El campo no puede estar vacio",
+          trigger: "blur"
+        }, {
+          min: 2,
+          max: 100,
+          message: "el tamaño no puede ser menos de 2 o mas de 100",
+          trigger: "blur"
+        }],
+        nacimiento: [{
+          required: true,
+          message: "El campo no puede estar vacio",
+          trigger: "blur"
+        }]
+      }
+    };
+  },
+  mounted: function mounted() {
+    var app = this;
+    var id = app.$route.params.id;
+    console.log("estes es el id: " + id);
+    axios.get("/api/person/" + id).then(function (response) {
+      console.log(response.data);
+      app.person = response.data[0];
+    })["catch"](function () {
+      alert("No se puede hallar el registro de la persona indicada");
+    });
+  },
+  methods: {
+    test: function test() {
+      alert("bienvenido al modulo");
+    },
+    savePerson: function savePerson() {
+      //alert("hola");
+      event.preventDefault();
+      var app = this;
+      var newPerson = app.person;
+      axios.post("/api/person", {
+        persona: newPerson,
+        marker: "editar"
+      }).then(function (response) {
+        alert("se ha creado el registro de la persona");
+      })["catch"](function (response) {
+        console.log(response);
+        alert("no se puede crear el registro de la persona");
+      });
+    },
+    noPerson: function noPerson() {
+      this.$router.push("/api");
+    },
+    resetPerson: function resetPerson() {
+      /*
+            (this.person.nro_dip = ""),
+                (this.person.nombres = ""),
+                (this.person.paterno = ""),
+                (this.person.materno = ""),
+                (this.person.fec_nacimiento = ""),
+                (this.person.id_sexo = "M");*/
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/FixedAssets.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/FixedAssets.vue?vue&type=script&lang=js& ***!
@@ -4652,7 +4747,7 @@ __webpack_require__.r(__webpack_exports__);
         password: this.model.password
       }).then(function (response) {
         _this.$router.push({
-          name: "dashboard"
+          name: "welcome"
         });
       })["catch"](function (error) {
         _this.error = error.response.data;
@@ -4878,7 +4973,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         app.loading = false;
         app.people = Object.values(response.data.data);
-        app.pagination = response.data; //console.log(response);
+        app.pagination = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4887,6 +4982,19 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: "addperson"
       });
+    },
+    initEditPerson: function initEditPerson(index, row) {
+      console.log(index, row);
+      var personal = row.nro_dip;
+      this.$router.push({
+        name: 'editperson',
+        params: {
+          id: personal.trim()
+        }
+      });
+    },
+    initShowPerson: function initShowPerson(index, row) {
+      var personal = row.nro_dip; //router.push({ name: 'editperson', params: { userId: personal }})
     }
   }
 });
@@ -6836,7 +6944,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.el-card[data-v-43953a47]{\r\n    background: #FFFFFF;\r\n    /*\r\n    background: #DEDFD9;\r\n    background: #EBEEF4;\r\n    background: #d3dce6;\r\n    */\n}\n.el-form[data-v-43953a47]{\r\n    padding-left: 120px;\r\n    padding-right: 120px;\r\n    padding-top: 60px;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-card[data-v-43953a47] {\r\n  background: #ffffff;\r\n  /*\r\n    background: #DEDFD9;\r\n    background: #EBEEF4;\r\n    background: #d3dce6;\r\n    */\n}\n.el-form[data-v-43953a47] {\r\n  padding-left: 120px;\r\n  padding-right: 120px;\r\n  padding-top: 60px;\n}\r\n", ""]);
 
 // exports
 
@@ -6875,6 +6983,25 @@ exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Rob
 
 // module
 exports.push([module.i, "\nhtml,\r\nbody {\r\n  font-family: \"Roboto Condensed\", sans-serif;\n}\n#app {\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #333;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 22px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n\r\n/*\r\n      options: [\r\n            {\r\n              \"title\" : \"contabilidad\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"assets\",\r\n                      \"title\": \"activos fijos\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n            {\r\n              \"title\" : \"bienes e inventarios\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"tesoro\",\r\n              \"icon\"  : \"el-icon-back\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"aplicacion\",\r\n              \"icon\"  : \"el-icon-setting\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"perfiles\"\r\n                    },\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"lionel\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n          ]      \r\n  */\r\n/*\r\n         * obtener el reporte generado desde REST API de JasperReport Server\r\n         */\r\n/*\r\n        presionar(index) {\r\n            let app = this;\r\n            axios({\r\n                url: \"/reporte\",\r\n                method: \"GET\",\r\n                responseType: \"blob\" // important\r\n            }).then(response => {\r\n                const blob = new Blob([response.data], {\r\n                    type: \"application/pdf\"\r\n                });\r\n                const objectUrl = window.URL.createObjectURL(blob);\r\n                console.log(objectUrl);\r\n                window.open(objectUrl);\r\n            });\r\n        }*/\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.el-card[data-v-a7072644] {\r\n  background: #ffffff;\n}\n.el-form[data-v-a7072644] {\r\n  padding-left: 120px;\r\n  padding-right: 120px;\r\n  padding-top: 60px;\n}\r\n", ""]);
 
 // exports
 
@@ -83019,6 +83146,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Home.vue?vue&type=style&index=0&id=63cd6604&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Home.vue?vue&type=style&index=0&id=63cd6604&scoped=true&lang=css& ***!
@@ -83883,18 +84040,18 @@ var render = function() {
                             attrs: {
                               size: "small",
                               label: "numero de identificacion",
-                              prop: "nro_dip"
+                              prop: "personal"
                             }
                           },
                           [
                             _c("el-input", {
                               attrs: { size: "small" },
                               model: {
-                                value: _vm.person.nro_dip,
+                                value: _vm.person.personal,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.person, "nro_dip", $$v)
+                                  _vm.$set(_vm.person, "personal", $$v)
                                 },
-                                expression: "person.nro_dip"
+                                expression: "person.personal"
                               }
                             })
                           ],
@@ -83975,7 +84132,7 @@ var render = function() {
                             attrs: {
                               size: "small",
                               label: "fecha de nacimiento",
-                              prop: "fec_nacimiento"
+                              prop: "nacimiento"
                             }
                           },
                           [
@@ -83987,11 +84144,11 @@ var render = function() {
                                 placeholder: "Pick a date"
                               },
                               model: {
-                                value: _vm.person.fec_nacimiento,
+                                value: _vm.person.nacimiento,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.person, "fec_nacimiento", $$v)
+                                  _vm.$set(_vm.person, "nacimiento", $$v)
                                 },
-                                expression: "person.fec_nacimiento"
+                                expression: "person.nacimiento"
                               }
                             })
                           ],
@@ -84007,11 +84164,11 @@ var render = function() {
                               {
                                 attrs: { size: "small" },
                                 model: {
-                                  value: _vm.person.id_sexo,
+                                  value: _vm.person.sexo,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.person, "id_sexo", $$v)
+                                    _vm.$set(_vm.person, "sexo", $$v)
                                   },
-                                  expression: "person.id_sexo"
+                                  expression: "person.sexo"
                                 }
                               },
                               [
@@ -84038,7 +84195,12 @@ var render = function() {
                                   type: "primary",
                                   plain: ""
                                 },
-                                on: { click: _vm.savePerson }
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.savePerson($event)
+                                  }
+                                }
                               },
                               [_vm._v("Guardar")]
                             ),
@@ -85293,6 +85455,278 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "clearfix",
+            attrs: { slot: "header" },
+            slot: "header"
+          },
+          [
+            _c("span", [_vm._v("editar persona")]),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                staticStyle: { float: "right", padding: "3px 0" },
+                attrs: { type: "text" }
+              },
+              [_vm._v("ayuda")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c(
+              "el-row",
+              [
+                _c(
+                  "el-col",
+                  { attrs: { span: 24 } },
+                  [
+                    _c(
+                      "el-form",
+                      {
+                        ref: "form",
+                        attrs: {
+                          model: _vm.person,
+                          rules: _vm.rules,
+                          "label-width": "160px"
+                        }
+                      },
+                      [
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              size: "small",
+                              label: "numero de identificacion",
+                              prop: "personal"
+                            }
+                          },
+                          [
+                            _c("el-input", {
+                              attrs: { size: "small" },
+                              model: {
+                                value: _vm.person.personal,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.person, "personal", $$v)
+                                },
+                                expression: "person.personal"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              size: "small",
+                              label: "nombres",
+                              prop: "nombres"
+                            }
+                          },
+                          [
+                            _c("el-input", {
+                              attrs: { size: "small" },
+                              model: {
+                                value: _vm.person.nombres,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.person, "nombres", $$v)
+                                },
+                                expression: "person.nombres"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: { size: "small", label: "apellido paterno" }
+                          },
+                          [
+                            _c("el-input", {
+                              attrs: { size: "small" },
+                              model: {
+                                value: _vm.person.paterno,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.person, "paterno", $$v)
+                                },
+                                expression: "person.paterno"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              size: "small",
+                              label: "apellido materno",
+                              prop: "materno"
+                            }
+                          },
+                          [
+                            _c("el-input", {
+                              attrs: { size: "small" },
+                              model: {
+                                value: _vm.person.materno,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.person, "materno", $$v)
+                                },
+                                expression: "person.materno"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          {
+                            attrs: {
+                              size: "small",
+                              label: "fecha de nacimiento",
+                              prop: "nacimiento"
+                            }
+                          },
+                          [
+                            _c("el-date-picker", {
+                              staticStyle: { width: "100%" },
+                              attrs: {
+                                size: "small",
+                                type: "date",
+                                placeholder: "Pick a date"
+                              },
+                              model: {
+                                value: _vm.person.nacimiento,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.person, "nacimiento", $$v)
+                                },
+                                expression: "person.nacimiento"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          { attrs: { size: "small", label: "genero" } },
+                          [
+                            _c(
+                              "el-radio-group",
+                              {
+                                attrs: { size: "small" },
+                                model: {
+                                  value: _vm.person.sexo,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.person, "sexo", $$v)
+                                  },
+                                  expression: "person.sexo"
+                                }
+                              },
+                              [
+                                _c("el-radio-button", {
+                                  attrs: { label: "M" }
+                                }),
+                                _vm._v(" "),
+                                _c("el-radio-button", { attrs: { label: "F" } })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: {
+                                  size: "small",
+                                  type: "primary",
+                                  plain: ""
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.savePerson($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Guardar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: {
+                                  size: "small",
+                                  type: "danger",
+                                  plain: ""
+                                },
+                                on: { click: _vm.noPerson }
+                              },
+                              [_vm._v("Cancelar")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/FixedAssets.vue?vue&type=template&id=053f1c48&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/FixedAssets.vue?vue&type=template&id=053f1c48&scoped=true& ***!
@@ -85805,7 +86239,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "footer" }, [
                     _c("div", { staticClass: "version" }, [
-                      _vm._v("Version 1.06.00")
+                      _vm._v("Version 1.08.01")
                     ])
                   ])
                 ],
@@ -86052,7 +86486,10 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.initEditPerson(scope.$index)
+                                  return _vm.initEditPerson(
+                                    scope.$index,
+                                    scope.row
+                                  )
                                 }
                               }
                             },
@@ -86069,7 +86506,10 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.initShowPerson(scope.$index)
+                                  return _vm.initShowPerson(
+                                    scope.$index,
+                                    scope.row
+                                  )
                                 }
                               }
                             },
@@ -102560,14 +103000,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Users__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/Users */ "./resources/js/views/Users.vue");
 /* harmony import */ var _views_Persons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/Persons */ "./resources/js/views/Persons.vue");
 /* harmony import */ var _views_AddPerson__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/AddPerson */ "./resources/js/views/AddPerson.vue");
-/* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
-/* harmony import */ var _views_DeliveryDocuments__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/DeliveryDocuments */ "./resources/js/views/DeliveryDocuments.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _views_Inventory__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/Inventory */ "./resources/js/views/Inventory.vue");
-/* harmony import */ var _views_EditDeliveryDocument__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/EditDeliveryDocument */ "./resources/js/views/EditDeliveryDocument.vue");
+/* harmony import */ var _views_EditPerson__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/EditPerson */ "./resources/js/views/EditPerson.vue");
+/* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
+/* harmony import */ var _views_DeliveryDocuments__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/DeliveryDocuments */ "./resources/js/views/DeliveryDocuments.vue");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var _views_Inventory__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/Inventory */ "./resources/js/views/Inventory.vue");
+/* harmony import */ var _views_EditDeliveryDocument__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/EditDeliveryDocument */ "./resources/js/views/EditDeliveryDocument.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Pages
+
 
 
 
@@ -102589,7 +103031,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
     name: 'home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_12__["default"]
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_13__["default"]
   }, {
     path: '/login',
     name: 'login',
@@ -102611,7 +103053,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     {
       path: '',
       name: 'welcome',
-      component: _views_Welcome__WEBPACK_IMPORTED_MODULE_10__["default"]
+      component: _views_Welcome__WEBPACK_IMPORTED_MODULE_11__["default"]
     }, {
       path: 'assets',
       name: 'assets',
@@ -102619,7 +103061,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: 'deliverydocuments',
       name: 'deliverydocuments',
-      component: _views_DeliveryDocuments__WEBPACK_IMPORTED_MODULE_11__["default"]
+      component: _views_DeliveryDocuments__WEBPACK_IMPORTED_MODULE_12__["default"]
     }, //deliverydocument
     {
       path: 'users',
@@ -102630,21 +103072,29 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'persons',
       component: _views_Persons__WEBPACK_IMPORTED_MODULE_8__["default"]
     }, {
-      path: 'persons/add',
+      path: 'person/add',
       name: 'addperson',
       component: _views_AddPerson__WEBPACK_IMPORTED_MODULE_9__["default"]
     }, {
+      path: 'person/:id',
+      name: 'editperson',
+      component: _views_EditPerson__WEBPACK_IMPORTED_MODULE_10__["default"]
+    }, {
+      path: 'person/show/:id',
+      name: 'editperson',
+      component: _views_EditPerson__WEBPACK_IMPORTED_MODULE_10__["default"]
+    }, {
       path: 'welcome',
       name: 'welcome',
-      component: _views_Welcome__WEBPACK_IMPORTED_MODULE_10__["default"]
+      component: _views_Welcome__WEBPACK_IMPORTED_MODULE_11__["default"]
     }, {
       path: 'inventory',
       name: 'inventory',
-      component: _views_Inventory__WEBPACK_IMPORTED_MODULE_13__["default"]
+      component: _views_Inventory__WEBPACK_IMPORTED_MODULE_14__["default"]
     }, {
       path: 'editdeliverydocument',
       name: 'editdeliverydocument',
-      component: _views_EditDeliveryDocument__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _views_EditDeliveryDocument__WEBPACK_IMPORTED_MODULE_15__["default"]
     }],
     meta: {
       requiresAuth: true
@@ -103159,6 +103609,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDeliveryDocument_vue_vue_type_template_id_79cd1878___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/EditPerson.vue":
+/*!*******************************************!*\
+  !*** ./resources/js/views/EditPerson.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditPerson.vue?vue&type=template&id=a7072644&scoped=true& */ "./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true&");
+/* harmony import */ var _EditPerson_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditPerson.vue?vue&type=script&lang=js& */ "./resources/js/views/EditPerson.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& */ "./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _EditPerson_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "a7072644",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/EditPerson.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/EditPerson.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/views/EditPerson.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EditPerson.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=style&index=0&id=a7072644&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_style_index_0_id_a7072644_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EditPerson.vue?vue&type=template&id=a7072644&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EditPerson.vue?vue&type=template&id=a7072644&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditPerson_vue_vue_type_template_id_a7072644_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

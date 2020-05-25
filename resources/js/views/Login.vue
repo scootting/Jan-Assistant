@@ -48,7 +48,7 @@
             </div>
           </el-card>
           <div class="footer">
-            <div class="version">Version 1.06.00</div>
+            <div class="version">Version 1.08.01</div>
           </div>
         </el-col>
       </el-row>
@@ -108,7 +108,7 @@ export default {
           password: this.model.password
         })
         .then(response => {
-          this.$router.push({ name: "dashboard" });
+          this.$router.push({ name: "welcome" });
         })
         .catch(error => {
           this.error = error.response.data;

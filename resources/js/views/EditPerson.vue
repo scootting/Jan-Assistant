@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>nueva persona</span>
+        <span>editar persona</span>
         <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
       <div>
@@ -53,15 +53,11 @@ export default {
   name: "AniadirPersona",
   data() {
     return {
-      messages: {},
+      
       person: {
-        personal: "",
-        nombres: "",
-        paterno: "",
-        materno: "",
-        nacimiento: "",
-        sexo: "M"
+        'marker': 'editar',
       },
+
       rules: {
         personal: [
           {
@@ -108,24 +104,37 @@ export default {
             message: "El campo no puede estar vacio",
             trigger: "blur"
           }
-          //{ type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
         ]
       }
     };
   },
-  mounted() {},
+  mounted() {
+    let app = this;
+    let id = app.$route.params.id;
+    console.log("estes es el id: " + id);
+    axios
+      .get("/api/person/" + id)
+      .then(function(response) {
+        console.log(response.data);
+        app.person = response.data[0];
+      })
+      .catch(function() {
+        alert("No se puede hallar el registro de la persona indicada");
+      });
+  },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
     savePerson() {
+      //alert("hola");
+      event.preventDefault();
       var app = this;
       var newPerson = app.person;
-      //console.log("REGISTRAR");
       axios
         .post("/api/person", {
-          persona: newPerson,
-          marker: "registrar"
+          persona : newPerson ,
+          marker: "editar"
         })
         .then(function(response) {
           alert("se ha creado el registro de la persona");
@@ -156,11 +165,6 @@ export default {
 <style scoped>
 .el-card {
   background: #ffffff;
-  /*
-    background: #DEDFD9;
-    background: #EBEEF4;
-    background: #d3dce6;
-    */
 }
 .el-form {
   padding-left: 120px;

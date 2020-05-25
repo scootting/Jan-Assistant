@@ -42,26 +42,28 @@ class General extends Model
     }
 
     public static function GetPersonsByDescription($description){
-        $query = "select * from public.personas where paterno ='".$description."'";
-        \Log::info("Query: ".$query);
+        $query = "select * from public.personas where paterno ='".$description."' order by paterno, materno, nombres";
+        //\Log::info("Query: ".$query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
     public static function AddPerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
-        $query = "";
+        $query = "select * from public.ff_registrar_persona('".$identityCard."', '".$paternal."', '".$maternal."', '".$names."','".$sex."', '".$birthdate."')";
+        //\Log::info("REGISTRAR PARA PERSONAS: ".$query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
     public static function UpdatePerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
-        $query = "";
+        $query = "select * from public.ff_editar_persona('".$identityCard."', '".$paternal."', '".$maternal."', '".$names."','".$sex."', '".$birthdate."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
     public static function GetPersonByIdentityCard($identityCard){
-        $query = "";
+        $query = "select * from public.ff_buscar_persona('".$identityCard."')";
+        //$data = DB::table('public.personas')->where('nro_dip','=',"6600648")->get();
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
