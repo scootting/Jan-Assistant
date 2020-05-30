@@ -4305,9 +4305,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "AniadirPersona",
   data: function data() {
     return {
-      person: {
-        'marker': 'editar'
-      },
+      person: {},
       rules: {
         personal: [{
           required: true,
@@ -4448,6 +4446,54 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6960,10 +7006,10 @@ exports.push([module.i, "\n.el-card[data-v-43953a47] {\r\n  background: #ffffff;
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700);", ""]);
 
 // module
-exports.push([module.i, "\nhtml, body {\r\n  font-family: 'Roboto Condensed', sans-serif;\r\n  /*background: #102a43;*/\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #F0AB00;\r\n  background: #E5E5E7;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  font-family: 'Roboto Condensed', sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton, input, select, textarea\r\n{\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/ \r\n\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: 'Ubuntu', sans-serif;\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #f0ab00;\r\n  background: #e5e5e7;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: 'Ubuntu', sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/\r\n", ""]);
 
 // exports
 
@@ -6979,10 +7025,10 @@ exports.push([module.i, "\nhtml, body {\r\n  font-family: 'Roboto Condensed', sa
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
+
 
 // module
-exports.push([module.i, "\nhtml,\r\nbody {\r\n  font-family: \"Roboto Condensed\", sans-serif;\n}\n#app {\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #333;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 22px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n\r\n/*\r\n      options: [\r\n            {\r\n              \"title\" : \"contabilidad\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"assets\",\r\n                      \"title\": \"activos fijos\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n            {\r\n              \"title\" : \"bienes e inventarios\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"tesoro\",\r\n              \"icon\"  : \"el-icon-back\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"aplicacion\",\r\n              \"icon\"  : \"el-icon-setting\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"perfiles\"\r\n                    },\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"lionel\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n          ]      \r\n  */\r\n/*\r\n         * obtener el reporte generado desde REST API de JasperReport Server\r\n         */\r\n/*\r\n        presionar(index) {\r\n            let app = this;\r\n            axios({\r\n                url: \"/reporte\",\r\n                method: \"GET\",\r\n                responseType: \"blob\" // important\r\n            }).then(response => {\r\n                const blob = new Blob([response.data], {\r\n                    type: \"application/pdf\"\r\n                });\r\n                const objectUrl = window.URL.createObjectURL(blob);\r\n                console.log(objectUrl);\r\n                window.open(objectUrl);\r\n            });\r\n        }*/\r\n", ""]);
+exports.push([module.i, "\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Condensed\", sans-serif;*/\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Condensed\", sans-serif;*/\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #333;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 22px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n\r\n/*\r\n      options: [\r\n            {\r\n              \"title\" : \"contabilidad\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"assets\",\r\n                      \"title\": \"activos fijos\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n            {\r\n              \"title\" : \"bienes e inventarios\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"tesoro\",\r\n              \"icon\"  : \"el-icon-back\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"aplicacion\",\r\n              \"icon\"  : \"el-icon-setting\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"perfiles\"\r\n                    },\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"lionel\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n          ]      \r\n  */\r\n/*\r\n         * obtener el reporte generado desde REST API de JasperReport Server\r\n         */\r\n/*\r\n        presionar(index) {\r\n            let app = this;\r\n            axios({\r\n                url: \"/reporte\",\r\n                method: \"GET\",\r\n                responseType: \"blob\" // important\r\n            }).then(response => {\r\n                const blob = new Blob([response.data], {\r\n                    type: \"application/pdf\"\r\n                });\r\n                const objectUrl = window.URL.createObjectURL(blob);\r\n                console.log(objectUrl);\r\n                window.open(objectUrl);\r\n            });\r\n        }*/\r\n", ""]);
 
 // exports
 
@@ -7017,10 +7063,10 @@ exports.push([module.i, "\n.el-card[data-v-a7072644] {\r\n  background: #ffffff;
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);", ""]);
+
 
 // module
-exports.push([module.i, "\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\r\n    font-family: \"Roboto Condensed\", sans-serif;\n}\n#app[data-v-63cd6604] {\r\n    font-family: \"Roboto Condensed\", sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    text-align: left;\r\n    /*color: #2c3e50;\r\n  */\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n    font-family: inherit;\r\n    font-size: inherit;\r\n    line-height: inherit;\r\n    color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n    color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header[data-v-63cd6604] {\r\n    color: #333;\r\n    line-height: 60px;\r\n    padding: 0px;\n}\n.el-row[data-v-63cd6604] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-63cd6604] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-63cd6604] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-63cd6604] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-63cd6604] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-63cd6604] {\r\n    border-radius: 4px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-63cd6604] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Roboto+Condensed\");\r\n  font-family: 'Chelsea Market', cursive !important;\r\n  font-weight: 400 !important;\r\n  font-family: 'Chelsea Market', cursive !important;\r\n */\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\n}\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  /*\r\n  font-family: 'Open Sans Condensed', sans-serif !important;\r\n  font-family: 'Open Sans Condensed', sans-serif !important;\r\n  */\r\n  color: #333;\n}\n.el-header[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #eeeeee;\r\n  color: #333;\r\n  text-align: center;\r\n  line-height: 20;\n}\n.version[data-v-63cd6604]{\r\n    line-height: 5 !important;\r\n    background: #123234 !important;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #111111;\r\n  color: #858585;\r\n  text-align: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-63cd6604] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-63cd6604] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-63cd6604] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-63cd6604] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-63cd6604] {\r\n  border-radius: 4px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-63cd6604] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\r\n", ""]);
 
 // exports
 
@@ -85812,16 +85858,24 @@ var render = function() {
           _c(
             "el-header",
             [
+              _c("el-button", [_vm._v("Default")]),
+              _vm._v(" "),
               _c(
-                "el-menu",
-                { staticClass: "el-menu-demo", attrs: { mode: "horizontal" } },
-                [
-                  _c("el-menu-item", { attrs: { index: "1" } }, [
-                    _vm._v("DIRECCION ADMINISTRATIVA Y FINANCIERA")
-                  ])
-                ],
-                1
-              )
+                "el-button",
+                { staticClass: "version", attrs: { size: "medium" } },
+                [_vm._v("Medium")]
+              ),
+              _vm._v(" "),
+              _c("el-button", { attrs: { size: "small" } }, [_vm._v("Small")]),
+              _vm._v(" "),
+              _c("el-button", { attrs: { size: "mini" } }, [_vm._v("Mini")]),
+              _vm._v(" "),
+              _c("el-button", { attrs: { type: "text" } }, [
+                _vm._v("Text Button")
+              ]),
+              _vm._v(" "),
+              _c("el-tag", [_vm._v("Tag 1")]),
+              _vm._v("header\n    ")
             ],
             1
           ),
@@ -85829,10 +85883,6 @@ var render = function() {
           _c(
             "el-container",
             [
-              _c("el-aside", { attrs: { width: "200px" } }, [
-                _vm._v("Barra lateral")
-              ]),
-              _vm._v(" "),
               _c(
                 "el-container",
                 [
@@ -85855,7 +85905,7 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                                    This is a template for a simple\n                                    marketing or informational website. It\n                                    includes a large callout called a\n                                    jumbotron and three supporting pieces of\n                                    content. Use it as a starting point to\n                                    create something more unique.\n                                "
+                                      "\n                  This is a template for a simple\n                  marketing or informational website. It\n                  includes a large callout called a\n                  jumbotron and three supporting pieces of\n                  content. Use it as a starting point to\n                  create something more unique.\n                "
                                     )
                                   ]),
                                   _vm._v(" "),
@@ -85899,7 +85949,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("p", [
                                   _vm._v(
-                                    "\n                                    Donec id elit non mi porta gravida at\n                                    eget metus. Fusce dapibus, tellus ac\n                                    cursus commodo, tortor mauris\n                                    condimentum nibh, ut fermentum massa\n                                    justo sit amet risus. Etiam porta sem\n                                    malesuada magna mollis euismod. Donec\n                                    sed odio dui.\n                                "
+                                    "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
                                   )
                                 ])
                               ])
@@ -85919,7 +85969,7 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                                    Donec id elit non mi porta gravida at\n                                    eget metus. Fusce dapibus, tellus ac\n                                    cursus commodo, tortor mauris\n                                    condimentum nibh, ut fermentum massa\n                                    justo sit amet risus. Etiam porta sem\n                                    malesuada magna mollis euismod. Donec\n                                    sed odio dui.\n                                "
+                                      "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
                                     )
                                   ]),
                                   _vm._v(" "),
@@ -85952,7 +86002,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("p", [
                                   _vm._v(
-                                    "\n                                    Donec id elit non mi porta gravida at\n                                    eget metus. Fusce dapibus, tellus ac\n                                    cursus commodo, tortor mauris\n                                    condimentum nibh, ut fermentum massa\n                                    justo sit amet risus. Etiam porta sem\n                                    malesuada magna mollis euismod. Donec\n                                    sed odio dui.\n                                "
+                                    "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
                                   )
                                 ])
                               ])
@@ -85985,7 +86035,83 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("el-footer", [_vm._v("Pie de página")])
+                  _c(
+                    "el-footer",
+                    [
+                      _c(
+                        "el-row",
+                        { attrs: { gutter: 20 } },
+                        [
+                          _c("el-col", { attrs: { span: 8 } }, [
+                            _c("h5", [_vm._v("Heading 1")]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v(
+                                "\n                Donec id elit non mi porta gravida at\n                eget metus. Fusce dapibus, tellus ac\n                cursus commodo, tortor mauris\n                condimentum nibh, ut fermentum massa\n                justo sit amet risus. Etiam porta sem\n                malesuada magna mollis euismod. Donec\n                sed odio dui.\n              "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("el-col", { attrs: { span: 8 } }, [
+                            _c("h5", [_vm._v("Heading 2")]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v(
+                                "\n                Donec id elit non mi porta gravida at\n                eget metus. Fusce dapibus, tellus ac\n                cursus commodo, tortor mauris\n                condimentum nibh, ut fermentum massa\n                justo sit amet risus. Etiam porta sem\n                malesuada magna mollis euismod. Donec\n                sed odio dui.\n              "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "el-col",
+                            { attrs: { span: 8 } },
+                            [
+                              _c("h5", [_vm._v("Heading 3")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "\n                Donec id elit non mi porta gravida at\n                eget metus. Fusce dapibus, tellus ac\n                cursus commodo, tortor mauris\n                condimentum nibh, ut fermentum massa\n                justo sit amet risus. Etiam porta sem\n                malesuada magna mollis euismod. Donec\n                sed odio dui.\n              "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "el-row",
+                                [
+                                  _c("el-button", [_vm._v("Default")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    { attrs: { size: "medium" } },
+                                    [_vm._v("Medium")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    { attrs: { size: "small" } },
+                                    [_vm._v("Small")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("el-button", { attrs: { size: "mini" } }, [
+                                    _vm._v("Mini")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("el-divider"),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v("© UATF. Todos los derechos reservados.")
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )
