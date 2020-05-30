@@ -3949,19 +3949,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DocumentoDeCompra",
   data: function data() {
     return {
       user: this.$store.state.user,
+      gestion: this.$store.state.user.gestion,
+      selectParameter: "nro_doc",
+      writtenTextParameter: "",
+      parameters: [{
+        value: "nro_doc",
+        label: "Nro_doc"
+      }, {
+        value: "fecha_doc",
+        label: "Fecha"
+      }, {
+        value: "responsable",
+        label: "Resposable"
+      }, {
+        value: "ofc_des",
+        label: "Oficina"
+      }],
       messages: {},
       data: {},
       list: [],
+      search: "",
       columns: [{
         prop: "nro_doc",
         label: "Nro_doc",
-        width: 140,
-        slotName: "nro_doc"
+        width: 140
       }, {
         prop: "fecha_doc",
         label: "Fecha",
@@ -3974,6 +4012,16 @@ __webpack_require__.r(__webpack_exports__);
         prop: "ofc_des",
         label: "Oficina",
         width: 180
+      }, {
+        prop: "nro_doc",
+        label: "Editar",
+        width: 140,
+        slotName: "nro_doc"
+      }, {
+        prop: "nro_doc",
+        label: "Mostrar",
+        width: 140,
+        slotName: "fecha_doc"
       }]
     };
   },
@@ -3981,7 +4029,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var app = this;
-    axios.get("/api/DeliveryDocuments").then(function (response) {
+    axios.get("/api/delivery_documents/" + app.user.gestion).then(function (response) {
       console.log(response);
       app.list = response.data;
     })["catch"](function (error) {
@@ -4166,25 +4214,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ActivosFijos :3",
+  name: "EditDocuments",
   data: function data() {
     return {
+      gestion: this.$store.state.user.gestion,
       info: {},
       tableData: [],
       formEdit: false,
       data: {},
+      tabPosition: "Bottom",
       encargadoForm: {
-        id: this.$store.state.encargado.nro_doc,
-        fecha_doc: this.$store.state.encargado.fecha_doc,
+        nro_doc: "",
+        fecha_doc: "",
         estado: "",
-        responsable: this.$store.state.encargado.responsable,
+        de: "",
+        a: "",
+        responsable: "",
         cargores: ""
       },
+      destiny: {},
       editForm: {
         cantidad: "",
         descripcion: "",
-        det_des: "",
+        des_det: "",
         uni_med: "",
         id_partida: "",
         id_contable: "",
@@ -4193,9 +4281,11 @@ __webpack_require__.r(__webpack_exports__);
         importe: "",
         proveedor: "",
         nro_fac: "",
-        t_adqui: "",
         id: ""
-      }
+      },
+      unidMeds: [],
+      contGroups: [],
+      partidas: []
     };
   },
   mounted: function mounted() {
@@ -4205,14 +4295,18 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var app = this;
-    axios.post("/api/editDocument", {
-      nro_doc: app.encargadoForm.id
+    axios.post("/api/delivery_documents/edit", {
+      nro_doc: this.$store.state.encargado.nro_doc,
+      gestion: this.$store.state.user.gestion
     }).then(function (response) {
       app.info = response.data;
       app.tableData = app.info.listActivos;
-      app.encargadoForm.cargores = app.info.encargado.cargores;
-      app.encargadoForm.estado = app.info.encargado.estado;
-      console.log("info prueba 4:", response.data);
+      app.encargadoForm = Object.assign(app.encargadoForm, app.info.encargado);
+      app.destiny = app.info.destinos;
+      app.partidas = app.info.partidas;
+      app.contGroups = app.info.gruposC;
+      app.unidMeds = app.info.unidMeds;
+      console.log("info prueba 5:", response.data);
     })["catch"](function (error) {
       _this.error = error;
 
@@ -4226,6 +4320,9 @@ __webpack_require__.r(__webpack_exports__);
     test: function test() {
       alert("bienvenido al modulo");
     },
+    optionsLabelDestiny: function optionsLabelDestiny(id, desc) {
+      return id + " " + desc;
+    },
     editActive: function editActive(activo) {
       console.log("activo: ", activo);
       this.formEdit = true;
@@ -4236,6 +4333,35 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       console.log("editForm: ", this.editForm);
+    },
+    cleanEditForm: function cleanEditForm() {
+      var atrib = Object.keys(this.editForm);
+
+      for (var i = 0; i < atrib.length; i++) {
+        this.editForm[atrib[i]] = "";
+      }
+    },
+    saveAsset: function saveAsset() {
+      var _this2 = this;
+
+      var app = this;
+      axios.post("/api/delivery_documents/store", this.editForm).then(function (response) {
+        //console.log(response.data);
+        app.cleanEditForm();
+        app.formEdit = false;
+
+        _this2.$notify.success({
+          title: "Guardado",
+          message: response.data[0]
+        });
+      })["catch"](function (error) {
+        _this2.error = error;
+
+        _this2.$notify.error({
+          title: "Error",
+          message: _this2.error.message
+        });
+      });
     }
   }
 });
@@ -84736,17 +84862,97 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
+          { staticStyle: { "margin-top": "15px" } },
+          [
+            _c(
+              "el-input",
+              {
+                staticClass: "input-with-select",
+                attrs: { placeholder: "Please input" },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              },
+              [
+                _c(
+                  "el-select",
+                  {
+                    attrs: { slot: "prepend", placeholder: "Select" },
+                    slot: "prepend",
+                    model: {
+                      value: _vm.selectParameter,
+                      callback: function($$v) {
+                        _vm.selectParameter = $$v
+                      },
+                      expression: "selectParameter"
+                    }
+                  },
+                  _vm._l(_vm.parameters, function(item) {
+                    return _c("el-option", {
+                      key: item.value,
+                      attrs: { label: item.attribute, value: item.value }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "div",
           [
             _c("el-search-table-pagination", {
               attrs: {
                 type: "local",
-                data: _vm.list,
-                "page-sizes": [5, 10, 15],
+                data: _vm.list.filter(function(data) {
+                  return (
+                    !_vm.search ||
+                    data[_vm.selectParameter]
+                      .toLowerCase()
+                      .includes(_vm.search.toLowerCase())
+                  )
+                }),
+                "page-sizes": [10, 15],
                 columns: _vm.columns
               },
               scopedSlots: _vm._u([
                 {
                   key: "nro_doc",
+                  fn: function(scope) {
+                    return [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              return _vm.redirectVUE(scope.row)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(scope.row.edit) +
+                              "Editar\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "fecha_doc",
                   fn: function(scope) {
                     return [
                       _c(
@@ -84758,7 +84964,13 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(scope.row.nro_doc))]
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(scope.row.edit) +
+                              "Mostrar\n          "
+                          )
+                        ]
                       )
                     ]
                   }
@@ -84813,72 +85025,49 @@ var render = function() {
           "div",
           [
             _c(
-              "el-form",
+              "el-tabs",
               {
-                ref: "encargadoForm",
-                attrs: { model: _vm.encargadoForm, "label-width": "120px" }
+                staticStyle: { height: "425px" },
+                attrs: { "tab-position": _vm.tabPosition }
               },
               [
                 _c(
-                  "el-row",
+                  "el-tab-pane",
+                  { attrs: { label: "Detalles de Encargado" } },
                   [
-                    _c("el-col", { attrs: { span: 6 } }, [
-                      _c(
-                        "div",
-                        [
-                          _c(
-                            "el-form-item",
-                            { attrs: { label: "N°", prop: "id" } },
-                            [
-                              _c("el-input", {
-                                model: {
-                                  value: _vm.encargadoForm.id,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.encargadoForm, "id", $$v)
-                                  },
-                                  expression: "encargadoForm.id"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("el-col", { attrs: { span: 8 } }, [
-                      _c(
-                        "div",
-                        [
-                          _c(
-                            "el-form-item",
-                            { attrs: { label: "Fecha", prop: "fecha" } },
-                            [
+                    _c(
+                      "el-form",
+                      {
+                        ref: "encargadoForm",
+                        attrs: {
+                          model: _vm.encargadoForm,
+                          "label-width": "120px"
+                        }
+                      },
+                      [
+                        _c(
+                          "el-row",
+                          [
+                            _c("el-col", { attrs: { span: 6 } }, [
                               _c(
-                                "el-col",
-                                { attrs: { span: 11 } },
+                                "div",
                                 [
                                   _c(
                                     "el-form-item",
-                                    { attrs: { prop: "fecha_doc" } },
+                                    { attrs: { label: "N°", prop: "nro_doc" } },
                                     [
-                                      _c("el-date-picker", {
-                                        staticStyle: { width: "100%" },
-                                        attrs: {
-                                          type: "date",
-                                          placeholder: "Pick a date"
-                                        },
+                                      _c("el-input", {
+                                        attrs: { disabled: "" },
                                         model: {
-                                          value: _vm.encargadoForm.fecha_doc,
+                                          value: _vm.encargadoForm.nro_doc,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.encargadoForm,
-                                              "fecha_doc",
+                                              "nro_doc",
                                               $$v
                                             )
                                           },
-                                          expression: "encargadoForm.fecha_doc"
+                                          expression: "encargadoForm.nro_doc"
                                         }
                                       })
                                     ],
@@ -84887,104 +85076,240 @@ var render = function() {
                                 ],
                                 1
                               )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-col",
-                      { attrs: { span: 6 } },
-                      [
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "Estado", prop: "estado" } },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.encargadoForm.estado,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.encargadoForm, "estado", $$v)
-                                },
-                                expression: "encargadoForm.estado"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-row",
-                  [
-                    _c(
-                      "el-col",
-                      { attrs: { span: 8 } },
-                      [
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "Con Destino", required: "" } },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.encargadoForm.dest,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.encargadoForm, "dest", $$v)
-                                },
-                                expression: "encargadoForm.dest"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-row",
-                  [
-                    _c(
-                      "el-col",
-                      { attrs: { span: 8 } },
-                      [
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              label: "Responsable",
-                              prop: "responsable",
-                              required: ""
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.encargadoForm.responsable,
-                                callback: function($$v) {
-                                  _vm.$set(
-                                    _vm.encargadoForm,
-                                    "responsable",
-                                    $$v
+                            ]),
+                            _vm._v(" "),
+                            _c("el-col", { attrs: { span: 8 } }, [
+                              _c(
+                                "div",
+                                [
+                                  _c(
+                                    "el-form-item",
+                                    {
+                                      attrs: { label: "Fecha", prop: "fecha" }
+                                    },
+                                    [
+                                      _c(
+                                        "el-col",
+                                        { attrs: { span: 11 } },
+                                        [
+                                          _c(
+                                            "el-form-item",
+                                            { attrs: { prop: "fecha" } },
+                                            [
+                                              _c("el-date-picker", {
+                                                staticStyle: { width: "100%" },
+                                                attrs: {
+                                                  type: "date",
+                                                  placeholder: "Pick a date"
+                                                },
+                                                model: {
+                                                  value:
+                                                    _vm.encargadoForm.fecha,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.encargadoForm,
+                                                      "fecha",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "encargadoForm.fecha"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
                                   )
-                                },
-                                expression: "encargadoForm.responsable"
-                              }
-                            })
+                                ],
+                                1
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "el-col",
+                              { attrs: { span: 6 } },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  {
+                                    attrs: { label: "Estado", prop: "estado" }
+                                  },
+                                  [
+                                    _c("el-input", {
+                                      attrs: { disabled: "" },
+                                      model: {
+                                        value: _vm.encargadoForm.estado,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.encargadoForm,
+                                            "estado",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "encargadoForm.estado"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
                           ],
                           1
-                        )
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-row",
+                          [
+                            _c(
+                              "el-col",
+                              { attrs: { span: 8 } },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  {
+                                    attrs: {
+                                      label: "Con Destino",
+                                      required: ""
+                                    }
+                                  },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.encargadoForm.de,
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.encargadoForm, "de", $$v)
+                                        },
+                                        expression: "encargadoForm.de"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-select",
+                                      {
+                                        model: {
+                                          value: _vm.encargadoForm.a,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.encargadoForm,
+                                              "a",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "encargadoForm.a"
+                                        }
+                                      },
+                                      _vm._l(_vm.destiny, function(item) {
+                                        return _c("el-option", {
+                                          key: "oficina_key_" + item.id_oficina,
+                                          attrs: {
+                                            label: _vm.optionsLabelDestiny(
+                                              item.id_oficina,
+                                              item.ofc_des
+                                            ),
+                                            value: item.id_oficina
+                                          }
+                                        })
+                                      }),
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-row",
+                          [
+                            _c(
+                              "el-col",
+                              { attrs: { span: 8 } },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  {
+                                    attrs: {
+                                      label: "Responsable",
+                                      prop: "responsable",
+                                      required: ""
+                                    }
+                                  },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.encargadoForm.responsable,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.encargadoForm,
+                                            "responsable",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "encargadoForm.responsable"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-row",
+                          [
+                            _c(
+                              "el-col",
+                              { attrs: { span: 8 } },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  {
+                                    attrs: {
+                                      label: "Cargo Responsable",
+                                      prop: "cargores",
+                                      required: ""
+                                    }
+                                  },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.encargadoForm.cargores,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.encargadoForm,
+                                            "cargores",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "encargadoForm.cargores"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("el-button", [_vm._v("Guardar/Actualizar")])
                       ],
                       1
                     )
@@ -84993,162 +85318,155 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c(
-                  "el-row",
+                  "el-tab-pane",
+                  { attrs: { label: "Tabla" } },
                   [
                     _c(
-                      "el-col",
-                      { attrs: { span: 8 } },
+                      "el-table",
+                      {
+                        staticClass: "bg-purple",
+                        staticStyle: { width: "100%" },
+                        attrs: { data: _vm.tableData, height: "400" }
+                      },
                       [
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              label: "Cargo Responsable",
-                              prop: "cargores",
-                              required: ""
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.encargadoForm.cargores,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.encargadoForm, "cargores", $$v)
-                                },
-                                expression: "encargadoForm.cargores"
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "cantidad",
+                            label: "Cantidad",
+                            width: "70"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "uni_med",
+                            label: "Uni.Med.",
+                            width: "70"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "descripcion",
+                            label: "Descripción",
+                            width: "110"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "des_det",
+                            label: "Descripcion Detallada",
+                            width: "95"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "id_partida",
+                            label: "ID Partida",
+                            width: "80"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "id_contable",
+                            label: "ID Contable",
+                            width: "85"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "vida_util",
+                            label: "Vida Util",
+                            width: "50"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "pre_uni",
+                            label: "Precio Unitario",
+                            width: "65"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "importe",
+                            label: "Importe",
+                            width: "80"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "proveedor",
+                            label: "Proveedor",
+                            width: "80"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "nro_fac",
+                            label: "N° Factura",
+                            width: "80"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "tipo_adq",
+                            label: "Tipo Adquisición",
+                            width: "120"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: { prop: "id", label: "Id", width: "35" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: { fixed: "left", label: " ", width: "50" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c(
+                                    "el-button",
+                                    { attrs: { type: "text", size: "small" } },
+                                    [_vm._v("Quitar")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: { type: "text", size: "small" },
+                                      nativeOn: {
+                                        click: function($event) {
+                                          return _vm.editActive(scope.row)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Editar")]
+                                  )
+                                ]
                               }
-                            })
-                          ],
-                          1
-                        )
+                            }
+                          ])
+                        })
                       ],
                       1
                     )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c("el-button", [_vm._v("Guardar/Actualizar")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "el-table",
-              {
-                staticClass: "bg-purple",
-                staticStyle: { width: "100%" },
-                attrs: { data: _vm.tableData, height: "250" }
-              },
-              [
-                _c("el-table-column", {
-                  attrs: { prop: "cantidad", label: "Cantidad", width: "70" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "uni_med", label: "Uni.Med.", width: "70" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "descripcion",
-                    label: "Descripción",
-                    width: "120"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "des_det",
-                    label: "Descripcion Detallada",
-                    width: "120"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "id_partida",
-                    label: "ID Partida",
-                    width: "80"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "id_contable",
-                    label: "ID Contable",
-                    width: "80"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "vida_util", label: "Vida Util", width: "40" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "pre_uni",
-                    label: "Precio Unitario",
-                    width: "50"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "importe", label: "Importe", width: "50" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "proveedor", label: "Proveedor", width: "80" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "nro_fac", label: "N° Factura", width: "60" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "tipo_adq",
-                    label: "Tipo Adquisición",
-                    width: "60"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "id", label: "Id", width: "40" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { fixed: "left", label: " ", width: "50" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _c(
-                            "el-button",
-                            { attrs: { type: "text", size: "small" } },
-                            [_vm._v("Quitar")]
-                          ),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "el-button",
-                            {
-                              attrs: { type: "text", size: "small" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.editActive(scope.row)
-                                }
-                              }
-                            },
-                            [_vm._v("Editar")]
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                })
+                )
               ],
               1
             )
@@ -85163,7 +85481,7 @@ var render = function() {
           attrs: {
             title: "Detalle de Entrega de Activo",
             visible: _vm.formEdit,
-            width: "60%",
+            width: "65%",
             center: ""
           },
           on: {
@@ -85217,17 +85535,33 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "el-form-item",
-                        { attrs: { label: "Uni. Med", prop: "uni_med" } },
+                        { attrs: { label: "Uni.Med.", prop: "uni_med" } },
                         [
-                          _c("el-input", {
-                            model: {
-                              value: _vm.editForm.uni_med,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "uni_med", $$v)
-                              },
-                              expression: "editForm.uni_med"
-                            }
-                          })
+                          _c(
+                            "el-select",
+                            {
+                              model: {
+                                value: _vm.editForm.uni_med,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "uni_med", $$v)
+                                },
+                                expression: "editForm.uni_med"
+                              }
+                            },
+                            _vm._l(_vm.unidMeds, function(item) {
+                              return _c("el-option", {
+                                key: "u_m_key_" + item.id_uni_med,
+                                attrs: {
+                                  label: _vm.optionsLabelDestiny(
+                                    item.uni_des_cor,
+                                    item.uni_des_det
+                                  ),
+                                  value: item.uni_des_cor
+                                }
+                              })
+                            }),
+                            1
+                          )
                         ],
                         1
                       )
@@ -85250,7 +85584,11 @@ var render = function() {
                         },
                         [
                           _c("el-input", {
-                            attrs: { type: "textarea" },
+                            attrs: {
+                              type: "textarea",
+                              rows: "5",
+                              "max-rows": "8"
+                            },
                             model: {
                               value: _vm.editForm.descripcion,
                               callback: function($$v) {
@@ -85297,15 +85635,31 @@ var render = function() {
                         "el-form-item",
                         { attrs: { label: "Partida", required: "" } },
                         [
-                          _c("el-input", {
-                            model: {
-                              value: _vm.editForm.id_partida,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "id_partida", $$v)
-                              },
-                              expression: "editForm.id_partida"
-                            }
-                          })
+                          _c(
+                            "el-select",
+                            {
+                              model: {
+                                value: _vm.editForm.id_partida,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "id_partida", $$v)
+                                },
+                                expression: "editForm.id_partida"
+                              }
+                            },
+                            _vm._l(_vm.partidas, function(item) {
+                              return _c("el-option", {
+                                key: "partida_key_" + item.par_cod,
+                                attrs: {
+                                  label: _vm.optionsLabelDestiny(
+                                    item.par_cod,
+                                    item.par_des
+                                  ),
+                                  value: item.par_cod
+                                }
+                              })
+                            }),
+                            1
+                          )
                         ],
                         1
                       )
@@ -85327,15 +85681,31 @@ var render = function() {
                         "el-form-item",
                         { attrs: { label: "Grupo Contable", required: "" } },
                         [
-                          _c("el-input", {
-                            model: {
-                              value: _vm.editForm.id_contable,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "id_contable", $$v)
-                              },
-                              expression: "editForm.id_contable"
-                            }
-                          })
+                          _c(
+                            "el-select",
+                            {
+                              model: {
+                                value: _vm.editForm.id_contable,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "id_contable", $$v)
+                                },
+                                expression: "editForm.id_contable"
+                              }
+                            },
+                            _vm._l(_vm.contGroups, function(item) {
+                              return _c("el-option", {
+                                key: "group_contable_key_" + item.con_cod,
+                                attrs: {
+                                  label: _vm.optionsLabelDestiny(
+                                    item.con_cod,
+                                    item.con_des
+                                  ),
+                                  value: item.con_cod
+                                }
+                              })
+                            }),
+                            1
+                          )
                         ],
                         1
                       ),
@@ -85408,7 +85778,11 @@ var render = function() {
                         },
                         [
                           _c("el-input", {
-                            attrs: { type: "textarea" },
+                            attrs: {
+                              type: "textarea",
+                              rows: "5",
+                              "max-rows": "8"
+                            },
                             model: {
                               value: _vm.editForm.des_det,
                               callback: function($$v) {
@@ -85430,9 +85804,14 @@ var render = function() {
               _c(
                 "el-form-item",
                 [
-                  _c("el-button", { attrs: { type: "primary" } }, [
-                    _vm._v("Aceptar")
-                  ]),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.saveAsset }
+                    },
+                    [_vm._v("Aceptar")]
+                  ),
                   _vm._v(" "),
                   _c("el-button", [_vm._v("Cancelar")])
                 ],
@@ -104376,8 +104755,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan-master\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan-master\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\Activos_roteSW\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\Activos_roteSW\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

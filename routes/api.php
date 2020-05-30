@@ -30,11 +30,14 @@ Route::group([
     Route::post('logout', 'GeneralController@logoutUser');
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     Route::post('years', 'GeneralController@registerUserYears');
-    Route::get('DeliveryDocuments','DeliveryDocumentsController@getListDeliveryDocument');
-    Route::post('editDocument','DeliveryDocumentsController@getDocumentsByInCharge');
     //Route::post('token', 'GeneralController@checkTokenUser');
-    
-// *** - rutas para crear, editar, mostrar, buscar e imprimir a una persona - ***
+
+    // *** - rutas para crear, editar, mostrar, buscar e imprimir a DeliveryDocuments - ***
+    Route::get('delivery_documents/{gestion}','DeliveryDocumentsController@getListDeliveryDocument');
+    Route::post('delivery_documents/edit','DeliveryDocumentsController@getDocumentsByInCharge');
+    Route::post('delivery_documents/store','DeliveryDocumentsController@storeActivo');
+
+    // *** - rutas para crear, editar, mostrar, buscar e imprimir a una persona - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');
     Route::get('person/add','GeneralController@addPerson');
     Route::post('person','GeneralController@storePerson');    
