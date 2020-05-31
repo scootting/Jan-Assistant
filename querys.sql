@@ -120,3 +120,90 @@ COST 100;
 
 ALTER FUNCTION public.ff_editar_persona (p_personal varchar, p_paterno varchar, p_materno varchar, p_nombres varchar, p_sexo char, p_nacimiento varchar)
   OWNER TO postgres;
+
+/*
+ *** - funcion para mostrar la Partida - ***
+*/
+CREATE OR REPLACE FUNCTION act.ff_obtener_partida (
+  p_gestion integer
+)
+RETURNS SETOF act.tt_partida AS
+$body$
+DECLARE
+  Datos RECORD;
+BEGIN
+   FOR Datos IN select pa.par_cod,
+   
+   					   pa.par_des
+                       
+   from act.partida pa
+   		where  pa.gestion = p_gestion 
+         LOOP
+        RETURN NEXT Datos;
+    END LOOP;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100 ROWS 1000;
+
+ALTER FUNCTION act.ff_obtener_partida (p_gestion integer)
+  OWNER TO postgres;
+
+/*
+ *** - funcion para guardar activo desde editar - ***
+*/
+  CREATE OR REPLACE FUNCTION act.ff_guardar_activo (
+  p_cantidad varchar,
+  p_descripcion text,
+  p_des_det text,
+  p_uni_med varchar,
+  p_id_partida varchar,
+  p_id_contable varchar,
+  p_vida_util varchar,
+  p_pre_uni varchar,
+  p_nro_fac varchar,
+  p_id varchar
+)
+RETURNS varchar AS
+$body$
+DECLARE
+  Datos RECORD;
+BEGIN
+    IF 
+       p_cantidad = '' OR
+       p_descripcion = '' OR
+       p_des_det = '' OR
+       p_uni_med = '' OR
+       p_id_partida = '' OR
+       p_id_contable = '' OR
+       p_vida_util = '' OR
+       p_pre_uni = '' OR
+       p_nro_fac = '' OR
+       p_id = '' THEN
+       RAISE EXCEPTION 'Los campos obligatorios no pueden ser nulo.';
+    END IF;
+    UPDATE act.asignaciones_detalles
+       SET cantidad = p_cantidad::integer,
+           descripcion = p_descripcion,
+           des_det = p_des_det,
+           uni_med = p_uni_med,
+           id_partida = p_id_partida,
+           id_contable = p_id_contable,
+           vida_util = p_vida_util::integer,
+           pre_uni = p_pre_uni::numeric,
+           nro_fac = p_nro_fac
+     WHERE id = p_id::integer;                          
+    RETURN 'Msg: Los datos de [' || p_id || '] fueron actualizados';  
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100;
+
+ALTER FUNCTION act.ff_guardar_activo (p_cantidad varchar, p_descripcion text, p_des_det text, p_uni_med varchar, p_id_partida varchar, p_id_contable varchar, p_vida_util varchar, p_pre_uni varchar, p_nro_fac varchar, p_id varchar)
+  OWNER TO postgres;
