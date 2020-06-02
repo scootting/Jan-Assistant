@@ -207,3 +207,39 @@ COST 100;
 
 ALTER FUNCTION act.ff_guardar_activo (p_cantidad varchar, p_descripcion text, p_des_det text, p_uni_med varchar, p_id_partida varchar, p_id_contable varchar, p_vida_util varchar, p_pre_uni varchar, p_nro_fac varchar, p_id varchar)
   OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION act.ff_desc_encargado (
+  p_gestion integer
+)
+RETURNS SETOF act.t_desc_encargado AS
+$body$
+DECLARE
+    Datos RECORD;
+BEGIN
+    ---lista de asignaciones
+    FOR Datos IN select 	
+    				a.nro_doc::varchar(10) ,
+                    a.fecha::date , 
+                    a.responsable::varchar (55) , 
+                    of.ofc_des::varchar (80)
+			 	from act.asignaciones a , act.oficina of
+			 	where a.id_ofc = of.id_oficina and a.tip_doc = 1
+                and a.gestion = p_gestion
+                LOOP
+        	RETURN NEXT Datos;
+      	END LOOP;
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+RETURNS NULL ON NULL INPUT
+SECURITY INVOKER
+COST 100 ROWS 1000;
+
+ALTER FUNCTION act.ff_desc_encargado (p_gestion integer)
+  OWNER TO postgres;
+
+
+-----------------fin
+

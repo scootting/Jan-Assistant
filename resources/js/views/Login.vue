@@ -146,12 +146,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .version {
+}
+.footer .version{
     font-family: "Open Sans";
     padding: 0 10px;
     color: #9fb3c8;
-    font-size: 12px;
+    font-size: 15px;
     margin-top: 5px;
-  }
+
 }
 </style>

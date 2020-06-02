@@ -17,12 +17,12 @@ body {
   font-family: "Roboto Slab", serif;
   font-family: 'Chelsea Market', cursive;
   */
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  background: #e5e5e7;
   background: #d8ebb5;
   background: #faf5e4;
   background: #263f44;
   background: #f0ab00;
-  background: #e5e5e7;
   background: #162530;
   background: #2c3e50;
   /*#015668; */
@@ -35,7 +35,7 @@ body {
   font-family: "Roboto Slab", serif;
   font-family: 'Chelsea Market', cursive;
   */
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;

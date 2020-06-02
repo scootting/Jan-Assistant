@@ -4294,6 +4294,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    //created vs mounted
     var app = this;
     axios.post("/api/delivery_documents/edit", {
       nro_doc: this.$store.state.encargado.nro_doc,
@@ -4348,7 +4349,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/delivery_documents/store", this.editForm).then(function (response) {
         //console.log(response.data);
         app.cleanEditForm();
-        app.formEdit = false;
+        app.formEdit = false; // para yessica : app.activo[atrib[i]]= this.editForm[atrib[i]];
 
         _this2.$notify.success({
           title: "Guardado",
@@ -4713,33 +4714,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -4752,6 +4726,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    initLogin: function initLogin() {
+      this.$router.push({
+        name: "login"
+      });
     }
   }
 });
@@ -4792,6 +4771,53 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       user: this.$store.state.user,
+      messages: {},
+      data: {}
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    test: function test() {
+      alert("bienvenido al modulo");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Layout.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Bienvenido",
+  data: function data() {
+    return {
       messages: {},
       data: {}
     };
@@ -5227,10 +5253,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -7135,7 +7157,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700);", ""]);
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: 'Ubuntu', sans-serif;\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #f0ab00;\r\n  background: #e5e5e7;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: 'Ubuntu', sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  background: #e5e5e7;\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #f0ab00;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/\r\n", ""]);
 
 // exports
 
@@ -7192,7 +7214,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Roboto+Condensed\");\r\n  font-family: 'Chelsea Market', cursive !important;\r\n  font-weight: 400 !important;\r\n  font-family: 'Chelsea Market', cursive !important;\r\n */\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\n}\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  /*\r\n  font-family: 'Open Sans Condensed', sans-serif !important;\r\n  font-family: 'Open Sans Condensed', sans-serif !important;\r\n  */\r\n  color: #333;\n}\n.el-header[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #eeeeee;\r\n  color: #333;\r\n  text-align: center;\r\n  line-height: 20;\n}\n.version[data-v-63cd6604]{\r\n    line-height: 5 !important;\r\n    background: #123234 !important;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #111111;\r\n  color: #858585;\r\n  text-align: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-63cd6604] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-63cd6604] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-63cd6604] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-63cd6604] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-63cd6604] {\r\n  border-radius: 4px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-63cd6604] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Roboto+Condensed\");\r\n  font-family: 'Chelsea Market', cursive !important;\r\n  font-weight: 400 !important;\r\n  font-family: 'Chelsea Market', cursive !important;\r\n */\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\n}\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #333;\n}\n.el-header[data-v-63cd6604] {\r\n  background-color: #eeeeee;\r\n  background: #ffffff;\r\n  color: #333;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 10px;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #111111;\r\n  color: #858585;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604]{\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604]{\r\n  font-size: 15px;\n}\r\n", ""]);
 
 // exports
 
@@ -7211,7 +7233,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.login .el-card[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\n}\n.clearfix[data-v-12f5395a]:before,\r\n.clearfix[data-v-12f5395a]:after {\r\n  display: table;\r\n  content: \"\";\n}\n.clearfix[data-v-12f5395a]:after {\r\n  clear: both;\n}\r\n/*estilo aprobado para su uso*/\n.login-button[data-v-12f5395a] {\r\n  width: 100%;\r\n  margin-top: 20px;\n}\n.header[data-v-12f5395a],\r\n.footer[data-v-12f5395a] {\r\n  padding: 20px 20px;\r\n  color: #f0f4f8;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\n.version {\r\n    font-family: \"Open Sans\";\r\n    padding: 0 10px;\r\n    color: #9fb3c8;\r\n    font-size: 12px;\r\n    margin-top: 5px;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.login .el-card[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\n}\n.clearfix[data-v-12f5395a]:before,\r\n.clearfix[data-v-12f5395a]:after {\r\n  display: table;\r\n  content: \"\";\n}\n.clearfix[data-v-12f5395a]:after {\r\n  clear: both;\n}\r\n/*estilo aprobado para su uso*/\n.login-button[data-v-12f5395a] {\r\n  width: 100%;\r\n  margin-top: 20px;\n}\n.header[data-v-12f5395a],\r\n.footer[data-v-12f5395a] {\r\n  padding: 20px 20px;\r\n  color: #f0f4f8;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.footer .version[data-v-12f5395a]{\r\n    font-family: \"Open Sans\";\r\n    padding: 0 10px;\r\n    color: #9fb3c8;\r\n    font-size: 15px;\r\n    margin-top: 5px;\n}\r\n", ""]);
 
 // exports
 
@@ -86237,24 +86259,18 @@ var render = function() {
           _c(
             "el-header",
             [
-              _c("el-button", [_vm._v("Default")]),
+              _c("span", [
+                _vm._v("sistema de informacion administrativa y financiera")
+              ]),
               _vm._v(" "),
               _c(
                 "el-button",
-                { staticClass: "version", attrs: { size: "medium" } },
-                [_vm._v("Medium")]
-              ),
-              _vm._v(" "),
-              _c("el-button", { attrs: { size: "small" } }, [_vm._v("Small")]),
-              _vm._v(" "),
-              _c("el-button", { attrs: { size: "mini" } }, [_vm._v("Mini")]),
-              _vm._v(" "),
-              _c("el-button", { attrs: { type: "text" } }, [
-                _vm._v("Text Button")
-              ]),
-              _vm._v(" "),
-              _c("el-tag", [_vm._v("Tag 1")]),
-              _vm._v("header\n    ")
+                {
+                  attrs: { type: "text", icon: "el-icon-s-platform" },
+                  on: { click: _vm.initLogin }
+                },
+                [_vm._v("acceso al sistema")]
+              )
             ],
             1
           ),
@@ -86274,41 +86290,8 @@ var render = function() {
                         [
                           _c(
                             "el-col",
-                            { attrs: { span: 24 } },
-                            [
-                              _c(
-                                "el-card",
-                                { staticClass: "box-card" },
-                                [
-                                  _c("h1", [_vm._v("Hello, world!")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                  This is a template for a simple\n                  marketing or informational website. It\n                  includes a large callout called a\n                  jumbotron and three supporting pieces of\n                  content. Use it as a starting point to\n                  create something more unique.\n                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-button",
-                                    { attrs: { size: "mini", plain: "" } },
-                                    [_vm._v("Default")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-button",
-                                    {
-                                      attrs: {
-                                        type: "primary",
-                                        size: "mini",
-                                        plain: ""
-                                      }
-                                    },
-                                    [_vm._v("Primary")]
-                                  )
-                                ],
-                                1
-                              )
-                            ],
+                            { attrs: { offset: 4, span: 16 } },
+                            [_c("router-view")],
                             1
                           )
                         ],
@@ -86321,50 +86304,26 @@ var render = function() {
                         [
                           _c(
                             "el-col",
-                            { attrs: { span: 8 } },
-                            [
-                              _c("el-card", { staticClass: "box-card" }, [
-                                _c("h5", [_vm._v("Heading")]),
-                                _vm._v(" "),
-                                _c("p", [
-                                  _vm._v(
-                                    "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
-                                  )
-                                ])
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-col",
-                            { attrs: { span: 8 } },
+                            { attrs: { offset: 4, span: 4 } },
                             [
                               _c(
                                 "el-card",
-                                { staticClass: "box-card" },
                                 [
-                                  _c("h5", [_vm._v("Heading")]),
+                                  _c("el-button", {
+                                    attrs: {
+                                      type: "text",
+                                      icon: "el-icon-message",
+                                      circle: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("h4", [_vm._v("facilito")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
                                       "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
                                     )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("el-button", {
-                                    attrs: {
-                                      type: "primary",
-                                      icon: "el-icon-edit"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("el-button", {
-                                    attrs: {
-                                      type: "primary",
-                                      icon: "el-icon-share"
-                                    }
-                                  })
+                                  ])
                                 ],
                                 1
                               )
@@ -86374,39 +86333,90 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "el-col",
-                            { attrs: { span: 8 } },
+                            { attrs: { span: 4 } },
                             [
-                              _c("el-card", { staticClass: "box-card" }, [
-                                _c("h5", [_vm._v("Heading")]),
-                                _vm._v(" "),
-                                _c("p", [
-                                  _vm._v(
-                                    "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
-                                  )
-                                ])
-                              ])
+                              _c(
+                                "el-card",
+                                [
+                                  _c("el-button", {
+                                    attrs: {
+                                      type: "text",
+                                      icon: "el-icon-edit",
+                                      circle: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("h4", [_vm._v("funcion 1")]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-col",
+                            { attrs: { span: 4 } },
+                            [
+                              _c(
+                                "el-card",
+                                [
+                                  _c("el-button", {
+                                    attrs: {
+                                      type: "text",
+                                      icon: "el-icon-check",
+                                      circle: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("h4", [_vm._v("funcion 2")]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-col",
+                            { attrs: { span: 4 } },
+                            [
+                              _c(
+                                "el-card",
+                                [
+                                  _c("el-button", {
+                                    attrs: {
+                                      type: "text",
+                                      icon: "el-icon-delete",
+                                      circle: ""
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("h4", [_vm._v("funcion 3")]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "\n                  Donec id elit non mi porta gravida at\n                  eget metus. Fusce dapibus, tellus ac\n                  cursus commodo, tortor mauris\n                  condimentum nibh, ut fermentum massa\n                  justo sit amet risus. Etiam porta sem\n                  malesuada magna mollis euismod. Donec\n                  sed odio dui.\n                "
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-row",
-                        { attrs: { gutter: 20 } },
-                        [
-                          _c("el-col", { attrs: { span: 4 } }, [
-                            _c("div", { staticClass: "grid-content bg-purple" })
-                          ]),
-                          _vm._v(" "),
-                          _c("el-col", { attrs: { span: 16 } }, [
-                            _c("div", { staticClass: "grid-content bg-purple" })
-                          ]),
-                          _vm._v(" "),
-                          _c("el-col", { attrs: { span: 4 } }, [
-                            _c("div", { staticClass: "grid-content bg-purple" })
-                          ])
                         ],
                         1
                       )
@@ -86565,6 +86575,67 @@ var render = function() {
           _c("p", [_vm._v(_vm._s(_vm.user.gestion))])
         ])
       ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
+          _c("h1", [_vm._v("Hello, world!")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "\n      This is a template for a simple\n      marketing or informational website. It\n      includes a large callout called a\n      jumbotron and three supporting pieces of\n      content. Use it as a starting point to\n      create something more unique.\n    "
+            )
+          ]),
+          _vm._v(" "),
+          _c("el-button", { attrs: { size: "mini", plain: "" } }, [
+            _vm._v("Default")
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary", size: "mini", plain: "" } },
+            [_vm._v("Primary")]
+          ),
+          _vm._v(" "),
+          _c("el-button", {
+            attrs: { type: "primary", icon: "el-icon-edit", size: "mini" }
+          }),
+          _vm._v(" "),
+          _c("el-button", {
+            attrs: { type: "primary", icon: "el-icon-share", size: "mini" }
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -87158,9 +87229,7 @@ var render = function() {
         _c("h1", [_vm._v("bienvenido/a")]),
         _vm._v(" "),
         _c("h5", [
-          _vm._v(
-            "\n            esta pagina a sido intencionalmente puesta en blanco\n        "
-          )
+          _vm._v("esta pagina a sido intencionalmente puesta en blanco")
         ])
       ])
     ],
@@ -103511,9 +103580,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
 /* harmony import */ var _views_Inventory__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/Inventory */ "./resources/js/views/Inventory.vue");
 /* harmony import */ var _views_EditDeliveryDocument__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/EditDeliveryDocument */ "./resources/js/views/EditDeliveryDocument.vue");
+/* harmony import */ var _views_Layout__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/Layout */ "./resources/js/views/Layout.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Pages
+
 
 
 
@@ -103536,7 +103607,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
     name: 'home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_13__["default"],
+    children: [{
+      path: '',
+      name: 'layout',
+      component: _views_Layout__WEBPACK_IMPORTED_MODULE_16__["default"]
+    }]
   }, {
     path: '/login',
     name: 'login',
@@ -103554,7 +103630,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'dashboard',
     component: _views_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"],
     children: [// UserHome will be rendered inside User's <router-view>
-    // when /user/:id is matched
+    // when /user/:id is matched0
     {
       path: '',
       name: 'welcome',
@@ -104431,6 +104507,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/Layout.vue":
+/*!***************************************!*\
+  !*** ./resources/js/views/Layout.vue ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Layout.vue?vue&type=template&id=6a4bdfee&scoped=true& */ "./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true&");
+/* harmony import */ var _Layout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Layout.vue?vue&type=script&lang=js& */ "./resources/js/views/Layout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Layout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6a4bdfee",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/Layout.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/Layout.vue?vue&type=script&lang=js&":
+/*!****************************************************************!*\
+  !*** ./resources/js/views/Layout.vue?vue&type=script&lang=js& ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Layout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Layout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Layout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Layout.vue?vue&type=template&id=6a4bdfee&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=template&id=6a4bdfee&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Layout_vue_vue_type_template_id_6a4bdfee_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/views/Login.vue":
 /*!**************************************!*\
   !*** ./resources/js/views/Login.vue ***!
@@ -104881,8 +105026,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\PERSONAL\Documents\Activos_roteSW\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\Activos_roteSW\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan-master\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan-master\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -17,7 +17,7 @@ import DeliveryDocuments from './views/DeliveryDocuments'
 import Home from './views/Home'
 import Inventory from './views/Inventory'
 import EditDeliveryDocument from './views/EditDeliveryDocument'
-
+import Layout from './views/Layout'
 // Routes
 const router = new VueRouter({
     mode: 'history',
@@ -27,6 +27,9 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home,
+            children:[
+                { path: '', name: 'layout', component: Layout },
+            ],
         },
         {
             path: '/login',
@@ -47,7 +50,7 @@ const router = new VueRouter({
             component: Dashboard,
             children: [
                 // UserHome will be rendered inside User's <router-view>
-                // when /user/:id is matched
+                // when /user/:id is matched0
             { path: '', name: 'welcome', component: Welcome },
             { path: 'assets', name: 'assets', component: Assets },
             { path: 'deliverydocuments', name: 'deliverydocuments', component: DeliveryDocuments }, //deliverydocument

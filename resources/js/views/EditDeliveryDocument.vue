@@ -226,7 +226,7 @@ export default {
       this.$store.state.encargado
     );
   },
-  created() {
+  created() {  //created vs mounted
     var app = this;
     axios
       .post("/api/delivery_documents/edit", {
@@ -275,13 +275,14 @@ export default {
       for (let i = 0; i < atrib.length; i++) this.editForm[atrib[i]] = "";
     },
     saveAsset() {
-      var app = this
+      var app = this;
       axios
         .post("/api/delivery_documents/store", this.editForm)
         .then(response => {
           //console.log(response.data);
           app.cleanEditForm();
-          app.formEdit= false;
+          app.formEdit = false;
+          // para yessica : app.activo[atrib[i]]= this.editForm[atrib[i]];
           this.$notify.success({
             title: "Guardado",
             message: response.data[0]
