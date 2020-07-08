@@ -18,6 +18,7 @@ import Home from './views/Home'
 import Inventory from './views/Inventory'
 import EditDeliveryDocument from './views/EditDeliveryDocument'
 import Layout from './views/Layout'
+import Formalities from './views/Formalities'
 // Routes
 const router = new VueRouter({
     mode: 'history',
@@ -29,6 +30,7 @@ const router = new VueRouter({
             component: Home,
             children:[
                 { path: '', name: 'layout', component: Layout },
+                { path: '/formalities', name: 'formalities', component: Formalities },
             ],
         },
         {

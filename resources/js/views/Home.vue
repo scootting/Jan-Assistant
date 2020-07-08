@@ -40,8 +40,8 @@
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-edit" circle></el-button>
-                  <h4>funcion 1</h4>
+                  <el-button type="text" icon="el-icon-edit" circle @click.native="initToFormalities"></el-button>
+                  <h4>tramites</h4>
                   <p>
                     Donec id elit non mi porta gravida at
                     eget metus. Fusce dapibus, tellus ac
@@ -155,6 +155,9 @@ export default {
     },
     initLogin() {
       this.$router.push({ name: "login" });
+    },
+    initToFormalities(){
+      this.$router.push({ name: "formalities" });
     }
   }
 };
