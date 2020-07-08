@@ -1,5 +1,7 @@
 <?php
 
+use App\DeliveryDocuments;
+use App\Http\Controllers\DeliveryDocumentsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +35,32 @@ Route::group([
     //Route::post('token', 'GeneralController@checkTokenUser');
 
     // *** - rutas para crear, editar, mostrar, buscar e imprimir a DeliveryDocuments - ***
-    Route::get('delivery_documents/{gestion}','DeliveryDocumentsController@getListDeliveryDocument');
-    Route::post('delivery_documents/edit','DeliveryDocumentsController@getDocumentsByInCharge');
-    Route::post('delivery_documents/store','DeliveryDocumentsController@storeActivo');
+    Route::get('deliveryDocuments/responsable/{responsable}','DeliveryDocumentsController@searchResponsable' );
+    Route::get('deliveryDocuments/cargos/{responsable}','DeliveryDocumentsController@loadCargos' );
+    Route::get('deliveryDocuments/{gestion}','DeliveryDocumentsController@getListDeliveryDocument');
+    Route::post('deliveryDocuments/edit','DeliveryDocumentsController@getDocumentsByInCharge');
+    Route::get('deliveryDocuments/getRecursos/{gestion}','DeliveryDocumentsController@getListRecursos'); 
+    Route::post('deliveryDocuments/store','DeliveryDocumentsController@updateStore');
+    Route::post('deliveryDocuments/encargado/add','DeliveryDocumentsController@storeEncargado');
+    Route::post('deliveryDocuments/asset/add','DeliveryDocumentsController@storeAsset');
+    
+    
+    
+    // *** - rutas para crear, editar, mostrar, buscar e imprimir a DonationDocuments - ***
+    Route::get('donationDocuments/{gestion}','DonationDocumentsController@getListDonationDocument');
+    Route::post('donationDocuments/edit','DonationDocumentsController@getDonationDocumentsByInCharge');
+    Route::post('donationDocuments/store','DonationDocumentsController@updateStore');
+    Route::get('donationDocuments/getRecursos/{gestion}','DonationDocumentsController@getListRecursos');
+    Route::post('donationDocuments/encargado/add','DonationDocumentsController@storeEncargado');
+    Route::post('donationDocuments/asset/add','DonationDocumentsController@storeAsset');
+
+    // *** - rutas para crear, editar, mostrar, buscar e imprimir a CarpentryDocuments - ***
+    Route::get('carpentryDocuments/{gestion}','CarpentryDocumentsController@getListCarpentryDocument');
+    Route::post('carpentryDocuments/edit','CarpentryDocumentsController@getCarpentryDocumentsByInCharge');
+    Route::post('carpentryDocuments/store','CarpentryDocumentsController@updateStore');
+    Route::get('carpentryDocuments/getRecursos/{gestion}','CarpentryDocumentsController@getListRecursos');
+    Route::post('carpentryDocuments/encargado/add','CarpentryDocumentsController@storeEncargado');
+    Route::post('carpentryDocuments/asset/add','CarpentryDocumentsController@storeAsset');
 
     // *** - rutas para crear, editar, mostrar, buscar e imprimir a una persona - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');

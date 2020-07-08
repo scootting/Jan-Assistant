@@ -14,9 +14,16 @@ import AddPerson from './views/AddPerson'
 import EditPerson from './views/EditPerson'
 import Welcome from './views/Welcome'
 import DeliveryDocuments from './views/DeliveryDocuments'
+import EditDeliveryDocument from './views/EditDeliveryDocument'
+import AddDeliveryDocument from './views/AddDeliveryDocument'
 import Home from './views/Home'
 import Inventory from './views/Inventory'
-import EditDeliveryDocument from './views/EditDeliveryDocument'
+import DonationDocuments from './views/DonationDocuments'
+import EditDonationDocument from './views/EditDonationDocument'
+import AddDonationDocument from './views/AddDonationDocument'
+import CarpentryDocuments from './views/CarpentryDocuments'
+import EditCarpentryDocument from './views/EditCarpentryDocument'
+import AddCarpentryDocument from './views/AddCarpentryDocument'
 import Layout from './views/Layout'
 import Formalities from './views/Formalities'
 // Routes
@@ -55,7 +62,9 @@ const router = new VueRouter({
                 // when /user/:id is matched0
             { path: '', name: 'welcome', component: Welcome },
             { path: 'assets', name: 'assets', component: Assets },
-            { path: 'deliverydocuments', name: 'deliverydocuments', component: DeliveryDocuments }, //deliverydocument
+            { path: 'deliverydocuments', name: 'deliverydocuments', component: DeliveryDocuments }, //aqui inicia compra
+            { path: 'editdeliverydocument', name: 'editdeliverydocument', component: EditDeliveryDocument},
+            { path: 'deliverydocument/add', name: 'adddeliverydocument', component: AddDeliveryDocument},
             { path: 'users', name: 'users', component: Users },
             { path: 'persons', name: 'persons', component: Persons },
             { path: 'person/add', name: 'addperson', component: AddPerson },
@@ -63,8 +72,13 @@ const router = new VueRouter({
             { path: 'person/show/:id', name: 'editperson', component: EditPerson },
             { path: 'welcome', name: 'welcome', component: Welcome },
             { path: 'inventory', name: 'inventory', component: Inventory },
-            { path: 'editdeliverydocument', name: 'editdeliverydocument', component: EditDeliveryDocument}
-             ],           
+            { path: 'donationdocuments', name: 'donationdocuments', component: DonationDocuments }, //Aqui inicia donacion
+            { path: 'editdonationdocument', name: 'editdonationdocument', component: EditDonationDocument},
+            { path: 'donationdocument/add', name: 'adddonationdocument', component: AddDonationDocument},
+            { path: 'carpentrydocuments', name: 'carpentrydocuments', component: CarpentryDocuments },
+            { path: 'editcarpentrydocument', name: 'editcarpentrydocument', component: EditCarpentryDocument},
+            { path: 'carpentrydocument/add', name: 'addcarpentrydocument', component: AddCarpentryDocument}
+        ],           
             meta: {
                 requiresAuth: true,
             }

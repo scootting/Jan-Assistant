@@ -16,7 +16,10 @@ Vue.use(ElementUI, { locale });
 
 //Vue.use(ElTablePagination);
 import ElSearchTablePagination from 'el-search-table-pagination';
-Vue.use(ElSearchTablePagination)
+Vue.use(ElSearchTablePagination);
+//PDF
+import pdf from 'vue-pdf';
+Vue.use(pdf);
 
 
 

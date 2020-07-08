@@ -21,17 +21,40 @@ class DeliveryDocumentsController extends Controller
     {
         $result['listActivos'] = DeliveryDocuments::editActivo($request->nro_doc);
         $result['encargado'] = DeliveryDocuments::getInfoEncargado($request->nro_doc);
-        $result['destinos'] = DeliveryDocuments::getDestiny();
-        $result['partidas'] = DeliveryDocuments::getPartidas($request->gestion);
-        $result['gruposC'] = DeliveryDocuments::getContablesGroups();
-        $result['unidMeds'] = DeliveryDocuments::getUni_meds();
         //dd($result);
         return json_encode($result);
     }
-    public function storeActivo(Request $request)
+    public function getListRecursos($gestion)
     {
-        //dd($request);
-        $data = DeliveryDocuments::saveAsset($request->cantidad, $request->descripcion, $request->des_det, $request->uni_med, $request->id_partida, $request->id_contable, $request->vida_util, $request->pre_uni, $request->nro_fac, $request->id);
-        return json_decode($data);
+        $result['destinos'] = DeliveryDocuments::getDestiny();
+        $result['partidas'] = DeliveryDocuments::getPartidas($gestion);
+        $result['gruposC'] = DeliveryDocuments::getContablesGroups();
+        $result['unidMeds'] = DeliveryDocuments::getUni_meds();
+        return json_encode($result);
+    }
+    public function updateStore(Request $request)
+    {
+        $data = DeliveryDocuments::updateAsset($request->cantidad, $request->descripcion, $request->des_det, $request->uni_med, $request->id_partida, $request->id_contable, $request->vida_util, $request->pre_uni, $request->nro_fac, $request->id);
+        return json_encode($data);
+    }
+
+    public function storeEncargado(Request $request){
+        $datos=$request->data;
+        $data = DeliveryDocuments::addEncargado($datos['fecha_doc'], $datos['estado'], $datos['a'], $datos['responsable'],$datos['cargores'], $datos['gestion']);
+        return json_encode($data);
+    }
+    public function storeAsset (Request $request)
+    {
+        //$data = DeliveryDocuments::addAsset($request->cantidad, $request->descripcion, $request->des_det, $request->uni_med, $request->id_partida, $request->id_contable, $request->vida_util, $request->pre_uni, $request->nro_fac, $request->id);
+        
+        return json_encode(['msn'=>'guardado del nuevo activo']);
+    }
+    public function searchResponsable ($keyword){
+        $data = DeliveryDocuments::searchResponsable($keyword);
+        return json_encode($data);
+    }
+    public function loadCargos ($responsable){
+        $data = DeliveryDocuments::loadCargos($responsable);
+        return json_encode($data);
     }
 }

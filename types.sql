@@ -38,4 +38,45 @@ CREATE TYPE act.tt_partida AS (
 ALTER TYPE act.tt_partida
   OWNER TO postgres;
 
+<<<<<<< HEAD
+/*
+ *** - Tipo para las funciones de lista de biblioteca - ***
+*/ 
+CREATE TYPE act.t_desc_biblioteca AS (
+  nro_doc VARCHAR(10),
+  fecha_doc DATE,
+  responsable VARCHAR(55),
+  ofc_des VARCHAR(80)
+);
+
+ALTER TYPE act.t_desc_biblioteca
+  OWNER TO postgres;
+
+/*
+ *** - Tipo para las funciones de lista de carpinteria - ***
+*/ 
+
+CREATE TYPE act.t_desc_carpinteria AS (
+  nro_doc VARCHAR(10),
+  fecha_doc DATE,
+  responsable VARCHAR(55),
+  ofc_des VARCHAR(80)
+);
+
+ALTER TYPE act.t_desc_carpinteria
+  OWNER TO postgres;
+/*
+ *** - Tipo para las funciones de lista de donacion - ***
+*/ 
+CREATE TYPE act.t_desc_donacion AS (
+  nro_doc VARCHAR(10),
+  fecha_doc DATE,
+  responsable VARCHAR(55),
+  ofc_des VARCHAR(80)
+);
+
+ALTER TYPE act.t_desc_donacion
+  OWNER TO postgres;
+=======
   ----fin
+>>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8

@@ -79,7 +79,33 @@ Vue is a progressive framework for building user interfaces.
 - Add to functions to GeneralController for add, edit and get to datatable public.personas.
 - Add to routes into frontend and the backend for relationship views and controller and model General.
 
-
+1.8.2
+- Create controlles DonationDocumentsController.
+- create model DonationDocuments.
+- Create EditDonationDocument. 
+- Create routes in API and js/router.js.
+- Retrieve information from donationdocuments.
+- Add new functions editActivo and getInfoEncargado in the model DonationDocuments.
+- Use to component el-form, el-row, el-col and el-form-item to design the form.
+- Use to component el-dialog for the asset form into View EdirDeliveryDocument.
+1.8.3
+- Create controlles LDocumentsController.
+- create model DonationDocuments.
+- Create EditDonationDocument. 
+- Create routes in API and js/router.js.
+- Retrieve information from donationdocuments.
+- Add new functions editActivo and getInfoEncargado in the model DonationDocuments.
+- Use to component el-form, el-row, el-col and el-form-item to design the form.
+- Use to component el-dialog for the asset form into View EdirDeliveryDocument.
+1.8.4
+- Create controlles DonationDocumentsController.
+- create model DonationDocuments.
+- Create EditDonationDocument. 
+- Create routes in API and js/router.js.
+- Retrieve information from donationdocuments.
+- Add new functions editActivo and getInfoEncargado in the model DonationDocuments.
+- Use to component el-form, el-row, el-col and el-form-item to design the form.
+- Use to component el-dialog for the asset form into View EdirDeliveryDocument.
 
 
 ## Contributing
