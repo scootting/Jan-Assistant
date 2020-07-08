@@ -18,19 +18,13 @@ import EditDeliveryDocument from './views/EditDeliveryDocument'
 import AddDeliveryDocument from './views/AddDeliveryDocument'
 import Home from './views/Home'
 import Inventory from './views/Inventory'
-<<<<<<< HEAD
 import DonationDocuments from './views/DonationDocuments'
 import EditDonationDocument from './views/EditDonationDocument'
 import AddDonationDocument from './views/AddDonationDocument'
 import CarpentryDocuments from './views/CarpentryDocuments'
 import EditCarpentryDocument from './views/EditCarpentryDocument'
 import AddCarpentryDocument from './views/AddCarpentryDocument'
-
-
-=======
-import EditDeliveryDocument from './views/EditDeliveryDocument'
 import Layout from './views/Layout'
->>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8
 // Routes
 const router = new VueRouter({
     mode: 'history',
