@@ -55,7 +55,6 @@ export default {
     return {
       
       person: {
-        'marker': 'editar',
       },
 
       rules: {

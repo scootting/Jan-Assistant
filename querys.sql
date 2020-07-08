@@ -209,6 +209,7 @@ ALTER FUNCTION act.ff_guardar_activo (p_cantidad varchar, p_descripcion text, p_
   OWNER TO postgres;
 
 
+<<<<<<< HEAD
 /*
  *** - funcion para la lista de biblioteca- ***
 */
@@ -216,18 +217,32 @@ CREATE OR REPLACE FUNCTION act.ff_desc_biblioteca (
   p_gestion integer
 )
 RETURNS SETOF act.t_desc_biblioteca AS
+=======
+CREATE OR REPLACE FUNCTION act.ff_desc_encargado (
+  p_gestion integer
+)
+RETURNS SETOF act.t_desc_encargado AS
+>>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8
 $body$
 DECLARE
     Datos RECORD;
 BEGIN
+<<<<<<< HEAD
     
+=======
+    ---lista de asignaciones
+>>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8
     FOR Datos IN select 	
     				a.nro_doc::varchar(10) ,
                     a.fecha::date , 
                     a.responsable::varchar (55) , 
                     of.ofc_des::varchar (80)
 			 	from act.asignaciones a , act.oficina of
+<<<<<<< HEAD
 			 	where a.id_ofc = of.id_oficina and a.tip_doc = 6
+=======
+			 	where a.id_ofc = of.id_oficina and a.tip_doc = 1
+>>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8
                 and a.gestion = p_gestion
                 LOOP
         	RETURN NEXT Datos;
@@ -238,6 +253,7 @@ LANGUAGE 'plpgsql'
 VOLATILE
 RETURNS NULL ON NULL INPUT
 SECURITY INVOKER
+<<<<<<< HEAD
 PARALLEL UNSAFE
 COST 100 ROWS 1000;
 
@@ -314,3 +330,13 @@ COST 100 ROWS 1000;
 ALTER FUNCTION act.ff_desc_donacion (p_gestion integer)
   OWNER TO postgres; 
   
+=======
+COST 100 ROWS 1000;
+
+ALTER FUNCTION act.ff_desc_encargado (p_gestion integer)
+  OWNER TO postgres;
+
+
+-----------------fin
+
+>>>>>>> 9221dfb7dd103406b6badcebf7c026398116a2c8

@@ -206,13 +206,14 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 html,
 body {
-  font-family: "Roboto Condensed", sans-serif;
+  /*
+  font-family: "Roboto Condensed", sans-serif;*/
 }
 #app {
-  font-family: "Roboto Condensed", sans-serif;
+  /*
+  font-family: "Roboto Condensed", sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;

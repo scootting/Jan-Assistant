@@ -6,33 +6,45 @@
 <script>
 </script>
 <style>
+/*
+@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');
+*/
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700");
 
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-html, body {
-  font-family: 'Roboto Condensed', sans-serif;
-  /*background: #102a43;*/
+html,
+body {
+  /*
+  font-family: "Roboto Slab", serif;
+  font-family: 'Chelsea Market', cursive;
+  */
+  font-family: "Ubuntu", sans-serif;
+  background: #e5e5e7;
   background: #d8ebb5;
   background: #faf5e4;
   background: #263f44;
-  background: #F0AB00;
-  background: #E5E5E7;
+  background: #f0ab00;
   background: #162530;
   background: #2c3e50;
   /*#015668; */
   margin: 0;
   padding: 0;
-  background-size: contain;  
+  background-size: contain;
 }
 #app {
-  font-family: 'Roboto Condensed', sans-serif;
+  /*
+  font-family: "Roboto Slab", serif;
+  font-family: 'Chelsea Market', cursive;
+  */
+  font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #000;
-
-}  
-button, input, select, textarea
-{
+}
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -63,8 +75,7 @@ axios.interceptors.response.use(function (response) {
 
   return Promise.reject(error);
 });
-*/ 
-
+*/
 </style>
 
 

@@ -233,7 +233,7 @@ export default {
       this.$store.state.encargado
     );
   },
-  created() {
+  created() {  //created vs mounted
     var app = this;
     axios
       .post("/api/deliveryDocuments/edit", {
