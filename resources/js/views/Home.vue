@@ -6,7 +6,7 @@
         <!--
         <el-button type="primary" icon="el-icon-eleme"  @click="initLogin" plain>acceso al sistema</el-button>
         -->
-        <el-button type="text" icon="el-icon-s-platform" @click="initLogin">acceso al sistema</el-button>
+        <el-button @click="initLogin">acceso al sistema</el-button>
       </el-header>
       <el-container>
         <!--
@@ -25,7 +25,7 @@
                   <!--
                   <el-button type="text" icon="el-icon-message" circle plain></el-button>
                   -->
-                  <el-button type="text" icon="el-icon-message" circle></el-button>
+                  <el-button type="text" icon="el-icon-message" circle @click.native="initAddTaxExemption"></el-button>
                   <h4>facilito</h4>
                   <p>
                     Donec id elit non mi porta gravida at
@@ -156,6 +156,9 @@ export default {
     initLogin() {
       this.$router.push({ name: "login" });
     },
+    initAddTaxExemption(){
+      this.$router.push({ name: "addTaxExemption" });
+    },
     initToFormalities(){
       this.$router.push({ name: "formalities" });
     }
@@ -204,7 +207,7 @@ textarea {
 }
 .el-header .el-button {
   line-height: 5px;
-  margin-top: 10px;
+  margin-top: 15px;
   float: right;
 }
 

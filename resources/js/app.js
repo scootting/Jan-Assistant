@@ -18,9 +18,11 @@ Vue.use(ElementUI, { locale });
 import ElSearchTablePagination from 'el-search-table-pagination';
 Vue.use(ElSearchTablePagination);
 //PDF
+
+/*
 import pdf from 'vue-pdf';
 Vue.use(pdf);
-
+*/
 
 
 router.beforeEach((to, from, next) => {
@@ -57,6 +59,7 @@ axios.interceptors.response.use(
         return response;
     },
     function(error) {
+
         // handle error
         if (error.response) {
             //alert(error.response.status);

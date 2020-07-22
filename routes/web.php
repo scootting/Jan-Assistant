@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 
 //  * Ruta añadida para redireccionar a la misma pagina.    
-Route::get('personita/{id}','GeneralController@getPersonById');    
+Route::get('personita/{id}','GeneralController@getPersonById');  
+
+
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
+
+Route::get('files', 'FileController@index');
+Route::post('upload', 'FileController@uploadFile');
+Route::get('delete/upload-folder/{file}', 'FileController@deleteFile');
+Route::get('download/upload-folder/{file}', 'FileController@downloadFile');
 
 /*
 // *** - Comentado por Lionel - ***

@@ -26,6 +26,10 @@ import EditCarpentryDocument from './views/EditCarpentryDocument'
 import AddCarpentryDocument from './views/AddCarpentryDocument'
 import Layout from './views/Layout'
 import Formalities from './views/Formalities'
+
+//clients
+import AddTaxExemption from './views/clients/AddTaxExemption'
+
 // Routes
 const router = new VueRouter({
     mode: 'history',
@@ -38,6 +42,7 @@ const router = new VueRouter({
             children:[
                 { path: '', name: 'layout', component: Layout },
                 { path: '/formalities', name: 'formalities', component: Formalities },
+                { path: '/taxExemption', name: 'addTaxExemption', component: AddTaxExemption },
             ],
         },
         {
@@ -69,8 +74,8 @@ const router = new VueRouter({
             { path: 'persons', name: 'persons', component: Persons },
             { path: 'person/add', name: 'addperson', component: AddPerson },
             { path: 'person/:id', name: 'editperson', component: EditPerson },
-            { path: 'person/show/:id', name: 'editperson', component: EditPerson },
-            { path: 'welcome', name: 'welcome', component: Welcome },
+            //{ path: 'person/show/:id', name: 'editperson', component: EditPerson },
+            //{ path: 'welcome', name: 'welcome', component: Welcome },
             { path: 'inventory', name: 'inventory', component: Inventory },
             { path: 'donationdocuments', name: 'donationdocuments', component: DonationDocuments }, //Aqui inicia donacion
             { path: 'editdonationdocument', name: 'editdonationdocument', component: EditDonationDocument},
