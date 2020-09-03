@@ -79,9 +79,10 @@ class GeneralController extends Controller
         //\Log::info($data);
         return json_encode($data);
     } 
+
+    //  * Guardas los datos de una persona en el recurso utilizado.
     public function storePerson(Request $request){
         $persona = $request->get('persona');
-        // Input::get('personal');
         $personal = $persona['personal'];
         $nombres = $persona['nombres'];
         $paterno = $persona['paterno'];
@@ -106,4 +107,24 @@ class GeneralController extends Controller
         }
         return json_encode($data);
     }
+
+    //  * Obtener una lista de usuarios de el recurso utilizado.
+    //  * {parametro: tipo de busqueda por atributo, descripcion: descripcion de la busqueda}    
+    public function getUsersByDescription(Request $request){
+        
+        $descripcion = $request->get('descripcion');
+        $data = General::GetUsersByDescription($descripcion);        
+        $page = ($request->get('page')? $request->get('page'): 1);
+        $perPage = 10;
+
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/users')]
+        );
+        return json_encode($paginate);
+    }
+
 }

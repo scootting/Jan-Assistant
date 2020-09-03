@@ -11,24 +11,23 @@ class FileController extends Controller
     }
 
     public function uploadFile( Request $request){
-        \Log::info("Tiempo: ");
-        \Log::info("Hola como estas");
         \Log::info($request);
         $dataSource = $request->get('datasource');
         $arrayData = json_decode($dataSource, true);;    
         \Log::info($arrayData);
-        \Log::info($arrayData['descripcion']);
+        $mes = $arrayData['mes'];
+        $gestion = $arrayData['gestion'];    
 
-        /*
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $file_name = $file->getClientOriginalName();
-            $file->storeAs('upload', $file_name);
+            \Log::info($file_name);
+            $path = 'upload/'.strval($gestion).'/'.strval($mes);
+            $file->storeAs($path, $file_name);
             /* Storage::disk('local')->put($file_name, $file); */
-        /*
         } else {
             return response()->json(['error'=>'File not exist!']);
-        }*/
+        }
         return response()->json(['success'=>'Uploaded Successfully.']);
     }
 
@@ -56,10 +55,14 @@ class FileController extends Controller
         return response()->download($path, $file, $header);
     }
 
-    public function deleteFile($file){
+    public function deleteFile(Request $request, $file){
+        \Log::info("funcion delete");
+
+        \Log::info($request);
         $file_exist = '../storage/app/upload/'.$file;
         if($file_exist){
             @unlink($file_exist);
+
         } else {
             return response()->json(['error'=>'File not exist!']);
         }

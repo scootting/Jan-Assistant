@@ -8,6 +8,7 @@
         :on-remove="handleRemove"
         :headers="{ 'X-CSRF-TOKEN': csrf }"
         :data="{ 'datasource': JSON.stringify(info) }"
+        :show-file-list= "false"
         multiple
       >
         <i class="el-icon-upload"></i>
@@ -35,40 +36,33 @@ export default {
   },
   mounted() {},
   methods: {
-    savePerson() {
-      //alert("hola");
-      event.preventDefault();
-      var app = this;
-      var newPerson = app.person;
-      axios
-        .post("upload", {
-        })
-        .then(function(response) {
-          alert("se ha creado el registro de la persona");
-        })
-        .catch(function(response) {
-          console.log(response);
-          alert("no se puede crear el registro de la persona");
-        });
-    },
     test() {
       alert("bienvenido al modulo");
     },
     /* *** Cuando se eliminar el archivo satisfactoriamente *** */
     handleRemove(file, fileList) {
+      axios.get("delete/upload-folder/" + file).then(res => {
+        this.getFiles();
+      });
+
       console.log(file, fileList);
       this.fileList = FileList;
     },
 
     /* *** Cuando se agrega el archivo satisfactoriamente *** */
     handleSuccessFile(response, file, fileList) {
+      this.$message({
+          message: 'Gracias, acaba de subir el archivo '+file.name+'.',
+          type: 'success'
+        });
       console.log(response,file, fileList);
       this.fileList = fileList;
     },
-
+    /*
     onFileChange(e) {
       this.file = e.target.files[0];
-    },
+    },*/
+    /*
     uploadFile() {
       let formData = new FormData();
       formData.append("file", this.file);
@@ -81,6 +75,7 @@ export default {
           console.log("Error: ", err);
         });
     },
+    */
     deleteFile(file) {
       axios.get("/api/delete/" + file).then(res => {
         this.getFiles();
@@ -99,8 +94,7 @@ export default {
           let link = document.createElement("a");
           link.href = window.URL.createObjectURL(blob);
           link.download = file;
-          link.click();
-        });
+                 });
     }
   }
 };

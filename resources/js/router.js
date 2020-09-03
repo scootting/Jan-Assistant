@@ -8,10 +8,16 @@ import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
 import Assets from './views/FixedAssets'
-import Users from './views/Users'
-import Persons from './views/Persons'
-import AddPerson from './views/AddPerson'
-import EditPerson from './views/EditPerson'
+
+//usuario
+import Users from './views/application/Users'
+import AddUser from './views/application/AddUser'
+import EditUser from './views/application/EditUser'
+//persona
+import Persons from './views/application/Persons'
+import AddPerson from './views/application/AddPerson'
+import EditPerson from './views/application/EditPerson'
+
 import Welcome from './views/Welcome'
 import DeliveryDocuments from './views/DeliveryDocuments'
 import EditDeliveryDocument from './views/EditDeliveryDocument'
@@ -70,7 +76,11 @@ const router = new VueRouter({
             { path: 'deliverydocuments', name: 'deliverydocuments', component: DeliveryDocuments }, //aqui inicia compra
             { path: 'editdeliverydocument', name: 'editdeliverydocument', component: EditDeliveryDocument},
             { path: 'deliverydocument/add', name: 'adddeliverydocument', component: AddDeliveryDocument},
+            // enlaces para administrar los usuarios
             { path: 'users', name: 'users', component: Users },
+            { path: 'user/add', name: 'adduser', component: AddUser },
+            { path: 'user/:id', name: 'edituser', component: EditUser },
+            // enlaces para administrar las personas
             { path: 'persons', name: 'persons', component: Persons },
             { path: 'person/add', name: 'addperson', component: AddPerson },
             { path: 'person/:id', name: 'editperson', component: EditPerson },

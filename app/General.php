@@ -48,6 +48,7 @@ class General extends Model
         return $data;
     }    
 
+
     public static function AddPerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
         $query = "select * from public.ff_registrar_persona('".$identityCard."', '".$paternal."', '".$maternal."', '".$names."','".$sex."', '".$birthdate."')";
         //\Log::info("REGISTRAR PARA PERSONAS: ".$query);
@@ -63,9 +64,21 @@ class General extends Model
 
     public static function GetPersonByIdentityCard($identityCard){
         $query = "select * from public.ff_buscar_persona('".$identityCard."')";
-        //$data = DB::table('public.personas')->where('nro_dip','=',"6600648")->get();
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
+    
+    // *** - funcion para la busqueda de los usuarios  [db: app.users]- ***
+    // *** - parametros [description: descripcion de la busqueda] - ***
+    public static function GetUsersByDescription($description){
+        if ($description == '') 
+            # code...
+            $query = "select * from app.users order by nodip, descripcion, usuario";
+        else
+            $query = "select * from app.users where nodip ='".$description."' order by nodip, descripcion, usuario";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));    
+        return $data;
+    }    
 }
