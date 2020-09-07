@@ -55,8 +55,8 @@ class GeneralController extends Controller
 
     public function getPersonsByDescription(Request $request){
         $descripcion = $request->get('descripcion'); // '' cadena vacia
-        $parametro = $request->get('parametro');
-        $descripcion = 'ROJAS';
+        //$parametro = $request->get('parametro');
+        //$descripcion = 'ROJAS';
         $data = General::GetPersonsByDescription($descripcion);
         
         $page = ($request->get('page')? $request->get('page'): 1);
@@ -76,7 +76,6 @@ class GeneralController extends Controller
     //  * {id: numero de carnet de identidad}    
     public function getPersonById($id){        
         $data = General::GetPersonByIdentityCard($id);
-        //\Log::info($data);
         return json_encode($data);
     } 
 
@@ -95,14 +94,11 @@ class GeneralController extends Controller
         switch ($marcador) {
             case 'registrar':
                 $data = General::AddPerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
-                # code...
                 break;
             case 'editar':
-                # code...
                 $data = General::UpdatePerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
             break;
             default:
-                # code...
                 break;
         }
         return json_encode($data);

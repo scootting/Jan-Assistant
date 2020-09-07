@@ -23,6 +23,15 @@ Route::group([
     Route::post('logout', 'GeneralController@logoutUser');
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     Route::post('years', 'GeneralController@registerUserYears');
+    // *** - rutas para crear, editar, mostrar, buscar a las personas - ***
+    Route::post('persons', 'GeneralController@getPersonsByDescription');
+    Route::get('person/add','GeneralController@addPerson');
+    Route::post('person','GeneralController@storePerson');    
+
+    
+    Route::get('person/{id}','GeneralController@getPersonById');    
+
+
 
     // *** - rutas para crear, editar, mostrar, buscar e imprimir a DeliveryDocuments - ***
     Route::get('deliveryDocuments/responsable/{responsable}','DeliveryDocumentsController@searchResponsable' );
@@ -50,12 +59,6 @@ Route::group([
     Route::post('carpentryDocuments/encargado/add','CarpentryDocumentsController@storeEncargado');
     Route::post('carpentryDocuments/asset/add','CarpentryDocumentsController@storeAsset');
 
-    // *** - rutas para crear, editar, mostrar, buscar a las personas - ***
-    Route::post('persons', 'GeneralController@getPersonsByDescription');
-    Route::get('person/add','GeneralController@addPerson');
-    Route::post('person','GeneralController@storePerson');    
-    //Route::get('person/edit/{id}','GeneralController@editPerson');    
-    Route::get('person/{id}','GeneralController@getPersonById');    
 
     // *** - rutas para crear, editar, mostrar, buscar a los usuarios del sistema - ***
     Route::post('users', 'GeneralController@getUsersByDescription');

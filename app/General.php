@@ -42,13 +42,20 @@ class General extends Model
     }
 
     public static function GetPersonsByDescription($description){
-        $query = "select * from public.personas where paterno ='".$description."' order by paterno, materno, nombres";
-        //\Log::info("Query: ".$query);
+        \Log::info("Description: ".$description);
+        if ($description == '') 
+            # code...
+            $query = "select * from app.ff_buscar_personas('')";
+        else
+            $query = "select * from app.ff_buscar_personas('".$description."')";
+        \Log::info($query);
+        //$query = "select * from public.personas where paterno ='".$description."' order by paterno, materno, nombres";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
-
+    // *** - funcion para la creacion de personas - ***
+    // *** - parametros [carnet de identidad, nombres, apellido paterno, apellido materno, sexo, fecha de nacimiento] - ***
     public static function AddPerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
         $query = "select * from public.ff_registrar_persona('".$identityCard."', '".$paternal."', '".$maternal."', '".$names."','".$sex."', '".$birthdate."')";
         //\Log::info("REGISTRAR PARA PERSONAS: ".$query);
@@ -56,12 +63,16 @@ class General extends Model
         return $data;
     }    
 
+    // *** - funcion para modificar informacion de las personas - ***
+    // *** - parametros [carnet de identidad, nombres, apellido paterno, apellido materno, sexo, fecha de nacimiento] - ***
     public static function UpdatePerson($identityCard, $names, $paternal, $maternal, $sex, $birthdate){
         $query = "select * from public.ff_editar_persona('".$identityCard."', '".$paternal."', '".$maternal."', '".$names."','".$sex."', '".$birthdate."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
 
+    // *** - funcion para la busqueda de las personas por carnet de identidad - ***
+    // *** - parametros [carnet de identidad] - ***
     public static function GetPersonByIdentityCard($identityCard){
         $query = "select * from public.ff_buscar_persona('".$identityCard."')";
         $data = collect(DB::select(DB::raw($query)));
