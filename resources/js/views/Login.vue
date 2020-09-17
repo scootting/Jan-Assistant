@@ -67,7 +67,7 @@ export default {
     return {
       model: {
         username: null,
-        password: null
+        password: null,
       },
       drawer: false,
       loading: false,
@@ -77,27 +77,27 @@ export default {
           {
             required: true,
             message: "El usuario es requerido",
-            trigger: "blur"
+            trigger: "blur",
           },
           {
             min: 4,
             message: "El usuario de tener por lo menos 5 caracteres",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         password: [
           {
             required: true,
             message: "La contraseña es requerida",
-            trigger: "blur"
+            trigger: "blur",
           },
           {
             min: 5,
             message: "La contraseña de tener por lo menos 5 caracteres",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -105,20 +105,20 @@ export default {
       this.$store
         .dispatch("retrieveToken", {
           username: this.model.username,
-          password: this.model.password
+          password: this.model.password,
         })
-        .then(response => {
+        .then((response) => {
           this.$router.push({ name: "welcome" });
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error.response.data;
           this.$notify.error({
             title: "Error",
-            message: this.error.message
+            message: this.error.message,
           });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -147,12 +147,11 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.footer .version{
-    font-family: "Open Sans";
-    padding: 0 10px;
-    color: #9fb3c8;
-    font-size: 15px;
-    margin-top: 5px;
-
+.footer .version {
+  font-family: "Open Sans";
+  padding: 0 10px;
+  color: #9fb3c8;
+  font-size: 15px;
+  margin-top: 5px;
 }
 </style>

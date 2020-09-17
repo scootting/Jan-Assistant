@@ -14,17 +14,6 @@ import locale from "element-ui/lib/locale/lang/es";
 
 Vue.use(ElementUI, { locale });
 
-//Vue.use(ElTablePagination);
-import ElSearchTablePagination from 'el-search-table-pagination';
-Vue.use(ElSearchTablePagination);
-//PDF
-
-/*
-import pdf from 'vue-pdf';
-Vue.use(pdf);
-*/
-
-
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
