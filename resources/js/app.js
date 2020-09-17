@@ -48,14 +48,10 @@ axios.interceptors.response.use(
         return response;
     },
     function(error) {
-
         // handle error
         if (error.response) {
-            //alert(error.response.status);
             switch (error.response.status) {
                 case 401:
-                    //store.dispatch('logoff')
-                    //console.log("Re Re 401 - No autenticado");
                     localStorage.removeItem("access_token");
                     delete axios.defaults.headers.common["Authorization"];
                     router.push({ name: "login" });

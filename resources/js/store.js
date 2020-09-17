@@ -18,10 +18,7 @@ const store = new Vuex.Store({
     mutations: {
         retrieveToken(state, { user, token }) { 
             state.token = token;
-            //console.log(state.token + " token " + token);
-            //state.user = JSON.stringify(user);
             state.user = user[0]; 
-            //console.log(JSON.stringify(state.user) + " -- " + user.id);
         },
         destroyToken(state) {
             state.token = null;
@@ -43,14 +40,9 @@ const store = new Vuex.Store({
                         const token = response.data.access_token;
                         const user = response.data.user;
                         localStorage.setItem("access_token", token);
-                        //localStorage.setItem("user", user);
                         axios.defaults.headers.common["Authorization"] =
                             "Bearer " + token;
-
-                        //console.log("Cabeceras: ", axios.defaults.headers);
-                        console.log("antes de: " + user);
                         commit("retrieveToken", { user, token });
-                        //context.commit("retrieveToken", token, user);
                         console.log("despues de: " + user);
                         resolve(response);
                     })

@@ -23,8 +23,6 @@
                 :rules="rules"
                 @submit.native.prevent="login"
               >
-                <!--                <el-form-item prop="username" label="Usuario">
-                -->
                 <el-form-item prop="username">
                   <el-input v-model="model.username" placeholder="Usuario">
                     <i slot="prefix" class="el-input__icon el-icon-user"></i>

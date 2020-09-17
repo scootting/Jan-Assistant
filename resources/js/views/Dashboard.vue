@@ -1,76 +1,87 @@
 <template>
   <div>
     <el-container>
-      <el-header style="text-align: right; background-color: #fff">
-        <!---->
-        <el-dropdown size="medium">
-          <span class="el-dropdown-link">
-            Configuracion
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown" style="margin-left:10px">
-            <el-dropdown-item icon="el-icon-date" @click.native="centerDialogVisible = true">gestion</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-setting" @click.native="NoDeveloped">perfiles</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-message" @click.native="NoDeveloped">mensajes</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-dropdown size="medium">
-          <span class="el-dropdown-link">
-            {{ user.descripcion
-            }}
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-user" @click.native="NoDeveloped">mi perfil</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-chat-dot-square" @click.native="NoDeveloped">mis mensajes</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-right" @click.native="logoutUser">cerrar sesion</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-header>
-      <el-container>
-        <el-aside width="224px" style="background-color: #263f44; min-height:100vh">
-          <!--                  
+      <el-aside width="260px" style="background-color: #212120; min-height:100vh">
+        <!--                  
                 *** - menu dinamico usando ElementUI - ***
-          -->
-          <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            background-color="#263f44"
-            text-color="#fff"
-            active-text-color="#fff"
-            style="border-right: 0 !important"
-          >
-            <template v-for="(option, index) in options">
-              <el-submenu :index="String(index)" :key="index">
-                <template slot="title">
-                  <i :class="option.icon"></i>
-                  <span slot="title">
+        -->
+        <div class="logo">
+          <p>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</p>
+        </div>
+        <el-menu
+          default-active="2"
+          class="el-menu-vertical-demo"
+          background-color="#212120"
+          text-color="#faebd7"
+          active-text-color="#faebd7"
+          style="border-right: 0 !important"
+        >
+          <template v-for="(option, index) in options">
+            <el-submenu :index="String(index)" :key="index">
+              <template slot="title">
+                <i :class="option.icon"></i>
+                <span slot="title">
+                  {{
+                  option.title.trim()
+                  }}
+                </span>
+              </template>
+              <el-menu-item-group
+                v-for="(group, g_index) in option.groups"
+                :key="g_index"
+                :title="group.title.trim()"
+              >
+                <el-menu-item v-for="(item, i_index) in group.items" :key="i_index">
+                  <!-- :index='String(g_index)'-->
+                  <router-link :to="{ name: item.view.trim() }" tag="span">
                     {{
-                    option.title.trim()
+                    item.title.trim()
                     }}
-                  </span>
-                </template>
-                <el-menu-item-group
-                  v-for="(group, g_index) in option.groups"
-                  :key="g_index"
-                  :title="group.title.trim()"
-                >
-                  <el-menu-item v-for="(item, i_index) in group.items" :key="i_index">
-                    <!-- :index='String(g_index)'-->
-                    <router-link :to="{ name: item.view.trim() }" tag="span">
-                      {{
-                      item.title.trim()
-                      }}
-                    </router-link>
-                  </el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-            </template>
-          </el-menu>
-          <!--                  
+                  </router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </template>
+        </el-menu>
+        <!--                  
                 *** - finalizacion del menu dinamico usando ElementUI - ***
-          -->
-        </el-aside>
+        -->
+      </el-aside>
+
+      <el-container>
+        <el-header style="text-align: right; background-color: #F4F3EF">
+          <!---->
+          <el-dropdown size="medium">
+            <span class="el-dropdown-link">
+              Configuracion
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown" style="margin-left:10px">
+              <el-dropdown-item
+                icon="el-icon-date"
+                @click.native="centerDialogVisible = true"
+              >gestion</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-setting" @click.native="NoDeveloped">perfiles</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-message" @click.native="NoDeveloped">mensajes</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-dropdown size="medium">
+            <span class="el-dropdown-link">
+              {{ user.descripcion
+              }}
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item icon="el-icon-user" @click.native="NoDeveloped">mi perfil</el-dropdown-item>
+              <el-dropdown-item
+                icon="el-icon-chat-dot-square"
+                @click.native="NoDeveloped"
+              >mis mensajes</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-right" @click.native="logoutUser">cerrar sesion</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-header>
+
         <el-main style="padding:40px; color:#000">
           <el-row type="flex" class="row-bg" justify="center">
             <el-col :span="22">
@@ -93,10 +104,9 @@
     <!--                  
       *** - dialogo usando ElementUI - ***
     -->
-    <el-dialog title="Warning" :visible.sync="centerDialogVisible" width="35%" center>
-      <span>este mensaje esta colocado a proposito.</span>
+    <el-dialog title="gestion" :visible.sync="centerDialogVisible" width="30%" center>
       <el-form>
-        <el-form-item label="gestion">
+        <el-form-item label="seleccione la gestion">
           <el-select
             v-model="yearSelected"
             placeholder="por favor seleccione una gestion"
@@ -112,8 +122,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">Cancelar</el-button>
-        <el-button type="primary" @click="changeYear">Confirmar</el-button>
+        <el-button @click="centerDialogVisible = false" size="small">Cancelar</el-button>
+        <el-button type="primary" @click="changeYear" size="small">Confirmar</el-button>
       </span>
     </el-dialog>
   </div>
@@ -128,7 +138,7 @@ export default {
       user: this.$store.state.user,
       years: {},
       options: {},
-      yearSelected: 1999 // this.user.gestion,
+      yearSelected: 1999, // this.user.gestion,
     };
   },
   created() {},
@@ -138,33 +148,32 @@ export default {
     axios
       .post("/api/profiles", {
         usuario: app.user.usuario,
-        gestion: app.user.gestion
+        gestion: app.user.gestion,
       })
-      .then(response => {
+      .then((response) => {
         app.options = response.data;
         axios
           .post("/api/years", { usuario: app.user.usuario })
-          .then(response => {
+          .then((response) => {
             app.years = response.data;
           })
-          .catch(error => {
+          .catch((error) => {
             this.error = error;
             this.$notify.error({
               title: "Error",
-              message: this.error.message
+              message: this.error.message,
             });
           });
       })
-      .catch(error => {
+      .catch((error) => {
         this.error = error;
         this.$notify.error({
           title: "Error",
-          message: this.error.message
+          message: this.error.message,
         });
       });
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     logoutUser() {
       this.$router.push({ name: "logout" });
@@ -175,18 +184,18 @@ export default {
       axios
         .post("/api/profiles", {
           usuario: app.user.usuario,
-          gestion: app.yearSelected
+          gestion: app.yearSelected,
         })
-        .then(response => {
+        .then((response) => {
           app.options = response.data;
           app.user.gestion = app.yearSelected;
           app.$store.commit("updateUser", app.user);
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error;
           this.$notify.error({
             title: "Error",
-            message: this.error.message
+            message: this.error.message,
           });
         });
       app.centerDialogVisible = false;
@@ -195,25 +204,20 @@ export default {
       this.$notify.warning({
         title: "advertencia",
         message: "aun el modulo no se ha desarrollado.",
-        showClose: false
       });
     },
-    ToWelcomePage(){
-        this.$router.push({name: 'welcome'});
-    }
-  }
+    ToWelcomePage() {
+      this.$router.push({ name: "welcome" });
+    },
+  },
 };
 </script>
 
 <style>
 html,
 body {
-  /*
-  font-family: "Roboto Condensed", sans-serif;*/
 }
 #app {
-  /*
-  font-family: "Roboto Condensed", sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
@@ -230,12 +234,12 @@ textarea {
 }
 
 .el-aside {
-  color: #333;
+  color: #212120;
 }
 
 /* estilos revisados y aprobados*/
 .el-header {
-  color: #333;
+  color: #fff;
   line-height: 60px;
   padding-left: 224px;
 }
@@ -251,6 +255,13 @@ textarea {
 .el-icon-arrow-down {
   font-size: 12px;
 }
+
+.logo {
+  padding: 42px 5px;
+  align-content: center;
+  text-align: center;
+  color: #faebd7;
+}
 /* estilos revisados y aprobados para el card */
 #level {
   display: flex !important;
@@ -260,78 +271,10 @@ textarea {
 .el-breadcrumb {
   align-items: center;
   justify-content: flex-start;
-  font-size: 22px !important;
+  font-size: 20px !important;
 }
 #right-button {
   align-items: right;
   justify-content: flex-end;
 }
-
-/*
-      options: [
-            {
-              "title" : "contabilidad",
-              "icon"  : "el-icon-notebook-2",
-              "groups": [
-                {
-                  "title" : "recursos propios",  
-                  "items" :[
-                    {
-                      "view" : "assets",
-                      "title": "activos fijos"
-                    }
-                  ]
-                }
-              ],
-            },
-            {
-              "title" : "bienes e inventarios",
-              "icon"  : "el-icon-notebook-2",
-              "groups": [],
-            },
-            {
-              "title" : "tesoro",
-              "icon"  : "el-icon-back",
-              "groups": [],
-            },
-            {
-              "title" : "aplicacion",
-              "icon"  : "el-icon-setting",
-              "groups": [
-                {
-                  "title" : "recursos propios",  
-                  "items" :[
-                    {
-                      "view" : "profiles",
-                      "title": "perfiles"
-                    },
-                    {
-                      "view" : "profiles",
-                      "title": "lionel"
-                    }
-                  ]
-                }
-              ],
-            },
-          ]      
-  */
-/*
-         * obtener el reporte generado desde REST API de JasperReport Server
-         */
-/*
-        presionar(index) {
-            let app = this;
-            axios({
-                url: "/reporte",
-                method: "GET",
-                responseType: "blob" // important
-            }).then(response => {
-                const blob = new Blob([response.data], {
-                    type: "application/pdf"
-                });
-                const objectUrl = window.URL.createObjectURL(blob);
-                console.log(objectUrl);
-                window.open(objectUrl);
-            });
-        }*/
 </style>

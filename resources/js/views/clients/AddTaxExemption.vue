@@ -45,7 +45,6 @@ export default {
   computed: {
     // un getter computado
     reversedMessage: function() {
-      // `this` apunta a la instancia vm
       return "hola";
     },
     csrfToken: function() {

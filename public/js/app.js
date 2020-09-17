@@ -3671,6 +3671,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
@@ -3748,13 +3758,12 @@ __webpack_require__.r(__webpack_exports__);
     NoDeveloped: function NoDeveloped() {
       this.$notify.warning({
         title: "advertencia",
-        message: "aun el modulo no se ha desarrollado.",
-        showClose: false
+        message: "aun el modulo no se ha desarrollado."
       });
     },
     ToWelcomePage: function ToWelcomePage() {
       this.$router.push({
-        name: 'welcome'
+        name: "welcome"
       });
     }
   }
@@ -4033,6 +4042,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -4170,8 +4186,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -4818,6 +4832,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Personas",
   data: function data() {
@@ -5152,7 +5168,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     // un getter computado
     reversedMessage: function reversedMessage() {
-      // `this` apunta a la instancia vm
       return "hola";
     },
     csrfToken: function csrfToken() {
@@ -7140,7 +7155,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700);", ""]);
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  background: #e5e5e7;\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #263f44;\r\n  background: #f0ab00;\r\n  background: #162530;\r\n  background: #2c3e50;\r\n  /*#015668; */\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\r\n\r\n/*\r\naxios.interceptors.response.use(function (response) {\r\n  return response;\r\n}, function (error) {\r\n\r\n  const originalRequest = error.config;\r\n\r\n  if (error.response.status === 401 && !originalRequest._retry) {\r\n\r\n    originalRequest._retry = true;\r\n\r\n    const refreshToken = window.localStorage.getItem('refreshToken');\r\n    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })\r\n      .then(({data}) => {\r\n        window.localStorage.setItem('token', data.token);\r\n        window.localStorage.setItem('refreshToken', data.refreshToken);\r\n        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;\r\n        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;\r\n        return axios(originalRequest);\r\n      });\r\n  }\r\n\r\n  return Promise.reject(error);\r\n});\r\n*/\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  */\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  background: #f0ab00;\r\n  background: #d8ebb5;\r\n  background: #faf5e4;\r\n  background: #f4f3ef;\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  font-family: \"Ubuntu\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #000;\r\n  text-transform: uppercase;\n}\nbutton,\r\ninput,\r\n.el-dropdown-menu,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\r\n  text-transform: uppercase;\n}\r\n", ""]);
 
 // exports
 
@@ -7159,7 +7174,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Condensed\", sans-serif;*/\n}\n#app {\r\n  /*\r\n  font-family: \"Roboto Condensed\", sans-serif;*/\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #333;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #333;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 22px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n\r\n/*\r\n      options: [\r\n            {\r\n              \"title\" : \"contabilidad\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"assets\",\r\n                      \"title\": \"activos fijos\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n            {\r\n              \"title\" : \"bienes e inventarios\",\r\n              \"icon\"  : \"el-icon-notebook-2\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"tesoro\",\r\n              \"icon\"  : \"el-icon-back\",\r\n              \"groups\": [],\r\n            },\r\n            {\r\n              \"title\" : \"aplicacion\",\r\n              \"icon\"  : \"el-icon-setting\",\r\n              \"groups\": [\r\n                {\r\n                  \"title\" : \"recursos propios\",  \r\n                  \"items\" :[\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"perfiles\"\r\n                    },\r\n                    {\r\n                      \"view\" : \"profiles\",\r\n                      \"title\": \"lionel\"\r\n                    }\r\n                  ]\r\n                }\r\n              ],\r\n            },\r\n          ]      \r\n  */\r\n/*\r\n         * obtener el reporte generado desde REST API de JasperReport Server\r\n         */\r\n/*\r\n        presionar(index) {\r\n            let app = this;\r\n            axios({\r\n                url: \"/reporte\",\r\n                method: \"GET\",\r\n                responseType: \"blob\" // important\r\n            }).then(response => {\r\n                const blob = new Blob([response.data], {\r\n                    type: \"application/pdf\"\r\n                });\r\n                const objectUrl = window.URL.createObjectURL(blob);\r\n                console.log(objectUrl);\r\n                window.open(objectUrl);\r\n            });\r\n        }*/\r\n", ""]);
+exports.push([module.i, "\nhtml,\r\nbody {\n}\n#app {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #212120;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #fff;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\n.logo {\r\n  padding: 42px 5px;\r\n  align-content: center;\r\n  text-align: center;\r\n  color: #faebd7;\n}\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 20px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n", ""]);
 
 // exports
 
@@ -7178,7 +7193,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Roboto+Condensed\");\r\n  font-family: 'Chelsea Market', cursive !important;\r\n  font-weight: 400 !important;\r\n  font-family: 'Chelsea Market', cursive !important;\r\n */\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\n}\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #333;\n}\n.el-header[data-v-63cd6604] {\r\n  background-color: #eeeeee;\r\n  background: #ffffff;\r\n  color: #333;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #111111;\r\n  color: #858585;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604]{\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604]{\r\n  font-size: 15px;\n}\r\n", ""]);
+exports.push([module.i, "\nhtml[data-v-63cd6604],\r\nbody[data-v-63cd6604] {\n}\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #212120;\n}\n.el-header[data-v-63cd6604] {\r\n  /*background-color: #000;*/\r\n  background: #212120;\r\n  color: #fff;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #212120;\r\n  color: #fff;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604] {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604] {\r\n  font-size: 15px;\n}\r\n", ""]);
 
 // exports
 
@@ -84296,137 +84311,98 @@ var render = function() {
         "el-container",
         [
           _c(
-            "el-header",
+            "el-aside",
             {
-              staticStyle: { "text-align": "right", "background-color": "#fff" }
+              staticStyle: {
+                "background-color": "#212120",
+                "min-height": "100vh"
+              },
+              attrs: { width: "260px" }
             },
             [
-              _c(
-                "el-dropdown",
-                { attrs: { size: "medium" } },
-                [
-                  _c("span", { staticClass: "el-dropdown-link" }, [
-                    _vm._v("\n          Configuracion\n          "),
-                    _c("i", {
-                      staticClass: "el-icon-arrow-down el-icon--right"
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "el-dropdown-menu",
-                    {
-                      staticStyle: { "margin-left": "10px" },
-                      attrs: { slot: "dropdown" },
-                      slot: "dropdown"
-                    },
-                    [
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-date" },
-                          nativeOn: {
-                            click: function($event) {
-                              _vm.centerDialogVisible = true
-                            }
-                          }
-                        },
-                        [_vm._v("gestion")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-setting" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.NoDeveloped($event)
-                            }
-                          }
-                        },
-                        [_vm._v("perfiles")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-message" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.NoDeveloped($event)
-                            }
-                          }
-                        },
-                        [_vm._v("mensajes")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
+              _c("div", { staticClass: "logo" }, [
+                _c("p", [
+                  _vm._v("SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA")
+                ])
+              ]),
               _vm._v(" "),
               _c(
-                "el-dropdown",
-                { attrs: { size: "medium" } },
+                "el-menu",
+                {
+                  staticClass: "el-menu-vertical-demo",
+                  staticStyle: { "border-right": "0 !important" },
+                  attrs: {
+                    "default-active": "2",
+                    "background-color": "#212120",
+                    "text-color": "#faebd7",
+                    "active-text-color": "#faebd7"
+                  }
+                },
                 [
-                  _c("span", { staticClass: "el-dropdown-link" }, [
-                    _vm._v(
-                      "\n          " +
-                        _vm._s(_vm.user.descripcion) +
-                        "\n          "
-                    ),
-                    _c("i", {
-                      staticClass: "el-icon-arrow-down el-icon--right"
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "el-dropdown-menu",
-                    { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                    [
+                  _vm._l(_vm.options, function(option, index) {
+                    return [
                       _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-user" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.NoDeveloped($event)
-                            }
-                          }
-                        },
-                        [_vm._v("mi perfil")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-chat-dot-square" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.NoDeveloped($event)
-                            }
-                          }
-                        },
-                        [_vm._v("mis mensajes")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          attrs: { icon: "el-icon-right" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.logoutUser($event)
-                            }
-                          }
-                        },
-                        [_vm._v("cerrar sesion")]
+                        "el-submenu",
+                        { key: index, attrs: { index: String(index) } },
+                        [
+                          _c("template", { slot: "title" }, [
+                            _c("i", { class: option.icon }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { attrs: { slot: "title" }, slot: "title" },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(option.title.trim()) +
+                                    "\n              "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(option.groups, function(group, g_index) {
+                            return _c(
+                              "el-menu-item-group",
+                              {
+                                key: g_index,
+                                attrs: { title: group.title.trim() }
+                              },
+                              _vm._l(group.items, function(item, i_index) {
+                                return _c(
+                                  "el-menu-item",
+                                  { key: i_index },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to: { name: item.view.trim() },
+                                          tag: "span"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(item.title.trim()) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              }),
+                              1
+                            )
+                          })
+                        ],
+                        2
                       )
-                    ],
-                    1
-                  )
+                    ]
+                  })
                 ],
-                1
+                2
               )
             ],
             1
@@ -84436,92 +84412,140 @@ var render = function() {
             "el-container",
             [
               _c(
-                "el-aside",
+                "el-header",
                 {
                   staticStyle: {
-                    "background-color": "#263f44",
-                    "min-height": "100vh"
-                  },
-                  attrs: { width: "224px" }
+                    "text-align": "right",
+                    "background-color": "#F4F3EF"
+                  }
                 },
                 [
                   _c(
-                    "el-menu",
-                    {
-                      staticClass: "el-menu-vertical-demo",
-                      staticStyle: { "border-right": "0 !important" },
-                      attrs: {
-                        "default-active": "2",
-                        "background-color": "#263f44",
-                        "text-color": "#fff",
-                        "active-text-color": "#fff"
-                      }
-                    },
+                    "el-dropdown",
+                    { attrs: { size: "medium" } },
                     [
-                      _vm._l(_vm.options, function(option, index) {
-                        return [
+                      _c("span", { staticClass: "el-dropdown-link" }, [
+                        _vm._v("\n            Configuracion\n            "),
+                        _c("i", {
+                          staticClass: "el-icon-arrow-down el-icon--right"
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-dropdown-menu",
+                        {
+                          staticStyle: { "margin-left": "10px" },
+                          attrs: { slot: "dropdown" },
+                          slot: "dropdown"
+                        },
+                        [
                           _c(
-                            "el-submenu",
-                            { key: index, attrs: { index: String(index) } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _c("i", { class: option.icon }),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { attrs: { slot: "title" }, slot: "title" },
-                                  [
-                                    _vm._v(
-                                      "\n                  " +
-                                        _vm._s(option.title.trim()) +
-                                        "\n                "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(option.groups, function(group, g_index) {
-                                return _c(
-                                  "el-menu-item-group",
-                                  {
-                                    key: g_index,
-                                    attrs: { title: group.title.trim() }
-                                  },
-                                  _vm._l(group.items, function(item, i_index) {
-                                    return _c(
-                                      "el-menu-item",
-                                      { key: i_index },
-                                      [
-                                        _c(
-                                          "router-link",
-                                          {
-                                            attrs: {
-                                              to: { name: item.view.trim() },
-                                              tag: "span"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                    " +
-                                                _vm._s(item.title.trim()) +
-                                                "\n                  "
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  }),
-                                  1
-                                )
-                              })
-                            ],
-                            2
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-date" },
+                              nativeOn: {
+                                click: function($event) {
+                                  _vm.centerDialogVisible = true
+                                }
+                              }
+                            },
+                            [_vm._v("gestion")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-setting" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.NoDeveloped($event)
+                                }
+                              }
+                            },
+                            [_vm._v("perfiles")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-message" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.NoDeveloped($event)
+                                }
+                              }
+                            },
+                            [_vm._v("mensajes")]
                           )
-                        ]
-                      })
+                        ],
+                        1
+                      )
                     ],
-                    2
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-dropdown",
+                    { attrs: { size: "medium" } },
+                    [
+                      _c("span", { staticClass: "el-dropdown-link" }, [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.user.descripcion) +
+                            "\n            "
+                        ),
+                        _c("i", {
+                          staticClass: "el-icon-arrow-down el-icon--right"
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-dropdown-menu",
+                        { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                        [
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-user" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.NoDeveloped($event)
+                                }
+                              }
+                            },
+                            [_vm._v("mi perfil")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-chat-dot-square" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.NoDeveloped($event)
+                                }
+                              }
+                            },
+                            [_vm._v("mis mensajes")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              attrs: { icon: "el-icon-right" },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.logoutUser($event)
+                                }
+                              }
+                            },
+                            [_vm._v("cerrar sesion")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -84603,9 +84627,9 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "Warning",
+            title: "gestion",
             visible: _vm.centerDialogVisible,
-            width: "35%",
+            width: "30%",
             center: ""
           },
           on: {
@@ -84615,14 +84639,12 @@ var render = function() {
           }
         },
         [
-          _c("span", [_vm._v("este mensaje esta colocado a proposito.")]),
-          _vm._v(" "),
           _c(
             "el-form",
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "gestion" } },
+                { attrs: { label: "seleccione la gestion" } },
                 [
                   _c(
                     "el-select",
@@ -84668,6 +84690,7 @@ var render = function() {
               _c(
                 "el-button",
                 {
+                  attrs: { size: "small" },
                   on: {
                     click: function($event) {
                       _vm.centerDialogVisible = false
@@ -84679,7 +84702,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.changeYear } },
+                {
+                  attrs: { type: "primary", size: "small" },
+                  on: { click: _vm.changeYear }
+                },
                 [_vm._v("Confirmar")]
               )
             ],
@@ -84914,11 +84940,11 @@ var render = function() {
             "el-header",
             [
               _c("span", [
-                _vm._v("sistema de informacion administrativa y financiera")
+                _vm._v("SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA")
               ]),
               _vm._v(" "),
               _c("el-button", { on: { click: _vm.initLogin } }, [
-                _vm._v("acceso al sistema")
+                _vm._v("LOGIN")
               ])
             ],
             1
@@ -85034,7 +85060,7 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("h4", [_vm._v("funcion 2")]),
+                                  _c("h4", [_vm._v("personas")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
@@ -85063,7 +85089,7 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("h4", [_vm._v("funcion 3")]),
+                                  _c("h4", [_vm._v("valores")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
@@ -85691,7 +85717,7 @@ var render = function() {
                         attrs: {
                           model: _vm.person,
                           rules: _vm.rules,
-                          "label-width": "160px"
+                          "label-width": "260px"
                         }
                       },
                       [
@@ -85802,7 +85828,7 @@ var render = function() {
                               attrs: {
                                 size: "small",
                                 type: "date",
-                                placeholder: "Pick a date"
+                                placeholder: "seleccione una fecha"
                               },
                               model: {
                                 value: _vm.person.nacimiento,
@@ -86204,7 +86230,7 @@ var render = function() {
                         attrs: {
                           model: _vm.person,
                           rules: _vm.rules,
-                          "label-width": "160px"
+                          "label-width": "260px"
                         }
                       },
                       [
@@ -86468,7 +86494,7 @@ var render = function() {
               "el-input",
               {
                 staticClass: "input-with-select",
-                attrs: { placeholder: "Please input" },
+                attrs: { placeholder: "INSERTE UNA DESCRIPCION" },
                 model: {
                   value: _vm.writtenTextParameter,
                   callback: function($$v) {
@@ -86478,28 +86504,6 @@ var render = function() {
                 }
               },
               [
-                _c(
-                  "el-select",
-                  {
-                    attrs: { slot: "prepend", placeholder: "Select" },
-                    slot: "prepend",
-                    model: {
-                      value: _vm.selectParameter,
-                      callback: function($$v) {
-                        _vm.selectParameter = $$v
-                      },
-                      expression: "selectParameter"
-                    }
-                  },
-                  _vm._l(_vm.parameters, function(item) {
-                    return _c("el-option", {
-                      key: item.value,
-                      attrs: { label: item.attribute, value: item.value }
-                    })
-                  }),
-                  1
-                ),
-                _vm._v(" "),
                 _c("el-button", {
                   attrs: { slot: "append", icon: "el-icon-search" },
                   on: { click: _vm.initSearchPerson },
@@ -103312,11 +103316,8 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   // handle error
   if (error.response) {
-    //alert(error.response.status);
     switch (error.response.status) {
       case 401:
-        //store.dispatch('logoff')
-        //console.log("Re Re 401 - No autenticado");
         localStorage.removeItem("access_token");
         delete axios.defaults.headers.common["Authorization"];
         _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
@@ -103566,10 +103567,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     retrieveToken: function retrieveToken(state, _ref) {
       var user = _ref.user,
           token = _ref.token;
-      state.token = token; //console.log(state.token + " token " + token);
-      //state.user = JSON.stringify(user);
-
-      state.user = user[0]; //console.log(JSON.stringify(state.user) + " -- " + user.id);
+      state.token = token;
+      state.user = user[0];
     },
     destroyToken: function destroyToken(state) {
       state.token = null;
@@ -103589,16 +103588,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         }).then(function (response) {
           var token = response.data.access_token;
           var user = response.data.user;
-          localStorage.setItem("access_token", token); //localStorage.setItem("user", user);
-
-          axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common["Authorization"] = "Bearer " + token; //console.log("Cabeceras: ", axios.defaults.headers);
-
-          console.log("antes de: " + user);
+          localStorage.setItem("access_token", token);
+          axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common["Authorization"] = "Bearer " + token;
           commit("retrieveToken", {
             user: user,
             token: token
-          }); //context.commit("retrieveToken", token, user);
-
+          });
           console.log("despues de: " + user);
           resolve(response);
         })["catch"](function (error) {

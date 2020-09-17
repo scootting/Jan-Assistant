@@ -8,7 +8,7 @@
       <div>
         <el-row>
           <el-col :span="24">
-            <el-form ref="form" :model="person" :rules="rules" label-width="160px">
+            <el-form ref="form" :model="person" :rules="rules" label-width="260px">
               <el-form-item size="small" label="numero de identificacion" prop="personal">
                 <el-input size="small" v-model="person.personal"></el-input>
               </el-form-item>
@@ -25,7 +25,7 @@
                 <el-date-picker
                   size="small"
                   type="date"
-                  placeholder="Pick a date"
+                  placeholder="seleccione una fecha"
                   v-model="person.nacimiento"
                   style="width: 100%;"
                 ></el-date-picker>

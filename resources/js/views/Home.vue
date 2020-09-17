@@ -2,11 +2,11 @@
   <div>
     <el-container>
       <el-header>
-        <span>sistema de informacion administrativa y financiera</span>
+        <span>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</span>
         <!--
         <el-button type="primary" icon="el-icon-eleme"  @click="initLogin" plain>acceso al sistema</el-button>
         -->
-        <el-button @click="initLogin">acceso al sistema</el-button>
+        <el-button @click="initLogin">LOGIN</el-button>
       </el-header>
       <el-container>
         <!--
@@ -22,10 +22,12 @@
             <el-row :gutter="20">
               <el-col :offset="4" :span="4">
                 <el-card>
-                  <!--
-                  <el-button type="text" icon="el-icon-message" circle plain></el-button>
-                  -->
-                  <el-button type="text" icon="el-icon-message" circle @click.native="initAddTaxExemption"></el-button>
+                  <el-button
+                    type="text"
+                    icon="el-icon-message"
+                    circle
+                    @click.native="initAddTaxExemption"
+                  ></el-button>
                   <h4>facilito</h4>
                   <p>
                     Donec id elit non mi porta gravida at
@@ -40,7 +42,12 @@
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-edit" circle @click.native="initToFormalities"></el-button>
+                  <el-button
+                    type="text"
+                    icon="el-icon-edit"
+                    circle
+                    @click.native="initToFormalities"
+                  ></el-button>
                   <h4>tramites</h4>
                   <p>
                     Donec id elit non mi porta gravida at
@@ -56,7 +63,7 @@
               <el-col :span="4">
                 <el-card>
                   <el-button type="text" icon="el-icon-check" circle></el-button>
-                  <h4>funcion 2</h4>
+                  <h4>personas</h4>
                   <p>
                     Donec id elit non mi porta gravida at
                     eget metus. Fusce dapibus, tellus ac
@@ -71,7 +78,7 @@
               <el-col :span="4">
                 <el-card>
                   <el-button type="text" icon="el-icon-delete" circle></el-button>
-                  <h4>funcion 3</h4>
+                  <h4>valores</h4>
                   <p>
                     Donec id elit non mi porta gravida at
                     eget metus. Fusce dapibus, tellus ac
@@ -145,7 +152,7 @@ export default {
   data() {
     return {
       messages: {},
-      data: {}
+      data: {},
     };
   },
   mounted() {},
@@ -156,24 +163,18 @@ export default {
     initLogin() {
       this.$router.push({ name: "login" });
     },
-    initAddTaxExemption(){
+    initAddTaxExemption() {
       this.$router.push({ name: "addTaxExemption" });
     },
-    initToFormalities(){
+    initToFormalities() {
       this.$router.push({ name: "formalities" });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/*
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
-  font-family: 'Chelsea Market', cursive !important;
-  font-weight: 400 !important;
-  font-family: 'Chelsea Market', cursive !important;
- */
 html,
 body {
 }
@@ -193,13 +194,13 @@ textarea {
 }
 
 .el-aside {
-  color: #333;
+  color: #212120;
 }
 
 .el-header {
-  background-color: #eeeeee;
-  background: #ffffff;
-  color: #333;
+  /*background-color: #000;*/
+  background: #212120;
+  color: #fff;
   line-height: 60px;
 }
 .el-header span {
@@ -208,13 +209,14 @@ textarea {
 .el-header .el-button {
   line-height: 5px;
   margin-top: 15px;
+  color: #000;
   float: right;
 }
 
 .el-footer {
   height: auto !important;
-  background-color: #111111;
-  color: #858585;
+  background-color: #212120;
+  color: #fff;
   float: left;
 }
 .el-row {
@@ -226,13 +228,13 @@ textarea {
   display: block;
   margin: 0 auto;
 }
-.el-card h4{
+.el-card h4 {
   font-size: 2rem;
   margin: 10px;
   display: block;
   text-align: center;
 }
-.el-card p{
+.el-card p {
   font-size: 15px;
 }
 </style>

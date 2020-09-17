@@ -6,10 +6,12 @@
             <el-button style="text-align: right; float: right" size="small" type="primary" icon="el-icon-plus" @click="initAddPerson">nueva persona</el-button>
         </div>
         <div style="margin-top: 15px;">
-            <el-input placeholder="Please input" v-model="writtenTextParameter" class="input-with-select">
+            <el-input placeholder="INSERTE UNA DESCRIPCION" v-model="writtenTextParameter" class="input-with-select">
+            <!--
                 <el-select v-model="selectParameter" slot="prepend" placeholder="Select">
                     <el-option v-for="item in parameters" :label="item.attribute" :value="item.value" :key="item.value"></el-option>
                 </el-select>
+                -->
                 <el-button slot="append" icon="el-icon-search" @click="initSearchPerson"></el-button>
             </el-input>
         </div>
