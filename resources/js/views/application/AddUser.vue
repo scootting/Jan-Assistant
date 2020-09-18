@@ -73,15 +73,6 @@ export default {
       var app = this;
       var newPerson = app.person;
 
-this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });      
-
       axios
         .post("/api/person", {
           persona: newPerson,

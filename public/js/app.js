@@ -4617,14 +4617,6 @@ __webpack_require__.r(__webpack_exports__);
     saveUser: function saveUser() {
       var app = this;
       var newPerson = app.person;
-      this.$refs[formName].validate(function (valid) {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
       axios.post("/api/person", {
         persona: newPerson,
         marker: "registrar"
@@ -4834,24 +4826,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Personas",
   data: function data() {
     return {
-      selectParameter: "",
-      parameters: [{
-        attribute: "carnet de identidad",
-        value: "personal"
-      }, {
-        attribute: "apellido paterno",
-        value: "paterno"
-      }, {
-        attribute: "apellido materno",
-        value: "materno"
-      }, {
-        attribute: "nombres",
-        value: "nombres"
-      }],
+      //selectParameter: "",
+
+      /*
+      parameters: [
+        {attribute: "carnet de identidad", value: "personal",},
+        {attribute: "apellido paterno", value: "paterno",},
+        {attribute: "apellido materno", value: "materno",},
+        {attribute: "nombres", value: "nombres",},
+      ],*/
       messages: {},
       people: [],
       pagination: {
@@ -4864,8 +4877,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    var app = this; //app.selectParameter = this.parameters[0].value;
-
+    var app = this;
     axios.post("/api/persons", {
       descripcion: app.writtenTextParameter
     }).then(function (response) {
@@ -4918,8 +4930,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var app = this;
-      app.loading = true; //app.selectParameter = this.parameters[0].value;
-
+      app.loading = true;
       axios.post("/api/persons", {
         descripcion: app.writtenTextParameter
       }).then(function (response) {
@@ -4952,14 +4963,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -7288,7 +7291,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-input .el-select[data-v-2ec57130] {\n    width: 180px;\n}\n", ""]);
+exports.push([module.i, "\n.el-input .el-select[data-v-2ec57130] {\n  width: 180px;\n}\n", ""]);
 
 // exports
 
@@ -86681,7 +86684,7 @@ var render = function() {
               "el-input",
               {
                 staticClass: "input-with-select",
-                attrs: { placeholder: "Please input" },
+                attrs: { placeholder: "INSERTE UNA DESCRIPCION" },
                 model: {
                   value: _vm.writtenTextParameter,
                   callback: function($$v) {
@@ -86691,28 +86694,6 @@ var render = function() {
                 }
               },
               [
-                _c(
-                  "el-select",
-                  {
-                    attrs: { slot: "prepend", placeholder: "Select" },
-                    slot: "prepend",
-                    model: {
-                      value: _vm.selectParameter,
-                      callback: function($$v) {
-                        _vm.selectParameter = $$v
-                      },
-                      expression: "selectParameter"
-                    }
-                  },
-                  _vm._l(_vm.parameters, function(item) {
-                    return _c("el-option", {
-                      key: item.value,
-                      attrs: { label: item.attribute, value: item.value }
-                    })
-                  }),
-                  1
-                ),
-                _vm._v(" "),
                 _c("el-button", {
                   attrs: { slot: "append", icon: "el-icon-search" },
                   slot: "append"
@@ -86788,7 +86769,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { align: "right", width: "180" },
+                  attrs: { align: "right", width: "280" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",

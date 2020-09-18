@@ -13,18 +13,10 @@
       </div>
       <div style="margin-top: 15px;">
         <el-input
-          placeholder="Please input"
+          placeholder="INSERTE UNA DESCRIPCION"
           v-model="writtenTextParameter"
           class="input-with-select"
         >
-          <el-select v-model="selectParameter" slot="prepend" placeholder="Select">
-            <el-option
-              v-for="item in parameters"
-              :label="item.attribute"
-              :value="item.value"
-              :key="item.value"
-            ></el-option>
-          </el-select>
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
@@ -41,7 +33,7 @@
           <el-table-column prop="nodip" label="no" width="80"></el-table-column>
           <el-table-column prop="descripcion" label="descripcion" width="320"></el-table-column>
           <el-table-column prop="usuario" label="usuario"></el-table-column>
-          <el-table-column align="right" width="180">
+          <el-table-column align="right" width="280">
             <template slot-scope="scope">
               <el-button
                 @click="initEditUser(scope.$index, scope.row)"
