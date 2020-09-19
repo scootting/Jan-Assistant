@@ -31,9 +31,11 @@ class GeneralController extends Controller
     }
 
     //  * Registrar un usuario en el recurso.    
-    public function registerUser(Request $request){
-        $carnet = $request->get('carnet'); 
-        $data = General::RegisterUser($carnet);
+    public function storeUser(Request $request){
+        $usuario = $request->get('usuario');
+        $personal = $usuario['personal'];
+        \Log::info($personal);
+        $data = General::RegisterUser($personal);
         return $data;
     } 
     

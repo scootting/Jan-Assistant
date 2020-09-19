@@ -31,8 +31,7 @@ Route::group([
     
     Route::get('person/{id}','GeneralController@getPersonById');    
 
-
-
+    
     // *** - rutas para crear, editar, mostrar, buscar e imprimir a DeliveryDocuments - ***
     Route::get('deliveryDocuments/responsable/{responsable}','DeliveryDocumentsController@searchResponsable' );
     Route::get('deliveryDocuments/cargos/{responsable}','DeliveryDocumentsController@loadCargos' );
@@ -62,6 +61,7 @@ Route::group([
 
     // *** - rutas para crear, editar, mostrar, buscar a los usuarios del sistema - ***
     Route::post('users', 'GeneralController@getUsersByDescription');
+    Route::post('user','GeneralController@storeUser');    
     /*
     Route::post('upload', 'FileController@uploadFile');
     */

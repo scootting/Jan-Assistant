@@ -4587,25 +4587,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AniadirPersona",
   data: function data() {
     return {
       messages: {},
       user: {
-        personal: "",
-        descripcion: "",
-        name: "",
-        password: "",
-        estado: "T"
+        personal: ""
+        /* description: "", name: "", password:"", state: "T" */
+
       },
       rules: {
         personal: [{
           required: true,
           message: "El campo no puede estar vacio",
           trigger: "blur"
-        } //{ type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
-        ]
+        }]
       }
     };
   },
@@ -4616,15 +4615,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveUser: function saveUser() {
       var app = this;
-      var newPerson = app.person;
-      axios.post("/api/person", {
-        persona: newPerson,
-        marker: "registrar"
+      var newUser = app.user;
+      axios.post("/api/user", {
+        usuario: newUser
       }).then(function (response) {
-        alert("se ha creado el registro de la persona");
-      })["catch"](function (response) {
-        console.log(response);
-        alert("no se puede crear el registro de la persona");
+        alert("se ha creado el registro del usuario");
+      })["catch"](function (error) {
+        app.error = error.response.data;
+        console.log(error.response.data);
+        app.$notify.error({
+          title: "Error",
+          message: app.error.message
+        });
       });
     },
     noUser: function noUser() {
@@ -86052,101 +86054,6 @@ var render = function() {
                                 on: { click: _vm.noUser }
                               },
                               [_vm._v("Cancelar")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              size: "small",
-                              label: "descripcion",
-                              prop: "descripcion"
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              attrs: { size: "small", disabled: true },
-                              model: {
-                                value: _vm.user.descripcion,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.user, "descripcion", $$v)
-                                },
-                                expression: "user.descripcion"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { size: "small", label: "usuario" } },
-                          [
-                            _c("el-input", {
-                              attrs: { size: "small", disabled: true },
-                              model: {
-                                value: _vm.user.name,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.user, "name", $$v)
-                                },
-                                expression: "user.name"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              size: "small",
-                              label: "apellido materno",
-                              prop: "materno"
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              attrs: { size: "small", disabled: true },
-                              model: {
-                                value: _vm.user.materno,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.user, "materno", $$v)
-                                },
-                                expression: "user.materno"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { size: "small", label: "genero" } },
-                          [
-                            _c(
-                              "el-radio-group",
-                              {
-                                attrs: { size: "small" },
-                                model: {
-                                  value: _vm.user.estado,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.user, "estado", $$v)
-                                  },
-                                  expression: "user.estado"
-                                }
-                              },
-                              [
-                                _c("el-radio-button", {
-                                  attrs: { label: "T" }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", { attrs: { label: "F" } })
-                              ],
-                              1
                             )
                           ],
                           1

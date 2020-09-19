@@ -5,7 +5,7 @@
         <span>nuevo usuario</span>
         <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
-      <div>        
+      <div>
         <el-row>
           <el-col :span="24">
             <el-form ref="form" :model="user" :rules="rules" label-width="260px">
@@ -16,6 +16,7 @@
                 <el-button size="small" type="primary" @click.prevent="saveUser('user')" plain>Crear</el-button>
                 <el-button size="small" type="danger" @click="noUser" plain>Cancelar</el-button>
               </el-form-item>
+              <!--
               <el-form-item size="small" label="descripcion" prop="descripcion">
                 <el-input size="small" v-model="user.descripcion" :disabled="true"></el-input>
               </el-form-item>
@@ -31,6 +32,7 @@
                   <el-radio-button label="F"></el-radio-button>
                 </el-radio-group>
               </el-form-item>
+              -->
             </el-form>
           </el-col>
         </el-row>
@@ -47,21 +49,17 @@ export default {
       messages: {},
       user: {
         personal: "",
-        descripcion: "",
-        name: "",
-        password:"",
-        estado: "T"
+        /* description: "", name: "", password:"", state: "T" */
       },
       rules: {
         personal: [
           {
             required: true,
             message: "El campo no puede estar vacio",
-            trigger: "blur"
+            trigger: "blur",
           },
-          //{ type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
-        ]
-      }
+        ],
+      },
     };
   },
   mounted() {},
@@ -71,19 +69,22 @@ export default {
     },
     saveUser() {
       var app = this;
-      var newPerson = app.person;
+      var newUser = app.user;
 
       axios
-        .post("/api/person", {
-          persona: newPerson,
-          marker: "registrar"
+        .post("/api/user", {
+          usuario: newUser,
         })
-        .then(function(response) {
-          alert("se ha creado el registro de la persona");
+        .then(function (response) {
+          alert("se ha creado el registro del usuario");
         })
-        .catch(function(response) {
-          console.log(response);
-          alert("no se puede crear el registro de la persona");
+        .catch(function (error) {
+          app.error = error.response.data;
+          console.log(error.response.data);
+          app.$notify.error({
+            title: "Error",
+            message: app.error.message,
+          });
         });
     },
 
@@ -91,9 +92,8 @@ export default {
       this.$router.push("/api");
     },
 
-    resetUser() {
-    }
-  }
+    resetUser() {},
+  },
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
