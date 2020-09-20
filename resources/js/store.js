@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     state: {
         token: localStorage.getItem("access_token") || null,
         user: {} || null,
+        
     },
     plugins: [createPersistedState()],
     getters: {
@@ -43,7 +44,7 @@ const store = new Vuex.Store({
                         axios.defaults.headers.common["Authorization"] =
                             "Bearer " + token;
                         commit("retrieveToken", { user, token });
-                        console.log("despues de: " + user);
+                        //console.log("despues de: " + user);
                         resolve(response);
                     })
                     .catch(error => {

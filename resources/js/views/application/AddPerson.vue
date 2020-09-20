@@ -156,11 +156,6 @@ export default {
 <style scoped>
 .el-card {
   background: #ffffff;
-  /*
-    background: #DEDFD9;
-    background: #EBEEF4;
-    background: #d3dce6;
-    */
 }
 .el-form {
   padding-left: 120px;

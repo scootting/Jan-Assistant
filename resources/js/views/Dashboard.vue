@@ -72,7 +72,7 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-user" @click.native="NoDeveloped">mi perfil</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-user" @click.native="initToUserProfile">mi perfil</el-dropdown-item>
               <el-dropdown-item
                 icon="el-icon-chat-dot-square"
                 @click.native="NoDeveloped"
@@ -91,7 +91,7 @@
                   <el-breadcrumb-item>Welcome</el-breadcrumb-item>
                 </el-breadcrumb>
                 <div id="right-button">
-                  <el-button icon="el-icon-back" circle @click.native="ToWelcomePage"></el-button>
+                  <el-button icon="el-icon-back" circle @click.native="initToWelcomePage"></el-button>
                 </div>
               </div>
               <br />
@@ -206,8 +206,11 @@ export default {
         message: "aun el modulo no se ha desarrollado.",
       });
     },
-    ToWelcomePage() {
+    initToWelcomePage() {
       this.$router.push({ name: "welcome" });
+    },
+    initToUserProfile(){
+      this.$router.push({ name: "userprofile" });
     },
   },
 };

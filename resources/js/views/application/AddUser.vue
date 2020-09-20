@@ -16,23 +16,6 @@
                 <el-button size="small" type="primary" @click.prevent="saveUser('user')" plain>Crear</el-button>
                 <el-button size="small" type="danger" @click="noUser" plain>Cancelar</el-button>
               </el-form-item>
-              <!--
-              <el-form-item size="small" label="descripcion" prop="descripcion">
-                <el-input size="small" v-model="user.descripcion" :disabled="true"></el-input>
-              </el-form-item>
-              <el-form-item size="small" label="usuario">
-                <el-input size="small" v-model="user.name" :disabled="true"></el-input>
-              </el-form-item>
-              <el-form-item size="small" label="apellido materno" prop="materno">
-                <el-input size="small" v-model="user.materno" :disabled="true"></el-input>
-              </el-form-item>
-              <el-form-item size="small" label="genero">
-                <el-radio-group v-model="user.estado" size="small">
-                  <el-radio-button label="T"></el-radio-button>
-                  <el-radio-button label="F"></el-radio-button>
-                </el-radio-group>
-              </el-form-item>
-              -->
             </el-form>
           </el-col>
         </el-row>
