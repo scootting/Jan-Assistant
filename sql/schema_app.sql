@@ -207,7 +207,7 @@ BEGIN
        v_usuario := Datos.nombres::char(1) || iif(Datos.paterno = '', Datos.paterno, Datos.materno);
        v_descripcion := iif(Datos.paterno <> '', Datos.paterno || ' ', '') || Datos.materno || ', ' || Datos.nombres;
        v_clave := md5('12345678'); 
-       p_gestion := 2019;
+       p_gestion := (SELECT gestion FROM public.sis_gestion ps WHERE ps.estado='S');
        /*
        INSERT INTO app.users
        */
