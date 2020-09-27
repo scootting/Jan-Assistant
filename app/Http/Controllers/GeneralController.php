@@ -125,4 +125,11 @@ class GeneralController extends Controller
         return json_encode($paginate);
     }
 
+    //  * Obtener un usuario de el recurso utilizado.
+    //  * {id: numero de carnet de identidad}    
+    public function getUserById($id){        
+        $data = General::GetUserByIdentityCard($id);
+        return json_encode($data);
+    } 
+
 }

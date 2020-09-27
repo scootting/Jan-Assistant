@@ -4115,7 +4115,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Inventarios",
   data: function data() {
@@ -5027,17 +5026,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Profile",
   data: function data() {
     return {
       messages: {},
-      data: {},
-      user: {
-        nodip: "",
-        descripcion: "",
-        usuario: "",
-        clave: ""
+      user: this.$store.state.user,
+      centerDialogVisible: false,
+      userPassword: {
+        pass: '',
+        newPass: '',
+        checkPass: ''
       }
     };
   },
@@ -7408,7 +7427,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-card[data-v-2dee8060] {\r\n  background: #ffffff;\n}\n.el-form[data-v-2dee8060] {\r\n  padding-left: 120px;\r\n  padding-right: 120px;\r\n  padding-top: 60px;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-card[data-v-2dee8060] {\r\n    background: #ffffff;\n}\n.el-form[data-v-2dee8060] {\r\n    padding-left: 120px;\r\n    padding-right: 120px;\r\n    padding-top: 60px;\n}\n.el-dialog>.el-form[data-v-2dee8060] {\r\n    padding-left: 30px;\r\n    padding-right: 30px;\r\n    padding-top: 20px;\n}\r\n", ""]);
 
 // exports
 
@@ -85407,7 +85426,9 @@ var render = function() {
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.user.usuario))]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.user.gestion))])
+          _c("p", [_vm._v(_vm._s(_vm.user.gestion))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.user))])
         ])
       ])
     ],
@@ -86811,7 +86832,7 @@ var render = function() {
                           },
                           [
                             _c("el-input", {
-                              attrs: { size: "small" },
+                              attrs: { size: "small", disabled: "" },
                               model: {
                                 value: _vm.user.nodip,
                                 callback: function($$v) {
@@ -86835,7 +86856,7 @@ var render = function() {
                           },
                           [
                             _c("el-input", {
-                              attrs: { size: "small" },
+                              attrs: { size: "small", disabled: "" },
                               model: {
                                 value: _vm.user.descripcion,
                                 callback: function($$v) {
@@ -86859,7 +86880,7 @@ var render = function() {
                           },
                           [
                             _c("el-input", {
-                              attrs: { size: "small" },
+                              attrs: { size: "small", disabled: "" },
                               model: {
                                 value: _vm.user.usuario,
                                 callback: function($$v) {
@@ -86884,7 +86905,11 @@ var render = function() {
                           [
                             _c("el-input", {
                               staticStyle: { width: "84%" },
-                              attrs: { size: "small" },
+                              attrs: {
+                                size: "small",
+                                disabled: "",
+                                "show-password": ""
+                              },
                               model: {
                                 value: _vm.user.clave,
                                 callback: function($$v) {
@@ -86906,7 +86931,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.changePassword($event)
+                                    _vm.centerDialogVisible = true
                                   }
                                 }
                               },
@@ -86927,7 +86952,123 @@ var render = function() {
           ],
           1
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "contraseña",
+            visible: _vm.centerDialogVisible,
+            width: "50%",
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.centerDialogVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              ref: "form",
+              attrs: { model: _vm.userPassword, "label-width": "190px" }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "actual contraseña", prop: "pass" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "password", autocomplete: "off" },
+                    model: {
+                      value: _vm.userPassword.pass,
+                      callback: function($$v) {
+                        _vm.$set(_vm.userPassword, "pass", $$v)
+                      },
+                      expression: "userPassword.pass"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "nueva contraseña", prop: "newPass" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "password", autocomplete: "off" },
+                    model: {
+                      value: _vm.userPassword.newPass,
+                      callback: function($$v) {
+                        _vm.$set(_vm.userPassword, "newPass", $$v)
+                      },
+                      expression: "userPassword.newPass"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "Confirmar contraseña", prop: "checkPass" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "password", autocomplete: "off" },
+                    model: {
+                      value: _vm.userPassword.checkPass,
+                      callback: function($$v) {
+                        _vm.$set(_vm.userPassword, "checkPass", $$v)
+                      },
+                      expression: "userPassword.checkPass"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "small" },
+                  on: {
+                    click: function($event) {
+                      _vm.centerDialogVisible = false
+                    }
+                  }
+                },
+                [_vm._v("Cancelar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "small" },
+                  on: { click: _vm.changePassword }
+                },
+                [_vm._v("Confirmar")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )

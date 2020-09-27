@@ -45,9 +45,9 @@ class General extends Model
         \Log::info("Description: ".$description);
         if ($description == '') 
             # code...
-            $query = "select * from app.ff_buscar_personas('')";
+            $query = "select * from public.ff_buscar_personas('')";
         else
-            $query = "select * from app.ff_buscar_personas('".$description."')";
+            $query = "select * from public.ff_buscar_personas('".$description."')";
         \Log::info($query);
         //$query = "select * from public.personas where paterno ='".$description."' order by paterno, materno, nombres";
         $data = collect(DB::select(DB::raw($query)));
@@ -71,10 +71,8 @@ class General extends Model
         return $data;
     }    
 
-    // *** - funcion para la busqueda de las personas por carnet de identidad - ***
-    // *** - parametros [carnet de identidad] - ***
     public static function GetPersonByIdentityCard($identityCard){
-        $query = "select * from public.ff_buscar_persona('".$identityCard."')";
+        $query = "select * from public.ff_mostrar_persona('".$identityCard."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
@@ -92,4 +90,14 @@ class General extends Model
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }    
+
+
+    // *** - funcion para la busqueda de las personas por carnet de identidad - ***
+    // *** - parametros [carnet de identidad] - ***
+
+    public static function GetUserByIdentityCard($identityCard){
+        $query = "select * from public.ff_mostrar_usuario('".$identityCard."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }        
 }

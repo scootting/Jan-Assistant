@@ -1,7 +1,7 @@
 /*
- *** - funcion para la busqueda de personas por carnet de identidad - ***
+ *** - funcion para la busqueda de persona por carnet de identidad - ***
 */
-CREATE OR REPLACE FUNCTION public.ff_buscar_persona (
+CREATE OR REPLACE FUNCTION public.ff_mostrar_persona (
   p_personal varchar
 )
 RETURNS SETOF public.tt_persona AS
@@ -32,11 +32,11 @@ CALLED ON NULL INPUT
 SECURITY INVOKER
 COST 100 ROWS 1000;
 
-ALTER FUNCTION public.ff_buscar_persona (p_personal varchar)
+ALTER FUNCTION public.ff_mostrar_persona (p_personal varchar)
   OWNER TO postgres;
 
 /*
- *** - funcion para registrar personas - ***
+ *** - funcion para registrar una persona - ***
 */
 CREATE OR REPLACE FUNCTION public.ff_registrar_persona (
   p_personal varchar,
@@ -79,7 +79,7 @@ ALTER FUNCTION public.ff_registrar_persona (p_personal varchar, p_paterno varcha
   OWNER TO postgres;
 
 /*
- *** - funcion para editar personas - ***
+ *** - funcion para editar una persona - ***
 */
 
 CREATE OR REPLACE FUNCTION public.ff_editar_persona (
@@ -119,4 +119,65 @@ SECURITY INVOKER
 COST 100;
 
 ALTER FUNCTION public.ff_editar_persona (p_personal varchar, p_paterno varchar, p_materno varchar, p_nombres varchar, p_sexo char, p_nacimiento varchar)
+  OWNER TO postgres;
+
+
+/*
+ *** - funcion para buscar personas por distintos campos- ***
+*/
+
+CREATE OR REPLACE FUNCTION public.ff_buscar_personas (
+  p_descripcion varchar
+)
+RETURNS SETOF public.tt_persona AS
+$body$
+DECLARE
+  Datos RECORD;
+BEGIN
+	IF p_descripcion = '' THEN
+		FOR Datos IN SELECT p.id_persona,
+        					p.nro_dip::VARCHAR, 
+                            p.paterno::VARCHAR, 
+                            p.materno::VARCHAR, 
+                            p.nombres::VARCHAR, 
+                            p.id_sexo::CHAR(1),
+                            p.fec_nacimiento::DATE
+   				  FROM public.personas p
+              ORDER BY p.nro_dip DESC, p.paterno, p.materno, p.nombres
+                   LOOP
+        RETURN NEXT Datos;
+        END LOOP;
+        IF NOT FOUND THEN
+           	RAISE EXCEPTION 'No existe personas';
+        END IF;        	
+    ELSE 
+    	FOR Datos IN SELECT p.id_persona,
+                            p.nro_dip::VARCHAR, 
+                            p.paterno::VARCHAR, 
+                            p.materno::VARCHAR, 
+                            p.nombres::VARCHAR, 
+                            p.id_sexo::CHAR(1),
+                            p.fec_nacimiento::DATE
+                       FROM public.personas p
+                      WHERE p.nro_dip like '%' || p_descripcion || '%'
+                         OR p.paterno like '%' || p_descripcion || '%'
+                         OR p.materno like '%' || p_descripcion || '%'
+                         OR p.nombres like '%' || p_descripcion || '%'
+                   ORDER BY p.nro_dip DESC, p.paterno, p.materno, p.nombres
+                       LOOP
+            RETURN NEXT Datos;
+            END LOOP;
+            IF NOT FOUND THEN
+               RAISE EXCEPTION 'No existe personas 2';
+            END IF;        	            
+    END IF;        
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 100 ROWS 1000;
+
+ALTER FUNCTION public.ff_buscar_personas (p_descripcion varchar)
   OWNER TO postgres;
