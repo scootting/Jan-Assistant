@@ -13,7 +13,8 @@ import Assets from './views/FixedAssets'
 import Users from './views/application/Users'
 import AddUser from './views/application/AddUser'
 import EditUser from './views/application/EditUser'
-import UserProfile from './views/application/UserProfile'
+import ShowUser from './views/application/ShowUser'
+import EditUserProfiles from './views/application/EditUserProfiles'
 //persona
 import Persons from './views/application/Persons'
 import AddPerson from './views/application/AddPerson'
@@ -69,7 +70,8 @@ const router = new VueRouter({
                 { path: 'users', name: 'users', component: Users },
                 { path: 'user/add', name: 'adduser', component: AddUser },
                 { path: 'user/:id', name: 'edituser', component: EditUser },
-                { path: 'user/profile', name: 'userprofile', component: UserProfile },
+                { path: 'user/show', name: 'showuser', component: ShowUser },
+                { path: 'user/profiles/:id', name: 'edituserprofiles', component: EditUserProfiles },
 
                 // enlaces para administrar las personas
                 { path: 'persons', name: 'persons', component: Persons },

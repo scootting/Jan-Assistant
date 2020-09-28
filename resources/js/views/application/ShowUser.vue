@@ -71,7 +71,9 @@ export default {
         test() {
             alert("bienvenido al modulo");
         },
-        changePassword() {},
+        changePassword() {
+
+        },
     },
 };
 </script>
