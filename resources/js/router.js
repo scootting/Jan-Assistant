@@ -71,7 +71,7 @@ const router = new VueRouter({
                 { path: 'user/add', name: 'adduser', component: AddUser },
                 { path: 'user/:id', name: 'edituser', component: EditUser },
                 { path: 'user/show', name: 'showuser', component: ShowUser },
-                { path: 'user/profiles/:id', name: 'edituserprofiles', component: EditUserProfiles },
+                { path: 'user/profiles', name: 'edituserprofiles', component: EditUserProfiles },
 
                 // enlaces para administrar las personas
                 { path: 'persons', name: 'persons', component: Persons },

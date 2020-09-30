@@ -4813,19 +4813,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Inventarios",
   data: function data() {
     return {
       user: this.$store.state.user,
       messages: {},
-      data: {}
+      data: {},
+      tableData: [{
+        date: "2016-05-03",
+        name: "Tom",
+        address: "No. 189, Grove St, Los Angeles"
+      }, {
+        date: "2016-05-02",
+        name: "Tom",
+        address: "No. 189, Grove St, Los Angeles"
+      }, {
+        date: "2016-05-04",
+        name: "Tom",
+        address: "No. 189, Grove St, Los Angeles"
+      }, {
+        date: "2016-05-01",
+        name: "Tom",
+        address: "No. 189, Grove St, Los Angeles"
+      }]
     };
   },
   mounted: function mounted() {},
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    handleDeleteProfile: function handleDeleteProfile(index, rows) {
+      rows.splice(index, 1);
     }
   }
 });
@@ -86595,44 +86637,138 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [
-            _c("span", [_vm._v("manejo de perfiles")]),
-            _vm._v(" "),
-            _c(
-              "el-button",
-              {
-                staticStyle: { float: "right", padding: "3px 0" },
-                attrs: { type: "text" }
-              },
-              [_vm._v("nuevos perfiles")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("h1", [_vm._v("perfiles")]),
-        _vm._v(" "),
-        _c("h5", [
-          _vm._v(
-            "\r\n            esta pagina aun esta en desarrollo, haremos lo posible para que este funcional en el menor tiempo posible.\r\n            "
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "clearfix",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c("span", [_vm._v("manejo de perfiles")]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticStyle: { float: "right", padding: "3px 0" },
+                  attrs: { type: "text" }
+                },
+                [_vm._v("nuevos perfiles")]
+              )
+            ],
+            1
           ),
-          _c("p", [_vm._v("Gracias")]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.user.usuario))]),
+          _c("h1", [_vm._v("perfiles")]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.user.gestion))]),
+          _c("h5", [
+            _c("p", [_vm._v(_vm._s(_vm.user.usuario))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.user.gestion))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.user))])
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.user))])
-        ])
-      ])
+          _c(
+            "el-table",
+            { staticStyle: { width: "100%" }, attrs: { data: _vm.tableData } },
+            [
+              _c("el-table-column", {
+                attrs: { label: "Fecha", width: "180" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c("i", { staticClass: "el-icon-time" }),
+                        _vm._v(" "),
+                        _c("span", { staticStyle: { "margin-left": "10px" } }, [
+                          _vm._v(_vm._s(scope.row.date))
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Nombre", width: "180" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "el-popover",
+                          { attrs: { trigger: "hover", placement: "top" } },
+                          [
+                            _c("p", [
+                              _vm._v("Name: " + _vm._s(scope.row.name))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Addr: " + _vm._s(scope.row.address))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "name-wrapper",
+                                attrs: { slot: "reference" },
+                                slot: "reference"
+                              },
+                              [
+                                _c("el-tag", { attrs: { size: "medium" } }, [
+                                  _vm._v(_vm._s(scope.row.name))
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Operaciones" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "danger" },
+                            on: {
+                              click: function($event) {
+                                return _vm.handleDeleteProfile(
+                                  scope.$index,
+                                  scope.row
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("Eliminar")]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -104000,7 +104136,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'showuser',
       component: _views_application_ShowUser__WEBPACK_IMPORTED_MODULE_10__["default"]
     }, {
-      path: 'user/profiles/:id',
+      path: 'user/profiles',
       name: 'edituserprofiles',
       component: _views_application_EditUserProfiles__WEBPACK_IMPORTED_MODULE_11__["default"]
     }, // enlaces para administrar las personas
