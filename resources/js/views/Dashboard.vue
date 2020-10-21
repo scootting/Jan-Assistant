@@ -202,9 +202,6 @@ export default {
 </script>
 
 <style>
-html,
-body {}
-
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
