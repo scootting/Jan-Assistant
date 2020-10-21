@@ -3656,6 +3656,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
@@ -4337,6 +4339,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -7449,7 +7453,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-input .el-select[data-v-2ec57130] {\n  width: 180px;\n}\n", ""]);
+exports.push([module.i, "\n.el-input .el-select[data-v-2ec57130] {\r\n  width: 180px;\n}\r\n", ""]);
 
 // exports
 
@@ -84765,7 +84769,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-main",
-                { staticStyle: { padding: "40px", color: "#000" } },
+                { staticStyle: { padding: "40px", background: "fff" } },
                 [
                   _c(
                     "el-row",
@@ -84778,43 +84782,29 @@ var render = function() {
                         "el-col",
                         { attrs: { span: 22 } },
                         [
-                          _c(
-                            "div",
-                            { attrs: { id: "level" } },
-                            [
-                              _c(
-                                "el-breadcrumb",
-                                {
+                          _c("div", { attrs: { id: "level" } }, [
+                            _c("p"),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { attrs: { id: "right-button" } },
+                              [
+                                _c("el-button", {
                                   attrs: {
-                                    "separator-class": "el-icon-arrow-right"
-                                  }
-                                },
-                                [
-                                  _c("el-breadcrumb-item", [_vm._v("Api")]),
-                                  _vm._v(" "),
-                                  _c("el-breadcrumb-item", [_vm._v("Welcome")])
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { attrs: { id: "right-button" } },
-                                [
-                                  _c("el-button", {
-                                    attrs: { icon: "el-icon-back", circle: "" },
-                                    nativeOn: {
-                                      click: function($event) {
-                                        return _vm.initToWelcomePage($event)
-                                      }
+                                    icon: "el-icon-back",
+                                    circle: "",
+                                    warning: ""
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      return _vm.initToWelcomePage($event)
                                     }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("br"),
                           _vm._v(" "),
@@ -85463,7 +85453,7 @@ var render = function() {
         _vm._v(" "),
         _c("h5", [
           _vm._v(
-            "\n            esta pagina aun esta en desarrollo, haremos lo posible para que este funcional en el menor tiempo posible.\n            "
+            "\r\n            esta pagina aun esta en desarrollo, haremos lo posible para que este funcional en el menor tiempo posible.\r\n            "
           ),
           _c("p", [_vm._v("Gracias")]),
           _vm._v(" "),
@@ -85842,7 +85832,7 @@ var render = function() {
             slot: "header"
           },
           [
-            _c("span", [_vm._v("Card name")]),
+            _c("span", [_vm._v("bienvenido")]),
             _vm._v(" "),
             _c(
               "el-button",
@@ -85850,7 +85840,7 @@ var render = function() {
                 staticStyle: { float: "right", padding: "3px 0" },
                 attrs: { type: "text" }
               },
-              [_vm._v("Operation button")]
+              [_vm._v("ayuda")]
             )
           ],
           1
@@ -105901,8 +105891,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan-master\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan-master\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

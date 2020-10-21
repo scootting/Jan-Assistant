@@ -64,17 +64,19 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-header>
-
-            <el-main style="padding:40px; color:#000">
+            <el-main style="padding:40px; background:fff">
                 <el-row type="flex" class="row-bg" justify="center">
                     <el-col :span="22">
                         <div id="level">
+                            <p></p>
+                            <!--
                             <el-breadcrumb separator-class="el-icon-arrow-right">
                                 <el-breadcrumb-item>Api</el-breadcrumb-item>
                                 <el-breadcrumb-item>Welcome</el-breadcrumb-item>
                             </el-breadcrumb>
+                            -->
                             <div id="right-button">
-                                <el-button icon="el-icon-back" circle @click.native="initToWelcomePage"></el-button>
+                                <el-button icon="el-icon-back" circle @click.native="initToWelcomePage" warning></el-button>
                             </div>
                         </div>
                         <br />
