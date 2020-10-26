@@ -9,15 +9,28 @@
       </div>
       <h1>bienvenido/a</h1>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
+      <el-button type="text" @click="prueba = true">Personas</el-button>
+      <example msg="Welcome to Your Vue.js App" />
+      <persona :centerDialogVisible='prueba'></persona>
+      <!-- 
+      -->
     </el-card>
   </div>
 </template>
 
 <script>
+import persona from "./components/person";
+import example from "./components/example.vue";
+
 export default {
   name: "Bienvenido",
+  components: {
+    persona,
+    example,
+  },
   data() {
     return {
+      prueba: false,
       messages: {},
       data: {},
     };
