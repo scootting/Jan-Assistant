@@ -4371,7 +4371,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      prueba: false,
+      target: false,
       messages: {},
       data: {}
     };
@@ -4380,6 +4380,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    openModalPerson: function openModalPerson() {
+      this.$emit('openModal');
     }
   }
 });
@@ -5415,19 +5418,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "person",
+  name: "ModalPerson",
+
+  /*
   props: {
     centerDialogVisible: {
+      required: true,
       type: Boolean,
-      "default": false
-    }
+      default: false,
+    },
+  },*/
+  data: function data() {
+    return {
+      centerDialogVisible: false
+    };
   },
-  computed: {
-    disabled: function disabled() {
-      return false;
+  computed: {},
+  methods: {
+    openModal: function openModal() {
+      console.log("Probando que ingresa aca!!!");
+      this.centerDialogVisible = true;
+    },
+    closeModal: function closeModal() {
+      this.centerDialogVisible = false;
     }
   }
 });
@@ -85994,20 +86008,13 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-button",
-            {
-              attrs: { type: "text" },
-              on: {
-                click: function($event) {
-                  _vm.prueba = true
-                }
-              }
-            },
+            { attrs: { type: "text" }, on: { click: _vm.openModalPerson } },
             [_vm._v("Personas")]
           ),
           _vm._v(" "),
           _c("example", { attrs: { msg: "Welcome to Your Vue.js App" } }),
           _vm._v(" "),
-          _c("persona", { attrs: { centerDialogVisible: _vm.prueba } })
+          _c("persona")
         ],
         1
       )
@@ -87870,28 +87877,13 @@ var render = function() {
               slot: "footer"
             },
             [
-              _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.centerDialogVisible = false
-                    }
-                  }
-                },
-                [_vm._v("Cancel")]
-              ),
+              _c("el-button", { on: { click: _vm.closeModal } }, [
+                _vm._v("Cancel")
+              ]),
               _vm._v(" "),
               _c(
                 "el-button",
-                {
-                  attrs: { type: "primary" },
-                  on: {
-                    click: function($event) {
-                      _vm.centerDialogVisible = false
-                    }
-                  }
-                },
+                { attrs: { type: "primary" }, on: { click: _vm.closeModal } },
                 [_vm._v("Confirm")]
               )
             ],

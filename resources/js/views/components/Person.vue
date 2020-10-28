@@ -11,26 +11,36 @@
         default</span
       >
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="centerDialogVisible=false"
-          >Confirm</el-button
-        >
+        <el-button @click="closeModal">Cancel</el-button>
+        <el-button type="primary" @click="closeModal">Confirm</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 export default {
-  name: "person",
+  name: "ModalPerson",
+  /*
   props: {
     centerDialogVisible: {
+      required: true,
       type: Boolean,
-      default:false
+      default: false,
     },
+  },*/
+  data() {
+    return {
+      centerDialogVisible: false,
+    };
   },
-  computed: {
-    disabled() {
-      return false;
+  computed: {},
+  methods: {
+    openModal() {
+      console.log("Probando que ingresa aca!!!");
+      this.centerDialogVisible = true;
+    },
+    closeModal() {
+      this.centerDialogVisible = false;
     },
   },
 };

@@ -9,9 +9,9 @@
       </div>
       <h1>bienvenido/a</h1>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
-      <el-button type="text" @click="prueba = true">Personas</el-button>
+      <el-button type="text"  @click="openModalPerson">Personas</el-button>
       <example msg="Welcome to Your Vue.js App" />
-      <persona :centerDialogVisible='prueba'></persona>
+      <persona></persona>
       <!-- 
       -->
     </el-card>
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      prueba: false,
+      target: false,
       messages: {},
       data: {},
     };
@@ -40,6 +40,9 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
+    openModalPerson(){
+      this.$emit('openModal');
+    }
   },
 };
 </script>
