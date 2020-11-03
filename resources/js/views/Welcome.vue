@@ -9,9 +9,11 @@
       </div>
       <h1>bienvenido/a</h1>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
-      <el-button type="text"  @click="openModalPerson">Personas</el-button>
+      <el-button type="text" @click="openModalPerson">Personas</el-button>
       <example msg="Welcome to Your Vue.js App" />
-      <persona></persona>
+      <persona :centerDialogVisible="isVisible" @update-visible="update"></persona>
+      <el-button type="text" @click="openModalValued">Valorado</el-button>
+      <valorado :centerDialogVisible.sync="isValued"></valorado>
       <!-- 
       -->
     </el-card>
@@ -19,18 +21,21 @@
 </template>
 
 <script>
-import persona from "./components/person";
+import persona from "./components/Personed";
 import example from "./components/example.vue";
+import valorado from "./components/Valued";
 
 export default {
   name: "Bienvenido",
   components: {
     persona,
     example,
+    valorado,
   },
   data() {
     return {
-      target: false,
+      isValued: false,
+      isVisible: false,
       messages: {},
       data: {},
     };
@@ -40,8 +45,14 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    openModalPerson(){
-      this.$emit('openModal');
+    openModalPerson() {
+      this.isVisible = true;
+    },
+    openModalValued(){
+      this.isValued = true;
+    },
+    update(isVisible){
+      this.isVisible = isVisible;
     }
   },
 };

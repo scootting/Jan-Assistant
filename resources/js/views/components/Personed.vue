@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       title="Warning"
-      :visible.sync="centerDialogVisible"
+      :visible.sync="isCenterDialogVisible"
       width="30%"
       center
     >
@@ -12,35 +12,39 @@
       >
       <span slot="footer" class="dialog-footer">
         <el-button @click="closeModal">Cancel</el-button>
-        <el-button type="primary" @click="closeModal">Confirm</el-button>
+        <el-button type="primary" @click="closeModal" @close="cierren">Confirm</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
 export default {
-  name: "ModalPerson",
-  /*
+  name: "Personed",
   props: {
     centerDialogVisible: {
       required: true,
       type: Boolean,
       default: false,
     },
-  },*/
+  },
   data() {
     return {
-      centerDialogVisible: false,
+      isCenterDialogVisible: this.centerDialogVisible,
     };
   },
   computed: {},
   methods: {
-    openModal() {
-      console.log("Probando que ingresa aca!!!");
-      this.centerDialogVisible = true;
+    cierren(){
+      console.log("pruebas de como se cierra");
     },
     closeModal() {
-      this.centerDialogVisible = false;
+      this.isCenterDialogVisible = false;
+      this.$emit("update-visible", this.isCenterDialogVisible);
+    },
+  },
+  watch: {
+    centerDialogVisible: function () {
+      this.isCenterDialogVisible = this.centerDialogVisible;
     },
   },
 };
