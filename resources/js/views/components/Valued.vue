@@ -2,7 +2,6 @@
   <div>
     <el-dialog
       title="Warning"
-      v-show="centerDialogVisible"
       :visible.sync="centerDialogVisible"
       width="30%"
       center
