@@ -25,7 +25,7 @@ import Home from './views/Home'
 import Layout from './views/Layout'
 
 //clients
-import Inventory from './views/Inventory'
+import Inventory from './views/inventory/Inventory'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
 
