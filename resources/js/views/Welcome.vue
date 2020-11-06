@@ -9,13 +9,14 @@
       </div>
       <h1>bienvenido/a</h1>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
-      <el-button type="text" @click="openModalPerson">Personas</el-button>
       <example msg="Welcome to Your Vue.js App" />
+
+      <el-button type="text" @click="openModalPerson">Personas</el-button>
       <persona :centerDialogVisible="isVisible" @update-visible="update"></persona>
-      <el-button type="text" @click="openModalValued">Valorado</el-button>
-      <valorado :centerDialogVisible.sync="isValued"></valorado>
       <!-- 
       -->
+      <el-button type="text" @click="openModalValued">Valorado</el-button>
+      <valorado :centerDialogVisible.sync="isValued"></valorado>
     </el-card>
   </div>
 </template>
