@@ -4317,6 +4317,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -86225,13 +86226,13 @@ var render = function() {
             _vm._v("esta pagina a sido intencionalmente puesta en blanco")
           ]),
           _vm._v(" "),
+          _c("example", { attrs: { msg: "Welcome to Your Vue.js App" } }),
+          _vm._v(" "),
           _c(
             "el-button",
             { attrs: { type: "text" }, on: { click: _vm.openModalPerson } },
             [_vm._v("Personas")]
           ),
-          _vm._v(" "),
-          _c("example", { attrs: { msg: "Welcome to Your Vue.js App" } }),
           _vm._v(" "),
           _c("persona", {
             attrs: { centerDialogVisible: _vm.isVisible },
