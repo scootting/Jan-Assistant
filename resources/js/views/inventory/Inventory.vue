@@ -7,14 +7,20 @@
           >Ayuda</el-button
         >
       </div>
-      <div style="margin-top: 15px">
+
+      <div
+        style="margin-top: 15px">
         <el-input
           placeholder="INSERTE UNA DESCRIPCION"
           v-model="writtenTextParameter"
           class="input-with-select"
           @keyup.enter.native="getOffices"
         >
-          <el-button slot="append" icon="el-icon-search" @click="getOffices"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getOffices"
+          ></el-button>
         </el-input>
       </div>
       <br />
@@ -78,7 +84,10 @@ export default {
       this.loading = true;
       axios
         .get("/api/inventory/" + 2020, {
-          params: { page: this.pagination.page , descripcion:this.writtenTextParameter },
+          params: {
+            page: this.pagination.page,
+            descripcion: this.writtenTextParameter.toUpperCase(),
+          },
         })
         .then((data) => {
           this.loading = false;
@@ -94,15 +103,14 @@ export default {
       this.getOffices();
     },
     initShowInventory(index, row) {
-      
       this.$router.push({
         name: "inventorydetail",
-        params:{
-          soa: row.cod_soa
-        }
+        params: {
+          soa: row.cod_soa,
+        },
       });
     },
-    
+
     test() {
       alert("bienvenido al modulo");
     },

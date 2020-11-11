@@ -5655,6 +5655,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Inventarios",
   data: function data() {
@@ -5680,7 +5686,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/inventory/" + 2020, {
         params: {
           page: this.pagination.page,
-          descripcion: this.writtenTextParameter
+          descripcion: this.writtenTextParameter.toUpperCase()
         }
       }).then(function (data) {
         _this.loading = false;
@@ -5792,16 +5798,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "InventoryDetail",
   data: function data() {
     return {
       loading: false,
+      user: this.$store.state.user,
       sub_oficinas: [],
       oficina: {},
       activos: [],
-      pagination: {},
-      subOficinaSelectId: 'TODOS'
+      pagination: {
+        page: 1
+      },
+      subOficinaSelectId: "TODOS"
     };
   },
   mounted: function mounted() {
@@ -5826,12 +5857,14 @@ __webpack_require__.r(__webpack_exports__);
           id: -1,
           descripcion: "TODOS"
         });
-
-        _this2.CargarActivos();
       })["catch"](function (err) {});
     },
-    getActivosPaginate: function getActivosPaginate() {},
+    getActivosPaginate: function getActivosPaginate(page) {
+      this.pagination.page = page;
+      this.selectSubOficina();
+    },
     selectSubOficina: function selectSubOficina(id) {
+      this.subOficinaSelectId = id;
       this.CargarActivos();
     },
     CargarActivos: function CargarActivos() {
@@ -88525,7 +88558,6 @@ var render = function() {
                     "el-select",
                     {
                       attrs: { placeholder: "TODO" },
-                      on: { change: _vm.selectSubOficina },
                       model: {
                         value: _vm.subOficinaSelectId,
                         callback: function($$v) {
@@ -88559,10 +88591,71 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "el-form",
+                {
+                  attrs: {
+                    "label-width": "160px",
+                    inline: false,
+                    size: "normal"
+                  }
+                },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "SUB-UNIDADES:" } },
+                    [
+                      _c(
+                        "el-dropdown",
+                        {
+                          attrs: {
+                            trigger: "click",
+                            size: "default",
+                            "split-button": "true",
+                            type: "primary"
+                          },
+                          on: { command: _vm.selectSubOficina }
+                        },
+                        [
+                          _vm._v("\n            Sub-Oficinas\n            "),
+                          _c(
+                            "el-dropdown-menu",
+                            { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                            _vm._l(_vm.sub_oficinas, function(item) {
+                              return _c(
+                                "el-dropdown-item",
+                                { key: item.id, attrs: { command: item.id } },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(item.descripcion) +
+                                      "\n              "
+                                  )
+                                ]
+                              )
+                            }),
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
           ),
+          _vm._v(" "),
+          _c("br"),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
@@ -88585,7 +88678,7 @@ var render = function() {
                 },
                 [
                   _c("el-table-column", {
-                    attrs: { label: "CODIGO" },
+                    attrs: { label: "CODIGO", width: "180" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
@@ -88612,7 +88705,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "uni_med", label: "UNIDAD" }
+                    attrs: { prop: "uni_med", label: "MEDIDA", width: "180" }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -88620,7 +88713,30 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "estado", label: "ESTADO" }
+                    attrs: { label: "ESTADO", width: "180" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "name-wrapper",
+                                attrs: { slot: "reference" },
+                                slot: "reference"
+                              },
+                              [
+                                _c("el-tag", { attrs: { size: "medium" } }, [
+                                  _vm._v(_vm._s(scope.row.estado))
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
                   })
                 ],
                 1

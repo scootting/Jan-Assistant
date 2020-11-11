@@ -15,11 +15,7 @@
       <br />
       <el-form label-width="160px" :inline="true" size="normal">
         <el-form-item label="SUB-OFICINAS">
-          <el-select
-            placeholder="TODO"
-            @change="selectSubOficina"
-            v-model="subOficinaSelectId"
-          >
+          <el-select placeholder="TODO" v-model="subOficinaSelectId">
             <el-option
               v-for="item in sub_oficinas"
               :key="item.id"
@@ -34,13 +30,38 @@
             >Cargar Activos</el-button
           >
         </el-form-item>
+        <br />
+        <br />
+        <el-form label-width="160px" :inline="false" size="normal">
+          <el-form-item label="SUB-UNIDADES:">
+            <el-dropdown
+              trigger="click"
+              size="default"
+              split-button = "true"
+              type="primary"
+              @command="selectSubOficina"
+            >
+              Sub-Oficinas
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="item in sub_oficinas"
+                  :key="item.id"
+                  :command="item.id"
+                >
+                  {{ item.descripcion }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-form-item>
+        </el-form>
       </el-form>
 
       <br />
 
+      <br />
       <div>
         <el-table v-loading="loading" :data="activos" style="width: 100%">
-          <el-table-column label="CODIGO">
+          <el-table-column label="CODIGO" width="180">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">{{ scope.row.id }}</el-tag>
@@ -49,16 +70,17 @@
           </el-table-column>
           <el-table-column
             prop="uni_med"
-            label="UNIDAD"
+            label="MEDIDA"
+            width="180"
           ></el-table-column>
-          <el-table-column
-            prop="des"
-            label="DESCRIPCION"
-          ></el-table-column>
-          <el-table-column
-            prop="estado"
-            label="ESTADO"
-          ></el-table-column>
+          <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
+          <el-table-column label="ESTADO" width="180">
+            <template slot-scope="scope">
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">{{ scope.row.estado }}</el-tag>
+              </div>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           :page-size="pagination.per_page"
@@ -77,11 +99,14 @@ export default {
   data() {
     return {
       loading: false,
+      user: this.$store.state.user,
       sub_oficinas: [],
       oficina: {},
       activos: [],
-      pagination: {},
-      subOficinaSelectId: 'TODOS',
+      pagination: {
+        page: 1,
+      },
+      subOficinaSelectId: "TODOS",
     };
   },
   mounted() {
@@ -102,12 +127,16 @@ export default {
           this.subOficinaSelectId = -1;
           this.sub_oficinas = data.data;
           this.sub_oficinas.push({ id: -1, descripcion: "TODOS" });
-          this.CargarActivos();
+         
         })
         .catch((err) => {});
     },
-    getActivosPaginate() {},
+    getActivosPaginate(page) {
+      this.pagination.page = page;
+      this.selectSubOficina();
+    },
     selectSubOficina(id) {
+      this.subOficinaSelectId = id;
       this.CargarActivos();
     },
     CargarActivos() {
