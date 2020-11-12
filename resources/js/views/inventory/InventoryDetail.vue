@@ -8,6 +8,7 @@
           size="small"
           type="primary"
           icon="el-icon-plus"
+          @click="loadReportAssets"
           >hola</el-button
         >
       </div>
@@ -37,7 +38,7 @@
             <el-dropdown
               trigger="click"
               size="default"
-              split-button = "true"
+              split-button=true
               type="primary"
               @command="selectSubOficina"
             >
@@ -127,7 +128,6 @@ export default {
           this.subOficinaSelectId = -1;
           this.sub_oficinas = data.data;
           this.sub_oficinas.push({ id: -1, descripcion: "TODOS" });
-         
         })
         .catch((err) => {});
     },
@@ -154,6 +154,22 @@ export default {
           this.pagination = data.data;
         })
         .catch((err) => {});
+    },
+    loadReportAssets() {
+      axios({
+        url: "api/inventory/download",
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        console.log(response);
+        /*
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "file.pdf");
+        document.body.appendChild(fileLink);
+        fileLink.click();*/
+      });
     },
   },
 };

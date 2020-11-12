@@ -5820,6 +5820,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "InventoryDetail",
   data: function data() {
@@ -5882,6 +5883,22 @@ __webpack_require__.r(__webpack_exports__);
         _this3.activos = Object.values(data.data.data);
         _this3.pagination = data.data;
       })["catch"](function (err) {});
+    },
+    loadReportAssets: function loadReportAssets() {
+      axios({
+        url: "api/inventory/download",
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        console.log(response);
+        /*
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "file.pdf");
+        document.body.appendChild(fileLink);
+        fileLink.click();*/
+      });
     }
   }
 });
@@ -88534,7 +88551,8 @@ var render = function() {
                     size: "small",
                     type: "primary",
                     icon: "el-icon-plus"
-                  }
+                  },
+                  on: { click: _vm.loadReportAssets }
                 },
                 [_vm._v("hola")]
               )
@@ -107266,8 +107284,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
