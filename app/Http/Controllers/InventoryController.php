@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use PHPJasper\PHPJasper; 
+
 class InventoryController extends Controller
 {
     public function getOffices(Request $request, $gestion)
@@ -51,4 +53,30 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
+
+    public function getReport(){
+        //$input = base_path() .
+        //'/vendor/geekcom/phpjasper/examples/hello_world.jasper';
+        $input = base_path() .
+        '/reports/AssetDetailsByCategory.jasper';
+        //$output = base_path() .
+        //'/vendor/geekcom/phpjasper/examples';
+        $output = base_path() .
+        '/reports';
+        $options = [
+            'format' => ['pdf']
+        ];
+    
+        $jasper = new PHPJasper;
+    
+        $jasper->process(
+            $input,
+            $output,
+            $options
+        )->execute();
+        
+        $pathToFile = base_path() .
+        '/reports/AssetDetailsByCategory.pdf';
+        return response()->file($pathToFile);
+    }    
 }
