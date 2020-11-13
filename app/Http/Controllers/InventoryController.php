@@ -50,55 +50,72 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
-
+    //reportes usando Jasper
     public function getReport()
     {
-        $input = base_path() .
-        '/reports/test.jrxml';
-    
+        $input = public_path() .
+            '/reports/test.jrxml';
+
         $jasper = new PHPJasper;
         $jasper->compile($input)->execute();
-    
-        $input = base_path() .
+
+        $input = public_path() .
             '/reports/test.jasper';
-        $output = base_path() .
-            '/public/reports';
-            
+        $output = public_path() .
+            '/reports';
         $options = [
             'format' => ['pdf'],
-        ];/*
-        $options = [
-            'format' => ['pdf'],
-            'locale' => 'en',
-            'params' => [],
-            'db_connection' => [
-                'driver' => env('DB_CONNECTION'),
-                'username' => env('DB_USERNAME'),
-                'password' => env('DB_PASSWORD'),
-                'host' => env('DB_HOST'),
-                'database' => env('DB_DATABASE'),
-                'port' => env('DB_PORT')
-            ],/*            
+            'params' => [
+                'Parameter1' => 'Esto es una prueba para el perfil',
+            ],/*
             'db_connection' => [
                 'driver' => 'postgres', //mysql, ....
                 'username' => 'postgres',
                 'password' => '12345678',
-                'host' => '192.168.25.64',
+                'host' => '192.168.26.64',
                 'database' => 'daf_help',
-                'port' => '5432'
-            ]
-        ];*/
+                'port' => '5432',
+            ],*/
+        ];
+        /*
+
+        $options = [
+        'format' => ['pdf'],
+        'locale' => 'es',
+        'params' => ['test' => 1],
+        'db_connection' => [
+        'driver' => 'postgres', //mysql, ....
+        'username' => 'postgres',
+        'password' => '12345678',
+        'host' => '192.168.26.64',
+        'database' => 'daf_help',
+        'port' => '5432'
+        ]
+        ];
+         */
+
+        /*
+        'db_connection' => [
+        'driver' => env('DB_CONNECTION'),
+        'username' => env('DB_USERNAME'),
+        'password' => env('DB_PASSWORD'),
+        'host' => env('DB_HOST'),
+        'database' => env('DB_DATABASE'),
+        'port' => env('DB_PORT')
+        ],*/
+
+        //];
 
         $jasper = new PHPJasper;
-
+        \Log::info($options);
         $jasper->process(
             $input,
             $output,
             $options
         )->execute();
 
-        $pathToFile = base_path() .
-            '/public/reports/test.pdf';
+        $pathToFile = public_path() .
+            '/reports/test.pdf';
         return response()->file($pathToFile);
     }
 }
