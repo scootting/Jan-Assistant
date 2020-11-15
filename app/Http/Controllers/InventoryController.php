@@ -54,46 +54,28 @@ class InventoryController extends Controller
     public function getReport()
     {
         $input = public_path() .
-            '/reports/test.jrxml';
+            '/reports/assets.jrxml';
 
         $jasper = new PHPJasper;
         $jasper->compile($input)->execute();
-
         $input = public_path() .
-            '/reports/test.jasper';
+            '/reports/assets.jasper';
         $output = public_path() .
             '/reports';
         $options = [
-            'format' => ['pdf'],
+            'format' => ['pdf'],/*
             'params' => [
                 'Parameter1' => 'Esto es una prueba para el perfil',
-            ],/*
+            ],*/
             'db_connection' => [
                 'driver' => 'postgres', //mysql, ....
                 'username' => 'postgres',
                 'password' => '12345678',
-                'host' => '192.168.26.64',
+                'host' => '192.168.25.64',
                 'database' => 'daf_help',
                 'port' => '5432',
-            ],*/
+            ],/**/ 
         ];
-        /*
-
-        $options = [
-        'format' => ['pdf'],
-        'locale' => 'es',
-        'params' => ['test' => 1],
-        'db_connection' => [
-        'driver' => 'postgres', //mysql, ....
-        'username' => 'postgres',
-        'password' => '12345678',
-        'host' => '192.168.26.64',
-        'database' => 'daf_help',
-        'port' => '5432'
-        ]
-        ];
-         */
-
         /*
         'db_connection' => [
         'driver' => env('DB_CONNECTION'),
@@ -105,7 +87,6 @@ class InventoryController extends Controller
         ],*/
 
         //];
-
         $jasper = new PHPJasper;
         \Log::info($options);
         $jasper->process(
@@ -115,7 +96,7 @@ class InventoryController extends Controller
         )->execute();
 
         $pathToFile = public_path() .
-            '/reports/test.pdf';
+            '/reports/assets.pdf';
         return response()->file($pathToFile);
     }
 }

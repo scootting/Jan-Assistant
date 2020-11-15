@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assets" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d699c90a-950c-4791-9d9e-a4cc91bdf996">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT ia.ofc_cod, 
+(
+	SELECT io.descripcion 
+      FROM inv.oficinas io
+	WHERE io.cod_soa = ia.ofc_cod
+) AS ofc_des,
+ia.sub_ofc_cod,
+(
+    SELECT io.descripcion 
+      FROM inv.sub_oficinas io
+    WHERE io.id = ia.sub_ofc_cod
+) AS sub_ofc_des,
+ia.par_cod,
+(
+	SELECT ap.par_des 
+	  FROM act.partida ap
+	WHERE ap.gestion = '2020' 
+		 AND ap.par_cod = ia.par_cod
+) AS par_des, 
+ia.cod_ant, ia.can, ia.uni_med, ia.des, ia.estado 
+FROM inv.activos ia
+WHERE ia.ofc_cod = '00000001'
+ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
+	</queryString>
+	<field name="ofc_cod" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="59" y="0" width="100" height="30" uuid="848d047f-8440-43f0-b18b-20da3805d208">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5917d93f-814a-4175-9fbf-99ed3c9eca59"/>
+				</reportElement>
+				<text><![CDATA[ofc_cod]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="59" y="26" width="100" height="30" uuid="d2288e4e-60d1-4c73-8ddc-1bf6c93429a9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5917d93f-814a-4175-9fbf-99ed3c9eca59"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ofc_cod}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
