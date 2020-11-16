@@ -29,32 +29,189 @@ WHERE ia.ofc_cod = '00000001'
 ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
 	</queryString>
 	<field name="ofc_cod" class="java.lang.String"/>
+	<field name="ofc_des" class="java.lang.String"/>
+	<field name="sub_ofc_cod" class="java.lang.String"/>
+	<field name="sub_ofc_des" class="java.lang.String"/>
+	<field name="par_cod" class="java.lang.String"/>
+	<field name="par_des" class="java.lang.String"/>
+	<field name="cod_ant" class="java.lang.String"/>
+	<field name="can" class="java.lang.String"/>
+	<field name="uni_med" class="java.lang.String"/>
+	<field name="des" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<group name="OfcGroup">
+		<groupExpression><![CDATA[$F{ofc_cod}]]></groupExpression>
+		<groupHeader>
+			<band height="55">
+				<textField>
+					<reportElement x="0" y="10" width="100" height="30" uuid="2c39e71c-f599-4c44-b12a-9081786ce81b"/>
+					<textFieldExpression><![CDATA[$F{ofc_cod}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<group name="SubOfcGroup" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{sub_ofc_cod}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<textField>
+					<reportElement x="0" y="10" width="100" height="30" uuid="bed8fdce-479b-4215-86fd-95842f03232a"/>
+					<textFieldExpression><![CDATA[$F{sub_ofc_cod}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="210" y="40" width="260" height="20" uuid="4e8e6642-23a6-4f37-b377-537113f78e3c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6484c72-95de-4562-a463-1cce2d4b4686"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIPCION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="40" width="60" height="20" uuid="791e6292-a67b-4d94-84ef-13eb43898359">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0622fdf-f604-4175-888f-965a35fd91b0"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANTIDAD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="70" height="20" uuid="6aa4154a-c814-477d-aefb-35aa5a2d0665">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58274d45-6d78-4464-87cb-c0fcae550521"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CODIGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="150" y="40" width="50" height="20" uuid="4dadbbd9-29ae-4648-9499-c3f7f433c16e">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3886cd85-2cd8-45f8-9ca4-251ccd817246"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIDAD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="480" y="40" width="92" height="20" uuid="82555079-b60a-4efc-bdca-e7530cb5b717">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="334016b6-8200-4212-bbd7-e5f12b096fb6"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESTADO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<group name="ParGroup">
+		<groupExpression><![CDATA[$F{par_cod}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<textField>
+					<reportElement x="210" y="10" width="170" height="20" uuid="2cab63db-ad5a-4afe-a742-e2db814aa483"/>
+					<textFieldExpression><![CDATA[$F{par_cod}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="55" splitType="Stretch">
 			<staticText>
-				<reportElement x="59" y="0" width="100" height="30" uuid="848d047f-8440-43f0-b18b-20da3805d208">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5917d93f-814a-4175-9fbf-99ed3c9eca59"/>
-				</reportElement>
-				<text><![CDATA[ofc_cod]]></text>
+				<reportElement x="0" y="1" width="572" height="20" uuid="c71d8993-00c4-4110-8b96-248e2a84acdb"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD AUTÓNOMA "TÓMAS FRÍAS"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="17" width="572" height="20" forecolor="#000000" uuid="eb8a4b53-4e34-4b2e-a453-fbbb7cd3d398"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[DIRECCÍON ADMINISTRATIVA Y FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="572" height="20" forecolor="#000000" uuid="4d07be04-fdd1-4a07-bcae-6ba60e3d66b6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[DIVISÍON DE BIENES E INVENTARIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="9" width="86" height="10" uuid="60fbaede-a3b8-4479-a626-fa9af669ab90"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="6"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE INFORMACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="16" width="108" height="10" uuid="b0ea06cf-680c-4e2a-9d22-24697b6d0126"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="6"/>
+				</textElement>
+				<text><![CDATA[ADMINISTRATIVA Y FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="3" width="48" height="35" uuid="11b7995f-d174-42f6-a4b4-57137eb0445c"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="20"/>
+				</textElement>
+				<text><![CDATA[SIAF]]></text>
 			</staticText>
 		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="49" splitType="Stretch">
 			<textField>
-				<reportElement x="59" y="26" width="100" height="30" uuid="d2288e4e-60d1-4c73-8ddc-1bf6c93429a9">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5917d93f-814a-4175-9fbf-99ed3c9eca59"/>
+				<reportElement x="0" y="0" width="70" height="30" uuid="8c1a2443-c4d9-4059-b5c5-0791c0d9c9ae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd508fbf-ac7a-4064-af90-0f0ad491f8de"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{ofc_cod}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cod_ant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="60" height="30" uuid="d6c01f2b-56ce-465a-8f2f-d328a1a4be83">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18d0f972-9899-43c5-b976-abedcbbc0690"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="50" height="30" uuid="9a9f38ad-a571-4779-9ab5-8c45d2a2087b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68b38d2f-37dc-4730-8da8-a7f22a53f93f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="260" height="30" uuid="1eb77ea9-c192-4fe9-8f4f-b7270c0d3403">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4814192-04df-4134-9c46-d49ad027f922"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="92" height="30" uuid="7d7604cf-4ee9-4540-85a0-6231ce007b33">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94e8dd18-fb9e-42eb-9636-750da84bed10"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
