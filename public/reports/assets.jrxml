@@ -42,10 +42,13 @@ ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
 	<group name="OfcGroup">
 		<groupExpression><![CDATA[$F{ofc_cod}]]></groupExpression>
 		<groupHeader>
-			<band height="55">
+			<band height="38">
 				<textField>
-					<reportElement x="0" y="10" width="100" height="30" uuid="2c39e71c-f599-4c44-b12a-9081786ce81b"/>
-					<textFieldExpression><![CDATA[$F{ofc_cod}]]></textFieldExpression>
+					<reportElement x="0" y="10" width="572" height="20" uuid="2c39e71c-f599-4c44-b12a-9081786ce81b"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ofc_cod}.concat( " - " + $F{ofc_des} )]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -58,8 +61,11 @@ ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
 		<groupHeader>
 			<band height="64">
 				<textField>
-					<reportElement x="0" y="10" width="100" height="30" uuid="bed8fdce-479b-4215-86fd-95842f03232a"/>
-					<textFieldExpression><![CDATA[$F{sub_ofc_cod}]]></textFieldExpression>
+					<reportElement x="0" y="10" width="572" height="20" uuid="bed8fdce-479b-4215-86fd-95842f03232a"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sub_ofc_cod}.concat( " - " + $F{sub_ofc_des} )]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="210" y="40" width="260" height="20" uuid="4e8e6642-23a6-4f37-b377-537113f78e3c">
@@ -117,8 +123,11 @@ ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
 		<groupHeader>
 			<band height="37">
 				<textField>
-					<reportElement x="210" y="10" width="170" height="20" uuid="2cab63db-ad5a-4afe-a742-e2db814aa483"/>
-					<textFieldExpression><![CDATA[$F{par_cod}]]></textFieldExpression>
+					<reportElement x="210" y="10" width="362" height="20" uuid="2cab63db-ad5a-4afe-a742-e2db814aa483"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{par_cod}.concat(" - " + $F{par_des}.toUpperCase() )]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -187,30 +196,45 @@ ORDER BY ia.ofc_cod,ia.sub_ofc_cod, ia.par_cod]]>
 				<reportElement x="0" y="0" width="70" height="30" uuid="8c1a2443-c4d9-4059-b5c5-0791c0d9c9ae">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd508fbf-ac7a-4064-af90-0f0ad491f8de"/>
 				</reportElement>
+				<textElement>
+					<font size="9" isItalic="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cod_ant}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="0" width="60" height="30" uuid="d6c01f2b-56ce-465a-8f2f-d328a1a4be83">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18d0f972-9899-43c5-b976-abedcbbc0690"/>
 				</reportElement>
+				<textElement>
+					<font size="9" isItalic="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="150" y="0" width="50" height="30" uuid="9a9f38ad-a571-4779-9ab5-8c45d2a2087b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68b38d2f-37dc-4730-8da8-a7f22a53f93f"/>
 				</reportElement>
+				<textElement>
+					<font size="9" isItalic="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="210" y="0" width="260" height="30" uuid="1eb77ea9-c192-4fe9-8f4f-b7270c0d3403">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4814192-04df-4134-9c46-d49ad027f922"/>
 				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="9" isItalic="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="480" y="0" width="92" height="30" uuid="7d7604cf-4ee9-4540-85a0-6231ce007b33">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94e8dd18-fb9e-42eb-9636-750da84bed10"/>
 				</reportElement>
+				<textElement>
+					<font size="9" isItalic="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
 			</textField>
 		</band>
