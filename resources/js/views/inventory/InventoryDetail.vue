@@ -157,7 +157,7 @@ export default {
     },
     loadReportAssets() {
       axios({
-        url: "/api/descargando",
+        url: "/api/descargando/" + this.oficina.cod_soa,
         method: "GET",
         responseType: "blob",
       }).then((response) => {

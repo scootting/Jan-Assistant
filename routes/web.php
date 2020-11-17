@@ -25,7 +25,7 @@ Route::get('files', 'FileController@index');
 Route::post('upload', 'FileController@uploadFile');
 Route::get('delete/upload-folder/{file}', 'FileController@deleteFile');
 Route::get('download/upload-folder/{file}', 'FileController@downloadFile');
-Route::get('descargando','InventoryController@getReport'); 
+Route::get('descargando/{cod_soa}','InventoryController@getReport'); 
 /*
 Route::get('/', function () {
     return view('welcome');

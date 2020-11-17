@@ -47,5 +47,5 @@ Route::group([
     Route::get('inventory/show/{cod_soa}','InventoryController@getOfficeByCodSoa');
     Route::get('inventory/sub_offices/{cod_soa}','InventoryController@getSubOfficesByCodSoa');
     Route::get('inventory/activos/{cod_soa}','InventoryController@getActivosByCodSoaAndSubOffice');
-    Route::get('descargando','InventoryController@getReport'); 
+    Route::get('descargando/{cod_soa}','InventoryController@getReport'); 
 });

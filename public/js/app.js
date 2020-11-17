@@ -5898,7 +5898,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadReportAssets: function loadReportAssets() {
       axios({
-        url: "/api/descargando",
+        url: "/api/descargando/" + this.oficina.cod_soa,
         method: "GET",
         responseType: "blob"
       }).then(function (response) {

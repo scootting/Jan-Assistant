@@ -51,8 +51,9 @@ class InventoryController extends Controller
         return json_encode($paginate);
     }
     //reportes usando Jasper
-    public function getReport()
+    public function getReport(Request $request, $cod_soa)
     {
+        \Log::info($cod_soa);
         $input = public_path() .
             '/reports/assets.jrxml';
 
@@ -63,10 +64,10 @@ class InventoryController extends Controller
         $output = public_path() .
             '/reports';
         $options = [
-            'format' => ['pdf'],/*
+            'format' => ['pdf'],
             'params' => [
-                'Parameter1' => 'Esto es una prueba para el perfil',
-            ],*/
+                'p_ofc_cod' => $cod_soa,
+            ],
             'db_connection' => [
                 'driver' => 'postgres', //mysql, ....
                 'username' => 'postgres',
