@@ -97,6 +97,17 @@ class InventoryController extends Controller
 
         $pathToFile = public_path() .
             '/reports/assets.pdf';
-        return response()->file($pathToFile);
+        // Render
+        //return response()->file($pathToFile);
+        // Download
+        //return response()->download($pathToFile);
+
+        $filename = 'assets.pdf';
+/*
+        return Response::make(file_get_contents($pathToFile), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$filename.'"'
+        ]);*/
+        return response()->download($pathToFile, $filename, ['Content-Type' => 'application/pdf']);
     }
 }

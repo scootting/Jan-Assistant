@@ -9,36 +9,30 @@
           type="primary"
           icon="el-icon-plus"
           @click="loadReportAssets"
-          >hola</el-button
+          >imprimir reporte</el-button
         >
       </div>
       <br />
       <br />
       <el-form label-width="160px" :inline="true" size="normal">
-        <el-form-item label="SUB-OFICINAS">
-          <el-select placeholder="TODO" v-model="subOficinaSelectId">
-            <el-option
-              v-for="item in sub_oficinas"
-              :key="item.id"
-              :label="item.descripcion"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="CargarActivos"
-            >Cargar Activos</el-button
-          >
-        </el-form-item>
-        <br />
-        <br />
+        <!--
+            <el-form-item label="SUB-OFICINAS">
+                <el-select placeholder="TODO" v-model="subOficinaSelectId">
+                    <el-option v-for="item in sub_oficinas" :key="item.id" :label="item.descripcion" :value="item.id">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="CargarActivos">Cargar Activos</el-button>
+            </el-form-item>
+            <br />
+            <br />-->
         <el-form label-width="160px" :inline="false" size="normal">
           <el-form-item label="SUB-UNIDADES:">
             <el-dropdown
               trigger="click"
               size="default"
-              split-button=true
+              split-button="true"
               type="primary"
               @command="selectSubOficina"
             >
@@ -94,6 +88,7 @@
     </el-card>
   </div>
 </template>
+
 <script>
 export default {
   name: "InventoryDetail",
@@ -127,7 +122,10 @@ export default {
         .then((data) => {
           this.subOficinaSelectId = -1;
           this.sub_oficinas = data.data;
-          this.sub_oficinas.push({ id: -1, descripcion: "TODOS" });
+          this.sub_oficinas.push({
+            id: -1,
+            descripcion: "TODOS",
+          });
         })
         .catch((err) => {});
     },
@@ -141,7 +139,9 @@ export default {
     },
     CargarActivos() {
       this.loading = true;
-      let params = { page: this.pagination.page | 1 };
+      let params = {
+        page: this.pagination.page | 1,
+      };
       if (this.subOficinaSelectId != -1)
         params.idSubOffice = this.subOficinaSelectId;
       axios
@@ -162,13 +162,15 @@ export default {
         responseType: "blob",
       }).then((response) => {
         console.log(response);
-        /*
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement("a");
-        fileLink.href = fileURL;
-        fileLink.setAttribute("download", "file.pdf");
-        document.body.appendChild(fileLink);
-        fileLink.click();*/
+        console.log("1");
+        //let newBlob =
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "test.pdf";
+        link.click();
       });
     },
   },

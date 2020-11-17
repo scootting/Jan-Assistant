@@ -4105,6 +4105,24 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    loadReportAssets: function loadReportAssets() {
+      axios({
+        url: "inventory/download",
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        console.log(response);
+        console.log("1"); //let newBlob =
+
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "test.pdf";
+        link.click();
+      });
     }
   }
 });
@@ -5816,11 +5834,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "InventoryDetail",
   data: function data() {
@@ -5891,13 +5904,15 @@ __webpack_require__.r(__webpack_exports__);
         responseType: "blob"
       }).then(function (response) {
         console.log(response);
-        /*
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement("a");
-        fileLink.href = fileURL;
-        fileLink.setAttribute("download", "file.pdf");
-        document.body.appendChild(fileLink);
-        fileLink.click();*/
+        console.log("1"); //let newBlob =
+
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "test.pdf";
+        link.click();
       });
     }
   }
@@ -85922,13 +85937,22 @@ var render = function() {
           _vm._v(" "),
           _c("p", [
             _vm._v(
-              "\n      This is a template for a simple\n      marketing or informational website. It\n      includes a large callout called a\n      jumbotron and three supporting pieces of\n      content. Use it as a starting point to\n      create something more unique.\n    "
+              "\n      Lionel This is a template for a simple marketing or informational\n      website. It includes a large callout called a jumbotron and three\n      supporting pieces of content. Use it as a starting point to create\n      something more unique.\n    "
             )
           ]),
           _vm._v(" "),
-          _c("el-button", { attrs: { size: "mini", plain: "" } }, [
-            _vm._v("Default")
-          ]),
+          _c(
+            "el-button",
+            {
+              attrs: { size: "mini", plain: "" },
+              on: {
+                click: function($event) {
+                  return _vm.loadReportAssets()
+                }
+              }
+            },
+            [_vm._v("Default")]
+          ),
           _vm._v(" "),
           _c(
             "el-button",
@@ -88554,7 +88578,7 @@ var render = function() {
                   },
                   on: { click: _vm.loadReportAssets }
                 },
-                [_vm._v("hola")]
+                [_vm._v("imprimir reporte")]
               )
             ],
             1
@@ -88568,53 +88592,6 @@ var render = function() {
             "el-form",
             { attrs: { "label-width": "160px", inline: true, size: "normal" } },
             [
-              _c(
-                "el-form-item",
-                { attrs: { label: "SUB-OFICINAS" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "TODO" },
-                      model: {
-                        value: _vm.subOficinaSelectId,
-                        callback: function($$v) {
-                          _vm.subOficinaSelectId = $$v
-                        },
-                        expression: "subOficinaSelectId"
-                      }
-                    },
-                    _vm._l(_vm.sub_oficinas, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { label: item.descripcion, value: item.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: { click: _vm.CargarActivos }
-                    },
-                    [_vm._v("Cargar Activos")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
               _c(
                 "el-form",
                 {
@@ -107284,8 +107261,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
