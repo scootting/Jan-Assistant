@@ -33,22 +33,21 @@ export default {
       alert("bienvenido al modulo");
     },
     loadReportAssets() {
+      /*
       axios({
-        url: "inventory/download",
+        url: "/descargando",
         method: "GET",
         responseType: "blob",
       }).then((response) => {
         console.log(response);
-        console.log("1");
+        console.log("3");
         //let newBlob =
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "test.pdf";
-        link.click();
-      });
+        //var headers = response.headers();
+        let blob = new Blob([response.data], { type: "application/pdf" });
+        console.log(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });*/
     },
   },
 };

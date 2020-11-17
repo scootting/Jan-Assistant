@@ -103,11 +103,14 @@ class InventoryController extends Controller
         //return response()->download($pathToFile);
 
         $filename = 'assets.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
 /*
         return Response::make(file_get_contents($pathToFile), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.$filename.'"'
         ]);*/
-        return response()->download($pathToFile, $filename, ['Content-Type' => 'application/pdf']);
+        \Log::info("pruebas de algo");
+        \Log::info(response()->download($pathToFile, $filename, $headers));
+        return response()->download($pathToFile, $filename, $headers);
     }
 }

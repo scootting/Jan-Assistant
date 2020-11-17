@@ -4107,22 +4107,21 @@ __webpack_require__.r(__webpack_exports__);
       alert("bienvenido al modulo");
     },
     loadReportAssets: function loadReportAssets() {
+      /*
       axios({
-        url: "inventory/download",
+        url: "/descargando",
         method: "GET",
-        responseType: "blob"
-      }).then(function (response) {
+        responseType: "blob",
+      }).then((response) => {
         console.log(response);
-        console.log("1"); //let newBlob =
-
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
-        });
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "test.pdf";
-        link.click();
-      });
+        console.log("3");
+        //let newBlob =
+        //var headers = response.headers();
+        let blob = new Blob([response.data], { type: "application/pdf" });
+        console.log(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });*/
     }
   }
 });
@@ -5899,20 +5898,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadReportAssets: function loadReportAssets() {
       axios({
-        url: "api/inventory/download",
+        url: "/api/descargando",
         method: "GET",
         responseType: "blob"
       }).then(function (response) {
-        console.log(response);
-        console.log("1"); //let newBlob =
-
+        console.log(response.data);
+        console.log("1");
         var blob = new Blob([response.data], {
           type: "application/pdf"
         });
         var link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
+        console.log(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
+        /*
         link.download = "test.pdf";
         link.click();
+        */
       });
     }
   }
