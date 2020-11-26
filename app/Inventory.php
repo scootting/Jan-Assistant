@@ -41,5 +41,17 @@ class Inventory extends Model
             $db->where('inv.activos.sub_ofc_cod',$idso);
         }
         return $db->get();
+    } 
+    public static function getInventories($gestion,$descripcion)
+    {
+        $query = "select inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,
+        inv.oficinas.descripcion,inv.doc_inv.estado
+        from inv.doc_inv , inv.oficinas where 
+        inv.doc_inv.gestion = ".$gestion."
+        and inv.doc_inv.ofc_cod = inv.oficinas.cod_soa 
+        and inv.oficinas.descripcion like '%".$descripcion."%'
+        ";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
     }
 }

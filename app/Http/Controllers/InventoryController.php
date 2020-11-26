@@ -106,6 +106,7 @@ class InventoryController extends Controller
         $filename = 'assets.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
 /*
+
         return Response::make(file_get_contents($pathToFile), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.$filename.'"'
@@ -113,5 +114,21 @@ class InventoryController extends Controller
         \Log::info("pruebas de algo");
         \Log::info(response()->download($pathToFile, $filename, $headers));
         return response()->download($pathToFile, $filename, $headers);
-    }
+    } 
+
+   public function getInventories(Request $request,$gestion)
+   {
+    $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');
+    $data = Inventory::getInventories($gestion, $descripcion);
+    $page = ($request->get('page') ? $request->get('page') : 1);
+    $perPage = 10;
+    $paginate = new LengthAwarePaginator(
+        $data->forPage($page, $perPage),
+        $data->count(),
+        $perPage,
+        $page,
+        ['path' => url('api/inventory2')]
+    );
+    return json_encode($paginate);
+   }
 }

@@ -26,6 +26,7 @@ import Layout from './views/Layout'
 
 //clients
 import Inventory from './views/inventory/Inventory'
+import Inventory2 from './views/inventory/Inventory2'
 import InventoryDetail from './views/inventory/InventoryDetail'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
@@ -82,6 +83,7 @@ const router = new VueRouter({
                 //{ path: 'welcome', name: 'welcome', component: Welcome },
                 { path: 'inventory', name: 'inventory', component: Inventory },
                 { path: 'inventory/:soa', name: 'inventorydetail', component: InventoryDetail },
+                { path: 'inventory2', name: 'inventory2', component: Inventory2 },
             ],
             meta: {
                 requiresAuth: true,
