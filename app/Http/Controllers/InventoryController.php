@@ -131,4 +131,37 @@ class InventoryController extends Controller
     );
     return json_encode($paginate);
    }
+   public function getUnidad(Request $request)
+   {
+    $keyWord = ($request->get('keyWord') ? $request->get('keyWord') : '');
+    $data = Inventory::getUnidad($keyWord);
+    $page = ($request->get('page') ? $request->get('page') : 1);
+    $perPage = 10;
+    $paginate = new LengthAwarePaginator(
+        $data->forPage($page, $perPage),
+        $data->count(),
+        $perPage,
+        $page,
+        ['path' => url('api/inventory2/unidad')]
+    );
+    return json_encode($paginate);
+   }
+   public function getSubUnidad(Request $request)
+   {
+    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+    $data = Inventory::getSubUnidades($unidad);
+    return json_encode($data);
+   }
+   public function getCargos(Request $request)
+   {
+    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+    $data = Inventory::getCargos($unidad);
+    return json_encode($data);
+   }
+   public function getResponsables(Request $request)
+   {
+    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+    $data = Inventory::getResponsables($unidad);
+    return json_encode($data);
+   }
 }

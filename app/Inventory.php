@@ -54,4 +54,44 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function getUnidad($keyWord)
+    {
+        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa
+        from inv.oficinas 
+        where inv.oficinas.descripcion like '%".$keyWord."%' or 
+        inv.oficinas.cod_soa like '%".$keyWord."%'";
+         $data = collect(DB::select(DB::raw($query)));
+         return $data;
+    }
+    public static function getSubUnidades($unidad)
+    {
+        $query = "select inv.sub_oficinas.id ,inv.sub_oficinas.descripcion
+        from inv.sub_oficinas,inv.oficinas ,inv.activos
+        where inv.oficinas.cod_soa = inv.activos.ofc_cod
+        and inv.oficinas.cod_soa like '%".$unidad."%' 
+        and inv.sub_oficinas.id = inv.activos.sub_ofc_cod
+        group by (inv.sub_oficinas.id,inv.sub_oficinas.descripcion)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getCargos($unidad)
+    {
+        $query = " select inv.cargos.id ,inv.cargos.descripcion 
+        from inv.cargos,inv.activos, inv.oficinas
+        where inv.cargos.id = inv.activos.car_cod
+        and inv.oficinas.cod_soa like '%".$unidad."%' 
+        group by ( inv.cargos.id, inv.cargos.descripcion)
+        order by (inv.cargos.id)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getResponsables ($unidad)
+    {
+        $query = " select inv.activos.ci_resp
+        from inv.activos
+        where inv.activos.ofc_cod like '%".$unidad."%'
+        group by ( inv.activos.ci_resp )";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 }

@@ -9,6 +9,7 @@
           size="small"
           type="primary"
           icon="el-icon-plus"
+          @click="newInventory"
           >Nuevo Inventario</el-button
         >
       </div>
@@ -132,6 +133,9 @@ export default {
           soa: row.cod_soa,
         },
       });
+    },
+    newInventory(){
+      this.$router.push({name:'newinventory'})
     },
 
     test() {

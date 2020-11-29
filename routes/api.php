@@ -49,6 +49,9 @@ Route::group([
     Route::get('inventory/activos/{cod_soa}','InventoryController@getActivosByCodSoaAndSubOffice');
     Route::get('descargando/{cod_soa}','InventoryController@getReport');
     //rutas de inventarios 2 
-    Route::get('inventory2/{gestion}','InventoryController@getInventories'); 
-    
+    Route::get('inventory2/unidad','InventoryController@getUnidad');
+    Route::get('inventory2/sub_unidad','InventoryController@getSubUnidad');
+    Route::get('inventory2/cargos','InventoryController@getCargos');
+    Route::get('inventory2/responsables','InventoryController@getResponsables');
+    Route::get('inventory2/{gestion}','InventoryController@getInventories');  
 });
