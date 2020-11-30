@@ -6216,6 +6216,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "newInventory",
   data: function data() {
@@ -6223,7 +6225,10 @@ __webpack_require__.r(__webpack_exports__);
       No_Doc: null,
       NewInvent: {
         unidad: "",
-        subUnidades: ""
+        subUnidades: "",
+        cargos: "",
+        responsables: "",
+        encargados: ""
       },
       unidades: [],
       subUnidades: [],
@@ -6251,6 +6256,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     onChangeUnidad: function onChangeUnidad(cod_soa) {
       this.getSubUnidades(cod_soa);
+      this.getCargosResp(cod_soa);
+      this.getResponsables(cod_soa);
     },
     getSubUnidades: function getSubUnidades(cod_soa) {
       var _this2 = this;
@@ -6264,6 +6271,52 @@ __webpack_require__.r(__webpack_exports__);
         _this2.NewInvent.subUnidades = _this2.subUnidades.map(function (su) {
           return su.id;
         });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getCargosResp: function getCargosResp(cod_soa) {
+      var _this3 = this;
+
+      axios.get("/api/inventory2/cargos", {
+        params: {
+          cod_soa: cod_soa
+        }
+      }).then(function (data) {
+        _this3.cargos = data.data;
+        _this3.NewInvent.cargos = _this3.cargos.map(function (car) {
+          return car.id;
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getResponsables: function getResponsables(cod_soa) {
+      var _this4 = this;
+
+      axios.get("/api/inventory2/responsables", {
+        params: {
+          cod_soa: cod_soa
+        }
+      }).then(function (data) {
+        _this4.responsables = data.data;
+        _this4.NewInvent.responsables = _this4.responsables.map(function (resp) {
+          return resp.nro_dip;
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getEncargados: function getEncargados(nro_dip) {
+      var _this5 = this;
+
+      axios.get("/api/inventory2/encargados", {
+        params: {
+          nro_dip: nro_dip
+        }
+      }).then(function (data) {
+        _this5.encargados = Object.values(data.data.data);
+        console.log(data);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -89490,8 +89543,11 @@ var render = function() {
                             attrs: {
                               filterable: "",
                               remote: "",
+                              multiple: "",
                               "reserve-keyword": "",
-                              placeholder: "Seleccione encargados",
+                              placeholder:
+                                "Seleccione Encargados para Inventario",
+                              "remote-method": _vm.getEncargados,
                               maxlength: "30"
                             },
                             model: {
@@ -89504,10 +89560,10 @@ var render = function() {
                           },
                           _vm._l(_vm.encargados, function(item) {
                             return _c("el-option", {
-                              key: item.descripcion,
+                              key: item.nro_dip,
                               attrs: {
-                                label: item.descripcion,
-                                value: item.descripcion
+                                label: item.paterno + " " + item.nombres,
+                                value: item.nro_dip
                               }
                             })
                           }),
@@ -89605,15 +89661,15 @@ var render = function() {
                               multiple: "",
                               "reserve-keyword": "",
                               placeholder: "Cargos",
-                              "remote-method": _vm.remoteMethod,
+                              "remote-method": _vm.getCargosResp,
                               maxlength: "30"
                             },
                             model: {
-                              value: _vm.NewInvent.cargo,
+                              value: _vm.NewInvent.cargos,
                               callback: function($$v) {
-                                _vm.$set(_vm.NewInvent, "cargo", $$v)
+                                _vm.$set(_vm.NewInvent, "cargos", $$v)
                               },
-                              expression: "NewInvent.cargo"
+                              expression: "NewInvent.cargos"
                             }
                           },
                           _vm._l(_vm.cargos, function(item) {
@@ -89641,23 +89697,23 @@ var render = function() {
                               multiple: "",
                               "reserve-keyword": "",
                               placeholder: "Responsables",
-                              "remote-method": _vm.remoteMethod,
+                              "remote-method": _vm.getResponsables,
                               maxlength: "30"
                             },
                             model: {
-                              value: _vm.NewInvent.responsable,
+                              value: _vm.NewInvent.responsables,
                               callback: function($$v) {
-                                _vm.$set(_vm.NewInvent, "responsable", $$v)
+                                _vm.$set(_vm.NewInvent, "responsables", $$v)
                               },
-                              expression: "NewInvent.responsable"
+                              expression: "NewInvent.responsables"
                             }
                           },
                           _vm._l(_vm.responsables, function(item) {
                             return _c("el-option", {
-                              key: item.ci_resp,
+                              key: item.nro_dip,
                               attrs: {
-                                label: item.ci_resp,
-                                value: item.ci_resp
+                                label: item.nombres + item.paterno,
+                                value: item.nro_dip
                               }
                             })
                           }),

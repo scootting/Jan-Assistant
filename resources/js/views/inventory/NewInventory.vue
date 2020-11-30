@@ -19,15 +19,17 @@
                 v-model="NewInvent.encargados"
                 filterable
                 remote
+                multiple
                 reserve-keyword
-                placeholder="Seleccione encargados"
+                placeholder="Seleccione Encargados para Inventario"
+                :remote-method="getEncargados"
                 maxlength="30"
               >
                 <el-option
                   v-for="item in encargados"
-                  :key="item.descripcion"
-                  :label="item.descripcion"
-                  :value="item.descripcion"
+                  :key="item.nro_dip"
+                  :label="item.paterno +' '+ item.nombres"
+                  :value="item.nro_dip"
                 >
                 </el-option>
               </el-select>
@@ -75,13 +77,13 @@
             </el-form-item>
             <el-form-item label="Cargo" size="small">
               <el-select
-                v-model="NewInvent.cargo"
+                v-model="NewInvent.cargos"
                 filterable
                 remote
                 multiple
                 reserve-keyword
                 placeholder="Cargos"
-                :remote-method="remoteMethod"
+                :remote-method="getCargosResp"
                 maxlength="30"
               >
                 <el-option
@@ -95,20 +97,20 @@
             </el-form-item>
             <el-form-item label="Responsable" size="small">
               <el-select
-                v-model="NewInvent.responsable"
+                v-model="NewInvent.responsables"
                 filterable
                 remote
                 multiple
                 reserve-keyword
                 placeholder="Responsables"
-                :remote-method="remoteMethod"
+                :remote-method="getResponsables"
                 maxlength="30"
               >
                 <el-option
                   v-for="item in responsables"
-                  :key="item.ci_resp"
-                  :label="item.ci_resp"
-                  :value="item.ci_resp"
+                  :key="item.nro_dip"
+                  :label="item.nombres  + item.paterno"
+                  :value="item.nro_dip"
                 >
                 </el-option>
               </el-select>
@@ -135,6 +137,9 @@ export default {
       NewInvent: {
         unidad: "",
         subUnidades: "",
+        cargos: "",
+        responsables:"",
+        encargados:"",
       },
       unidades: [],
       subUnidades: [],
@@ -161,6 +166,8 @@ export default {
     },
     onChangeUnidad(cod_soa) {
       this.getSubUnidades(cod_soa);
+      this.getCargosResp(cod_soa);
+      this.getResponsables(cod_soa);
     },
     getSubUnidades(cod_soa) {
       axios
@@ -170,6 +177,45 @@ export default {
         .then((data) => {
           this.subUnidades = data.data;
           this.NewInvent.subUnidades = this.subUnidades.map((su) => su.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getCargosResp(cod_soa){
+      axios
+      .get("/api/inventory2/cargos", {
+          params: { cod_soa: cod_soa },
+        })
+        .then((data)=>{
+          this.cargos = data.data;
+          this.NewInvent.cargos = this.cargos.map((car)=>car.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getResponsables(cod_soa){
+       axios
+      .get("/api/inventory2/responsables", {
+          params: { cod_soa: cod_soa },
+        })
+        .then((data)=>{
+          this.responsables = data.data;
+          this.NewInvent.responsables = this.responsables.map((resp)=>resp.nro_dip);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getEncargados(nro_dip){
+       axios
+      .get("/api/inventory2/encargados", {
+          params: { nro_dip:nro_dip },
+        })
+        .then((data)=>{
+          this.encargados = Object.values(data.data.data);
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);

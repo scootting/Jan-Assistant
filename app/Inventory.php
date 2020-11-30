@@ -76,21 +76,34 @@ class Inventory extends Model
     }
     public static function getCargos($unidad)
     {
-        $query = " select inv.cargos.id ,inv.cargos.descripcion 
-        from inv.cargos,inv.activos, inv.oficinas
+        $query = "select inv.cargos.id ,inv.cargos.descripcion , public.personas.nro_dip
+        from inv.cargos,inv.activos, inv.oficinas,public.personas
         where inv.cargos.id = inv.activos.car_cod
         and inv.oficinas.cod_soa like '%".$unidad."%' 
-        group by ( inv.cargos.id, inv.cargos.descripcion)
+        and inv.activos.ci_resp = public.personas.nro_dip
+        group by ( inv.cargos.id, inv.cargos.descripcion,public.personas.nro_dip)
         order by (inv.cargos.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     public static function getResponsables ($unidad)
     {
-        $query = " select inv.activos.ci_resp
-        from inv.activos
-        where inv.activos.ofc_cod like '%".$unidad."%'
-        group by ( inv.activos.ci_resp )";
+        $query = "select public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno
+        from inv.activos,public.personas
+        where inv.activos.ofc_cod like '%".$unidad."%'and
+        public.personas.nro_dip = inv.activos.ci_resp
+        group by (public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getEncargados($nro_dip)      
+    {
+        $query = "select public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno
+        from public.personas
+        where public.personas.nro_dip like '%".$nro_dip."%'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

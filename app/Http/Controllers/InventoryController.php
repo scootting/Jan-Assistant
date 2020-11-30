@@ -164,4 +164,20 @@ class InventoryController extends Controller
     $data = Inventory::getResponsables($unidad);
     return json_encode($data);
    }
+   public function getEncargados(Request $request)
+   {    
+     $nro_dip = ($request->get('nro_dip') ? $request->get('nro_dip') : '');
+     $data = Inventory::getEncargados($nro_dip);
+     $page = ($request->get('page') ? $request->get('page') : 1);
+     $perPage = 10;
+     $paginate = new LengthAwarePaginator(
+         $data->forPage($page, $perPage),
+         $data->count(),
+         $perPage,
+         $page,
+         ['path' => url('api/inventory2/encargados')]
+     );
+     return json_encode($paginate);
+    
+   }
 }

@@ -53,5 +53,6 @@ Route::group([
     Route::get('inventory2/sub_unidad','InventoryController@getSubUnidad');
     Route::get('inventory2/cargos','InventoryController@getCargos');
     Route::get('inventory2/responsables','InventoryController@getResponsables');
+    Route::get('inventory2/encargados','InventoryController@getEncargados');
     Route::get('inventory2/{gestion}','InventoryController@getInventories');  
 });
