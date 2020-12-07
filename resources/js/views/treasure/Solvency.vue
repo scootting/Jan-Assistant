@@ -8,34 +8,16 @@
           size="small"
           type="primary"
           icon="el-icon-plus"
-          @click="initAddPerson"
-          >nueva persona</el-button
-        >
-      </div>
-      <div style="margin-top: 15px">
-        <el-input
-          placeholder="INSERTE UNA DESCRIPCION"
-          v-model="writtenTextParameter"
-          class="input-with-select"
-        >
-          <!--
-                <el-select v-model="selectParameter" slot="prepend" placeholder="Select">
-                    <el-option v-for="item in parameters" :label="item.attribute" :value="item.value" :key="item.value"></el-option>
-                </el-select>
-          -->
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="initSearchPerson"
-          ></el-button>
-        </el-input>
+          @click="initAddSolvency"
+          >nueva lista de solvencias</el-button
+        >          
       </div>
       <br />
       <div>
-        <el-table v-loading="loading" :data="people" style="width: 100%">
-          <el-table-column prop="personal" label="CARNET"></el-table-column>
-          <el-table-column prop="paterno" label="PATERNO"></el-table-column>
-          <el-table-column prop="materno" label="MATERNO"></el-table-column>
+        <el-table v-loading="loading" :data="listSolvency" style="width: 100%">
+          <el-table-column prop="id" label="ID"></el-table-column>
+          <el-table-column prop="fecha" label="FECHA"></el-table-column>
+          <el-table-column prop="operaciones" label="OPERACION"></el-table-column>
           <el-table-column
             prop="nombres"
             label="NOMBRES"
@@ -44,18 +26,11 @@
           <el-table-column align="right" width="220">
             <template slot-scope="scope">
               <el-button
-                @click="initEditPerson(scope.$index, scope.row)"
+                @click="initChangeStateSolvency(scope.$index, scope.row)"
                 type="primary"
                 size="mini"
                 plain
                 >Editar</el-button
-              >
-              <el-button
-                @click="initShowPerson(scope.$index, scope.row)"
-                type="danger"
-                plain
-                size="mini"
-                >Mostrar</el-button
               >
             </template>
           </el-table-column>
@@ -77,33 +52,23 @@ export default {
   name: "Personas",
   data() {
     return {
-      //selectParameter: "",
-      /*
-      parameters: [
-        {attribute: "carnet de identidad", value: "personal",},
-        {attribute: "apellido paterno", value: "paterno",},
-        {attribute: "apellido materno", value: "materno",},
-        {attribute: "nombres", value: "nombres",},
-      ],*/
-
       messages: {},
-      people: [],
+      solvencies: [],
       pagination: {
         page: 1,
       },
-      writtenTextParameter: "",
       loading: true,
     };
   },
   mounted() {
     let app = this;
     axios
-      .post("/api/persons", {
+      .post("/api/solvencies", {
         descripcion: app.writtenTextParameter,
       })
       .then((response) => {
         app.loading = false;
-        app.people = response.data.data;
+        app.solvencies = response.data.data;
         app.pagination = response.data;
       })
       .catch((error) => {
@@ -115,14 +80,11 @@ export default {
       });
   },
   methods: {
-    test() {
-      alert("bienvenido al modulo");
-    },
     getDataPageSelected(page) {
       let app = this;
       app.loading = true;
       axios
-        .post("/api/persons", {
+        .post("/api/solvencies", {
           descripcion: app.writtenTextParameter,
           page: page,
         })
@@ -135,44 +97,10 @@ export default {
           console.log(error);
         });
     },
-    initAddPerson() {
-      this.$router.push({
-        name: "addperson",
-      });
+    initAddSolvency() {
     },
-    initEditPerson(index, row) {
+    initChangeStateSolvency(index, row) {
       console.log(index, row);
-      let personal = row.personal;
-      this.$router.push({
-        name: "editperson",
-        params: {
-          id: personal.trim(),
-        },
-      });
-    },
-    initSearchPerson() {
-      let app = this;
-      app.loading = true;
-      axios
-        .post("/api/persons", {
-          descripcion: app.writtenTextParameter,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.people = response.data.data;
-          app.pagination = response.data;
-        })
-        .catch((error) => {
-          this.error = error;
-          this.$notify.error({
-            title: "Error",
-            message: this.error.message,
-          });
-        });
-    },
-    initShowPerson(index, row) {
-      let personal = row.nro_dip;
-      //router.push({ name: 'editperson', params: { userId: personal }})
     },
   },
 };

@@ -15,6 +15,8 @@ import AddUser from './views/application/AddUser'
 import EditUser from './views/application/EditUser'
 import ShowUser from './views/application/ShowUser'
 import EditUserProfiles from './views/application/EditUserProfiles'
+
+
 //persona
 import Persons from './views/application/Persons'
 import AddPerson from './views/application/AddPerson'
@@ -24,13 +26,17 @@ import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
 
-//clients
+//bienes e inventarios
 import Inventory from './views/inventory/Inventory'
 import Inventory2 from './views/inventory/Inventory2'
 import InventoryDetail from './views/inventory/InventoryDetail'
 import NewInventory from './views/inventory/NewInventory'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
+
+//tesoreria
+import Solvency from './views/treasure/Solvency'
+
 
 // Routes
 const router = new VueRouter({
@@ -86,6 +92,9 @@ const router = new VueRouter({
                 { path: 'inventory/:soa', name: 'inventorydetail', component: InventoryDetail },
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
+
+                //enlaces para la administracion de paginas de tesoreria
+                { path: 'solvency', name: 'solvency', component: Solvency },
             ],
             meta: {
                 requiresAuth: true,
