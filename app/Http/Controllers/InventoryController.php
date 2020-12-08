@@ -155,12 +155,14 @@ class InventoryController extends Controller
    public function getCargos(Request $request)
    {
     $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
-    $data = Inventory::getCargos($unidad);
+    $sub_unidades = ($request->get('sub_unidades') ? $request->get('sub_unidades') : []);
+    $data = Inventory::getCargos($unidad,$sub_unidades);
     return json_encode($data);
    }
    public function getResponsables(Request $request)
    {
     $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+    $cargos = ($request->get('cargos') ? $request->get('cargos') : []);
     $data = Inventory::getResponsables($unidad);
     return json_encode($data);
    }

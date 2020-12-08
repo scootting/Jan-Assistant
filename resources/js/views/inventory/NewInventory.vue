@@ -8,11 +8,12 @@
           type="text"
           disabled
           v-bind:value="No_Doc"
+          placeholder="Nro de documento"
         />
       </div>
       <div>
         <el-row>
-          <el-col :span="24"></el-col>
+          
           <el-form label-width="160px" :inline="false" size="small">
             <el-form-item size="small" label="Encargados">
               <el-select
@@ -24,6 +25,8 @@
                 placeholder="Seleccione Encargados para Inventario"
                 :remote-method="getEncargados"
                 maxlength="30"
+                style="width:100%"
+                :loading = "encargadosLoading"
               >
                 <el-option
                   v-for="item in encargados"
@@ -44,7 +47,9 @@
                 placeholder="Seleccione una Unidad"
                 :remote-method="remoteMethod"
                 maxlength="30"
+                style="width:100%"
                 @change="onChangeUnidad"
+                :loading = "unidadLoading"
               >
                 <el-option
                   v-for="item in unidades"
@@ -65,6 +70,9 @@
                 placeholder="Sub Oficina"
                 :remote-method="getSubUnidades"
                 maxlength="30"
+                style="width:100%"
+                @change="onChangeSubUnidades"
+                :loading = "subUnidadLoading"
               >
                 <el-option
                   v-for="item in subUnidades"
@@ -85,6 +93,9 @@
                 placeholder="Cargos"
                 :remote-method="getCargosResp"
                 maxlength="30"
+                style="width:100%"
+                @change="onChangeCargos"
+                :loading = "cargosLoading"
               >
                 <el-option
                   v-for="item in cargos"
@@ -105,6 +116,8 @@
                 placeholder="Responsables"
                 :remote-method="getResponsables"
                 maxlength="30"
+                style="width:100%"
+                :loading = "responsablesLoading"
               >
                 <el-option
                   v-for="item in responsables"
@@ -117,7 +130,7 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="success" size="default">Guardar</el-button>
+                <el-button type="prymary" size="default">Guardar</el-button>
                 <el-button type="default" size="default">Realizar Inventario</el-button>
               </el-row>
             </el-form-item>
@@ -146,6 +159,11 @@ export default {
       cargos: [],
       responsables: [],
       encargados: [],
+      encargadosLoading: false,
+      subUnidadesLoading: false,
+      unidadesLoading: false,
+      cargosLoading: false,
+      responsablesLoading: false,
     };
   },
   mounted() {
@@ -166,41 +184,67 @@ export default {
     },
     onChangeUnidad(cod_soa) {
       this.getSubUnidades(cod_soa);
-      this.getCargosResp(cod_soa);
-      this.getResponsables(cod_soa);
+    },
+    onChangeSubUnidades(subUnidades){
+      let cod_soa = this.NewInvent.unidad;
+      this.getCargosResp(cod_soa,subUnidades);
+    },
+    onChangeCargos(cargos){
+      let cod_soa = this.NewInvent.unidad;
+      this.getResponsables(cod_soa,cargos);
     },
     getSubUnidades(cod_soa) {
+      this.unidadesLoading = true;
+      this.subUnidadesLoading = true;
       axios
         .get("/api/inventory2/sub_unidad", {
           params: { cod_soa: cod_soa },
         })
         .then((data) => {
+          this.subUnidadesLoading = false;
+          this.unidadesLoading = false;
           this.subUnidades = data.data;
           this.NewInvent.subUnidades = this.subUnidades.map((su) => su.id);
+          this.getCargosResp( this.NewInvent.unidad,this.NewInvent.subUnidades);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    getCargosResp(cod_soa){
+    getCargosResp(cod_soa,subUnidades){
+      this.cargosLoading = true;
+      this.subUnidadesLoading = true;
       axios
       .get("/api/inventory2/cargos", {
-          params: { cod_soa: cod_soa },
+          params: {
+            cod_soa: cod_soa,
+            sub_unidades: subUnidades
+          },
         })
         .then((data)=>{
+          this.cargosLoading = false;
+          this.subUnidadesLoading = false;
           this.cargos = data.data;
           this.NewInvent.cargos = this.cargos.map((car)=>car.id);
+          this.getResponsables(this.NewInvent.unidad,this.NewInvent.cargos);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    getResponsables(cod_soa){
+    getResponsables(cod_soa,cargos){
+      this.cargosLoading = true;
+      this.responsablesLoading = true;
        axios
       .get("/api/inventory2/responsables", {
-          params: { cod_soa: cod_soa },
+          params: {
+            cod_soa: cod_soa,
+            cargos: cargos
+          },
         })
         .then((data)=>{
+          this.cargosLoading = false;
+          this.responsablesLoading = false;
           this.responsables = data.data;
           this.NewInvent.responsables = this.responsables.map((resp)=>resp.nro_dip);
         })
@@ -209,11 +253,13 @@ export default {
         });
     },
     getEncargados(nro_dip){
+      this.encargadosLoading = true;
        axios
       .get("/api/inventory2/encargados", {
           params: { nro_dip:nro_dip },
         })
         .then((data)=>{
+          this.encargadosLoading = false;
           this.encargados = Object.values(data.data.data);
           console.log(data);
         })

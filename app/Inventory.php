@@ -74,14 +74,18 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function getCargos($unidad)
+    public static function getCargos($unidad,$sub_unidades)
     {
-        $query = "select inv.cargos.id ,inv.cargos.descripcion , public.personas.nro_dip
-        from inv.cargos,inv.activos, inv.oficinas,public.personas
+        $arrString="(";
+        foreach($sub_unidades as $k=>$su)
+            $arrString =$arrString.($k>0? ',':'' ).$su;
+        $arrString = $arrString.')';
+        $query = "select inv.cargos.id ,inv.cargos.descripcion
+        from inv.cargos,inv.activos
         where inv.cargos.id = inv.activos.car_cod
-        and inv.oficinas.cod_soa like '%".$unidad."%' 
-        and inv.activos.ci_resp = public.personas.nro_dip
-        group by ( inv.cargos.id, inv.cargos.descripcion,public.personas.nro_dip)
+        and inv.activos.sub_ofc_cod in ".$arrString."
+        and inv.activos.ofc_cod like '%".$unidad."%'   
+        group by ( inv.cargos.id, inv.cargos.descripcion)
         order by (inv.cargos.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;

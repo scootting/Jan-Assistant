@@ -6218,6 +6218,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "newInventory",
   data: function data() {
@@ -6234,7 +6247,12 @@ __webpack_require__.r(__webpack_exports__);
       subUnidades: [],
       cargos: [],
       responsables: [],
-      encargados: []
+      encargados: [],
+      encargadosLoading: false,
+      subUnidadesLoading: false,
+      unidadesLoading: false,
+      cargosLoading: false,
+      responsablesLoading: false
     };
   },
   mounted: function mounted() {
@@ -6256,49 +6274,73 @@ __webpack_require__.r(__webpack_exports__);
     },
     onChangeUnidad: function onChangeUnidad(cod_soa) {
       this.getSubUnidades(cod_soa);
-      this.getCargosResp(cod_soa);
-      this.getResponsables(cod_soa);
+    },
+    onChangeSubUnidades: function onChangeSubUnidades(subUnidades) {
+      var cod_soa = this.NewInvent.unidad;
+      this.getCargosResp(cod_soa, subUnidades);
+    },
+    onChangeCargos: function onChangeCargos(cargos) {
+      var cod_soa = this.NewInvent.unidad;
+      this.getResponsables(cod_soa, cargos);
     },
     getSubUnidades: function getSubUnidades(cod_soa) {
       var _this2 = this;
 
+      this.unidadesLoading = true;
+      this.subUnidadesLoading = true;
       axios.get("/api/inventory2/sub_unidad", {
         params: {
           cod_soa: cod_soa
         }
       }).then(function (data) {
+        _this2.subUnidadesLoading = false;
+        _this2.unidadesLoading = false;
         _this2.subUnidades = data.data;
         _this2.NewInvent.subUnidades = _this2.subUnidades.map(function (su) {
           return su.id;
         });
+
+        _this2.getCargosResp(_this2.NewInvent.unidad, _this2.NewInvent.subUnidades);
       })["catch"](function (err) {
         console.log(err);
       });
     },
-    getCargosResp: function getCargosResp(cod_soa) {
+    getCargosResp: function getCargosResp(cod_soa, subUnidades) {
       var _this3 = this;
 
+      this.cargosLoading = true;
+      this.subUnidadesLoading = true;
       axios.get("/api/inventory2/cargos", {
         params: {
-          cod_soa: cod_soa
+          cod_soa: cod_soa,
+          sub_unidades: subUnidades
         }
       }).then(function (data) {
+        _this3.cargosLoading = false;
+        _this3.subUnidadesLoading = false;
         _this3.cargos = data.data;
         _this3.NewInvent.cargos = _this3.cargos.map(function (car) {
           return car.id;
         });
+
+        _this3.getResponsables(_this3.NewInvent.unidad, _this3.NewInvent.cargos);
       })["catch"](function (err) {
         console.log(err);
       });
     },
-    getResponsables: function getResponsables(cod_soa) {
+    getResponsables: function getResponsables(cod_soa, cargos) {
       var _this4 = this;
 
+      this.cargosLoading = true;
+      this.responsablesLoading = true;
       axios.get("/api/inventory2/responsables", {
         params: {
-          cod_soa: cod_soa
+          cod_soa: cod_soa,
+          cargos: cargos
         }
       }).then(function (data) {
+        _this4.cargosLoading = false;
+        _this4.responsablesLoading = false;
         _this4.responsables = data.data;
         _this4.NewInvent.responsables = _this4.responsables.map(function (resp) {
           return resp.nro_dip;
@@ -6310,11 +6352,13 @@ __webpack_require__.r(__webpack_exports__);
     getEncargados: function getEncargados(nro_dip) {
       var _this5 = this;
 
+      this.encargadosLoading = true;
       axios.get("/api/inventory2/encargados", {
         params: {
           nro_dip: nro_dip
         }
       }).then(function (data) {
+        _this5.encargadosLoading = false;
         _this5.encargados = Object.values(data.data.data);
         console.log(data);
       })["catch"](function (err) {
@@ -89509,7 +89553,11 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               staticStyle: { "text-align": "right", float: "right" },
-              attrs: { type: "text", disabled: "" },
+              attrs: {
+                type: "text",
+                disabled: "",
+                placeholder: "Nro de documento"
+              },
               domProps: { value: _vm.No_Doc }
             })
           ]
@@ -89521,8 +89569,6 @@ var render = function() {
             _c(
               "el-row",
               [
-                _c("el-col", { attrs: { span: 24 } }),
-                _vm._v(" "),
                 _c(
                   "el-form",
                   {
@@ -89540,6 +89586,7 @@ var render = function() {
                         _c(
                           "el-select",
                           {
+                            staticStyle: { width: "100%" },
                             attrs: {
                               filterable: "",
                               remote: "",
@@ -89548,7 +89595,8 @@ var render = function() {
                               placeholder:
                                 "Seleccione Encargados para Inventario",
                               "remote-method": _vm.getEncargados,
-                              maxlength: "30"
+                              maxlength: "30",
+                              loading: _vm.encargadosLoading
                             },
                             model: {
                               value: _vm.NewInvent.encargados,
@@ -89580,13 +89628,15 @@ var render = function() {
                         _c(
                           "el-select",
                           {
+                            staticStyle: { width: "100%" },
                             attrs: {
                               filterable: "",
                               remote: "",
                               "reserve-keyword": "",
                               placeholder: "Seleccione una Unidad",
                               "remote-method": _vm.remoteMethod,
-                              maxlength: "30"
+                              maxlength: "30",
+                              loading: _vm.unidadLoading
                             },
                             on: { change: _vm.onChangeUnidad },
                             model: {
@@ -89619,6 +89669,7 @@ var render = function() {
                         _c(
                           "el-select",
                           {
+                            staticStyle: { width: "100%" },
                             attrs: {
                               filterable: "",
                               remote: "",
@@ -89626,8 +89677,10 @@ var render = function() {
                               "reserve-keyword": "",
                               placeholder: "Sub Oficina",
                               "remote-method": _vm.getSubUnidades,
-                              maxlength: "30"
+                              maxlength: "30",
+                              loading: _vm.subUnidadLoading
                             },
+                            on: { change: _vm.onChangeSubUnidades },
                             model: {
                               value: _vm.NewInvent.subUnidades,
                               callback: function($$v) {
@@ -89655,6 +89708,7 @@ var render = function() {
                         _c(
                           "el-select",
                           {
+                            staticStyle: { width: "100%" },
                             attrs: {
                               filterable: "",
                               remote: "",
@@ -89662,8 +89716,10 @@ var render = function() {
                               "reserve-keyword": "",
                               placeholder: "Cargos",
                               "remote-method": _vm.getCargosResp,
-                              maxlength: "30"
+                              maxlength: "30",
+                              loading: _vm.cargosLoading
                             },
+                            on: { change: _vm.onChangeCargos },
                             model: {
                               value: _vm.NewInvent.cargos,
                               callback: function($$v) {
@@ -89691,6 +89747,7 @@ var render = function() {
                         _c(
                           "el-select",
                           {
+                            staticStyle: { width: "100%" },
                             attrs: {
                               filterable: "",
                               remote: "",
@@ -89698,7 +89755,8 @@ var render = function() {
                               "reserve-keyword": "",
                               placeholder: "Responsables",
                               "remote-method": _vm.getResponsables,
-                              maxlength: "30"
+                              maxlength: "30",
+                              loading: _vm.responsablesLoading
                             },
                             model: {
                               value: _vm.NewInvent.responsables,
@@ -89733,7 +89791,7 @@ var render = function() {
                           [
                             _c(
                               "el-button",
-                              { attrs: { type: "success", size: "default" } },
+                              { attrs: { type: "prymary", size: "default" } },
                               [_vm._v("Guardar")]
                             ),
                             _vm._v(" "),
