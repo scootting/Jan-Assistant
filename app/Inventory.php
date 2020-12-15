@@ -11,7 +11,8 @@ class Inventory extends Model
     {
         $query = "select inv.oficinas.cod_soa,inv.oficinas.descripcion 
                     from inv.oficinas where 
-                    inv.oficinas.gestion = '" . $gestion . "' and inv.oficinas.descripcion like '%" . $descripcion . "%'";
+                    inv.oficinas.gestion = '" . $gestion . "' 
+                    and inv.oficinas.descripcion like '%" . $descripcion . "%'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -90,15 +91,21 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function getResponsables ($unidad)
+    public static function getResponsables ($unidad,$cargos)
     {
+        $arrString="(";
+        foreach($cargos as $k=>$cargo)
+            $arrString =$arrString.($k>0? ',':'' ).$cargo;
+        $arrString = $arrString.')';
         $query = "select public.personas.nro_dip,public.personas.nombres,
-        public.personas.paterno,public.personas.materno
-        from inv.activos,public.personas
+        public.personas.paterno,public.personas.materno, inv.cargos.descripcion 
+        from inv.activos,public.personas,inv.cargos
         where inv.activos.ofc_cod like '%".$unidad."%'and
         public.personas.nro_dip = inv.activos.ci_resp
+        and inv.activos.car_cod = inv.cargos.id
+        and inv.cargos.id in ".$arrString."
         group by (public.personas.nro_dip,public.personas.nombres,
-        public.personas.paterno,public.personas.materno)";
+        public.personas.paterno,public.personas.materno, inv.cargos.descripcion)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -111,4 +118,47 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function saveNewInventory($no_doc,$res_enc,$car_cod,$ofc_cod,$sub_ofc_cod,$car_cod_resp,$ci_res)
+    {
+        // $resp_enc = implode($res_enc);
+        // $cargo_c = implode($car_cod);
+        // $sub_ofc = implode($sub_ofc_cod);
+        // $resp_enc = implode($res_enc);
+        $date=Date('d-m-Y');
+        $query = " insert into 
+                inv.doc_inv
+                ( 
+                no_cod,
+                res_enc,
+                car_cod,
+                ofc_cod,
+                sub_ofc_cod,
+                car_cod_resp,
+                ci_res,
+                fec_cre
+                )
+                values
+                 (
+                '".$no_doc."',
+                '".str_replace(']','}',str_replace('[','{',json_encode($res_enc)))."',
+                '".str_replace(']','}',str_replace('[','{',json_encode($car_cod)))."',
+                '".$ofc_cod."',
+                '".str_replace(']','}',str_replace('[','{',json_encode($sub_ofc_cod)))."',
+                '".str_replace(']','}',str_replace('[','{',json_encode($car_cod_resp)))."',
+                '".str_replace(']','}',str_replace('[','{',json_encode($ci_res)))."',
+                '".$date."'
+                );";
+
+                // 
+                //     '".$no_doc.",
+                //     ARRAY".json_encode($res_enc).",
+                //     ARRAY".json_encode($car_cod).",
+                //     '".$ofc_cod."',
+                //     ARRAY".json_encode($sub_ofc_cod).",
+                //     ARRAY".json_encode($car_cod_resp).",
+                //     ".json_encode($ci_res).",
+                //     '".$date."'
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+}
 }

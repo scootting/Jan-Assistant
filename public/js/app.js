@@ -6230,7 +6230,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "newInventory",
   data: function data() {
@@ -6238,10 +6237,10 @@ __webpack_require__.r(__webpack_exports__);
       No_Doc: null,
       NewInvent: {
         unidad: "",
-        subUnidades: "",
-        cargos: "",
-        responsables: "",
-        encargados: ""
+        subUnidades: [],
+        cargos: [],
+        responsables: [],
+        encargados: []
       },
       unidades: [],
       subUnidades: [],
@@ -6361,6 +6360,33 @@ __webpack_require__.r(__webpack_exports__);
         _this5.encargadosLoading = false;
         _this5.encargados = Object.values(data.data.data);
         console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    formatResponsable: function formatResponsable(responsable) {
+      return {
+        cargo: responsable.descripcion,
+        responsable: responsable.paterno.trim() + ' ' + responsable.materno.trim() + ' ' + responsable.nombres.trim(),
+        nro_dip: responsable.nro_dip
+      };
+    },
+    saveInventory: function saveInventory() {
+      var _this6 = this;
+
+      //this.NewInvent.responsables= this.NewInvent.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0])); 
+      //tratar de guardar los responsables como un json 
+      axios.post("/api/inventory2/save", this.NewInvent).then(function (data) {
+        _this6.$message({
+          message: 'Inventario creado exitosamente',
+          type: 'success',
+          duration: 5000,
+          showClose: true
+        });
+
+        _this6.route.push({
+          name: 'inventory2'
+        });
       })["catch"](function (err) {
         console.log(err);
       });
@@ -89753,7 +89779,6 @@ var render = function() {
                               filterable: "",
                               remote: "",
                               multiple: "",
-                              "reserve-keyword": "",
                               placeholder:
                                 "Seleccione Encargados para Inventario",
                               "remote-method": _vm.getEncargados,
@@ -89768,9 +89793,9 @@ var render = function() {
                               expression: "NewInvent.encargados"
                             }
                           },
-                          _vm._l(_vm.encargados, function(item) {
+                          _vm._l(_vm.encargados, function(item, index) {
                             return _c("el-option", {
-                              key: item.nro_dip,
+                              key: index,
                               attrs: {
                                 label: item.paterno + " " + item.nombres,
                                 value: item.nro_dip
@@ -89809,9 +89834,9 @@ var render = function() {
                               expression: "NewInvent.unidad"
                             }
                           },
-                          _vm._l(_vm.unidades, function(item) {
+                          _vm._l(_vm.unidades, function(item, index) {
                             return _c("el-option", {
-                              key: item.cod_soa,
+                              key: index,
                               attrs: {
                                 label: item.descripcion,
                                 value: item.cod_soa
@@ -89840,7 +89865,7 @@ var render = function() {
                               placeholder: "Sub Oficina",
                               "remote-method": _vm.getSubUnidades,
                               maxlength: "30",
-                              loading: _vm.subUnidadLoading
+                              loading: _vm.subUnidadesLoading
                             },
                             on: { change: _vm.onChangeSubUnidades },
                             model: {
@@ -89851,9 +89876,9 @@ var render = function() {
                               expression: "NewInvent.subUnidades"
                             }
                           },
-                          _vm._l(_vm.subUnidades, function(item) {
+                          _vm._l(_vm.subUnidades, function(item, index) {
                             return _c("el-option", {
-                              key: item.id,
+                              key: index,
                               attrs: { label: item.descripcion, value: item.id }
                             })
                           }),
@@ -89890,9 +89915,9 @@ var render = function() {
                               expression: "NewInvent.cargos"
                             }
                           },
-                          _vm._l(_vm.cargos, function(item) {
+                          _vm._l(_vm.cargos, function(item, index) {
                             return _c("el-option", {
-                              key: item.id,
+                              key: index,
                               attrs: { label: item.descripcion, value: item.id }
                             })
                           }),
@@ -89928,9 +89953,9 @@ var render = function() {
                               expression: "NewInvent.responsables"
                             }
                           },
-                          _vm._l(_vm.responsables, function(item) {
+                          _vm._l(_vm.responsables, function(item, index) {
                             return _c("el-option", {
-                              key: item.nro_dip,
+                              key: index,
                               attrs: {
                                 label: item.nombres + item.paterno,
                                 value: item.nro_dip
@@ -89953,7 +89978,10 @@ var render = function() {
                           [
                             _c(
                               "el-button",
-                              { attrs: { type: "prymary", size: "default" } },
+                              {
+                                attrs: { type: "prymary", size: "default" },
+                                on: { click: _vm.saveInventory }
+                              },
                               [_vm._v("Guardar")]
                             ),
                             _vm._v(" "),

@@ -163,7 +163,7 @@ class InventoryController extends Controller
    {
     $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
     $cargos = ($request->get('cargos') ? $request->get('cargos') : []);
-    $data = Inventory::getResponsables($unidad);
+    $data = Inventory::getResponsables($unidad,$cargos);
     return json_encode($data);
    }
    public function getEncargados(Request $request)
@@ -181,5 +181,21 @@ class InventoryController extends Controller
      );
      return json_encode($paginate);
     
+   }
+   public function saveNewInventory(Request $request)
+   {
+       //dd($request);
+       $no_doc = '0008';//$request->no_doc;
+       $res_enc = $request->encargados;
+       $car_cod_enc = [];
+       for($i=0;$i<count($res_enc); $i++)
+        $car_cod_enc[]=3;
+       $car_cod = $car_cod_enc;
+       $ofc_cod = $request->unidad;
+       $sub_ofc_cod = $request->subUnidades;
+       $car_cod_resp = $request->cargos;
+       $ci_res = $request->responsables;
+       $data = Inventory::saveNewInventory($no_doc,$res_enc,$car_cod,$ofc_cod,$sub_ofc_cod,$car_cod_resp,$ci_res);
+       return json_encode($data);
    }
 }

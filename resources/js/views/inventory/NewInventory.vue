@@ -21,7 +21,6 @@
                 filterable
                 remote
                 multiple
-                reserve-keyword
                 placeholder="Seleccione Encargados para Inventario"
                 :remote-method="getEncargados"
                 maxlength="30"
@@ -29,8 +28,8 @@
                 :loading = "encargadosLoading"
               >
                 <el-option
-                  v-for="item in encargados"
-                  :key="item.nro_dip"
+                  v-for="(item , index) in encargados"
+                  :key="index"
                   :label="item.paterno +' '+ item.nombres"
                   :value="item.nro_dip"
                 >
@@ -52,8 +51,8 @@
                 :loading = "unidadLoading"
               >
                 <el-option
-                  v-for="item in unidades"
-                  :key="item.cod_soa"
+                  v-for="(item , index) in unidades"
+                  :key="index"
                   :label="item.descripcion"
                   :value="item.cod_soa"
                 >
@@ -72,11 +71,11 @@
                 maxlength="30"
                 style="width:100%"
                 @change="onChangeSubUnidades"
-                :loading = "subUnidadLoading"
+                :loading = "subUnidadesLoading"
               >
                 <el-option
-                  v-for="item in subUnidades"
-                  :key="item.id"
+                  v-for="(item,index) in subUnidades"
+                  :key="index"
                   :label="item.descripcion"
                   :value="item.id"
                 >
@@ -98,8 +97,8 @@
                 :loading = "cargosLoading"
               >
                 <el-option
-                  v-for="item in cargos"
-                  :key="item.id"
+                  v-for="(item,index) in cargos"
+                  :key="index"
                   :label="item.descripcion"
                   :value="item.id"
                 >
@@ -120,8 +119,8 @@
                 :loading = "responsablesLoading"
               >
                 <el-option
-                  v-for="item in responsables"
-                  :key="item.nro_dip"
+                  v-for="(item,index) in responsables"
+                  :key="index"
                   :label="item.nombres  + item.paterno"
                   :value="item.nro_dip"
                 >
@@ -130,7 +129,7 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="prymary" size="default">Guardar</el-button>
+                <el-button type="prymary" size="default" @click="saveInventory">Guardar</el-button>
                 <el-button type="default" size="default">Realizar Inventario</el-button>
               </el-row>
             </el-form-item>
@@ -149,10 +148,10 @@ export default {
       No_Doc: null,
       NewInvent: {
         unidad: "",
-        subUnidades: "",
-        cargos: "",
-        responsables:"",
-        encargados:"",
+        subUnidades: [],
+        cargos: [],
+        responsables:[],
+        encargados:[],
       },
       unidades: [],
       subUnidades: [],
@@ -262,6 +261,31 @@ export default {
           this.encargadosLoading = false;
           this.encargados = Object.values(data.data.data);
           console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    formatResponsable(responsable){
+      return { 
+        cargo:responsable.descripcion , 
+        responsable : responsable.paterno.trim()+' '+responsable.materno.trim()+' '+responsable.nombres.trim(),
+        nro_dip: responsable.nro_dip, 
+       }
+    },
+    saveInventory(){
+      //this.NewInvent.responsables= this.NewInvent.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0])); 
+      //tratar de guardar los responsables como un json 
+      axios
+      .post("/api/inventory2/save",this.NewInvent)
+      .then((data)=>{
+          this.$message({
+            message: 'Inventario creado exitosamente', 
+            type: 'success',
+            duration:5000,
+            showClose:true
+          })
+          this.route.push({name:'inventory2'})
         })
         .catch((err) => {
           console.log(err);
