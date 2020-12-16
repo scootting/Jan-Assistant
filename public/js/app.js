@@ -89674,7 +89674,8 @@ var render = function() {
                                 ])
                               ],
                               1
-                            )
+                            ),
+                            _vm._v("+\n          ")
                           ]
                         }
                       }
