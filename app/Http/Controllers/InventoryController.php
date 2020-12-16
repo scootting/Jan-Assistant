@@ -148,15 +148,16 @@ class InventoryController extends Controller
    }
    public function getSubUnidad(Request $request)
    {
-    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+    
+    $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
     $data = Inventory::getSubUnidades($unidad);
     return json_encode($data);
    }
    public function getCargos(Request $request)
    {
-    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
-    $sub_unidades = ($request->get('sub_unidades') ? $request->get('sub_unidades') : []);
-    $data = Inventory::getCargos($unidad,$sub_unidades);
+    $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
+    //$sub_unidades = ($request->get('sub_unidades') ? $request->get('sub_unidades') : []);
+    $data = Inventory::getCargos($unidad); //$sub_unidades
     return json_encode($data);
    }
    public function getResponsables(Request $request)
