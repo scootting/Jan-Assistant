@@ -6230,6 +6230,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "newInventory",
   data: function data() {
@@ -6247,11 +6278,14 @@ __webpack_require__.r(__webpack_exports__);
       cargos: [],
       responsables: [],
       encargados: [],
-      encargadosLoading: false,
+      searchEncargados: [],
+      selectEncargado: null,
+      searchEncargadoLoading: false,
       subUnidadesLoading: false,
-      unidadesLoading: false,
+      unidadLoading: false,
       cargosLoading: false,
-      responsablesLoading: false
+      responsablesLoading: false,
+      showDialogEncargado: false
     };
   },
   mounted: function mounted() {
@@ -6276,7 +6310,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onChangeSubUnidades: function onChangeSubUnidades(subUnidades) {
       var cod_soa = this.NewInvent.unidad;
-      this.getCargosResp(cod_soa, subUnidades);
+      this.getCargosResp(cod_soa, subUnidades); //subUnidades
+
+      this.getResponsables(cod_soa, subUnidades);
     },
     onChangeCargos: function onChangeCargos(cargos) {
       var cod_soa = this.NewInvent.unidad;
@@ -6304,15 +6340,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    getCargosResp: function getCargosResp(cod_soa, subUnidades) {
+    getCargosResp: function getCargosResp(cod_soa) {
       var _this3 = this;
 
       this.cargosLoading = true;
       this.subUnidadesLoading = true;
       axios.get("/api/inventory2/cargos", {
         params: {
-          cod_soa: cod_soa,
-          sub_unidades: subUnidades
+          cod_soa: cod_soa //sub_unidades: subUnidades,
+
         }
       }).then(function (data) {
         _this3.cargosLoading = false;
@@ -6351,14 +6387,14 @@ __webpack_require__.r(__webpack_exports__);
     getEncargados: function getEncargados(nro_dip) {
       var _this5 = this;
 
-      this.encargadosLoading = true;
+      this.searchEncargadoLoading = true;
       axios.get("/api/inventory2/encargados", {
         params: {
           nro_dip: nro_dip
         }
       }).then(function (data) {
-        _this5.encargadosLoading = false;
-        _this5.encargados = Object.values(data.data.data);
+        _this5.searchEncargadoLoading = false;
+        _this5.searchEncargados = Object.values(data.data.data);
         console.log(data);
       })["catch"](function (err) {
         console.log(err);
@@ -6367,29 +6403,54 @@ __webpack_require__.r(__webpack_exports__);
     formatResponsable: function formatResponsable(responsable) {
       return {
         cargo: responsable.descripcion,
-        responsable: responsable.paterno.trim() + ' ' + responsable.materno.trim() + ' ' + responsable.nombres.trim(),
+        responsable: responsable.paterno.trim() + " " + responsable.materno.trim() + " " + responsable.nombres.trim(),
         nro_dip: responsable.nro_dip
       };
     },
     saveInventory: function saveInventory() {
       var _this6 = this;
 
-      //this.NewInvent.responsables= this.NewInvent.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0])); 
-      //tratar de guardar los responsables como un json 
+      //this.NewInvent.responsables= this.NewInvent.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
+      //tratar de guardar los responsables como un json
       axios.post("/api/inventory2/save", this.NewInvent).then(function (data) {
         _this6.$message({
-          message: 'Inventario creado exitosamente',
-          type: 'success',
+          message: "Inventario creado exitosamente",
+          type: "success",
           duration: 5000,
           showClose: true
         });
 
         _this6.route.push({
-          name: 'inventory2'
+          name: "inventory2"
         });
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    onCancelDialog: function onCancelDialog() {
+      this.selectEncargado = null;
+      this.showDialogEncargado = false;
+    },
+    onConfirmDialog: function onConfirmDialog() {
+      var _this7 = this;
+
+      if (!this.selectEncargado) {
+        this.$message({
+          message: 'NO selecciono ningun encargado',
+          type: 'warning',
+          showClose: true,
+          duaration: 5000
+        });
+        return;
+      }
+
+      var addEncargado = this.searchEncargados.filter(function (e) {
+        return e.nro_dip === _this7.selectEncargado;
+      })[0];
+      this.NewInvent.encargados.push(addEncargado.nro_dip);
+      this.encargados.push(addEncargado);
+      this.selectEncargado = null;
+      this.showDialogEncargado = false;
     }
   }
 });
@@ -8553,7 +8614,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-57c635ce] {\r\n  padding-bottom: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-row[data-v-57c635ce] {\r\n  padding-bottom: 10px;\n}\n.enc-select[data-v-57c635ce]{\r\n  width: calc(100% - 100px);\r\n  margin-right: 15px;\n}\r\n", ""]);
 
 // exports
 
@@ -89775,16 +89836,12 @@ var render = function() {
                         _c(
                           "el-select",
                           {
-                            staticStyle: { width: "100%" },
+                            staticClass: "enc-select",
                             attrs: {
-                              filterable: "",
-                              remote: "",
                               multiple: "",
                               placeholder:
                                 "Seleccione Encargados para Inventario",
-                              "remote-method": _vm.getEncargados,
-                              maxlength: "30",
-                              loading: _vm.encargadosLoading
+                              maxlength: "30"
                             },
                             model: {
                               value: _vm.NewInvent.encargados,
@@ -89804,6 +89861,19 @@ var render = function() {
                             })
                           }),
                           1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary", size: "mini" },
+                            on: {
+                              click: function($event) {
+                                _vm.showDialogEncargado = true
+                              }
+                            }
+                          },
+                          [_vm._v("Buscar")]
                         )
                       ],
                       1
@@ -90006,7 +90076,79 @@ var render = function() {
           ],
           1
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "Buscar Encargado",
+            visible: _vm.showDialogEncargado,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.showDialogEncargado = $event
+            },
+            close: function($event) {
+              _vm.showDialogEncargado = false
+            }
+          }
+        },
+        [
+          _c(
+            "el-select",
+            {
+              attrs: {
+                placeholder: "busque un carnet",
+                loading: _vm.searchEncargadoLoading,
+                clearable: "",
+                filterable: "",
+                remote: "",
+                "remote-method": _vm.getEncargados
+              },
+              model: {
+                value: _vm.selectEncargado,
+                callback: function($$v) {
+                  _vm.selectEncargado = $$v
+                },
+                expression: "selectEncargado"
+              }
+            },
+            _vm._l(_vm.searchEncargados, function(item) {
+              return _c("el-option", {
+                key: item.nro_dip,
+                attrs: {
+                  label: item.paterno + " " + item.nombres,
+                  value: item.nro_dip
+                }
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c("el-button", { on: { click: _vm.onCancelDialog } }, [
+                _vm._v("Cancel")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.onConfirmDialog }
+                },
+                [_vm._v("CONFIRMAR")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -108914,8 +109056,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

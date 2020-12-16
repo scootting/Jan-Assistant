@@ -66,18 +66,27 @@ class Inventory extends Model
     }
     public static function getSubUnidades($unidad)
     {
-        $query = "select inv.sub_oficinas.id ,inv.sub_oficinas.descripcion
-        from inv.sub_oficinas,inv.oficinas ,inv.activos
-        where inv.oficinas.cod_soa = inv.activos.ofc_cod
-        and inv.oficinas.cod_soa like '%".$unidad."%' 
-        and inv.sub_oficinas.id = inv.activos.sub_ofc_cod
-        group by (inv.sub_oficinas.id,inv.sub_oficinas.descripcion)";
+
+        $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
+        from inv.sub_oficinas, inv.activos,inv.oficinas
+        WHERE
+        inv.activos.sub_ofc_cod = inv.sub_oficinas.id
+        and inv.oficinas.cod_soa = inv.activos.ofc_cod
+        and inv.oficinas.cod_soa like '%".$unidad."%'
+        group by (inv.sub_oficinas.descripcion,inv.sub_oficinas.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function getCargos($unidad,$sub_unidades)
+    public static function getCargos($unidad) //$sub_unidades
     {
-        $arrString="(";
+        $query = "select inv.cargos.id,inv.cargos.descripcion
+        from inv.activos,inv.cargos
+        where 
+        inv.activos.car_cod = inv.cargos.id
+        and  inv.activos.ofc_cod like '%$unidad%'
+        group by (inv.cargos.id,inv.cargos.descripcion)
+        order by (inv.cargos.id)";
+        /*$arrString="(";
         foreach($sub_unidades as $k=>$su)
             $arrString =$arrString.($k>0? ',':'' ).$su;
         $arrString = $arrString.')';
@@ -88,6 +97,7 @@ class Inventory extends Model
         and inv.activos.ofc_cod like '%".$unidad."%'   
         group by ( inv.cargos.id, inv.cargos.descripcion)
         order by (inv.cargos.id)";
+        */
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
