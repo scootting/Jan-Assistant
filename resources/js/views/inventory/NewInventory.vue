@@ -220,8 +220,9 @@ export default {
     },
     onChangeSubUnidades(subUnidades) {
       let cod_soa = this.NewInvent.unidad;
-      //this.getCargosResp(cod_soa,subUnidades); //subUnidades
+      this.getCargosResp(cod_soa,subUnidades); //subUnidades
       this.getResponsables(cod_soa, cargos);
+      
     },
     onChangeCargos(cargos) {
       let cod_soa = this.NewInvent.unidad;
@@ -240,19 +241,20 @@ export default {
           this.subUnidades = data.data;
           this.NewInvent.subUnidades = this.subUnidades.map((su) => su.id);
           this.getCargosResp(this.NewInvent.unidad, this.NewInvent.subUnidades);
+          
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    getCargosResp(cod_soa) {
+    getCargosResp(cod_soa,subUnidades) {
       this.cargosLoading = true;
       this.subUnidadesLoading = true;
       axios
         .get("/api/inventory2/cargos", {
           params: {
             cod_soa: cod_soa,
-            //sub_unidades: subUnidades,
+            sub_unidades: subUnidades,
           },
         })
         .then((data) => {

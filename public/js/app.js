@@ -6309,7 +6309,8 @@ __webpack_require__.r(__webpack_exports__);
       this.getSubUnidades(cod_soa);
     },
     onChangeSubUnidades: function onChangeSubUnidades(subUnidades) {
-      var cod_soa = this.NewInvent.unidad; //this.getCargosResp(cod_soa,subUnidades); //subUnidades
+      var cod_soa = this.NewInvent.unidad;
+      this.getCargosResp(cod_soa, subUnidades); //subUnidades
 
       this.getResponsables(cod_soa, cargos);
     },
@@ -6339,15 +6340,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    getCargosResp: function getCargosResp(cod_soa) {
+    getCargosResp: function getCargosResp(cod_soa, subUnidades) {
       var _this3 = this;
 
       this.cargosLoading = true;
       this.subUnidadesLoading = true;
       axios.get("/api/inventory2/cargos", {
         params: {
-          cod_soa: cod_soa //sub_unidades: subUnidades,
-
+          cod_soa: cod_soa,
+          sub_unidades: subUnidades
         }
       }).then(function (data) {
         _this3.cargosLoading = false;
