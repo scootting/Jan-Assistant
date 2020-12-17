@@ -6309,10 +6309,9 @@ __webpack_require__.r(__webpack_exports__);
       this.getSubUnidades(cod_soa);
     },
     onChangeSubUnidades: function onChangeSubUnidades(subUnidades) {
-      var cod_soa = this.NewInvent.unidad;
-      this.getCargosResp(cod_soa, subUnidades); //subUnidades
+      var cod_soa = this.NewInvent.unidad; //this.getCargosResp(cod_soa,subUnidades); //subUnidades
 
-      this.getResponsables(cod_soa, subUnidades);
+      this.getResponsables(cod_soa, cargos);
     },
     onChangeCargos: function onChangeCargos(cargos) {
       var cod_soa = this.NewInvent.unidad;

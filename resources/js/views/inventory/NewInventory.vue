@@ -220,8 +220,8 @@ export default {
     },
     onChangeSubUnidades(subUnidades) {
       let cod_soa = this.NewInvent.unidad;
-      this.getCargosResp(cod_soa,subUnidades); //subUnidades
-      this.getResponsables(cod_soa,subUnidades);
+      //this.getCargosResp(cod_soa,subUnidades); //subUnidades
+      this.getResponsables(cod_soa, cargos);
     },
     onChangeCargos(cargos) {
       let cod_soa = this.NewInvent.unidad;
