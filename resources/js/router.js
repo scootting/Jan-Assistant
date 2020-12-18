@@ -21,7 +21,6 @@ import EditUserProfiles from './views/application/EditUserProfiles'
 import Persons from './views/application/Persons'
 import AddPerson from './views/application/AddPerson'
 import EditPerson from './views/application/EditPerson'
-
 import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'

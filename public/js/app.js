@@ -6427,7 +6427,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this6.route.push({
-          name: "inventory2"
+          name: 'inventory2'
         });
       })["catch"](function (err) {
         console.log(err);

@@ -195,8 +195,9 @@ class InventoryController extends Controller
         $sub_ofc_cod = $request->subUnidades;
         $car_cod_resp = $request->cargos;
         $ci_res = $request->responsables;
+        $estado = 'ELABORADO';
         $gestion = '2020'; //$request->gestion;
-        $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $gestion);
+        $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado, $gestion);
         return json_encode($data);
     }
 }

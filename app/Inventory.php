@@ -135,7 +135,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $gestion)
+    public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado,$gestion)
     {
         // $resp_enc = implode($res_enc);
         // $cargo_c = implode($car_cod);
@@ -153,6 +153,7 @@ class Inventory extends Model
                 car_cod_resp,
                 ci_res,
                 fec_cre,
+                estado,
                 gestion
                 )
                 values
@@ -165,6 +166,7 @@ class Inventory extends Model
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($car_cod_resp))) . "',
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($ci_res))) . "',
                 '" . $date . "',
+                '" . $estado . "',
                 '" . $gestion . "'
                 );";
 

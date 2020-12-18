@@ -330,7 +330,7 @@ export default {
             duration: 5000,
             showClose: true,
           });
-          this.route.push({ name: "inventory2" });
+          this.route.push({ name: 'inventory2' });
         })
         .catch((err) => {
           console.log(err);
