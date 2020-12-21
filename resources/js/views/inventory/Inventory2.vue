@@ -19,10 +19,13 @@
           placeholder="INSERTE UNA DESCRIPCION"
           v-model="writtenTextParameter"
           class="input-with-select"
-           @keyup.enter.native="getOffices"
-           
+          @keyup.enter.native="getOffices"
         >
-          <el-button slot="append" icon="el-icon-search" @click="getInventories"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getInventories"
+          ></el-button>
         </el-input>
       </div>
       <br />
@@ -134,8 +137,8 @@ export default {
         },
       });
     },
-    newInventory(){
-      this.$router.push({name:'newinventory'})
+    newInventory() {
+      this.$router.push({ name: "newinventory" });
     },
 
     test() {

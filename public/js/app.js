@@ -5829,6 +5829,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Inventarios2",
   data: function data() {
@@ -5878,7 +5881,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     newInventory: function newInventory() {
       this.$router.push({
-        name: 'newinventory'
+        name: "newinventory"
       });
     },
     test: function test() {
@@ -6261,6 +6264,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "newInventory",
   data: function data() {
@@ -6312,7 +6318,7 @@ __webpack_require__.r(__webpack_exports__);
       var cod_soa = this.NewInvent.unidad;
       this.getCargosResp(cod_soa, subUnidades); //subUnidades
 
-      this.getResponsables(cod_soa, subUnidades);
+      this.getResponsables(cod_soa, cargos);
     },
     onChangeCargos: function onChangeCargos(cargos) {
       var cod_soa = this.NewInvent.unidad;
@@ -6340,15 +6346,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    getCargosResp: function getCargosResp(cod_soa) {
+    getCargosResp: function getCargosResp(cod_soa, subUnidades) {
       var _this3 = this;
 
       this.cargosLoading = true;
       this.subUnidadesLoading = true;
       axios.get("/api/inventory2/cargos", {
         params: {
-          cod_soa: cod_soa //sub_unidades: subUnidades,
-
+          cod_soa: cod_soa,
+          sub_unidades: subUnidades
         }
       }).then(function (data) {
         _this3.cargosLoading = false;
@@ -6421,7 +6427,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this6.route.push({
-          name: "inventory2"
+          name: 'inventory2'
         });
       })["catch"](function (err) {
         console.log(err);
@@ -6436,8 +6442,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.selectEncargado) {
         this.$message({
-          message: 'NO selecciono ningun encargado',
-          type: 'warning',
+          message: "NO selecciono ningun encargado",
+          type: "warning",
           showClose: true,
           duaration: 5000
         });
@@ -8614,7 +8620,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-57c635ce] {\r\n  padding-bottom: 10px;\n}\n.enc-select[data-v-57c635ce]{\r\n  width: calc(100% - 100px);\r\n  margin-right: 15px;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-row[data-v-57c635ce] {\r\n  padding-bottom: 10px;\n}\n.enc-select[data-v-57c635ce] {\r\n  width: calc(100% - 100px);\r\n  margin-right: 15px;\n}\r\n", ""]);
 
 // exports
 

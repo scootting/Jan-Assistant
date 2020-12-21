@@ -30,7 +30,10 @@
                 >
                 </el-option>
               </el-select>
-              <el-button type="primary" size="mini" @click="showDialogEncargado = true"
+              <el-button
+                type="primary"
+                size="mini"
+                @click="showDialogEncargado = true"
                 >Buscar</el-button
               >
             </el-form-item>
@@ -220,8 +223,8 @@ export default {
     },
     onChangeSubUnidades(subUnidades) {
       let cod_soa = this.NewInvent.unidad;
-      this.getCargosResp(cod_soa,subUnidades); //subUnidades
-      this.getResponsables(cod_soa,subUnidades);
+      this.getCargosResp(cod_soa, subUnidades); //subUnidades
+      this.getResponsables(cod_soa, cargos);
     },
     onChangeCargos(cargos) {
       let cod_soa = this.NewInvent.unidad;
@@ -245,14 +248,14 @@ export default {
           console.log(err);
         });
     },
-    getCargosResp(cod_soa) {
+    getCargosResp(cod_soa, subUnidades) {
       this.cargosLoading = true;
       this.subUnidadesLoading = true;
       axios
         .get("/api/inventory2/cargos", {
           params: {
             cod_soa: cod_soa,
-            //sub_unidades: subUnidades,
+            sub_unidades: subUnidades,
           },
         })
         .then((data) => {
@@ -327,7 +330,7 @@ export default {
             duration: 5000,
             showClose: true,
           });
-          this.route.push({ name: "inventory2" });
+          this.route.push({ name: 'inventory2' });
         })
         .catch((err) => {
           console.log(err);
@@ -338,16 +341,16 @@ export default {
       this.showDialogEncargado = false;
     },
     onConfirmDialog() {
-      if(!this.selectEncargado){
+      if (!this.selectEncargado) {
         this.$message({
-          message: 'NO selecciono ningun encargado',
-          type:'warning',
+          message: "NO selecciono ningun encargado",
+          type: "warning",
           showClose: true,
           duaration: 5000,
         });
         return;
       }
-      let addEncargado = this.searchEncargados.filter(e=>{
+      let addEncargado = this.searchEncargados.filter((e) => {
         return e.nro_dip === this.selectEncargado;
       })[0];
       this.NewInvent.encargados.push(addEncargado.nro_dip);
@@ -363,7 +366,7 @@ export default {
 .el-row {
   padding-bottom: 10px;
 }
-.enc-select{
+.enc-select {
   width: calc(100% - 100px);
   margin-right: 15px;
 }

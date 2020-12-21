@@ -75,7 +75,7 @@ class InventoryController extends Controller
                 'host' => '192.168.25.64',
                 'database' => 'daf_help',
                 'port' => '5432',
-            ],/**/ 
+            ],/**/
         ];
         /*
         'db_connection' => [
@@ -105,7 +105,7 @@ class InventoryController extends Controller
 
         $filename = 'assets.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
-/*
+        /*
 
         return Response::make(file_get_contents($pathToFile), 200, [
             'Content-Type' => 'application/pdf',
@@ -114,89 +114,90 @@ class InventoryController extends Controller
         \Log::info("pruebas de algo");
         \Log::info(response()->download($pathToFile, $filename, $headers));
         return response()->download($pathToFile, $filename, $headers);
-    } 
+    }
 
-   public function getInventories(Request $request,$gestion)
-   {
-    $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');
-    $data = Inventory::getInventories($gestion, $descripcion);
-    $page = ($request->get('page') ? $request->get('page') : 1);
-    $perPage = 10;
-    $paginate = new LengthAwarePaginator(
-        $data->forPage($page, $perPage),
-        $data->count(),
-        $perPage,
-        $page,
-        ['path' => url('api/inventory2')]
-    );
-    return json_encode($paginate);
-   }
-   public function getUnidad(Request $request)
-   {
-    $keyWord = ($request->get('keyWord') ? $request->get('keyWord') : '');
-    $data = Inventory::getUnidad($keyWord);
-    $page = ($request->get('page') ? $request->get('page') : 1);
-    $perPage = 10;
-    $paginate = new LengthAwarePaginator(
-        $data->forPage($page, $perPage),
-        $data->count(),
-        $perPage,
-        $page,
-        ['path' => url('api/inventory2/unidad')]
-    );
-    return json_encode($paginate);
-   }
-   public function getSubUnidad(Request $request)
-   {
-    
-    $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
-    $data = Inventory::getSubUnidades($unidad);
-    return json_encode($data);
-   }
-   public function getCargos(Request $request)
-   {
-    $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
-    //$sub_unidades = ($request->get('sub_unidades') ? $request->get('sub_unidades') : []);
-    $data = Inventory::getCargos($unidad); //$sub_unidades
-    return json_encode($data);
-   }
-   public function getResponsables(Request $request)
-   {
-    $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
-    $cargos = ($request->get('cargos') ? $request->get('cargos') : []);
-    $data = Inventory::getResponsables($unidad,$cargos);
-    return json_encode($data);
-   }
-   public function getEncargados(Request $request)
-   {    
-     $nro_dip = ($request->get('nro_dip') ? $request->get('nro_dip') : '');
-     $data = Inventory::getEncargados($nro_dip);
-     $page = ($request->get('page') ? $request->get('page') : 1);
-     $perPage = 10;
-     $paginate = new LengthAwarePaginator(
-         $data->forPage($page, $perPage),
-         $data->count(),
-         $perPage,
-         $page,
-         ['path' => url('api/inventory2/encargados')]
-     );
-     return json_encode($paginate);
-    
-   }
-   public function saveNewInventory(Request $request)
-   {
-       //dd($request);
-       $no_doc = '0008';//$request->no_doc;
-       $res_enc = $request->encargados;
-       $car_cod_enc = [];
-       for($i=0;$i<count($res_enc); $i++)
-        $car_cod_enc[]=3;
-       $car_cod = $car_cod_enc;
-       $ofc_cod = $request->unidad;
-       $sub_ofc_cod = $request->subUnidades;
-       $car_cod_resp = $request->cargos;
-       $ci_res = $request->responsables;
-       $data = Inventory::saveNewInventory($no_doc,$res_enc,$car_cod,$ofc_cod,$sub_ofc_cod,$car_cod_resp,$ci_res);
-       return json_encode($data);
-   }
+    public function getInventories(Request $request, $gestion)
+    {
+        $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');
+        $data = Inventory::getInventories($gestion, $descripcion);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/inventory2')]
+        );
+        return json_encode($paginate);
+    }
+    public function getUnidad(Request $request)
+    {
+        $keyWord = ($request->get('keyWord') ? $request->get('keyWord') : '');
+        $data = Inventory::getUnidad($keyWord);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/inventory2/unidad')]
+        );
+        return json_encode($paginate);
+    }
+    public function getSubUnidad(Request $request)
+    {
+
+        $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
+        $data = Inventory::getSubUnidades($unidad);
+        return json_encode($data);
+    }
+    public function getCargos(Request $request)
+    {
+        $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
+        $sub_unidades = ($request->get('sub_unidades') ? $request->get('sub_unidades') : []);
+        $data = Inventory::getCargos($unidad, $sub_unidades);
+        return json_encode($data);
+    }
+    public function getResponsables(Request $request)
+    {
+        $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+        $cargos = ($request->get('cargos') ? $request->get('cargos') : []);
+        $data = Inventory::getResponsables($unidad, $cargos);
+        return json_encode($data);
+    }
+    public function getEncargados(Request $request)
+    {
+        $nro_dip = ($request->get('nro_dip') ? $request->get('nro_dip') : '');
+        $data = Inventory::getEncargados($nro_dip);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/inventory2/encargados')]
+        );
+        return json_encode($paginate);
+    }
+    public function saveNewInventory(Request $request)
+    {
+        //dd($request);
+        $no_doc = '0008'; //$request->no_doc;
+        $res_enc = $request->encargados;
+        $car_cod_enc = [];
+        for ($i = 0; $i < count($res_enc); $i++)
+            $car_cod_enc[] = 3;
+        $car_cod = $car_cod_enc;
+        $ofc_cod = $request->unidad;
+        $sub_ofc_cod = $request->subUnidades;
+        $car_cod_resp = $request->cargos;
+        $ci_res = $request->responsables;
+        $estado = 'ELABORADO';
+        $gestion = '2020'; //$request->gestion;
+        $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado, $gestion);
+        return json_encode($data);
+    }
 }
