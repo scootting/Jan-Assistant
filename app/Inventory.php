@@ -29,9 +29,9 @@ class Inventory extends Model
     public static function getSubOfficesByCodSoa($cod_soa)
     {
         $query = "select * from inv.sub_oficinas 
-        where inv.sub_oficinas.id in (select inv.activos.sub_ofc_cod
-        from inv.activos where inv.activos.ofc_cod = '" . $cod_soa . "' 
-        group by inv.activos.sub_ofc_cod)";
+        where inv.sub_oficinas.id in (select sub_ofc_cod
+        from union_activo where cod_soa = '" . $cod_soa . "' 
+        group by sub_ofc_cod)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -137,10 +137,6 @@ class Inventory extends Model
     }
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado,$gestion)
     {
-        // $resp_enc = implode($res_enc);
-        // $cargo_c = implode($car_cod);
-        // $sub_ofc = implode($sub_ofc_cod);
-        // $resp_enc = implode($res_enc);
         $date = Date('d-m-Y');
         $query = " insert into 
                 inv.doc_inv
@@ -169,16 +165,6 @@ class Inventory extends Model
                 '" . $estado . "',
                 '" . $gestion . "'
                 );";
-
-        // 
-        //     '".$no_doc.",
-        //     ARRAY".json_encode($res_enc).",
-        //     ARRAY".json_encode($car_cod).",
-        //     '".$ofc_cod."',
-        //     ARRAY".json_encode($sub_ofc_cod).",
-        //     ARRAY".json_encode($car_cod_resp).",
-        //     ".json_encode($ci_res).",
-        //     '".$date."'
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
