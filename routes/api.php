@@ -57,4 +57,10 @@ Route::group([
     Route::get('inventory2/encargados', 'InventoryController@getEncargados');
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
+
+
+    // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
+    // *** - Buscar por su carnet de identidad - ***
+    Route::post('newstudent', 'TreasureController@getNewStudentByDNI');
+
 });

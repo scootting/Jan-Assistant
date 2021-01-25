@@ -36,6 +36,7 @@ import Active from './views/inventory/Active'
 
 //tesoreria
 import Solvency from './views/treasure/Solvency'
+import Students from './views/treasure/Students'
 
 
 // Routes
@@ -96,6 +97,7 @@ const router = new VueRouter({
 
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency },
+                { path: 'students', name: 'students', component: Students },
             ],
             meta: {
                 requiresAuth: true,
