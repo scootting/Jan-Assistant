@@ -34,23 +34,44 @@ export default {
   data() {
     return {
       writtenTextParameter: "",
+      year: '',
       messages: {},
-      data: {},
+      students: [],
     };
   },
-  mounted() {},
+  mounted() {
+      this.year = '2019';
+  },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
     initSearchNewStudent() {
+      let app = this;
+      axios
+        .post("/api/newstudent", {
+          id: app.writtenTextParameter,
+          year: app.year,
+        })
+        .then((response) => {
+          app.students = response.data.data;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.$notify.error({
+            title: "Error",
+            message: this.error.message,
+          });
+        });
+
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
         callback: (action) => {
+          /*
           this.$message({
             type: "info",
             message: `action: ${action}`,
-          });
+          });*/
         },
       });
     },

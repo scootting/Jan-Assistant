@@ -6747,11 +6747,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       writtenTextParameter: "",
+      year: '',
       messages: {},
-      data: {}
+      students: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.year = '2019';
+  },
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
@@ -6759,13 +6762,28 @@ __webpack_require__.r(__webpack_exports__);
     initSearchNewStudent: function initSearchNewStudent() {
       var _this = this;
 
+      var app = this;
+      axios.post("/api/newstudent", {
+        id: app.writtenTextParameter,
+        year: app.year
+      }).then(function (response) {
+        app.students = response.data.data;
+      })["catch"](function (error) {
+        _this.error = error;
+
+        _this.$notify.error({
+          title: "Error",
+          message: _this.error.message
+        });
+      });
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
         callback: function callback(action) {
-          _this.$message({
+          /*
+          this.$message({
             type: "info",
-            message: "action: ".concat(action)
-          });
+            message: `action: ${action}`,
+          });*/
         }
       });
     }

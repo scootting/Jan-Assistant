@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Treasure;
 use Illuminate\Http\Request;
 
 class TreasureController extends Controller
