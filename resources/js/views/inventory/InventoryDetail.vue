@@ -73,7 +73,7 @@
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">{{ scope.row.estado }}</el-tag>
-              </div>+
+              </div>
             </template>
           </el-table-column>
         </el-table>
