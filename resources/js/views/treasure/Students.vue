@@ -24,6 +24,7 @@
         </el-input>
       </div>
       <br />
+      <el-tag type="success">{{texto}}</el-tag>
     </el-card>
   </div>
 </template>
@@ -37,10 +38,11 @@ export default {
       year: '',
       messages: {},
       students: [],
+      texto: 'Loasdasdsadsad',
     };
   },
   mounted() {
-      this.year = '2019';
+      this.year = '2020';
   },
   methods: {
     test() {
@@ -54,10 +56,11 @@ export default {
           year: app.year,
         })
         .then((response) => {
-          app.students = response.data.data;
+          app.students = response.data;
+          app.texto = JSON.stringify(app.students);
         })
-        .catch((error) => {
-          this.error = error;
+        .catch((error) => {          
+          this.error = error.response.data;
           this.$notify.error({
             title: "Error",
             message: this.error.message,

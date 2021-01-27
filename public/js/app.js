@@ -6742,6 +6742,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VentaEstudiantesNuevos",
   data: function data() {
@@ -6749,11 +6750,12 @@ __webpack_require__.r(__webpack_exports__);
       writtenTextParameter: "",
       year: '',
       messages: {},
-      students: []
+      students: [],
+      texto: 'Loasdasdsadsad'
     };
   },
   mounted: function mounted() {
-    this.year = '2019';
+    this.year = '2020';
   },
   methods: {
     test: function test() {
@@ -6767,9 +6769,10 @@ __webpack_require__.r(__webpack_exports__);
         id: app.writtenTextParameter,
         year: app.year
       }).then(function (response) {
-        app.students = response.data.data;
+        app.students = response.data;
+        app.texto = JSON.stringify(app.students);
       })["catch"](function (error) {
-        _this.error = error;
+        _this.error = error.response.data;
 
         _this.$notify.error({
           title: "Error",
@@ -90726,64 +90729,73 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [
-            _c("span", [_vm._v("venta de valores para estudiantes nuevos")]),
-            _vm._v(" "),
-            _c(
-              "el-button",
-              {
-                staticStyle: { float: "right", padding: "3px 0" },
-                attrs: { type: "text" },
-                on: { click: _vm.test }
-              },
-              [_vm._v("ayuda")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticStyle: { "margin-top": "15px" } },
-          [
-            _c(
-              "el-input",
-              {
-                staticClass: "input-with-select",
-                attrs: {
-                  placeholder: "INSERTE EL NUMERO DE CARNET DEL INTERESADO"
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "clearfix",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c("span", [_vm._v("venta de valores para estudiantes nuevos")]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticStyle: { float: "right", padding: "3px 0" },
+                  attrs: { type: "text" },
+                  on: { click: _vm.test }
                 },
-                model: {
-                  value: _vm.writtenTextParameter,
-                  callback: function($$v) {
-                    _vm.writtenTextParameter = $$v
+                [_vm._v("ayuda")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: { "margin-top": "15px" } },
+            [
+              _c(
+                "el-input",
+                {
+                  staticClass: "input-with-select",
+                  attrs: {
+                    placeholder: "INSERTE EL NUMERO DE CARNET DEL INTERESADO"
                   },
-                  expression: "writtenTextParameter"
-                }
-              },
-              [
-                _c("el-button", {
-                  attrs: { slot: "append", icon: "el-icon-search" },
-                  on: { click: _vm.initSearchNewStudent },
-                  slot: "append"
-                })
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("br")
-      ])
+                  model: {
+                    value: _vm.writtenTextParameter,
+                    callback: function($$v) {
+                      _vm.writtenTextParameter = $$v
+                    },
+                    expression: "writtenTextParameter"
+                  }
+                },
+                [
+                  _c("el-button", {
+                    attrs: { slot: "append", icon: "el-icon-search" },
+                    on: { click: _vm.initSearchNewStudent },
+                    slot: "append"
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("el-tag", { attrs: { type: "success" } }, [
+            _vm._v(_vm._s(_vm.texto))
+          ])
+        ],
+        1
+      )
     ],
     1
   )
