@@ -3,7 +3,10 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>venta de valores para estudiantes nuevos</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="test"
+        <el-button
+          style="float: right; padding: 3px 0"
+          type="text"
+          @click="test"
           >ayuda</el-button
         >
       </div>
@@ -48,8 +51,37 @@
               </el-form-item>
             </el-form></div
         ></el-col>
-        <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="12"
+          ><div class="grid-content bg-purple">
+            <el-table
+              :data="requisites"
+              border
+              show-summary
+              style="width: 100%"
+              size="small"
+            >
+              <el-table-column prop="id" label="codigo" width="120">
+              </el-table-column>
+              <el-table-column prop="name" label="descripcion" width="420">
+              </el-table-column>
+              <el-table-column
+                prop="amount2"
+                sortable
+                label="Precio"
+                align="right"
+              >
+              </el-table-column>
+            </el-table></div
+        ></el-col>
       </el-row>
+      <el-button type="primary" size="small" @click="saveTransaction()"
+        >procesar</el-button
+      >
+      <el-button type="primary" size="small" @click="saveTransaction()"
+        >imprimir</el-button
+      >
+      <el-button size="small" @click="resetTransaction()">cancel</el-button>
+      <el-row> </el-row>
     </el-card>
   </div>
 </template>
@@ -69,8 +101,35 @@ export default {
         nombres: "",
         modalidad: "",
       },
-      requisites: {},
+      //requisites: {},
       texto: "Loasdasdsadsad",
+      requisites: [
+        {
+          id: "12987122",
+          name: "Tom",
+          amount2: "3.2",
+        },
+        {
+          id: "12987123",
+          name: "Tom",
+          amount2: "4.43",
+        },
+        {
+          id: "12987124",
+          name: "Tom",
+          amount2: "1.9",
+        },
+        {
+          id: "12987125",
+          name: "Tom",
+          amount2: "2.2",
+        },
+        {
+          id: "12987126",
+          name: "Tom",
+          amount2: "4.1",
+        },
+      ],
     };
   },
   mounted() {
@@ -79,6 +138,12 @@ export default {
   methods: {
     test() {
       alert("bienvenido al modulo");
+    },
+    resetTransaction(){
+      alert("se esta reseteando todo");
+    },
+    saveTransaction(){
+      alert("se esta guardando todo");
     },
     initSearchNewStudent() {
       let app = this;

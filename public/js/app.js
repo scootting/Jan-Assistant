@@ -6768,6 +6768,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VentaEstudiantesNuevos",
   data: function data() {
@@ -6782,8 +6814,29 @@ __webpack_require__.r(__webpack_exports__);
         nombres: "",
         modalidad: ""
       },
-      requisites: {},
-      texto: "Loasdasdsadsad"
+      //requisites: {},
+      texto: "Loasdasdsadsad",
+      requisites: [{
+        id: "12987122",
+        name: "Tom",
+        amount2: "3.2"
+      }, {
+        id: "12987123",
+        name: "Tom",
+        amount2: "4.43"
+      }, {
+        id: "12987124",
+        name: "Tom",
+        amount2: "1.9"
+      }, {
+        id: "12987125",
+        name: "Tom",
+        amount2: "2.2"
+      }, {
+        id: "12987126",
+        name: "Tom",
+        amount2: "4.1"
+      }]
     };
   },
   mounted: function mounted() {
@@ -6792,6 +6845,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
+    },
+    resetTransaction: function resetTransaction() {
+      alert("se esta reseteando todo");
+    },
+    saveTransaction: function saveTransaction() {
+      alert("se esta guardando todo");
     },
     initSearchNewStudent: function initSearchNewStudent() {
       var _this = this;
@@ -90994,11 +91053,93 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("el-col", { attrs: { span: 12 } }, [
-                _c("div", { staticClass: "grid-content bg-purple" })
+                _c(
+                  "div",
+                  { staticClass: "grid-content bg-purple" },
+                  [
+                    _c(
+                      "el-table",
+                      {
+                        staticStyle: { width: "100%" },
+                        attrs: {
+                          data: _vm.requisites,
+                          border: "",
+                          "show-summary": "",
+                          size: "small"
+                        }
+                      },
+                      [
+                        _c("el-table-column", {
+                          attrs: { prop: "id", label: "codigo", width: "120" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "name",
+                            label: "descripcion",
+                            width: "420"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "amount2",
+                            sortable: "",
+                            label: "Precio",
+                            align: "right"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
               ])
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary", size: "small" },
+              on: {
+                click: function($event) {
+                  return _vm.saveTransaction()
+                }
+              }
+            },
+            [_vm._v("procesar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary", size: "small" },
+              on: {
+                click: function($event) {
+                  return _vm.saveTransaction()
+                }
+              }
+            },
+            [_vm._v("imprimir")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { size: "small" },
+              on: {
+                click: function($event) {
+                  return _vm.resetTransaction()
+                }
+              }
+            },
+            [_vm._v("cancel")]
+          ),
+          _vm._v(" "),
+          _c("el-row")
         ],
         1
       )
@@ -109942,8 +110083,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
