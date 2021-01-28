@@ -62,5 +62,7 @@ Route::group([
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
     // *** - Buscar por su carnet de identidad - ***
     Route::post('newstudent', 'TreasureController@getNewStudentByDNI');
-
+    // *** - Buscar los valores pertenecientes a un tramite - ***
+    Route::post('valuesprocedure', 'TreasureController@getValuesProcedure');
+    
 });

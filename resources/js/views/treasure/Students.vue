@@ -54,18 +54,18 @@
         <el-col :span="12"
           ><div class="grid-content bg-purple">
             <el-table
-              :data="requisites"
+              :data="valuesPostulations"
               border
               show-summary
               style="width: 100%"
               size="small"
             >
-              <el-table-column prop="id" label="codigo" width="120">
+              <el-table-column prop="cod_val" label="codigo" width="75">
               </el-table-column>
-              <el-table-column prop="name" label="descripcion" width="420">
+              <el-table-column prop="des_val" label="descripcion" width="480">
               </el-table-column>
               <el-table-column
-                prop="amount2"
+                prop="pre_uni_val"
                 sortable
                 label="Precio"
                 align="right"
@@ -94,6 +94,7 @@ export default {
       writtenTextParameter: "",
       year: "",
       messages: {},
+      valuesPostulations:[],
       postulations: {
         nro_dip: "",
         paterno: "",
@@ -139,10 +140,10 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    resetTransaction(){
+    resetTransaction() {
       alert("se esta reseteando todo");
     },
-    saveTransaction(){
+    saveTransaction() {
       alert("se esta guardando todo");
     },
     initSearchNewStudent() {
@@ -156,6 +157,23 @@ export default {
           app.postulations = response.data[0];
           app.texto = JSON.stringify(app.postulations);
           /*de acuerdo a la postulacion se debe imprimir los valores*/
+          axios
+            .post("/api/valuesprocedure", {
+              description: 'EXCELENCIA',
+              year: app.year,
+            })
+            .then((response) => {
+              app.valuesPostulations = response.data;
+              app.texto = JSON.stringify(app.postulations);
+              /*de acuerdo a la postulacion se debe imprimir los valores*/
+            })
+            .catch((error) => {
+              this.error = error.response.data;
+              this.$notify.error({
+                title: "GRAN ERROR",
+                message: this.error.message,
+              });
+            });
         })
         .catch((error) => {
           this.error = error.response.data;

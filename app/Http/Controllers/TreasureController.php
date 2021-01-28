@@ -15,6 +15,16 @@ class TreasureController extends Controller
         $year = $request->get('year');
         $data = Treasure::getNewStudentByDNI($id, $year);
         return json_encode($data);
-    }     
+    }    
+    
+    //  * Encontrar a un estudiante nuevo a traves de su carnet de identidad y el año de ingreso.
+    //  * {id: numero de carnet de identidad}    
+    //  * {year: año de ingreso}    
+    public function getValuesProcedure(Request $request){
+        $description = $request->get('description');
+        $year = $request->get('year');
+        $data = Treasure::getValuesProcedure($description, $year);
+        return json_encode($data);
+    }
 
 }

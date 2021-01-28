@@ -49,16 +49,12 @@ class GeneralController extends Controller
 
     public function registerUserYears(Request $request){
         $usuario = $request->get('usuario');
-        //\Log::info("entra aca para su prueba".$usuario);
-
         $years = General::SearchUserYears($usuario);
         return json_encode($years);
     }
 
     public function getPersonsByDescription(Request $request){
         $descripcion = $request->get('descripcion'); // '' cadena vacia
-        //$parametro = $request->get('parametro');
-        //$descripcion = 'ROJAS';
         $data = General::GetPersonsByDescription($descripcion);
         
         $page = ($request->get('page')? $request->get('page'): 1);
@@ -85,10 +81,10 @@ class GeneralController extends Controller
     public function storePerson(Request $request){
         $persona = $request->get('persona');
         $personal = $persona['personal'];
-        $nombres = $persona['nombres'];
-        $paterno = $persona['paterno'];
-        $materno = $persona['materno'];
-        $sexo = $persona['sexo'];
+        $nombres = strtoupper($persona['nombres']);
+        $paterno = strtoupper($persona['paterno']);
+        $materno = strtoupper($persona['materno']);
+        $sexo = strtoupper($persona['sexo']);
         $nacimiento = $persona['nacimiento'];
 
         $marcador = $request->get('marker');

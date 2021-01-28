@@ -6807,6 +6807,7 @@ __webpack_require__.r(__webpack_exports__);
       writtenTextParameter: "",
       year: "",
       messages: {},
+      valuesPostulations: [],
       postulations: {
         nro_dip: "",
         paterno: "",
@@ -6863,6 +6864,22 @@ __webpack_require__.r(__webpack_exports__);
         app.postulations = response.data[0];
         app.texto = JSON.stringify(app.postulations);
         /*de acuerdo a la postulacion se debe imprimir los valores*/
+
+        axios.post("/api/valuesprocedure", {
+          description: 'EXCELENCIA',
+          year: app.year
+        }).then(function (response) {
+          app.valuesPostulations = response.data;
+          app.texto = JSON.stringify(app.postulations);
+          /*de acuerdo a la postulacion se debe imprimir los valores*/
+        })["catch"](function (error) {
+          _this.error = error.response.data;
+
+          _this.$notify.error({
+            title: "GRAN ERROR",
+            message: _this.error.message
+          });
+        });
       })["catch"](function (error) {
         _this.error = error.response.data;
 
@@ -91062,7 +91079,7 @@ var render = function() {
                       {
                         staticStyle: { width: "100%" },
                         attrs: {
-                          data: _vm.requisites,
+                          data: _vm.valuesPostulations,
                           border: "",
                           "show-summary": "",
                           size: "small"
@@ -91070,20 +91087,24 @@ var render = function() {
                       },
                       [
                         _c("el-table-column", {
-                          attrs: { prop: "id", label: "codigo", width: "120" }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
                           attrs: {
-                            prop: "name",
-                            label: "descripcion",
-                            width: "420"
+                            prop: "cod_val",
+                            label: "codigo",
+                            width: "75"
                           }
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
                           attrs: {
-                            prop: "amount2",
+                            prop: "des_val",
+                            label: "descripcion",
+                            width: "480"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "pre_uni_val",
                             sortable: "",
                             label: "Precio",
                             align: "right"
