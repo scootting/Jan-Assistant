@@ -33,6 +33,7 @@ import NewInventory from './views/inventory/NewInventory'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
 import Active from './views/inventory/Active'
+import EditActive from './views/inventory/EditActive'
 
 //tesoreria
 import Solvency from './views/treasure/Solvency'
@@ -93,7 +94,7 @@ const router = new VueRouter({
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
                 { path: 'active', name: 'active', component: Active },
-
+                { path: 'active/:id', name: 'editactive', component: EditActive },
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency },
             ],

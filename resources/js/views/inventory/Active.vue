@@ -14,37 +14,62 @@
           placeholder="INSERTE EL ACTIVO A BUSCAR"
           v-model="writtenTextParameter"
           class="input-with-select"
-          @keyup.enter.native="getOffices"
+          @keyup.enter.native="getActives"
         >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getOffices"
-          ></el-button>
         </el-input>
+        <el-select v-model="idOficce" placeholder="SELECCIONAR UNIDAD" filterable remote :remote-method="getUnidades" >
+          <el-option v-for="item in unidades"
+            :key="item.id"
+            :label="item.descripcion"
+            :value="item.id">
+          </el-option>
+        </el-select>
+        <el-select v-model="idsSubOffices" multiple placeholder="SELECIONAR SUB UNIDAD" clearable filterable>
+          <el-option v-for="item in subUnidades"
+            :key="item.id"
+            :label="item.descripcion"
+            :value="item.id">
+          </el-option>
+        </el-select>
+       <el-button
+            icon="el-icon-search"
+            @click="getActives"
+       ></el-button>
       </div>
       <br />
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
-          <el-table-column label="CODIGO SOA">
+          <el-table-column label="Identificador">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.cod_soa }}</el-tag>
+                <el-tag size="medium">{{ scope.row.id }}</el-tag>
               </div>
             </template>
           </el-table-column>
           <el-table-column
+            prop="oficina"
+            label="OFICINA"
+          ></el-table-column>
+          <el-table-column
             prop="descripcion"
+            label="SUB OFICINA"
+          ></el-table-column>
+          <el-table-column
+            prop="des"
             label="DESCRIPCION"
+          ></el-table-column> 
+           <el-table-column
+            prop="estado"
+            label="ESTADO"
           ></el-table-column>
           <el-table-column align="right" width="220">
             <template slot-scope="scope">
               <el-button
-                @click="initShowInventory(scope.$index, scope.row)"
+                @click="EditActive(scope.$index, scope.row)"
                 type="primary"
                 plain
                 size="mini"
-                >Mostrar</el-button
+                >Editar</el-button
               >
             </template>
           </el-table-column>
@@ -54,7 +79,7 @@
           layout="prev, pager, next"
           :current-page="pagination.current_page"
           :total="pagination.total"
-          @current-change="getOfficesPaginate"
+          @current-change="getActivesPaginate"
         ></el-pagination>
       </div>
     </el-card>
@@ -63,7 +88,7 @@
 
 <script>
 export default {
-  name: "Reasignar activos",
+  name: "Reasignar_activos",
   data() {
     return {
       loading: false,
@@ -74,19 +99,36 @@ export default {
         page: 1,
       },
       writtenTextParameter: "",
+      idOficce:null,
+      idsSubOffices:[],
+      unidades: [],
+      subUnidades:[],
     };
   },
   mounted() {
-    this.getOffices();
+    this.getActives();
+    this.getUnidades('');
+  },
+  watch: {
+    idOficce(newVal,oldVal){
+      if(newVal)
+        this.onChangeUnidades();
+      else {
+        this.subUnidades=[]
+      }
+      this.idSubOffices=[];
+    },
   },
   methods: {
-    getOffices() {
+    getActives() {
       this.loading = true;
       axios
-        .get("/api/inventory/" + 2020, {
+        .get("/api/reasignacion/", {
           params: {
             page: this.pagination.page,
             descripcion: this.writtenTextParameter.toUpperCase(),
+            idOffice: this.idOficce,
+            idSubOffice: this.idsSubOffices,
           },
         })
         .then((data) => {
@@ -98,15 +140,42 @@ export default {
           console.log(err);
         });
     },
-    getOfficesPaginate(page) {
+    getActivesPaginate(page) {
       this.pagination.page = page;
-      this.getOffices();
+      this.getActives('');
     },
-    initShowInventory(index, row) {
+    getUnidades(keyWord) {
+      axios
+        .get("/api/inventory2/unidad/", {
+          params: { keyWord: keyWord.toUpperCase()},
+        })
+        .then((data) => {
+          this.unidades = Object.values(data.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    onChangeUnidades(){
+      this.getSubUnidades();
+    },
+    getSubUnidades() {
+      axios
+        .get("/api/inventory2/sub_unidad", {
+          params: {idOffice: this.idOficce},
+        })
+        .then((data) => {
+          this.subUnidades = data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    EditActive(index, row) {
       this.$router.push({
-        name: "inventorydetail",
+        name: "editactive",
         params: {
-          soa: row.cod_soa,
+          id: row.id,
         },
       });
     },

@@ -65,7 +65,7 @@
                 plain
                 size="mini"
                 >Editar</el-button
-              >
+              > <br>
               <el-button
                 @click="initShowInventory(scope.$index, scope.row)"
                 type="primary"

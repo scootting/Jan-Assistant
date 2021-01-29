@@ -32,6 +32,7 @@ class InventoryController extends Controller
     }
     public function getSubOfficesByCodSoa($cod_soa)
     {
+        $cod_soa=$cod_soa=='null'? null : $cod_soa;
         $data = Inventory::getSubOfficesByCodSoa($cod_soa);
         return json_encode($data);
     }
@@ -150,7 +151,8 @@ class InventoryController extends Controller
     {
 
         $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
-        $data = Inventory::getSubUnidades($unidad);
+        $idoffice = ($request->get('idoffice') ? $request->get('idoffice') : '');
+        $data = Inventory::getSubUnidades($unidad,$idoffice);
         return json_encode($data);
     }
     public function getCargos(Request $request)
@@ -198,6 +200,29 @@ class InventoryController extends Controller
         $estado = 'ELABORADO';
         $gestion = '2020'; //$request->gestion;
         $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado, $gestion);
+        return json_encode($data);
+    }
+    public function SearchActivo(Request $request)
+    {
+        $descripcion = ($request->get('descripcion')) ? $request->get('descripcion') : null;
+        $ofc_ids = ($request->get('idOffice')) ? $request->get('idOffice') : null;
+        $sub_ofc_ids = ($request->get('idSubOffice')) ? $request->get('idSubOffice') : null;
+        //dd($descripcion,$ofc_ids,$sub_ofc_ids);
+        $data = Inventory::SearchActive($ofc_ids, $sub_ofc_ids,$descripcion);
+        $page = ($request->get('page')) ? $request->get('page') : null;
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            [],
+        );
+        return json_encode($paginate);
+    }
+    public function getActive($id)
+    {
+        $data = Inventory::showActiveById($id);
         return json_encode($data);
     }
 }
