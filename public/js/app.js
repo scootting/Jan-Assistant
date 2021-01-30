@@ -5723,7 +5723,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getActives();
-    this.getUnidades('');
+    this.getUnidades("");
   },
   watch: {
     idOficce: function idOficce(newVal, oldVal) {
@@ -5755,7 +5755,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getActivesPaginate: function getActivesPaginate(page) {
       this.pagination.page = page;
-      this.getActives('');
+      this.getActives("");
     },
     getUnidades: function getUnidades(keyWord) {
       var _this2 = this;
@@ -5811,6 +5811,87 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5935,6 +6016,424 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveAsset: function saveAsset() {}
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Edit_Inventory2",
+  data: function data() {
+    return {
+      id: null,
+      editForm: {
+        no_doc: "",
+        res_enc: [],
+        car_cod: [],
+        ofc_cod: "",
+        sub_ofc_cod: [],
+        ci_res: [],
+        estado: []
+      },
+      unidades: [],
+      subUnidades: [],
+      cargos: [],
+      responsables: [],
+      encargados: [],
+      searchEncargados: [],
+      selectEncargado: null,
+      searchEncargadoLoading: false,
+      subUnidadesLoading: false,
+      unidadLoading: false,
+      cargosLoading: false,
+      responsablesLoading: false,
+      showDialogEncargado: false
+    };
+  },
+  mounted: function mounted() {},
+  created: function created() {
+    var _this = this;
+
+    this.id = this.$route.params.id;
+    axios.get("/api/inventory2/edit/" + this.id).then(function (response) {
+      _this.editForm = response.data;
+
+      _this.getSubUnidades(_this.editForm.ofc_cod, false);
+
+      _this.remoteMethod(_this.editForm.ofc_cod);
+
+      _this.editForm.res_enc.forEach(function (nd) {
+        _this.getEncargados(nd, function (list) {
+          list.forEach(function (en) {
+            if (en.nro_dip === nd.trim()) _this.encargados.push(en);
+          });
+        });
+      });
+    })["catch"](function (error) {
+      _this.error = error;
+
+      _this.$notify.error({
+        title: "Error",
+        message: _this.error.message
+      });
+    });
+  },
+  methods: {
+    remoteMethod: function remoteMethod(keyWord) {
+      var _this2 = this;
+
+      axios.get("/api/inventory2/unidad/", {
+        params: {
+          keyWord: keyWord.toUpperCase()
+        }
+      }).then(function (data) {
+        _this2.unidades = Object.values(data.data.data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    onChangeUnidad: function onChangeUnidad(cod_soa) {
+      this.getSubUnidades(cod_soa, true);
+    },
+    onChangeSubUnidades: function onChangeSubUnidades(subUnidades) {
+      var cod_soa = this.editForm.ofc_cod;
+      this.getCargosResp(cod_soa, subUnidades, true); //subUnidades
+      //this.getResponsables(cod_soa, cargos,true);
+    },
+    onChangeCargos: function onChangeCargos(cargos) {
+      var cod_soa = this.editForm.ofc_cod;
+      this.getResponsables(cod_soa, cargos, true);
+    },
+    getSubUnidades: function getSubUnidades(cod_soa, actualizar) {
+      var _this3 = this;
+
+      this.unidadesLoading = true;
+      this.subUnidadesLoading = true;
+      axios.get("/api/inventory2/sub_unidad", {
+        params: {
+          cod_soa: cod_soa
+        }
+      }).then(function (data) {
+        _this3.subUnidadesLoading = false;
+        _this3.unidadesLoading = false;
+        _this3.subUnidades = data.data;
+        if (actualizar) _this3.editForm.sub_ofc_cod = _this3.subUnidades.map(function (su) {
+          return su.id;
+        });
+
+        _this3.getCargosResp(_this3.editForm.ofc_cod, _this3.editForm.sub_ofc_cod, actualizar);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getCargosResp: function getCargosResp(cod_soa, subUnidades, actualizar) {
+      var _this4 = this;
+
+      this.cargosLoading = true;
+      this.subUnidadesLoading = true;
+      axios.get("/api/inventory2/cargos", {
+        params: {
+          cod_soa: cod_soa,
+          sub_unidades: subUnidades
+        }
+      }).then(function (data) {
+        _this4.cargosLoading = false;
+        _this4.subUnidadesLoading = false;
+        _this4.cargos = data.data;
+        if (actualizar) _this4.editForm.car_cod_resp = _this4.cargos.map(function (car) {
+          return car.id;
+        });
+
+        _this4.getResponsables(_this4.editForm.ofc_cod, _this4.editForm.car_cod_resp, actualizar);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getResponsables: function getResponsables(cod_soa, cargos, actualizar) {
+      var _this5 = this;
+
+      this.cargosLoading = true;
+      this.responsablesLoading = true;
+      axios.get("/api/inventory2/responsables", {
+        params: {
+          cod_soa: cod_soa,
+          cargos: cargos
+        }
+      }).then(function (data) {
+        _this5.cargosLoading = false;
+        _this5.responsablesLoading = false;
+        _this5.responsables = data.data;
+        _this5.responsables = _this5.responsables.map(function (r) {
+          r.nro_dip = r.nro_dip.trim();
+          return r;
+        });
+        if (actualizar) _this5.editForm.ci_res = _this5.responsables.map(function (resp) {
+          return resp.nro_dip;
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getEncargados: function getEncargados(nro_dip) {
+      var _this6 = this;
+
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.searchEncargadoLoading = true;
+      axios.get("/api/inventory2/encargados", {
+        params: {
+          nro_dip: nro_dip
+        }
+      }).then(function (data) {
+        _this6.searchEncargadoLoading = false;
+        _this6.searchEncargados = Object.values(data.data.data);
+
+        _this6.searchEncargados.map(function (e) {
+          e.nro_dip = e.nro_dip.trim();
+          return e;
+        });
+
+        if (cb) cb(_this6.searchEncargados);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    formatResponsable: function formatResponsable(responsable) {
+      return {
+        cargo: responsable.descripcion,
+        responsable: responsable.paterno.trim() + " " + responsable.materno.trim() + " " + responsable.nombres.trim(),
+        nro_dip: responsable.nro_dip
+      };
+    },
+    saveInventory: function saveInventory() {
+      var _this7 = this;
+
+      //this.editForm.responsables= this.editForm.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
+      //tratar de guardar los responsables como un json
+      axios.post("/api/inventory2/save", this.editForm).then(function (data) {
+        _this7.$message({
+          message: "Inventario creado exitosamente",
+          type: "success",
+          duration: 5000,
+          showClose: true
+        });
+
+        _this7.route.push({
+          name: 'inventory2'
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    onCancelDialog: function onCancelDialog() {
+      this.selectEncargado = null;
+      this.showDialogEncargado = false;
+    },
+    onConfirmDialog: function onConfirmDialog() {
+      var _this8 = this;
+
+      if (!this.selectEncargado) {
+        this.$message({
+          message: "NO selecciono ningun encargado",
+          type: "warning",
+          showClose: true,
+          duaration: 5000
+        });
+        return;
+      }
+
+      var addEncargado = this.searchEncargados.filter(function (e) {
+        return e.nro_dip === _this8.selectEncargado;
+      })[0];
+      this.editForm.encargados.push(addEncargado.nro_dip);
+      this.encargados.push(addEncargado);
+      this.selectEncargado = null;
+      this.showDialogEncargado = false;
+    }
   }
 });
 
@@ -6205,11 +6704,12 @@ __webpack_require__.r(__webpack_exports__);
       this.pagination.page = page;
       this.getInventories();
     },
-    initShowInventory: function initShowInventory(index, row) {
+    editInventory: function editInventory(index, row) {
+      console.log(row);
       this.$router.push({
-        name: "editInventory",
+        name: "editinventory2",
         params: {
-          soa: row.cod_soa
+          id: row.id
         }
       });
     },
@@ -9137,6 +9637,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.el-card[data-v-5b3b7066] {\r\n    background: #ffffff;\n}\n.el-form[data-v-5b3b7066] {\r\n    padding-left: 120px;\r\n    padding-right: 120px;\r\n    padding-top: 60px;\n}\n.el-dialog>.el-form[data-v-5b3b7066] {\r\n    padding-left: 30px;\r\n    padding-right: 30px;\r\n    padding-top: 20px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.el-row[data-v-328cd9b2] {\r\n  padding-bottom: 10px;\n}\n.enc-select[data-v-328cd9b2] {\r\n  width: calc(100% - 100px);\r\n  margin-right: 15px;\n}\r\n", ""]);
 
 // exports
 
@@ -85494,6 +86013,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/NewInventory.vue?vue&type=style&index=0&id=57c635ce&lang=css&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/NewInventory.vue?vue&type=style&index=0&id=57c635ce&lang=css&scoped=true& ***!
@@ -89708,7 +90257,7 @@ var render = function() {
             slot: "header"
           },
           [
-            _c("span", [_vm._v("Unidades")]),
+            _c("span", [_vm._v("Activos Fijos")]),
             _vm._v(" "),
             _c(
               "el-button",
@@ -89728,6 +90277,7 @@ var render = function() {
           [
             _c("el-input", {
               staticClass: "input-with-select",
+              staticStyle: { width: "200px" },
               attrs: { placeholder: "INSERTE EL ACTIVO A BUSCAR" },
               nativeOn: {
                 keyup: function($event) {
@@ -89830,7 +90380,7 @@ var render = function() {
               },
               [
                 _c("el-table-column", {
-                  attrs: { label: "Identificador" },
+                  attrs: { label: "Identificador", width: "140" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -89844,7 +90394,7 @@ var render = function() {
                               slot: "reference"
                             },
                             [
-                              _c("el-tag", { attrs: { size: "medium" } }, [
+                              _c("el-tag", { attrs: { size: "small" } }, [
                                 _vm._v(_vm._s(scope.row.id))
                               ])
                             ],
@@ -89857,23 +90407,27 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "oficina", label: "OFICINA" }
+                  attrs: { prop: "oficina", label: "OFICINA", width: "180" }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "descripcion", label: "SUB OFICINA" }
+                  attrs: {
+                    prop: "descripcion",
+                    label: "SUB OFICINA",
+                    width: "150"
+                  }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "des", label: "DESCRIPCION" }
+                  attrs: { prop: "des", label: "DESCRIPCION", width: "330" }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "estado", label: "ESTADO" }
+                  attrs: { prop: "estado", label: "ESTADO", width: "180" }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { align: "right", width: "220" },
+                  attrs: { align: "right", width: "110" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -89945,6 +90499,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticStyle: { "margin-top": "15px 0" } },
     [
       _c(
         "el-card",
@@ -89954,32 +90509,99 @@ var render = function() {
             "el-form",
             {
               ref: "form",
+              staticClass: "demo-form-inline",
               attrs: {
+                "label-position": _vm.right,
+                "label-width": "220px",
                 model: _vm.form,
-                "label-width": "80px",
                 inline: false,
                 size: "normal"
               }
             },
             [
+              _c("span", [_vm._v(" Activo: " + _vm._s(_vm.editForm.id) + " ")]),
+              _vm._v(" "),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("hr", { staticStyle: { color: "gray" } }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
               _c(
                 "el-row",
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 11, center: "" } },
+                    { attrs: { span: 50 } },
                     [
                       _c(
                         "el-form-item",
                         {
                           attrs: {
-                            size: "small",
-                            label: "CI Responsable",
-                            prop: "proveedor"
+                            size: "mini",
+                            label: "CI Responsable:",
+                            prop: "ci_resp"
                           }
                         },
                         [
                           _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.ci_resp,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "ci_resp", $$v)
+                              },
+                              expression: "editForm.ci_resp"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Cargo del Responsable:",
+                            prop: "ci_resp"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.car_cod,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "car_cod", $$v)
+                              },
+                              expression: "editForm.car_cod"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 50 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Nombre Responsable:",
+                            prop: "ci_resp"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
                             model: {
                               value: _vm.editForm.ci_resp,
                               callback: function($$v) {
@@ -90007,40 +90629,59 @@ var render = function() {
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 11 } },
+                    { attrs: { span: 50 } },
                     [
                       _c(
                         "el-form-item",
                         {
                           attrs: {
-                            size: "small",
-                            label: "Uni.Med.",
-                            prop: "uni_med"
+                            size: "mini",
+                            label: "Codigo Unidad:",
+                            prop: "ofc_cod"
                           }
                         },
                         [
-                          _c(
-                            "el-select",
-                            {
-                              model: {
-                                value: _vm.editForm.uni_med,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.editForm, "uni_med", $$v)
-                                },
-                                expression: "editForm.uni_med"
-                              }
-                            },
-                            _vm._l(_vm.unidMeds, function(item) {
-                              return _c("el-option", {
-                                key: "u_m_key_" + item.id_uni_med,
-                                attrs: {
-                                  label: item.uni_des_det,
-                                  value: item.uni_des_cor
-                                }
-                              })
-                            }),
-                            1
-                          )
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.ofc_cod,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "ofc_cod", $$v)
+                              },
+                              expression: "editForm.ofc_cod"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 50 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Codigo SubUnidad:",
+                            prop: "sub_ofc_cod"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.sub_ofc_cod,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "sub_ofc_cod", $$v)
+                              },
+                              expression: "editForm.sub_ofc_cod"
+                            }
+                          })
                         ],
                         1
                       )
@@ -90056,25 +90697,155 @@ var render = function() {
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 11 } },
+                    { attrs: { span: 50 } },
                     [
                       _c(
                         "el-form-item",
                         {
                           attrs: {
-                            size: "small",
-                            label: "Cantidad",
+                            size: "mini",
+                            label: "Unidad de Medida:",
+                            prop: "uni_med"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.uni_med,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "uni_med", $$v)
+                              },
+                              expression: "editForm.uni_med"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Cantidad:",
                             prop: "cantidad"
                           }
                         },
                         [
                           _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            attrs: { disabled: "" },
+                            model: {
+                              value: _vm.editForm.fec_adq,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "fec_adq", $$v)
+                              },
+                              expression: "editForm.fec_adq"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Cantidad:",
+                            prop: "cantidad"
+                          }
+                        },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            attrs: { disabled: "" },
                             model: {
                               value: _vm.editForm.can,
                               callback: function($$v) {
                                 _vm.$set(_vm.editForm, "can", $$v)
                               },
                               expression: "editForm.can"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 50 } },
+                    [
+                      _c(
+                        "el-form-item",
+                        {
+                          attrs: {
+                            size: "mini",
+                            label: "Estado de Activo:",
+                            prop: "estado"
+                          }
+                        },
+                        [
+                          _c(
+                            "el-select",
+                            {
+                              model: {
+                                value: _vm.editForm.estado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "estado", $$v)
+                                },
+                                expression: "editForm.estado"
+                              }
+                            },
+                            _vm._l(_vm.estado, function(item) {
+                              return _c("el-option", {
+                                key: "u_m_key_" + item.estado,
+                                attrs: {
+                                  label: item.estado,
+                                  value: item.estado
+                                }
+                              })
+                            }),
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { size: "mini", label: "Vida Util:" } },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.vida_util,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "vida_util", $$v)
+                              },
+                              expression: "editForm.vida_util"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { size: "mini", label: "Precion Unitario:" } },
+                        [
+                          _c("el-input", {
+                            staticStyle: { width: "200px" },
+                            model: {
+                              value: _vm.editForm.imp_bs,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "imp_bs", $$v)
+                              },
+                              expression: "editForm.imp_bs"
                             }
                           })
                         ],
@@ -90096,82 +90867,24 @@ var render = function() {
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 11 } },
+                    { attrs: { span: 50 } },
                     [
                       _c(
                         "el-form-item",
                         {
                           attrs: {
-                            size: "small",
-                            label: "Vida Util",
-                            required: ""
+                            size: "mini",
+                            label: "Descripcion:",
+                            prop: "descripcion",
+                            width: "300px"
                           }
                         },
                         [
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            model: {
-                              value: _vm.editForm.vida_util,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "vida_util", $$v)
-                              },
-                              expression: "editForm.vida_util"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        {
-                          attrs: {
-                            size: "small",
-                            label: "Precion Unitario",
-                            required: ""
-                          }
-                        },
-                        [
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            model: {
-                              value: _vm.editForm.imp_bs,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "imp_bs", $$v)
-                              },
-                              expression: "editForm.imp_bs"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    { attrs: { span: 11 } },
-                    [
-                      _c(
-                        "el-form-item",
-                        {
-                          attrs: {
-                            size: "small",
-                            label: "Descripcion",
-                            prop: "descripcion"
-                          }
-                        },
-                        [
-                          _c("br"),
-                          _vm._v(" "),
                           _c("el-input", {
                             attrs: {
                               type: "textarea",
-                              rows: "5",
-                              "max-rows": "8"
+                              rows: "10",
+                              "max-rows": "10"
                             },
                             model: {
                               value: _vm.editForm.des,
@@ -90190,26 +90903,24 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-col",
-                    { attrs: { span: 11 } },
+                    { attrs: { span: 50 } },
                     [
                       _c(
                         "el-form-item",
                         {
                           attrs: {
-                            size: "small",
-                            label: "Descripcion Detallada",
+                            size: "mini",
+                            label: "Descripcion Detallada:",
                             prop: "descripcion",
-                            width: "180px"
+                            width: "300px"
                           }
                         },
                         [
-                          _c("br"),
-                          _vm._v(" "),
                           _c("el-input", {
                             attrs: {
                               type: "textarea",
-                              rows: "5",
-                              "max-rows": "8"
+                              rows: "10",
+                              "max-rows": "10"
                             },
                             model: {
                               value: _vm.editForm.des_det,
@@ -90235,7 +90946,7 @@ var render = function() {
                   _c(
                     "el-button",
                     {
-                      attrs: { type: "primary", plain: "" },
+                      attrs: { size: "mini", type: "primary", plain: "" },
                       on: { click: _vm.saveAsset }
                     },
                     [_vm._v("Guardar Cambios")]
@@ -90244,13 +90955,401 @@ var render = function() {
                   _c(
                     "el-button",
                     {
-                      attrs: { type: "danger", plain: "" },
+                      attrs: { size: "mini", type: "danger", plain: "" },
                       on: { click: _vm.Exit }
                     },
                     [_vm._v("Cancelar")]
                   )
                 ],
                 1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "clearfix",
+            attrs: { slot: "header" },
+            slot: "header"
+          },
+          [
+            _c("span", [_vm._v("Nuevo Inventario")]),
+            _vm._v(" "),
+            _c("input", {
+              staticStyle: { "text-align": "right", float: "right" },
+              attrs: {
+                type: "text",
+                disabled: "",
+                placeholder: "Nro de documento"
+              },
+              domProps: { value: _vm.editForm.no_cod }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c(
+              "el-row",
+              [
+                _c(
+                  "el-form",
+                  {
+                    attrs: {
+                      "label-width": "160px",
+                      inline: false,
+                      size: "small"
+                    }
+                  },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { size: "small", label: "Encargados" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            staticClass: "enc-select",
+                            attrs: {
+                              multiple: "",
+                              placeholder:
+                                "Seleccione Encargados para Inventario",
+                              maxlength: "30"
+                            },
+                            model: {
+                              value: _vm.editForm.res_enc,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "res_enc", $$v)
+                              },
+                              expression: "editForm.res_enc"
+                            }
+                          },
+                          _vm._l(_vm.encargados, function(item, index) {
+                            return _c("el-option", {
+                              key: index,
+                              attrs: {
+                                label: item.paterno + " " + item.nombres,
+                                value: item.nro_dip
+                              }
+                            })
+                          }),
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary", size: "mini" },
+                            on: {
+                              click: function($event) {
+                                _vm.showDialogEncargado = true
+                              }
+                            }
+                          },
+                          [_vm._v("Buscar")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Unidad ", size: "small" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              filterable: "",
+                              remote: "",
+                              "reserve-keyword": "",
+                              placeholder: "Seleccione una Unidad",
+                              "remote-method": _vm.remoteMethod,
+                              maxlength: "30",
+                              loading: _vm.unidadLoading
+                            },
+                            on: { change: _vm.onChangeUnidad },
+                            model: {
+                              value: _vm.editForm.ofc_cod,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "ofc_cod", $$v)
+                              },
+                              expression: "editForm.ofc_cod"
+                            }
+                          },
+                          _vm._l(_vm.unidades, function(item, index) {
+                            return _c("el-option", {
+                              key: index,
+                              attrs: {
+                                label: item.descripcion,
+                                value: item.cod_soa
+                              }
+                            })
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Sub-Unidad", size: "small" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              filterable: "",
+                              remote: "",
+                              multiple: "",
+                              "reserve-keyword": "",
+                              placeholder: "Sub Oficina",
+                              "remote-method": _vm.getSubUnidades,
+                              maxlength: "30",
+                              loading: _vm.subUnidadesLoading
+                            },
+                            on: { change: _vm.onChangeSubUnidades },
+                            model: {
+                              value: _vm.editForm.sub_ofc_cod,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "sub_ofc_cod", $$v)
+                              },
+                              expression: "editForm.sub_ofc_cod"
+                            }
+                          },
+                          _vm._l(_vm.subUnidades, function(item, index) {
+                            return _c("el-option", {
+                              key: index,
+                              attrs: { label: item.descripcion, value: item.id }
+                            })
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Cargo", size: "small" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              filterable: "",
+                              remote: "",
+                              multiple: "",
+                              "reserve-keyword": "",
+                              placeholder: "Cargos",
+                              "remote-method": _vm.getCargosResp,
+                              maxlength: "30",
+                              loading: _vm.cargosLoading
+                            },
+                            on: { change: _vm.onChangeCargos },
+                            model: {
+                              value: _vm.editForm.car_cod_resp,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "car_cod_resp", $$v)
+                              },
+                              expression: "editForm.car_cod_resp"
+                            }
+                          },
+                          _vm._l(_vm.cargos, function(item, index) {
+                            return _c("el-option", {
+                              key: index,
+                              attrs: { label: item.descripcion, value: item.id }
+                            })
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Responsable", size: "small" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              filterable: "",
+                              remote: "",
+                              multiple: "",
+                              "reserve-keyword": "",
+                              placeholder: "Responsables",
+                              "remote-method": _vm.getResponsables,
+                              maxlength: "30",
+                              loading: _vm.responsablesLoading
+                            },
+                            model: {
+                              value: _vm.editForm.ci_res,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "ci_res", $$v)
+                              },
+                              expression: "editForm.ci_res"
+                            }
+                          },
+                          _vm._l(_vm.responsables, function(item, index) {
+                            return _c("el-option", {
+                              key: index,
+                              attrs: {
+                                label: item.nombres + item.paterno,
+                                value: item.nro_dip
+                              }
+                            })
+                          }),
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "", size: "small" } },
+                      [
+                        _c(
+                          "el-row",
+                          { attrs: { type: "flex", justify: "end" } },
+                          [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { type: "prymary", size: "default" },
+                                on: { click: _vm.saveInventory }
+                              },
+                              [_vm._v("Guardar Cambios")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              { attrs: { type: "default", size: "default" } },
+                              [_vm._v("Realizar Inventario")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "Buscar Encargado",
+            visible: _vm.showDialogEncargado,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.showDialogEncargado = $event
+            },
+            close: function($event) {
+              _vm.showDialogEncargado = false
+            }
+          }
+        },
+        [
+          _c(
+            "el-select",
+            {
+              attrs: {
+                placeholder: "busque un carnet",
+                loading: _vm.searchEncargadoLoading,
+                clearable: "",
+                filterable: "",
+                remote: "",
+                "remote-method": _vm.getEncargados
+              },
+              model: {
+                value: _vm.selectEncargado,
+                callback: function($$v) {
+                  _vm.selectEncargado = $$v
+                },
+                expression: "selectEncargado"
+              }
+            },
+            _vm._l(_vm.searchEncargados, function(item) {
+              return _c("el-option", {
+                key: item.nro_dip,
+                attrs: {
+                  label: item.paterno + " " + item.nombres,
+                  value: item.nro_dip
+                }
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c("el-button", { on: { click: _vm.onCancelDialog } }, [
+                _vm._v("Cancel")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.onConfirmDialog }
+                },
+                [_vm._v("Confirmar")]
               )
             ],
             1
@@ -90659,7 +91758,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.initShowInventory(
+                                  return _vm.editInventory(
                                     scope.$index,
                                     scope.row
                                   )
@@ -90668,8 +91767,6 @@ var render = function() {
                             },
                             [_vm._v("Editar")]
                           ),
-                          _vm._v(" "),
-                          _c("br"),
                           _vm._v(" "),
                           _c(
                             "el-button",
@@ -90681,7 +91778,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.initShowInventory(
+                                  return _vm.editInventory(
                                     scope.$index,
                                     scope.row
                                   )
@@ -108121,18 +109218,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Layout__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/Layout */ "./resources/js/views/Layout.vue");
 /* harmony import */ var _views_inventory_Inventory__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./views/inventory/Inventory */ "./resources/js/views/inventory/Inventory.vue");
 /* harmony import */ var _views_inventory_Inventory2__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/inventory/Inventory2 */ "./resources/js/views/inventory/Inventory2.vue");
-/* harmony import */ var _views_inventory_InventoryDetail__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./views/inventory/InventoryDetail */ "./resources/js/views/inventory/InventoryDetail.vue");
-/* harmony import */ var _views_inventory_NewInventory__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./views/inventory/NewInventory */ "./resources/js/views/inventory/NewInventory.vue");
-/* harmony import */ var _views_Formalities__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./views/Formalities */ "./resources/js/views/Formalities.vue");
-/* harmony import */ var _views_clients_AddTaxExemption__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./views/clients/AddTaxExemption */ "./resources/js/views/clients/AddTaxExemption.vue");
-/* harmony import */ var _views_inventory_Active__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./views/inventory/Active */ "./resources/js/views/inventory/Active.vue");
-<<<<<<< HEAD
-/* harmony import */ var _views_inventory_EditActive__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./views/inventory/EditActive */ "./resources/js/views/inventory/EditActive.vue");
-/* harmony import */ var _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./views/treasure/Solvency */ "./resources/js/views/treasure/Solvency.vue");
-=======
-/* harmony import */ var _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./views/treasure/Solvency */ "./resources/js/views/treasure/Solvency.vue");
-/* harmony import */ var _views_treasure_Students__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./views/treasure/Students */ "./resources/js/views/treasure/Students.vue");
->>>>>>> 27ca20a336d49c7b562a19dc705ca336b35df7a3
+/* harmony import */ var _views_inventory_EditInventory2__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./views/inventory/EditInventory2 */ "./resources/js/views/inventory/EditInventory2.vue");
+/* harmony import */ var _views_inventory_InventoryDetail__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./views/inventory/InventoryDetail */ "./resources/js/views/inventory/InventoryDetail.vue");
+/* harmony import */ var _views_inventory_NewInventory__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./views/inventory/NewInventory */ "./resources/js/views/inventory/NewInventory.vue");
+/* harmony import */ var _views_Formalities__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./views/Formalities */ "./resources/js/views/Formalities.vue");
+/* harmony import */ var _views_clients_AddTaxExemption__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./views/clients/AddTaxExemption */ "./resources/js/views/clients/AddTaxExemption.vue");
+/* harmony import */ var _views_inventory_Active__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./views/inventory/Active */ "./resources/js/views/inventory/Active.vue");
+/* harmony import */ var _views_inventory_EditActive__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./views/inventory/EditActive */ "./resources/js/views/inventory/EditActive.vue");
+/* harmony import */ var _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./views/treasure/Solvency */ "./resources/js/views/treasure/Solvency.vue");
+/* harmony import */ var _views_treasure_Students__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./views/treasure/Students */ "./resources/js/views/treasure/Students.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Pages
@@ -108163,6 +109257,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 
+
  //tesoreria
 
 
@@ -108182,11 +109277,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: '/formalities',
       name: 'formalities',
-      component: _views_Formalities__WEBPACK_IMPORTED_MODULE_22__["default"]
+      component: _views_Formalities__WEBPACK_IMPORTED_MODULE_23__["default"]
     }, {
       path: '/taxExemption',
       name: 'addTaxExemption',
-      component: _views_clients_AddTaxExemption__WEBPACK_IMPORTED_MODULE_23__["default"]
+      component: _views_clients_AddTaxExemption__WEBPACK_IMPORTED_MODULE_24__["default"]
     }]
   }, {
     path: '/login',
@@ -108257,36 +109352,36 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: 'inventory/:soa',
       name: 'inventorydetail',
-      component: _views_inventory_InventoryDetail__WEBPACK_IMPORTED_MODULE_20__["default"]
+      component: _views_inventory_InventoryDetail__WEBPACK_IMPORTED_MODULE_21__["default"]
     }, {
       path: 'inventory2',
       name: 'inventory2',
       component: _views_inventory_Inventory2__WEBPACK_IMPORTED_MODULE_19__["default"]
     }, {
+      path: 'inventory2/:id',
+      name: 'editinventory2',
+      component: _views_inventory_EditInventory2__WEBPACK_IMPORTED_MODULE_20__["default"]
+    }, {
       path: 'newinventory',
       name: 'newinventory',
-      component: _views_inventory_NewInventory__WEBPACK_IMPORTED_MODULE_21__["default"]
+      component: _views_inventory_NewInventory__WEBPACK_IMPORTED_MODULE_22__["default"]
     }, {
       path: 'active',
       name: 'active',
-      component: _views_inventory_Active__WEBPACK_IMPORTED_MODULE_24__["default"]
+      component: _views_inventory_Active__WEBPACK_IMPORTED_MODULE_25__["default"]
     }, {
       path: 'active/:id',
       name: 'editactive',
-      component: _views_inventory_EditActive__WEBPACK_IMPORTED_MODULE_25__["default"]
+      component: _views_inventory_EditActive__WEBPACK_IMPORTED_MODULE_26__["default"]
     }, //enlaces para la administracion de paginas de tesoreria
     {
       path: 'solvency',
       name: 'solvency',
-<<<<<<< HEAD
-      component: _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_26__["default"]
-=======
-      component: _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_25__["default"]
+      component: _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_27__["default"]
     }, {
       path: 'students',
       name: 'students',
-      component: _views_treasure_Students__WEBPACK_IMPORTED_MODULE_26__["default"]
->>>>>>> 27ca20a336d49c7b562a19dc705ca336b35df7a3
+      component: _views_treasure_Students__WEBPACK_IMPORTED_MODULE_28__["default"]
     }],
     meta: {
       requiresAuth: true
@@ -110306,6 +111401,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/inventory/EditInventory2.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/views/inventory/EditInventory2.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true& */ "./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true&");
+/* harmony import */ var _EditInventory2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditInventory2.vue?vue&type=script&lang=js& */ "./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& */ "./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _EditInventory2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "328cd9b2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/inventory/EditInventory2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditInventory2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=style&index=0&id=328cd9b2&lang=css&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_style_index_0_id_328cd9b2_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/EditInventory2.vue?vue&type=template&id=328cd9b2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditInventory2_vue_vue_type_template_id_328cd9b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/views/inventory/Inventory.vue":
 /*!****************************************************!*\
   !*** ./resources/js/views/inventory/Inventory.vue ***!
@@ -110792,8 +111974,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

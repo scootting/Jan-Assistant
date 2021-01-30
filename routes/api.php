@@ -57,11 +57,10 @@ Route::group([
     Route::get('inventory2/encargados', 'InventoryController@getEncargados');
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
-<<<<<<< HEAD
-    //rutas de re asignacion de activos
+    Route::get('inventory2/edit/{id}','InventoryController@getInventory');
+    //***rutas de re asignacion de activos***
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
     Route::get('reasignacion/edit/{id}','InventoryController@getActive');
-=======
 
 
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
@@ -70,5 +69,4 @@ Route::group([
     // *** - Buscar los valores pertenecientes a un tramite - ***
     Route::post('valuesprocedure', 'TreasureController@getValuesProcedure');
     
->>>>>>> 27ca20a336d49c7b562a19dc705ca336b35df7a3
 });

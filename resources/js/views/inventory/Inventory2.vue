@@ -60,14 +60,14 @@
           <el-table-column align="right-center" width="220" label="Operaciones">
             <template slot-scope="scope">
               <el-button
-                @click="initShowInventory(scope.$index, scope.row)"
+                @click="editInventory(scope.$index, scope.row)"
                 type="primary"
                 plain
                 size="mini"
                 >Editar</el-button
-              > <br>
+              > 
               <el-button
-                @click="initShowInventory(scope.$index, scope.row)"
+                @click="editInventory(scope.$index, scope.row)"
                 type="primary"
                 plain
                 size="mini"
@@ -129,11 +129,12 @@ export default {
       this.pagination.page = page;
       this.getInventories();
     },
-    initShowInventory(index, row) {
+    editInventory(index, row) {
+      console.log(row);
       this.$router.push({
-        name: "editInventory",
+        name: "editinventory2",
         params: {
-          soa: row.cod_soa,
+          id: row.id,
         },
       });
     },

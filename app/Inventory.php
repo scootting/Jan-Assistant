@@ -49,7 +49,7 @@ class Inventory extends Model
     //obtener inventarios creados
     public static function getInventories($gestion, $descripcion)
     {
-        $query = "select inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,
+        $query = "select inv.doc_inv.id, inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,
         inv.oficinas.descripcion,inv.doc_inv.estado
         from inv.doc_inv , inv.oficinas where 
         inv.doc_inv.gestion = " . $gestion . "
@@ -202,6 +202,18 @@ class Inventory extends Model
         $query = "select * from inv.union_activos
         where id = ".$id."";
         $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    } 
+    public static function showInventoryById($id)
+    {
+        $query = "select * from inv.doc_inv
+        where id = ".$id."";
+        $data = collect(DB::select(DB::raw($query)))[0];
+        $data->car_cod = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->car_cod))));
+        $data->res_enc = explode(',',str_replace('{','',str_replace('}','',$data->res_enc)));
+        $data->sub_ofc_cod = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->sub_ofc_cod))));
+        $data->car_cod_resp = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->car_cod_resp))));
+        $data->ci_res =  explode(',',str_replace('{','',str_replace('}','',$data->ci_res)));
         return $data;
     }
 

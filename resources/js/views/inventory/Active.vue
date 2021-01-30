@@ -2,67 +2,67 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Unidades</span>
+        <span>Activos Fijos</span>
         <el-button style="float: right; padding: 3px 0" type="text"
           >Ayuda</el-button
         >
       </div>
-
-      <div
-        style="margin-top: 15px">
+      <div style="margin-top: 15px">
         <el-input
           placeholder="INSERTE EL ACTIVO A BUSCAR"
           v-model="writtenTextParameter"
           class="input-with-select"
           @keyup.enter.native="getActives"
+          style="width: 200px"
         >
         </el-input>
-        <el-select v-model="idOficce" placeholder="SELECCIONAR UNIDAD" filterable remote :remote-method="getUnidades" >
-          <el-option v-for="item in unidades"
+        <el-select
+          v-model="idOficce"
+          placeholder="SELECCIONAR UNIDAD"
+          filterable
+          remote
+          :remote-method="getUnidades"
+        >
+          <el-option
+            v-for="item in unidades"
             :key="item.id"
             :label="item.descripcion"
-            :value="item.id">
+            :value="item.id"
+          >
           </el-option>
         </el-select>
-        <el-select v-model="idsSubOffices" multiple placeholder="SELECIONAR SUB UNIDAD" clearable filterable>
-          <el-option v-for="item in subUnidades"
+        <el-select
+          v-model="idsSubOffices"
+          multiple
+          placeholder="SELECIONAR SUB UNIDAD"
+          clearable
+          filterable
+        >
+          <el-option
+            v-for="item in subUnidades"
             :key="item.id"
             :label="item.descripcion"
-            :value="item.id">
+            :value="item.id"
+          >
           </el-option>
         </el-select>
-       <el-button
-            icon="el-icon-search"
-            @click="getActives"
-       ></el-button>
+        <el-button icon="el-icon-search" @click="getActives"></el-button>
       </div>
-      <br />
+      <br/>
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
-          <el-table-column label="Identificador">
+          <el-table-column label="Identificador" width="140" >
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.id }}</el-tag>
+                <el-tag size="small">{{ scope.row.id }}</el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="oficina"
-            label="OFICINA"
-          ></el-table-column>
-          <el-table-column
-            prop="descripcion"
-            label="SUB OFICINA"
-          ></el-table-column>
-          <el-table-column
-            prop="des"
-            label="DESCRIPCION"
-          ></el-table-column> 
-           <el-table-column
-            prop="estado"
-            label="ESTADO"
-          ></el-table-column>
-          <el-table-column align="right" width="220">
+          <el-table-column prop="oficina" label="OFICINA" width="180"></el-table-column>
+          <el-table-column prop="descripcion" label="SUB OFICINA" width="150" ></el-table-column>
+          <el-table-column prop="des" label="DESCRIPCION" width="330" ></el-table-column>
+          <el-table-column prop="estado" label="ESTADO"  width="180"></el-table-column>
+          <el-table-column align="right"  width="110" >
             <template slot-scope="scope">
               <el-button
                 @click="EditActive(scope.$index, scope.row)"
@@ -99,24 +99,23 @@ export default {
         page: 1,
       },
       writtenTextParameter: "",
-      idOficce:null,
-      idsSubOffices:[],
+      idOficce: null,
+      idsSubOffices: [],
       unidades: [],
-      subUnidades:[],
+      subUnidades: [],
     };
   },
   mounted() {
     this.getActives();
-    this.getUnidades('');
+    this.getUnidades("");
   },
   watch: {
-    idOficce(newVal,oldVal){
-      if(newVal)
-        this.onChangeUnidades();
+    idOficce(newVal, oldVal) {
+      if (newVal) this.onChangeUnidades();
       else {
-        this.subUnidades=[]
+        this.subUnidades = [];
       }
-      this.idSubOffices=[];
+      this.idSubOffices = [];
     },
   },
   methods: {
@@ -142,12 +141,12 @@ export default {
     },
     getActivesPaginate(page) {
       this.pagination.page = page;
-      this.getActives('');
+      this.getActives("");
     },
     getUnidades(keyWord) {
       axios
         .get("/api/inventory2/unidad/", {
-          params: { keyWord: keyWord.toUpperCase()},
+          params: { keyWord: keyWord.toUpperCase() },
         })
         .then((data) => {
           this.unidades = Object.values(data.data.data);
@@ -156,13 +155,13 @@ export default {
           console.log(err);
         });
     },
-    onChangeUnidades(){
+    onChangeUnidades() {
       this.getSubUnidades();
     },
     getSubUnidades() {
       axios
         .get("/api/inventory2/sub_unidad", {
-          params: {idOffice: this.idOficce},
+          params: { idOffice: this.idOficce },
         })
         .then((data) => {
           this.subUnidades = data.data;

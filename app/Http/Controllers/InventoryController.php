@@ -224,5 +224,10 @@ class InventoryController extends Controller
     {
         $data = Inventory::showActiveById($id);
         return json_encode($data);
+    } 
+    public function getInventory($id)
+    {
+        $data = Inventory::showInventoryById($id);
+        return json_encode($data);
     }
 }
