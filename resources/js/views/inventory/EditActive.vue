@@ -21,24 +21,6 @@
                 style="width: 200px"
               ></el-input>
             </el-form-item>
-            <el-form-item size="mini" label="Cargo del Responsable:" prop="ci_resp">
-              <el-input
-                v-model="editForm.car_cod"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="50">
-            <el-form-item
-              size="mini"
-              label="Nombre Responsable:"
-              prop="ci_resp"
-            >
-              <el-input
-                v-model="editForm.ci_resp"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item>
           </el-col>
         </el-row>
         <hr style="color: gray" />
@@ -46,43 +28,27 @@
         <el-row>
           <el-col :span="50">
             <el-form-item size="mini" label="Codigo Unidad:" prop="ofc_cod">
-              <el-input
-                v-model="editForm.ofc_cod"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="50">
-            <el-form-item
-              size="mini"
-              label="Codigo SubUnidad:"
-              prop="sub_ofc_cod"
-            >
-              <el-input
-                v-model="editForm.sub_ofc_cod"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="50">
+              <el-input v-model="editForm.ofc_cod" style="width: 200px"></el-input>
+            </el-form-item> 
             <el-form-item size="mini" label="Unidad de Medida:" prop="uni_med">
               <el-input v-model="editForm.uni_med" style="width:200px"></el-input>
             </el-form-item> 
-            <el-form-item size="mini" label="Cantidad:" prop="cantidad">
+            <el-form-item size="mini" label="Fecha de Adquisicion:" prop="cantidad">
               <el-input v-model="editForm.fec_adq" style="width:200px" disabled></el-input>
             </el-form-item>
-            <el-form-item size="mini" label="Cantidad:" prop="cantidad">
-              <el-input v-model="editForm.can" style="width:200px" disabled></el-input>
+            <el-form-item size="mini" label="est_cod:" prop="est_cod">
+              <el-input v-model="editForm.est_cod" style="width:200px" disabled></el-input>
             </el-form-item>
-          </el-col> 
-           <el-col :span="50"> 
-             <el-form-item size="mini" label="Estado de Activo:" prop="estado">
+          </el-col>
+          <el-col :span="50">
+            <el-form-item size="mini" label="Codigo SubUnidad:" prop="sub_ofc_cod">
+              <el-input v-model="editForm.sub_ofc_cod" style="width: 200px"></el-input>
+            </el-form-item> 
+            <el-form-item size="mini" label="Estado de Activo:" prop="estado">
               <el-select v-model="editForm.estado">
                 <el-option
                   v-for="item in estado"
-                  :key="'u_m_key_' + item.estado"
+                  :key=" item.estado"
                   :label="item.estado"
                   :value="item.estado"
                 ></el-option>
@@ -94,9 +60,9 @@
                 style="width: 200px"
               ></el-input>
             </el-form-item>
-            <el-form-item size="mini" label="Precion Unitario:">
+            <el-form-item size="mini" label="Nro de Serie:">
               <el-input
-                v-model="editForm.imp_bs"
+                v-model="editForm.nro_serie"
                 style="width: 200px"
               ></el-input>
             </el-form-item>
@@ -153,15 +119,18 @@ export default {
       info: {},
       data: {},
       editForm: {
-        can: "",
         des: "",
         des_det: "",
         uni_med: "",
+        par_cod : "",
         vida_util: "",
-        imp_bs: "",
+        estado:"",
+        nro_serie:"",
+        ofc_cod:"",
+        sub_ofc_cod:"",
+        ci_resp:"",
         est_cod: "",
         id: "",
-        car_cod: "",
       },
       unidMeds: [],
       ofc_cod: "",
@@ -205,8 +174,24 @@ export default {
         name: "active",
       });
     },
-
-    saveAsset() {},
+    saveAsset() {
+      axios
+        .post("/api/reasignacion/save", this.editForm)
+        .then((data) => {
+          this.$notify.success({
+        title: "Cambios guardados",
+        message: "Se realizo cambios al Activo seleccionado exitosamente",
+        duration: 0,
+      });
+      this.$router.push({
+        name: "active",
+      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    
   },
 };
 </script>

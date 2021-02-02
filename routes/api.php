@@ -61,6 +61,8 @@ Route::group([
     //***rutas de re asignacion de activos***
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
     Route::get('reasignacion/edit/{id}','InventoryController@getActive');
+    Route::post('reasignacion/save','InventoryController@saveChangeActive');
+    
 
 
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***

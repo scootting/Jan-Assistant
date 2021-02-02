@@ -133,7 +133,7 @@
                 <el-button type="prymary" size="default" @click="saveInventory"
                   >Guardar</el-button
                 >
-                <el-button type="default" size="default"
+                <el-button type="default" size="default" @click="listActive"
                   >Realizar Inventario</el-button
                 >
               </el-row>
@@ -357,6 +357,12 @@ export default {
       this.encargados.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
+    },
+    listActive(){
+      this.$router.push({
+        name: "inventory2detail",
+       
+      });
     },
   },
 };

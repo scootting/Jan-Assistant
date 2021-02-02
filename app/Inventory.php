@@ -216,5 +216,11 @@ class Inventory extends Model
         $data->ci_res =  explode(',',str_replace('{','',str_replace('}','',$data->ci_res)));
         return $data;
     }
+    public static function saveChangeActive($des, $des_det, $uni_med,$par_cod,$vida_util,$estado,$nro_serie,$ofc_cod,$sub_ofc_cod,$est_cod,$ci_resp,$id)
+    { 
+        $query = "select * from inv.f_guardar_activo('".$des."', '".$des_det."','".$uni_med."','".$par_cod."','".$vida_util."','".$estado."','".$nro_serie."','".$ofc_cod."','".$sub_ofc_cod."','".$est_cod."','".$ci_resp."','".$id."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 }
