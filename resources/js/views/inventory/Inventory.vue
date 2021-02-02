@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Unidades</span>

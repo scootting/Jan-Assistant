@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px 0;">
+  <div style="margin-top: 15px 0;"  class="grid-content bg-purple">
     <el-card class="box-card">
       <el-form
         :label-position="right"
@@ -14,13 +14,15 @@
         <hr style="color: gray" />
         <br />
         <el-row>
-          <el-col :span="50">
+          <el-col :span="50"> 
+            <div>
             <el-form-item size="mini" label="CI Responsable:" prop="ci_resp">
               <el-input
                 v-model="editForm.ci_resp"
                 style="width: 200px"
               ></el-input>
-            </el-form-item>
+            </el-form-item> 
+            </div>
           </el-col>
         </el-row>
         <hr style="color: gray" />
@@ -196,5 +198,13 @@ export default {
 };
 </script>
 
-<style>
+<style> 
+.bg-purple {
+  background: #d3dce6;
+}
+.grid-content {
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 36px;
+}
 </style>
