@@ -130,7 +130,7 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="prymary" size="default" @click="saveInventory"
+                <el-button type="prymary" size="default" @click="saveAsset"
                   >Guardar Cambios</el-button
                 >
                 <el-button type="default" size="default"
@@ -179,7 +179,7 @@ export default {
   name: "Edit_Inventory2",
   data() {
     return {
-      id:null,
+      id:"",
       editForm: {
         no_doc: "",
         res_enc: [],
@@ -396,6 +396,23 @@ export default {
       this.encargados.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
+    },
+    saveAsset() {
+      axios
+        .post("/api/inventory2/save", this.editForm)
+        .then((data) => {
+          this.$notify.success({
+        title: "Cambios guardados",
+        message: "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+        duration: 0,
+      });
+      this.$router.push({
+        name: "inventory2",
+      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

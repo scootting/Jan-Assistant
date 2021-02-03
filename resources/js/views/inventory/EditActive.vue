@@ -32,14 +32,11 @@
             <el-form-item size="mini" label="Codigo Unidad:" prop="ofc_cod">
               <el-input v-model="editForm.ofc_cod" style="width: 200px"></el-input>
             </el-form-item> 
-            <el-form-item size="mini" label="Unidad de Medida:" prop="uni_med">
-              <el-input v-model="editForm.uni_med" style="width:200px"></el-input>
-            </el-form-item> 
-            <el-form-item size="mini" label="Fecha de Adquisicion:" prop="cantidad">
-              <el-input v-model="editForm.fec_adq" style="width:200px" disabled></el-input>
-            </el-form-item>
-            <el-form-item size="mini" label="est_cod:" prop="est_cod">
-              <el-input v-model="editForm.est_cod" style="width:200px" disabled></el-input>
+            <el-form-item size="mini" label="Vida Util:">
+              <el-input
+                v-model="editForm.vida_util"
+                style="width: 200px"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="50">
@@ -55,18 +52,6 @@
                   :value="item.estado"
                 ></el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item size="mini" label="Vida Util:">
-              <el-input
-                v-model="editForm.vida_util"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item size="mini" label="Nro de Serie:">
-              <el-input
-                v-model="editForm.nro_serie"
-                style="width: 200px"
-              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -123,15 +108,11 @@ export default {
       editForm: {
         des: "",
         des_det: "",
-        uni_med: "",
-        par_cod : "",
         vida_util: "",
         estado:"",
-        nro_serie:"",
         ofc_cod:"",
         sub_ofc_cod:"",
         ci_resp:"",
-        est_cod: "",
         id: "",
       },
       unidMeds: [],

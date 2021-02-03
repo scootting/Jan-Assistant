@@ -58,6 +58,7 @@ Route::group([
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
     Route::get('inventory2/edit/{id}','InventoryController@getInventory');
+    Route::post('inventory2/save','InventoryController@saveChangeDocInventory');
     //***rutas de re asignacion de activos***
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
     Route::get('reasignacion/edit/{id}','InventoryController@getActive');

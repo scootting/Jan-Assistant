@@ -234,17 +234,28 @@ class InventoryController extends Controller
     { 
         $des = $request->des;
         $des_det = $request->des_det;
-        $uni_med = $request->uni_med;
-        $par_cod = $request->par_cod;
         $vida_util= $request->vida_util;
         $estado= $request->estado;
-        $nro_serie = $request->nro_serie;
         $ofc_cod = $request->ofc_cod;
         $sub_ofc_cod = $request->sub_ofc_cod;
-        $est_cod= $request->est_cod;
         $ci_resp = $request->ci_resp;
         $id = $request->id;
-        $data = Inventory::saveChangeActive($des, $des_det, $uni_med,$par_cod,$vida_util,$estado,$nro_serie,$ofc_cod,$sub_ofc_cod,$est_cod,$ci_resp,$id);
+        $data = Inventory::saveChangeActive($des, $des_det,$vida_util,$estado,$ofc_cod,$sub_ofc_cod,$ci_resp,$id);
+        return json_encode($data);
+    } 
+    public function saveChangeDocInventory(Request $request)
+    {
+        $id = $request->id;
+        $res_enc = $request->encargados;
+        $car_cod_enc = [];
+        for ($i = 0; $i < count($res_enc); $i++)
+            $car_cod_enc[] = 3;
+        $car_cod = $car_cod_enc;
+        $ofc_cod = $request->unidad;
+        $sub_ofc_cod = $request->subUnidades;
+        $car_cod_resp = $request->cargos;
+        $ci_res = $request->responsables;
+        $data = Inventory::saveChangeDocInventory($id,$res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res);
         return json_encode($data);
     }
 }

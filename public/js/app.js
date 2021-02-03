@@ -5910,21 +5910,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditActive",
   data: function data() {
@@ -5935,15 +5920,11 @@ __webpack_require__.r(__webpack_exports__);
       editForm: {
         des: "",
         des_det: "",
-        uni_med: "",
-        par_cod: "",
         vida_util: "",
         estado: "",
-        nro_serie: "",
         ofc_cod: "",
         sub_ofc_cod: "",
         ci_resp: "",
-        est_cod: "",
         id: ""
       },
       unidMeds: [],
@@ -6197,7 +6178,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Edit_Inventory2",
   data: function data() {
     return {
-      id: null,
+      id: "",
       editForm: {
         no_doc: "",
         res_enc: [],
@@ -6420,6 +6401,23 @@ __webpack_require__.r(__webpack_exports__);
       this.encargados.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
+    },
+    saveAsset: function saveAsset() {
+      var _this9 = this;
+
+      axios.post("/api/inventory2/save", this.editForm).then(function (data) {
+        _this9.$notify.success({
+          title: "Cambios guardados",
+          message: "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+          duration: 0
+        });
+
+        _this9.$router.push({
+          name: "inventory2"
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -90791,72 +90789,16 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "el-form-item",
-                        {
-                          attrs: {
-                            size: "mini",
-                            label: "Unidad de Medida:",
-                            prop: "uni_med"
-                          }
-                        },
+                        { attrs: { size: "mini", label: "Vida Util:" } },
                         [
                           _c("el-input", {
                             staticStyle: { width: "200px" },
                             model: {
-                              value: _vm.editForm.uni_med,
+                              value: _vm.editForm.vida_util,
                               callback: function($$v) {
-                                _vm.$set(_vm.editForm, "uni_med", $$v)
+                                _vm.$set(_vm.editForm, "vida_util", $$v)
                               },
-                              expression: "editForm.uni_med"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        {
-                          attrs: {
-                            size: "mini",
-                            label: "Fecha de Adquisicion:",
-                            prop: "cantidad"
-                          }
-                        },
-                        [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            attrs: { disabled: "" },
-                            model: {
-                              value: _vm.editForm.fec_adq,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "fec_adq", $$v)
-                              },
-                              expression: "editForm.fec_adq"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        {
-                          attrs: {
-                            size: "mini",
-                            label: "est_cod:",
-                            prop: "est_cod"
-                          }
-                        },
-                        [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            attrs: { disabled: "" },
-                            model: {
-                              value: _vm.editForm.est_cod,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "est_cod", $$v)
-                              },
-                              expression: "editForm.est_cod"
+                              expression: "editForm.vida_util"
                             }
                           })
                         ],
@@ -90926,42 +90868,6 @@ var render = function() {
                             }),
                             1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        { attrs: { size: "mini", label: "Vida Util:" } },
-                        [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            model: {
-                              value: _vm.editForm.vida_util,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "vida_util", $$v)
-                              },
-                              expression: "editForm.vida_util"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        { attrs: { size: "mini", label: "Nro de Serie:" } },
-                        [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            model: {
-                              value: _vm.editForm.nro_serie,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "nro_serie", $$v)
-                              },
-                              expression: "editForm.nro_serie"
-                            }
-                          })
                         ],
                         1
                       )
@@ -91373,7 +91279,7 @@ var render = function() {
                               "el-button",
                               {
                                 attrs: { type: "prymary", size: "default" },
-                                on: { click: _vm.saveInventory }
+                                on: { click: _vm.saveAsset }
                               },
                               [_vm._v("Guardar Cambios")]
                             ),
