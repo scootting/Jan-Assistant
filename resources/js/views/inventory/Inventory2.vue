@@ -67,11 +67,11 @@
                 >Editar</el-button
               > 
               <el-button
-                @click="editInventory(scope.$index, scope.row)"
+                @click="listActive(scope.row.id)"
                 type="primary"
                 plain
                 size="mini"
-                >Ver Detalles</el-button
+                >Ver lista </el-button
               >
             </template>
           </el-table-column>
@@ -141,7 +141,14 @@ export default {
     newInventory() {
       this.$router.push({ name: "newinventory" });
     },
-
+    listActive(id){
+      this.$router.push({
+        name: "inventory2detail",
+        params: {
+          id: id,
+        }
+      });
+    },
     test() {
       alert("bienvenido al modulo");
     },

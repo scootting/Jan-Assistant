@@ -39,11 +39,9 @@ Route::group([
     Route::post('users', 'GeneralController@getUsersByDescription');
     Route::post('user', 'GeneralController@storeUser');
     Route::get('user/{id}', 'GeneralController@getUserById');
-
     /*
     Route::post('upload', 'FileController@uploadFile');
     */
-
     Route::get('inventory/{gestion}', 'InventoryController@getOffices');
     Route::get('inventory/show/{cod_soa}', 'InventoryController@getOfficeByCodSoa');
     Route::get('inventory/sub_offices/{cod_soa}', 'InventoryController@getSubOfficesByCodSoa');
@@ -59,6 +57,10 @@ Route::group([
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
     Route::get('inventory2/edit/{id}','InventoryController@getInventory');
     Route::post('inventory2/save','InventoryController@saveChangeDocInventory');
+    Route::get('inventory2/doc_inv/{id}', 'InventoryController@showDocInventory');
+    Route::get('inventory2/doc_detail_by_active/{id}', 'InventoryController@getDocDetailByActivoId');
+    Route::get('inventory2/search/{doc_cod}', 'InventoryController@getActivesForDocInv');
+    
     //***rutas de re asignacion de activos***
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
     Route::get('reasignacion/edit/{id}','InventoryController@getActive');

@@ -2,57 +2,65 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Detalles de Inventario</span>
+        <span
+          >Lista de activos para la realizacion del inventario
+          {{ cod_doc }}</span
+        >
         <el-button style="float: right; padding: 3px 0" type="text"
           >Ayuda</el-button
         >
       </div>
-      <div style="margin-top: 15px">
-       
-        <el-select
-          v-model="idOficce"
-          placeholder="SELECCIONAR UNIDAD"
-          filterable
-          remote
-          :remote-method="getUnidades"
+      <div>
+        <el-form
+          :model="doc_inv"
+          label-width="160px"
+          :inline="false"
+          size="mini"
         >
-          <el-option
-            v-for="item in unidades"
-            :key="item.id"
-            :label="item.descripcion"
-            :value="item.id"
-          >
-          </el-option>
-        </el-select>
-        <el-select
-          v-model="idsSubOffices"
-          multiple
-          placeholder="SELECIONAR SUB UNIDAD"
-          clearable
-          filterable
-        >
-          <el-option
-            v-for="item in subUnidades"
-            :key="item.id"
-            :label="item.descripcion"
-            :value="item.id"
-          >
-          </el-option>
-        </el-select>
-        <el-button icon="el-icon-search" @click="getActives"></el-button>
+          <el-form-item label="Oficina:">
+            <el-input v-model="doc_inv.oficina.descripcion" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="Sub Oficinas:">
+            <el-tag
+              v-for="sub_oficina in doc_inv.sub_oficinas"
+              :key="sub_oficina.id"
+              type="success"
+              size="normal"
+              effect="dark"
+              >{{ sub_oficina.descripcion }}</el-tag
+            >
+          </el-form-item>
+          <el-form-item label="Encargados de inventario:">
+            <el-tag
+              v-for="encargado in doc_inv.encargados"
+              :key="encargado.nro_dip"
+              type="default"
+              size="normal"
+              effect="dark"
+              >{{ formatResponsable(encargado).responsable }}</el-tag
+            >
+          </el-form-item>
+        </el-form>
       </div>
-      <br/>
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
-          <el-table-column label="Identificador" width="140" >
+          <el-table-column label="Identificador" width="140">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
                 <el-tag size="small">{{ scope.row.id }}</el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="des" label="DESCRIPCION" width="330" ></el-table-column>
-          <el-table-column prop="estado" label="ESTADO"  width="180"></el-table-column>
+          <el-table-column
+            prop="des"
+            label="DESCRIPCION"
+            width="330"
+          ></el-table-column>
+          <el-table-column
+            prop="estado"
+            label="ESTADO"
+            width="180"
+          ></el-table-column>
         </el-table>
         <el-pagination
           :page-size="pagination.per_page"
@@ -68,9 +76,11 @@
 
 <script>
 export default {
-  name: "DocumentoDetalle",
+  name: "DocumentoInventarioDetalle",
   data() {
     return {
+      doc_inv_id: null,
+      doc_inv: {},
       loading: false,
       user: this.$store.state.user,
       messages: {},
@@ -78,32 +88,35 @@ export default {
       pagination: {
         page: 1,
       },
-      writtenTextParameter: "",
-      idOficce: null,
-      idsSubOffices: [],
-      unidades: [],
-      subUnidades: [],
     };
   },
   mounted() {
-    this.getActives();
-    this.getUnidades("");
+    this.doc_inv_id = this.$route.params.id;
+    this.getDocInventory();
   },
   methods: {
-    getActives() {
-      this.loading = true;
+    getDocInventory() {
       axios
-        .get("/api/reasignacion/", {
-          params: {
-            page: this.pagination.page,
-            descripcion: this.writtenTextParameter.toUpperCase(),
-            idOffice: this.idOficce,
-            idSubOffice: this.idsSubOffices,
-          },
-        })
+        .get("/api/inventory2/doc_inv/" + this.doc_inv_id)
         .then((data) => {
+          this.doc_inv = data.data;
+          this.getActivesSearch();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getActivesSearch() {
+      axios.get("/api/inventory2/search/" + this.doc_inv.no_cod, {
+        params: {
+          page: this.pagination.page,
+          idOffice: this.doc_inv.oficina.id,
+          idSubOffices: this.doc_inv.sub_ofc_cod,
+        },
+      }).then((data) => {
           this.loading = false;
           this.data = Object.values(data.data.data);
+
           this.pagination = data.data;
         })
         .catch((err) => {
@@ -114,21 +127,20 @@ export default {
       this.pagination.page = page;
       this.getActives("");
     },
-    getUnidades(keyWord) {
-      axios
-        .get("/api/inventory2/unidad/", {
-          params: { keyWord: keyWord.toUpperCase() },
-        })
-        .then((data) => {
-          this.unidades = Object.values(data.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    
     test() {
       alert("bienvenido al modulo");
+    },
+    formatResponsable(responsable) {
+      return {
+        cargo: responsable.descripcion,
+        responsable:
+          responsable.paterno.trim() +
+          " " +
+          responsable.materno.trim() +
+          " " +
+          responsable.nombres.trim(),
+        nro_dip: responsable.nro_dip,
+      };
     },
   },
 };
@@ -136,4 +148,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
-<style scoped></style>
+<style scoped>
+.el-tag {
+  margin: 2px;
+}
+</style>

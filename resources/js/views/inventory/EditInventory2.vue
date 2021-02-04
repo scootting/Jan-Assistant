@@ -133,7 +133,7 @@
                 <el-button type="prymary" size="default" @click="saveAsset"
                   >Guardar Cambios</el-button
                 >
-                <el-button type="default" size="default"
+                <el-button type="default" size="default" @click="initNewInventory"
                   >Realizar Inventario</el-button
                 >
               </el-row>
@@ -392,7 +392,7 @@ export default {
       let addEncargado = this.searchEncargados.filter((e) => {
         return e.nro_dip === this.selectEncargado;
       })[0];
-      this.editForm.encargados.push(addEncargado.nro_dip);
+      this.NewInvent.encargados.push(addEncargado.nro_dip);
       this.encargados.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
@@ -413,6 +413,16 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    initNewInventory() {
+      this.$notify.info({
+        title: "Edicion cancelada",
+        message: "prueba de boton",
+        duration: 0,
+      });
+      this.$router.push({
+        name: "inventory2",
+      });
     },
   },
 };

@@ -30,7 +30,7 @@
         <el-row>
           <el-col :span="50">
             <el-form-item size="mini" label="Codigo Unidad:" prop="ofc_cod">
-              <el-input v-model="editForm.ofc_cod" style="width: 200px"></el-input>
+              <el-input v-model="editForm.ofc_cod" label="oficina" style="width: 200px"></el-input>
             </el-form-item> 
             <el-form-item size="mini" label="Vida Util:">
               <el-input
@@ -104,7 +104,6 @@ export default {
     return {
       gestion: this.$store.state.user.gestion,
       info: {},
-      data: {},
       editForm: {
         des: "",
         des_det: "",
@@ -117,7 +116,6 @@ export default {
       },
       unidMeds: [],
       ofc_cod: "",
-      sub_ofc_cod: [],
     };
   },
   mounted() {
