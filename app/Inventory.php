@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -199,8 +200,13 @@ class Inventory extends Model
 
     public static function showActiveById($id)
     {
-        $query = "select * from inv.union_activos
-        where id = ".$id."";
+        $query = "select ua.des,ua.des_det,ua.vida_util,ua.estado,
+        ua.ofc_cod,ua.sub_ofc_cod,ua.ci_resp,ua.id, of.descripcion as oficina,sof.descripcion
+         from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof
+         where ua.id = ".$id." and 
+         of.cod_ofc = ua.ofc_cod and sof.id = ua.sub_ofc_cod
+         group by (ua.des,ua.des_det,ua.vida_util,ua.estado,
+        ua.ofc_cod,ua.sub_ofc_cod,ua.ci_resp,ua.id, of.descripcion,sof.descripcion)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     } 
@@ -214,14 +220,84 @@ class Inventory extends Model
         $data->sub_ofc_cod = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->sub_ofc_cod))));
         $data->car_cod_resp = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->car_cod_resp))));
         $data->ci_res =  explode(',',str_replace('{','',str_replace('}','',$data->ci_res)));
+
         return $data;
     }
+
+    public static function getUnidadById($id)
+    {
+        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.id
+        from inv.oficinas 
+        where inv.oficinas.id like '%" . $id . "%'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data[0];
+    }
+
+    public static function getSubUnidadById($id)
+    {
+        $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
+        from inv.sub_oficinas
+        WHERE inv.sub_oficinas.id = ".$id."
+        group by (inv.sub_oficinas.descripcion,inv.sub_oficinas.id)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data[0];
+    } 
+
+    public static function getCargoById($id)
+    {
+        $query = "select inv.cargos.id , inv.cargos.descripcion
+        from inv.cargos, inv.activos,inv.sub_oficinas
+        where 
+        inv.cargos.id=".$id."
+        group by (inv.cargos.id,inv.cargos.descripcion)
+        order by (inv.cargos.id)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    } 
+
+    public static function searchDocDetailByActiveId($id)
+    {
+        $query=" select * from inv.detalle_doc_act where id_act = ".$id." ";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data[0];
+    }
+     
     public static function saveChangeActive($des, $des_det, $vida_util,$estado,$ofc_cod,$sub_ofc_cod,$ci_resp,$id)
     { 
         $query = "select * from inv.f_guardar_activo('".$des."', '".$des_det."','".$vida_util."','".$estado."','".$ofc_cod."','".$sub_ofc_cod."','".$ci_resp."','".$id."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+
+    public static function SearchActiveForDocInv($no_cod,$ofc_cod,$sub_ofc_cods)
+    {
+        //$listActWithDD=DB::table('inv.detail_doc_act')->select('id_act')->where('no_cod',$doc_cod)->get();
+        
+        $q1=" select inv.union_activos.* from inv.union_activos, inv.detalle_doc_act 
+                where inv.union_activos.id = inv.detalle_doc_act.id_act
+                and inv.detalle_doc_act.doc_cod = '".$no_cod."'";
+        $l1 = collect(DB::select(DB::raw($q1)));
+        foreach($l1 as $act ){
+            $act->deatalle_doc_act=self::searchDocDetailByActiveId($act->id);
+        }
+        $arrayIds=[];
+        foreach($l1 as $act){
+            $arrayIds[]=$act->id;
+        }
+        $db = DB::table('inv.union_activos as ua')->select('ua.id', 'of.descripcion as oficina','sof.descripcion','ua.des','ua.estado')
+        ->join('inv.oficinas as of','ua.ofc_cod','=','of.cod_ofc')->join('inv.sub_oficinas as sof','ua.sub_ofc_cod','=','sof.id');
+        //$l2->whereNotIn('ua.id',$arrayIds);
+        if($ofc_cod){
+            $db->where('of.id',$ofc_cod);
+        }
+        if($sub_ofc_cods){
+            $db->whereIn('ua.sub_ofc_cod',$sub_ofc_cods);
+        }
+        $l2 = $db->get();
+        $data =$l1->concat($l2);
+        return $data;
+    }
+
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
         $query = " Select * from inv.f_guardar_cambios doc(

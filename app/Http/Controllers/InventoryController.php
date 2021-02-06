@@ -220,6 +220,10 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
+    public function getDocDetailByActivoId( $id )
+    {
+        return json_encode(Inventory::getDocDetailByActivoId($id));
+    }
     public function getActive($id)
     {
         $data = Inventory::showActiveById($id);
@@ -257,5 +261,49 @@ class InventoryController extends Controller
         $ci_res = $request->responsables;
         $data = Inventory::saveChangeDocInventory($id,$res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res);
         return json_encode($data);
+    }
+    public function showDocInventory($id)
+    {
+        $data = Inventory::showInventoryById($id);
+        $data->sub_oficinas=[];
+        foreach($data->sub_ofc_cod as $idso){
+            $data->sub_oficinas[]= Inventory::getSubUnidadById($idso);
+        }
+        $data->oficina= Inventory::getOfficeByCodSoa($data->ofc_cod);
+        $data->cargos_encargados=[];
+        foreach($data->car_cod as $idc){
+            $data->cargos_encargados[]= Inventory::getCargoById($idc);
+        }
+        $data->encargados=[];
+        foreach($data->res_enc as $nd){
+            $data->encargados[]= Inventory::getEncargados($nd)[0];
+        }
+        $data->cargos_responsables=[];
+        foreach($data->car_cod_resp as $idc){
+            $data->cargos_responsables[]= Inventory::getCargoById($idc);
+        }
+        $data->responsables=[];
+        foreach($data->ci_res as $nd){
+            $data->responsables[]= Inventory::getEncargados($nd)[0];
+        }
+        return json_encode($data);
+    }
+
+    public static function getActivesForDocInv(Request $request, $doc_cod)
+    {
+        $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
+        $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
+        //dd($descripcion,$ofc_ids,$sub_ofc_ids);
+        $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_id, $sub_ofc_ids);
+        $page = ($request->get('page')) ? $request->get('page') : null;
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            [],
+        );
+        return json_encode($paginate);
     }
 }

@@ -361,7 +361,6 @@ export default {
     listActive(){
       this.$router.push({
         name: "inventory2detail",
-       
       });
     },
   },
