@@ -67,7 +67,7 @@
                 >Editar</el-button
               > 
               <el-button
-                @click="listActive(scope.row.id)"
+                @click="listActive(scope.row.no_cod)"
                 type="primary"
                 plain
                 size="mini"
@@ -141,11 +141,11 @@ export default {
     newInventory() {
       this.$router.push({ name: "newinventory" });
     },
-    listActive(id){
+    listActive(no_cod){
       this.$router.push({
         name: "inventory2detail",
         params: {
-          id: id,
+          no_cod: no_cod,
         }
       });
     },

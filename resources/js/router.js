@@ -97,7 +97,7 @@ const router = new VueRouter({
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },
                 { path: 'inventory2/:id', name: 'editinventory2', component: EditInventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
-                { path: 'inventory2detail/:id', name: 'inventory2detail', component: Inventory2Detail },
+                { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
                 //enlaces para la administracion de paginas de tesoreria

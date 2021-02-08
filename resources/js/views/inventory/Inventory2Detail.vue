@@ -3,28 +3,27 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span
-          >Lista de activos para la realizacion del inventario
-          {{ cod_doc }}</span
-        >
+          >Lista de activos para la realizacion del Inventario</span>
         <el-button style="float: right; padding: 3px 0" type="text"
           >Ayuda</el-button
         >
       </div>
       <div>
         <el-form
+          v-if="doc_inv"
           :model="doc_inv"
           label-width="160px"
           :inline="false"
           size="mini"
         >
           <el-form-item label="Oficina:">
-            <el-input v-model="doc_inv.oficina.descripcion" disabled></el-input>
+            <el-input v-model="doc_inv.oficina.descripcion" style="width: 200px" disabled></el-input> 
           </el-form-item>
           <el-form-item label="Sub Oficinas:">
             <el-tag
               v-for="sub_oficina in doc_inv.sub_oficinas"
               :key="sub_oficina.id"
-              type="success"
+              type="default"
               size="normal"
               effect="dark"
               >{{ sub_oficina.descripcion }}</el-tag
@@ -57,10 +56,34 @@
             width="330"
           ></el-table-column>
           <el-table-column
-            prop="estado"
             label="ESTADO"
             width="180"
-          ></el-table-column>
+          > 
+          <el-select slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.est_cod" value-key="desc" placeholder="desterminar estado" >
+            <el-option v-for="item in estados"
+              :key="item.id"
+              :label="item.desc"
+              :value="item.id">
+            </el-option>
+          </el-select>  
+          </el-table-column> 
+           <el-table-column
+            label="OBSERVACIONES"
+            width="250">
+          <input type="text" slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.obs_est" style="width: 200px">
+          </el-table-column>
+          <el-table-column
+            label="VALIDACION"
+            width="180">
+            <template slot-scope="scope" >
+              <el-checkbox v-model="data[scope.$index].detalle_doc_act.validacion" label="Verificado"></el-checkbox>
+            </template>
+          </el-table-column> 
+          <el-table-column
+            width="180">
+            <el-button slot-scope="scope" type="primary" size="default" @click="saveActiveInDetail(scope.$index)">Guardar</el-button>
+            
+          </el-table-column>
         </el-table>
         <el-pagination
           :page-size="pagination.per_page"
@@ -78,9 +101,11 @@
 export default {
   name: "DocumentoInventarioDetalle",
   data() {
-    return {
-      doc_inv_id: null,
-      doc_inv: {},
+    return { 
+      estados:[],
+      checked: true,
+      doc_inv_no_cod: null,
+      doc_inv: null,
       loading: false,
       user: this.$store.state.user,
       messages: {},
@@ -91,18 +116,32 @@ export default {
     };
   },
   mounted() {
-    this.doc_inv_id = this.$route.params.id;
+    this.doc_inv_no_cod = this.$route.params.no_cod;
     this.getDocInventory();
+    this.getEstados();
   },
   methods: {
     getDocInventory() {
       axios
-        .get("/api/inventory2/doc_inv/" + this.doc_inv_id)
+        .get("/api/inventory2/doc_inv/" + this.doc_inv_no_cod)
         .then((data) => {
           this.doc_inv = data.data;
           this.getActivesSearch();
         })
         .catch((err) => {
+          console.log(err);
+        });
+    },
+    whenDontHaveDocDetail(){
+      return {
+        est_cod: 1,
+        validacion: false,
+      };
+    },
+    getEstados(){
+      axios.get("/api/activo/estados/").then((data) => { 
+        this.estados = data.data;
+      }).catch((err) => {
           console.log(err);
         });
     },
@@ -115,8 +154,16 @@ export default {
         },
       }).then((data) => {
           this.loading = false;
-          this.data = Object.values(data.data.data);
-
+          var info = Object.values(data.data.data);
+          this.data=info.map(a=>{
+            if(!a.detalle_doc_act)
+              a.detalle_doc_act=this.whenDontHaveDocDetail();
+            a.detalle_doc_act.id_act=a.id;
+            a.detalle_doc_act.id_des=a.esquema;
+            a.detalle_doc_act.doc_cod=this.doc_inv.no_cod;
+            a.detalle_doc_act.cod_act=this.doc_inv.cod_nue;
+            return a;
+          })
           this.pagination = data.data;
         })
         .catch((err) => {
@@ -125,14 +172,13 @@ export default {
     },
     getActivesPaginate(page) {
       this.pagination.page = page;
-      this.getActives("");
+      this.getActivesSearch();
     },
     test() {
       alert("bienvenido al modulo");
     },
     formatResponsable(responsable) {
       return {
-        cargo: responsable.descripcion,
         responsable:
           responsable.paterno.trim() +
           " " +
@@ -141,6 +187,30 @@ export default {
           responsable.nombres.trim(),
         nro_dip: responsable.nro_dip,
       };
+    },
+    change(checked){
+      this.checked=true;
+    },
+     saveActiveInDetail(index){ 
+       {
+      axios
+        .post("/api/inventory2/saveActive", {
+          ... this.data[index].detalle_doc_act,
+          cod_ges: this.user.gestion
+        })
+        .then((data) => {
+          this.$notify.success({
+            title: "Cambios guardados",
+            message: "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+            duration: 0,
+          });
+          this.getActivesSearch();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     },
   },
 };

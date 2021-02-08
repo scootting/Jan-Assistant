@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Nuevo Inventario</span>
+        <span>Inventario Editado</span>
         <input
           style="text-align: right; float: right"
           type="text"
@@ -361,10 +361,10 @@ export default {
       //this.editForm.responsables= this.editForm.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
       //tratar de guardar los responsables como un json
       axios
-        .post("/api/inventory2/save", this.editForm)
+        .post("/api/inventory2/saveChange", this.editForm)
         .then((data) => {
           this.$message({
-            message: "Inventario creado exitosamente",
+            message: "Cambios Guardados Exitosamente",
             type: "success",
             duration: 5000,
             showClose: true,
