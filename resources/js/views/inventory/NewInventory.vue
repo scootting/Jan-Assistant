@@ -130,10 +130,10 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="prymary" size="default" @click="saveInventory"
+                <el-button type="prymary" size="default" @click="saveInventory" :disabled="guardado"
                   >Guardar</el-button
                 >
-                <el-button type="default" size="default" @click="listActive"
+                <el-button type="default" size="default" @click="listActive" :disabled="!guardado"
                   >Realizar Inventario</el-button
                 >
               </el-row>
@@ -200,6 +200,7 @@ export default {
       cargosLoading: false,
       responsablesLoading: false,
       showDialogEncargado: false,
+      guardado: false,
     };
   },
   mounted() {
@@ -330,7 +331,8 @@ export default {
             duration: 5000,
             showClose: true,
           });
-          this.route.push({ name: 'inventory2' });
+          this.No_Doc=data.data.no_doc;
+          this.guardado=true;
         })
         .catch((err) => {
           console.log(err);
@@ -359,8 +361,11 @@ export default {
       this.showDialogEncargado = false;
     },
     listActive(){
-      this.$router.push({
+       this.$router.push({
         name: "inventory2detail",
+        params: {
+          no_cod: this.No_Doc,
+        }
       });
     },
   },

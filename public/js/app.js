@@ -5910,12 +5910,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditActive",
   data: function data() {
     return {
       gestion: this.$store.state.user.gestion,
-      info: {},
+      estados: [],
+      unidades: [],
+      subUnidades: [],
       editForm: {
         des: "",
         des_det: "",
@@ -5925,13 +5948,12 @@ __webpack_require__.r(__webpack_exports__);
         sub_ofc_cod: "",
         ci_resp: "",
         id: ""
-      },
-      unidMeds: [],
-      ofc_cod: ""
+      }
     };
   },
   mounted: function mounted() {
     console.log("mensaje de recuperacion de datos desde re asignacion de activos ");
+    this.getEstados();
   },
   created: function created() {
     var _this = this;
@@ -5941,6 +5963,14 @@ __webpack_require__.r(__webpack_exports__);
     this.id = this.$route.params.id;
     axios.get("/api/reasignacion/edit/" + this.id).then(function (response) {
       app.editForm = response.data[0];
+      app.unidades.push({
+        cod_ofc: app.editForm.ofc_cod,
+        descripcion: app.editForm.oficina
+      });
+      app.subUnidades.push({
+        id: app.editForm.sub_ofc_cod,
+        descripcion: app.editForm.descripcion
+      });
     })["catch"](function (error) {
       _this.error = error;
 
@@ -5954,7 +5984,6 @@ __webpack_require__.r(__webpack_exports__);
     test: function test() {
       alert("bienvenido al modulo");
     },
-    noVerificate: function noVerificate() {},
     Exit: function Exit() {
       this.$notify.info({
         title: "Edicion cancelada",
@@ -5965,17 +5994,56 @@ __webpack_require__.r(__webpack_exports__);
         name: "active"
       });
     },
-    saveAsset: function saveAsset() {
+    getEstados: function getEstados() {
       var _this2 = this;
 
+      axios.get("/api/activo/estados/").then(function (data) {
+        _this2.estados = data.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getUnidades: function getUnidades(keyWord) {
+      var _this3 = this;
+
+      axios.get("/api/inventory2/unidad/", {
+        params: {
+          keyWord: keyWord.toUpperCase()
+        }
+      }).then(function (data) {
+        _this3.unidades = Object.values(data.data.data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getSubUnidades: function getSubUnidades(cod_ofc) {
+      var _this4 = this;
+
+      this.unidadesLoading = true;
+      this.subUnidadesLoading = true;
+      axios.get("/api/inventory2/sub_unidad", {
+        params: {
+          cod_ofc: cod_ofc
+        }
+      }).then(function (data) {
+        _this4.subUnidadesLoading = false;
+        _this4.subUnidades = data.data;
+        _this4.editForm.sub_ofc_cod = null;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    saveAsset: function saveAsset() {
+      var _this5 = this;
+
       axios.post("/api/reasignacion/save", this.editForm).then(function (data) {
-        _this2.$notify.success({
+        _this5.$notify.success({
           title: "Cambios guardados",
           message: "Se realizo cambios al Activo seleccionado exitosamente",
           duration: 0
         });
 
-        _this2.$router.push({
+        _this5.$router.push({
           name: "active"
         });
       })["catch"](function (err) {
@@ -6360,9 +6428,9 @@ __webpack_require__.r(__webpack_exports__);
 
       //this.editForm.responsables= this.editForm.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
       //tratar de guardar los responsables como un json
-      axios.post("/api/inventory2/save", this.editForm).then(function (data) {
+      axios.post("/api/inventory2/saveChange", this.editForm).then(function (data) {
         _this7.$message({
-          message: "Inventario creado exitosamente",
+          message: "Cambios Guardados Exitosamente",
           type: "success",
           duration: 5000,
           showClose: true
@@ -6711,11 +6779,11 @@ __webpack_require__.r(__webpack_exports__);
         name: "newinventory"
       });
     },
-    listActive: function listActive(id) {
+    listActive: function listActive(no_cod) {
       this.$router.push({
         name: "inventory2detail",
         params: {
-          id: id
+          no_cod: no_cod
         }
       });
     },
@@ -6736,6 +6804,35 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6816,8 +6913,10 @@ __webpack_require__.r(__webpack_exports__);
   name: "DocumentoInventarioDetalle",
   data: function data() {
     return {
-      doc_inv_id: null,
-      doc_inv: {},
+      estados: [],
+      checked: true,
+      doc_inv_no_cod: null,
+      doc_inv: null,
       loading: false,
       user: this.$store.state.user,
       messages: {},
@@ -6828,14 +6927,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.doc_inv_id = this.$route.params.id;
+    this.doc_inv_no_cod = this.$route.params.no_cod;
     this.getDocInventory();
+    this.getEstados();
   },
   methods: {
     getDocInventory: function getDocInventory() {
       var _this = this;
 
-      axios.get("/api/inventory2/doc_inv/" + this.doc_inv_id).then(function (data) {
+      axios.get("/api/inventory2/doc_inv/" + this.doc_inv_no_cod).then(function (data) {
         _this.doc_inv = data.data;
 
         _this.getActivesSearch();
@@ -6843,8 +6943,23 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    getActivesSearch: function getActivesSearch() {
+    whenDontHaveDocDetail: function whenDontHaveDocDetail() {
+      return {
+        est_cod: 1,
+        validacion: false
+      };
+    },
+    getEstados: function getEstados() {
       var _this2 = this;
+
+      axios.get("/api/activo/estados/").then(function (data) {
+        _this2.estados = data.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getActivesSearch: function getActivesSearch() {
+      var _this3 = this;
 
       axios.get("/api/inventory2/search/" + this.doc_inv.no_cod, {
         params: {
@@ -6853,26 +6968,55 @@ __webpack_require__.r(__webpack_exports__);
           idSubOffices: this.doc_inv.sub_ofc_cod
         }
       }).then(function (data) {
-        _this2.loading = false;
-        _this2.data = Object.values(data.data.data);
-        _this2.pagination = data.data;
+        _this3.loading = false;
+        var info = Object.values(data.data.data);
+        _this3.data = info.map(function (a) {
+          if (!a.detalle_doc_act) a.detalle_doc_act = _this3.whenDontHaveDocDetail();
+          a.detalle_doc_act.id_act = a.id;
+          a.detalle_doc_act.id_des = a.esquema;
+          a.detalle_doc_act.doc_cod = _this3.doc_inv.no_cod;
+          a.detalle_doc_act.cod_act = _this3.doc_inv.cod_nue;
+          return a;
+        });
+        _this3.pagination = data.data;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     getActivesPaginate: function getActivesPaginate(page) {
       this.pagination.page = page;
-      this.getActives("");
+      this.getActivesSearch();
     },
     test: function test() {
       alert("bienvenido al modulo");
     },
     formatResponsable: function formatResponsable(responsable) {
       return {
-        cargo: responsable.descripcion,
         responsable: responsable.paterno.trim() + " " + responsable.materno.trim() + " " + responsable.nombres.trim(),
         nro_dip: responsable.nro_dip
       };
+    },
+    change: function change(checked) {
+      this.checked = true;
+    },
+    saveActiveInDetail: function saveActiveInDetail(index) {
+      var _this4 = this;
+
+      {
+        axios.post("/api/inventory2/saveActive", _objectSpread({}, this.data[index].detalle_doc_act, {
+          cod_ges: this.user.gestion
+        })).then(function (data) {
+          _this4.$notify.success({
+            title: "Cambios guardados",
+            message: "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+            duration: 0
+          });
+
+          _this4.getActivesSearch();
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
     }
   }
 });
@@ -7278,7 +7422,8 @@ __webpack_require__.r(__webpack_exports__);
       unidadLoading: false,
       cargosLoading: false,
       responsablesLoading: false,
-      showDialogEncargado: false
+      showDialogEncargado: false,
+      guardado: false
     };
   },
   mounted: function mounted() {
@@ -7413,9 +7558,8 @@ __webpack_require__.r(__webpack_exports__);
           showClose: true
         });
 
-        _this6.route.push({
-          name: 'inventory2'
-        });
+        _this6.No_Doc = data.data.no_doc;
+        _this6.guardado = true;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -7447,7 +7591,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     listActive: function listActive() {
       this.$router.push({
-        name: "inventory2detail"
+        name: "inventory2detail",
+        params: {
+          no_cod: this.No_Doc
+        }
       });
     }
   }
@@ -90534,7 +90681,7 @@ var render = function() {
             _c("el-input", {
               staticClass: "input-with-select",
               staticStyle: { width: "200px" },
-              attrs: { placeholder: "INSERTE EL ACTIVO A BUSCAR" },
+              attrs: { placeholder: "INSERTE DESCRIPCION" },
               nativeOn: {
                 keyup: function($event) {
                   if (
@@ -90841,22 +90988,46 @@ var render = function() {
                         {
                           attrs: {
                             size: "mini",
-                            label: "Codigo Unidad:",
-                            prop: "ofc_cod"
+                            label: "Unidad:",
+                            prop: "oficina"
                           }
                         },
                         [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            attrs: { label: "oficina" },
-                            model: {
-                              value: _vm.editForm.ofc_cod,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "ofc_cod", $$v)
+                          _c(
+                            "el-select",
+                            {
+                              attrs: {
+                                filterable: "",
+                                remote: "",
+                                "remote-method": _vm.getUnidades,
+                                placeholder: "Seleccione una unidad"
                               },
-                              expression: "editForm.ofc_cod"
-                            }
-                          })
+                              on: {
+                                change: function($event) {
+                                  return _vm.getSubUnidades(
+                                    _vm.editForm.ofc_cod
+                                  )
+                                }
+                              },
+                              model: {
+                                value: _vm.editForm.ofc_cod,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "ofc_cod", $$v)
+                                },
+                                expression: "editForm.ofc_cod"
+                              }
+                            },
+                            _vm._l(_vm.unidades, function(item) {
+                              return _c("el-option", {
+                                key: item.cod_ofc,
+                                attrs: {
+                                  label: item.descripcion,
+                                  value: item.cod_ofc
+                                }
+                              })
+                            }),
+                            1
+                          )
                         ],
                         1
                       ),
@@ -90891,21 +91062,36 @@ var render = function() {
                         {
                           attrs: {
                             size: "mini",
-                            label: "Codigo SubUnidad:",
+                            label: "SubUnidad:",
                             prop: "sub_ofc_cod"
                           }
                         },
                         [
-                          _c("el-input", {
-                            staticStyle: { width: "200px" },
-                            model: {
-                              value: _vm.editForm.sub_ofc_cod,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editForm, "sub_ofc_cod", $$v)
+                          _c(
+                            "el-select",
+                            {
+                              attrs: {
+                                placeholder: "Seleccione una subunidad"
                               },
-                              expression: "editForm.sub_ofc_cod"
-                            }
-                          })
+                              model: {
+                                value: _vm.editForm.sub_ofc_cod,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editForm, "sub_ofc_cod", $$v)
+                                },
+                                expression: "editForm.sub_ofc_cod"
+                              }
+                            },
+                            _vm._l(_vm.subUnidades, function(item) {
+                              return _c("el-option", {
+                                key: item.id,
+                                attrs: {
+                                  label: item.descripcion,
+                                  value: item.id
+                                }
+                              })
+                            }),
+                            1
+                          )
                         ],
                         1
                       ),
@@ -90920,28 +91106,20 @@ var render = function() {
                           }
                         },
                         [
-                          _c(
-                            "el-select",
-                            {
-                              model: {
-                                value: _vm.editForm.estado,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.editForm, "estado", $$v)
-                                },
-                                expression: "editForm.estado"
-                              }
+                          _c("el-input", {
+                            attrs: {
+                              placeholder: "",
+                              size: "normal",
+                              clearable: ""
                             },
-                            _vm._l(_vm.estado, function(item) {
-                              return _c("el-option", {
-                                key: item.estado,
-                                attrs: {
-                                  label: item.estado,
-                                  value: item.estado
-                                }
-                              })
-                            }),
-                            1
-                          )
+                            model: {
+                              value: _vm.editForm.estado,
+                              callback: function($$v) {
+                                _vm.$set(_vm.editForm, "estado", $$v)
+                              },
+                              expression: "editForm.estado"
+                            }
+                          })
                         ],
                         1
                       )
@@ -91101,7 +91279,7 @@ var render = function() {
             slot: "header"
           },
           [
-            _c("span", [_vm._v("Nuevo Inventario")]),
+            _c("span", [_vm._v("Inventario Editado")]),
             _vm._v(" "),
             _c("input", {
               staticStyle: { "text-align": "right", float: "right" },
@@ -91875,7 +92053,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.listActive(scope.row.id)
+                                  return _vm.listActive(scope.row.no_cod)
                                 }
                               }
                             },
@@ -91942,10 +92120,7 @@ var render = function() {
           },
           [
             _c("span", [
-              _vm._v(
-                "Lista de activos para la realizacion del inventario\n        " +
-                  _vm._s(_vm.cod_doc)
-              )
+              _vm._v("Lista de activos para la realizacion del Inventario")
             ]),
             _vm._v(" "),
             _c(
@@ -91963,81 +92138,86 @@ var render = function() {
         _c(
           "div",
           [
-            _c(
-              "el-form",
-              {
-                attrs: {
-                  model: _vm.doc_inv,
-                  "label-width": "160px",
-                  inline: false,
-                  size: "mini"
-                }
-              },
-              [
-                _c(
-                  "el-form-item",
-                  { attrs: { label: "Oficina:" } },
+            _vm.doc_inv
+              ? _c(
+                  "el-form",
+                  {
+                    attrs: {
+                      model: _vm.doc_inv,
+                      "label-width": "160px",
+                      inline: false,
+                      size: "mini"
+                    }
+                  },
                   [
-                    _c("el-input", {
-                      attrs: { disabled: "" },
-                      model: {
-                        value: _vm.doc_inv.oficina.descripcion,
-                        callback: function($$v) {
-                          _vm.$set(_vm.doc_inv.oficina, "descripcion", $$v)
-                        },
-                        expression: "doc_inv.oficina.descripcion"
-                      }
-                    })
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Oficina:" } },
+                      [
+                        _c("el-input", {
+                          staticStyle: { width: "200px" },
+                          attrs: { disabled: "" },
+                          model: {
+                            value: _vm.doc_inv.oficina.descripcion,
+                            callback: function($$v) {
+                              _vm.$set(_vm.doc_inv.oficina, "descripcion", $$v)
+                            },
+                            expression: "doc_inv.oficina.descripcion"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Sub Oficinas:" } },
+                      _vm._l(_vm.doc_inv.sub_oficinas, function(sub_oficina) {
+                        return _c(
+                          "el-tag",
+                          {
+                            key: sub_oficina.id,
+                            attrs: {
+                              type: "default",
+                              size: "normal",
+                              effect: "dark"
+                            }
+                          },
+                          [_vm._v(_vm._s(sub_oficina.descripcion))]
+                        )
+                      }),
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Encargados de inventario:" } },
+                      _vm._l(_vm.doc_inv.encargados, function(encargado) {
+                        return _c(
+                          "el-tag",
+                          {
+                            key: encargado.nro_dip,
+                            attrs: {
+                              type: "default",
+                              size: "normal",
+                              effect: "dark"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.formatResponsable(encargado).responsable
+                              )
+                            )
+                          ]
+                        )
+                      }),
+                      1
+                    )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-form-item",
-                  { attrs: { label: "Sub Oficinas:" } },
-                  _vm._l(_vm.doc_inv.sub_oficinas, function(sub_oficina) {
-                    return _c(
-                      "el-tag",
-                      {
-                        key: sub_oficina.id,
-                        attrs: {
-                          type: "success",
-                          size: "normal",
-                          effect: "dark"
-                        }
-                      },
-                      [_vm._v(_vm._s(sub_oficina.descripcion))]
-                    )
-                  }),
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-form-item",
-                  { attrs: { label: "Encargados de inventario:" } },
-                  _vm._l(_vm.doc_inv.encargados, function(encargado) {
-                    return _c(
-                      "el-tag",
-                      {
-                        key: encargado.nro_dip,
-                        attrs: {
-                          type: "default",
-                          size: "normal",
-                          effect: "dark"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(_vm.formatResponsable(encargado).responsable)
-                        )
-                      ]
-                    )
-                  }),
-                  1
                 )
-              ],
-              1
-            )
+              : _vm._e()
           ],
           1
         ),
@@ -92092,7 +92272,137 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "estado", label: "ESTADO", width: "180" }
+                  attrs: { label: "ESTADO", width: "180" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return _c(
+                          "el-select",
+                          {
+                            attrs: {
+                              "value-key": "desc",
+                              placeholder: "desterminar estado"
+                            },
+                            model: {
+                              value:
+                                _vm.data[scope.$index].detalle_doc_act.est_cod,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.data[scope.$index].detalle_doc_act,
+                                  "est_cod",
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "data[scope.$index].detalle_doc_act.est_cod"
+                            }
+                          },
+                          _vm._l(_vm.estados, function(item) {
+                            return _c("el-option", {
+                              key: item.id,
+                              attrs: { label: item.desc, value: item.id }
+                            })
+                          }),
+                          1
+                        )
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "OBSERVACIONES", width: "250" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value:
+                                _vm.data[scope.$index].detalle_doc_act.obs_est,
+                              expression:
+                                "data[scope.$index].detalle_doc_act.obs_est"
+                            }
+                          ],
+                          staticStyle: { width: "200px" },
+                          attrs: { type: "text" },
+                          domProps: {
+                            value:
+                              _vm.data[scope.$index].detalle_doc_act.obs_est
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.data[scope.$index].detalle_doc_act,
+                                "obs_est",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "VALIDACION", width: "180" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c("el-checkbox", {
+                            attrs: { label: "Verificado" },
+                            model: {
+                              value:
+                                _vm.data[scope.$index].detalle_doc_act
+                                  .validacion,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.data[scope.$index].detalle_doc_act,
+                                  "validacion",
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "data[scope.$index].detalle_doc_act.validacion"
+                            }
+                          })
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { width: "180" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary", size: "default" },
+                            on: {
+                              click: function($event) {
+                                return _vm.saveActiveInDetail(scope.$index)
+                              }
+                            }
+                          },
+                          [_vm._v("Guardar")]
+                        )
+                      }
+                    }
+                  ])
                 })
               ],
               1
@@ -92628,7 +92938,11 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "prymary", size: "default" },
+                                attrs: {
+                                  type: "prymary",
+                                  size: "default",
+                                  disabled: _vm.guardado
+                                },
                                 on: { click: _vm.saveInventory }
                               },
                               [_vm._v("Guardar")]
@@ -92637,7 +92951,11 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "default", size: "default" },
+                                attrs: {
+                                  type: "default",
+                                  size: "default",
+                                  disabled: !_vm.guardado
+                                },
                                 on: { click: _vm.listActive }
                               },
                               [_vm._v("Realizar Inventario")]
@@ -109673,7 +109991,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'newinventory',
       component: _views_inventory_NewInventory__WEBPACK_IMPORTED_MODULE_22__["default"]
     }, {
-      path: 'inventory2detail/:id',
+      path: 'inventory2detail/:no_cod',
       name: 'inventory2detail',
       component: _views_inventory_Inventory2Detail__WEBPACK_IMPORTED_MODULE_23__["default"]
     }, {

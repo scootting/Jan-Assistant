@@ -152,7 +152,8 @@ class InventoryController extends Controller
 
         $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
         $idoffice = ($request->get('idoffice') ? $request->get('idoffice') : '');
-        $data = Inventory::getSubUnidades($unidad,$idoffice);
+        $cod_ofc = ($request->get('cod_ofc') ? $request->get('cod_ofc') : '');
+        $data = Inventory::getSubUnidades($unidad,$idoffice,$cod_ofc);
         return json_encode($data);
     }
     public function getCargos(Request $request)
@@ -187,7 +188,7 @@ class InventoryController extends Controller
     public function saveNewInventory(Request $request)
     {
         //dd($request);
-        $no_doc = '0008'; //$request->no_doc;
+        $no_doc = $request->no_doc;
         $res_enc = $request->encargados;
         $car_cod_enc = [];
         for ($i = 0; $i < count($res_enc); $i++)
@@ -262,9 +263,9 @@ class InventoryController extends Controller
         $data = Inventory::saveChangeDocInventory($id,$res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res);
         return json_encode($data);
     }
-    public function showDocInventory($id)
+    public function showDocInventory($no_cod)
     {
-        $data = Inventory::showInventoryById($id);
+        $data = Inventory::showInventoryById($no_cod);
         $data->sub_oficinas=[];
         foreach($data->sub_ofc_cod as $idso){
             $data->sub_oficinas[]= Inventory::getSubUnidadById($idso);
@@ -288,7 +289,6 @@ class InventoryController extends Controller
         }
         return json_encode($data);
     }
-
     public static function getActivesForDocInv(Request $request, $doc_cod)
     {
         $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
@@ -305,5 +305,28 @@ class InventoryController extends Controller
             [],
         );
         return json_encode($paginate);
+    }
+    public function getEstados()
+    {
+        $data = Inventory::getEstados();
+        return json_encode($data);
+    }
+    public function saveActiveInDetailDoc(Request $request)
+    {
+        // dd($request);
+        if($request->has('id'))
+            $id= $request->id;
+        else
+        $id = -1;
+        $doc_cod = $request->doc_cod;
+        $cod_ges = $request->cod_ges;
+        $cod_act = $request->cod_act;
+        $id_act = $request->id_act;
+        $id_des = $request->id_des;
+        $est_cod = $request->est_cod;
+        $obs_est = $request->obs_est;
+        $validacion = $request->validacion;
+        $data = Inventory::saveActiveInDetailDoc($doc_cod,$cod_ges,$cod_act,$id_act,$id_des,$est_cod,$obs_est,$validacion,$id);
+        return json_encode($data);
     }
 }

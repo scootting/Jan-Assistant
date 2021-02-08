@@ -63,7 +63,7 @@ class Inventory extends Model
     //ontener la unidad a la que se hará el inventario
     public static function getUnidad($keyWord)
     {
-        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.id
+        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id
         from inv.oficinas 
         where inv.oficinas.descripcion like '%" . $keyWord . "%' or 
         inv.oficinas.cod_soa like '%" . $keyWord . "%'";
@@ -71,7 +71,7 @@ class Inventory extends Model
         return $data;
     }
     //obtener las sub unidades de la unidad a la que se hará el inventario
-    public static function getSubUnidades($unidad,$idUnidad)
+    public static function getSubUnidades($unidad,$idUnidad,$cod_ofc)
     {
         $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
         from inv.sub_oficinas, inv.activos,inv.oficinas
@@ -82,6 +82,8 @@ class Inventory extends Model
             $query=$query." and inv.oficinas.cod_soa like '%" . $unidad . "%' ";
         if($idUnidad)
             $query=$query." and inv.oficinas.id = ". $idUnidad ." ";
+        if($cod_ofc)
+            $query=$query." and inv.oficinas.cod_ofc = ". $cod_ofc ." ";
         $query=$query."group by (inv.sub_oficinas.descripcion,inv.sub_oficinas.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -147,9 +149,18 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     } 
+
+    public static function getNewCodInv()
+    {
+        $idmax=DB::table('inv.doc_inv')->max('no_cod');
+        $newId=((int)$idmax)+1;
+        $cad = '0000'.$newId;
+        return substr($cad,strlen($cad)-4);
+    }
     //guardar datos del nuevo inventario
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res,$estado,$gestion)
     {
+        $no_doc = self::getNewCodInv();
         $date = Date('d-m-Y');
         $query = " insert into 
                 inv.doc_inv
@@ -179,7 +190,7 @@ class Inventory extends Model
                 '" . $gestion . "'
                 );";
         $data = collect(DB::select(DB::raw($query)));
-        return $data;
+        return ['data'=>$data,'no_doc'=>$no_doc];
     }
     // peticiones de busqueda para activos segun id de oficina, de la subOficina y descripción  
     public static function SearchActive($ofc_id,$sub_ofc_ids,$descripcion)
@@ -197,7 +208,7 @@ class Inventory extends Model
         }
         return $db->get();
     } 
-
+    // mostrar el activo por el ID 
     public static function showActiveById($id)
     {
         $query = "select ua.des,ua.des_det,ua.vida_util,ua.estado,
@@ -210,10 +221,11 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     } 
-    public static function showInventoryById($id)
+    //mostrar el inventario por el ID 
+    public static function showInventoryById($no_cod)
     {
         $query = "select * from inv.doc_inv
-        where id = ".$id."";
+        where no_cod = '".$no_cod."";
         $data = collect(DB::select(DB::raw($query)))[0];
         $data->car_cod = array_map('intval', explode(',',str_replace('{','',str_replace('}','',$data->car_cod))));
         $data->res_enc = explode(',',str_replace('{','',str_replace('}','',$data->res_enc)));
@@ -223,16 +235,16 @@ class Inventory extends Model
 
         return $data;
     }
-
+    //Obtener la oficina por el Id 
     public static function getUnidadById($id)
     {
-        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.id
+        $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc , inv.oficinas.id
         from inv.oficinas 
         where inv.oficinas.id like '%" . $id . "%'";
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
-
+    //ogtener las sub-oficinas por el Id
     public static function getSubUnidadById($id)
     {
         $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
@@ -242,7 +254,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     } 
-
+    //Obtener los cargos por el ID
     public static function getCargoById($id)
     {
         $query = "select inv.cargos.id , inv.cargos.descripcion
@@ -254,21 +266,21 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     } 
-
+    //obtener el detalle del documento por el ID del activo
     public static function searchDocDetailByActiveId($id)
     {
         $query=" select * from inv.detalle_doc_act where id_act = ".$id." ";
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
-     
+     //Guardar cambios del Activo
     public static function saveChangeActive($des, $des_det, $vida_util,$estado,$ofc_cod,$sub_ofc_cod,$ci_resp,$id)
     { 
         $query = "select * from inv.f_guardar_activo('".$des."', '".$des_det."','".$vida_util."','".$estado."','".$ofc_cod."','".$sub_ofc_cod."','".$ci_resp."','".$id."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
+    //Buscar activos por el los datos del documento del inventario
     public static function SearchActiveForDocInv($no_cod,$ofc_cod,$sub_ofc_cods)
     {
         //$listActWithDD=DB::table('inv.detail_doc_act')->select('id_act')->where('no_cod',$doc_cod)->get();
@@ -278,13 +290,13 @@ class Inventory extends Model
                 and inv.detalle_doc_act.doc_cod = '".$no_cod."'";
         $l1 = collect(DB::select(DB::raw($q1)));
         foreach($l1 as $act ){
-            $act->deatalle_doc_act=self::searchDocDetailByActiveId($act->id);
+            $act->detalle_doc_act=self::searchDocDetailByActiveId($act->id);
         }
         $arrayIds=[];
         foreach($l1 as $act){
             $arrayIds[]=$act->id;
         }
-        $db = DB::table('inv.union_activos as ua')->select('ua.id', 'of.descripcion as oficina','sof.descripcion','ua.des','ua.estado')
+        $db = DB::table('inv.union_activos as ua')->select('ua.*')
         ->join('inv.oficinas as of','ua.ofc_cod','=','of.cod_ofc')->join('inv.sub_oficinas as sof','ua.sub_ofc_cod','=','sof.id');
         //$l2->whereNotIn('ua.id',$arrayIds);
         if($ofc_cod){
@@ -297,10 +309,10 @@ class Inventory extends Model
         $data =$l1->concat($l2);
         return $data;
     }
-
+    //Guardar cambios del documento del Inventario
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
-        $query = " Select * from inv.f_guardar_cambios doc(
+        $query = " Select * from inv.f_guardar_cambios_doc(
                 '" . $id . "',
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($res_enc))) . "',
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($car_cod))) . "',
@@ -309,6 +321,22 @@ class Inventory extends Model
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($car_cod_resp))) . "',
                 '" . str_replace(']', '}', str_replace('[', '{', json_encode($ci_res))) . "',
                 );";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //Obtener los datos de la tabla de estados
+    public static function getEstados()
+    {
+        $query = "select * from inv.estado";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //Guardar datos de los activos en Documento Detalle
+
+    public static function saveActiveInDetailDoc($doc_cod,$cod_ges,$cod_act,$id_act,$id_des,$est_cod,$obs_est,$validacion,$id)
+    {
+        $fec_cre = Date('d-m-Y');
+        $query = "Select * from inv.insertarActivoDocDetail('".$doc_cod."','".$cod_ges."','".$cod_act."','".$id_act."','".$id_des."','".$fec_cre."','".$est_cod."','".$obs_est."','".$validacion."','".$id."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

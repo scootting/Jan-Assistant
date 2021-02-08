@@ -9,7 +9,7 @@
       </div>
       <div style="margin-top: 15px">
         <el-input
-          placeholder="INSERTE EL ACTIVO A BUSCAR"
+          placeholder="INSERTE DESCRIPCION"
           v-model="writtenTextParameter"
           class="input-with-select"
           @keyup.enter.native="getActives"

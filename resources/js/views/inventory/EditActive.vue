@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px 0;"  class="grid-content bg-purple">
+  <div style="margin-top: 15px 0" class="grid-content bg-purple">
     <el-card class="box-card">
       <el-form
         :label-position="right"
@@ -14,14 +14,14 @@
         <hr style="color: gray" />
         <br />
         <el-row>
-          <el-col :span="50"> 
+          <el-col :span="50">
             <div>
-            <el-form-item size="mini" label="CI Responsable:" prop="ci_resp">
-              <el-input
-                v-model="editForm.ci_resp"
-                style="width: 200px"
-              ></el-input>
-            </el-form-item> 
+              <el-form-item size="mini" label="CI Responsable:" prop="ci_resp">
+                <el-input
+                  v-model="editForm.ci_resp"
+                  style="width: 200px"
+                ></el-input>
+              </el-form-item>
             </div>
           </el-col>
         </el-row>
@@ -29,9 +29,22 @@
         <br />
         <el-row>
           <el-col :span="50">
-            <el-form-item size="mini" label="Codigo Unidad:" prop="ofc_cod">
-              <el-input v-model="editForm.ofc_cod" label="oficina" style="width: 200px"></el-input>
-            </el-form-item> 
+            <el-form-item size="mini" label="Unidad:" prop="oficina">
+              <el-select
+                v-model="editForm.ofc_cod"
+                filterable
+                remote
+                :remote-method="getUnidades"
+                placeholder="Seleccione una unidad"
+                @change="getSubUnidades(editForm.ofc_cod)"
+              >
+                <el-option v-for="item in unidades"
+                  :key="item.cod_ofc"
+                  :label="item.descripcion"
+                  :value="item.cod_ofc">
+                </el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item size="mini" label="Vida Util:">
               <el-input
                 v-model="editForm.vida_util"
@@ -40,18 +53,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="50">
-            <el-form-item size="mini" label="Codigo SubUnidad:" prop="sub_ofc_cod">
-              <el-input v-model="editForm.sub_ofc_cod" style="width: 200px"></el-input>
-            </el-form-item> 
-            <el-form-item size="mini" label="Estado de Activo:" prop="estado">
-              <el-select v-model="editForm.estado">
-                <el-option
-                  v-for="item in estado"
-                  :key=" item.estado"
-                  :label="item.estado"
-                  :value="item.estado"
-                ></el-option>
+            <el-form-item
+              size="mini"
+              label="SubUnidad:"
+              prop="sub_ofc_cod"
+            >
+              <el-select v-model="editForm.sub_ofc_cod" placeholder="Seleccione una subunidad" >
+                <el-option v-for="item in subUnidades"
+                  :key="item.id"
+                  :label="item.descripcion"
+                  :value="item.id">
+                </el-option>
               </el-select>
+            </el-form-item>
+            <el-form-item size="mini" label="Estado de Activo:" prop="estado">
+             <el-input v-model="editForm.estado" placeholder="" size="normal" clearable></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -59,7 +75,12 @@
         <br />
         <el-row>
           <el-col :span="50">
-            <el-form-item size="mini" label="Descripcion:" prop="descripcion" width="300px">
+            <el-form-item
+              size="mini"
+              label="Descripcion:"
+              prop="descripcion"
+              width="300px"
+            >
               <el-input
                 type="textarea"
                 v-model="editForm.des"
@@ -103,25 +124,26 @@ export default {
   data() {
     return {
       gestion: this.$store.state.user.gestion,
-      info: {},
+      estados: [],
+      unidades:[],
+      subUnidades:[],
       editForm: {
         des: "",
         des_det: "",
         vida_util: "",
-        estado:"",
-        ofc_cod:"",
-        sub_ofc_cod:"",
-        ci_resp:"",
+        estado: "",
+        ofc_cod: "",
+        sub_ofc_cod: "",
+        ci_resp: "",
         id: "",
       },
-      unidMeds: [],
-      ofc_cod: "",
     };
   },
   mounted() {
     console.log(
       "mensaje de recuperacion de datos desde re asignacion de activos "
     );
+    this.getEstados();
   },
   created() {
     //created vs mounted
@@ -131,6 +153,14 @@ export default {
       .get("/api/reasignacion/edit/" + this.id)
       .then((response) => {
         app.editForm = response.data[0];
+        app.unidades.push({ 
+          cod_ofc: app.editForm.ofc_cod,
+          descripcion:app.editForm.oficina
+        });
+        app.subUnidades.push({ 
+          id: app.editForm.sub_ofc_cod,
+          descripcion:app.editForm.descripcion
+        });
       })
       .catch((error) => {
         this.error = error;
@@ -144,7 +174,7 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    noVerificate() {},
+    
     Exit() {
       this.$notify.info({
         title: "Edicion cancelada",
@@ -155,29 +185,67 @@ export default {
         name: "active",
       });
     },
-    saveAsset() {
+    getEstados() {
       axios
-        .post("/api/reasignacion/save", this.editForm)
+        .get("/api/activo/estados/")
         .then((data) => {
-          this.$notify.success({
-        title: "Cambios guardados",
-        message: "Se realizo cambios al Activo seleccionado exitosamente",
-        duration: 0,
-      });
-      this.$router.push({
-        name: "active",
-      });
+          this.estados = data.data;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    
+
+    getUnidades(keyWord) {
+      axios
+        .get("/api/inventory2/unidad/", {
+          params: { keyWord: keyWord.toUpperCase() },
+        })
+        .then((data) => {
+          this.unidades = Object.values(data.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getSubUnidades(cod_ofc) {
+      this.unidadesLoading = true;
+      this.subUnidadesLoading = true;
+      axios
+        .get("/api/inventory2/sub_unidad", {
+          params: { cod_ofc: cod_ofc },
+        })
+        .then((data) => {
+          this.subUnidadesLoading = false;
+          this.subUnidades = data.data;
+          this.editForm.sub_ofc_cod = null;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    saveAsset() {
+      axios
+        .post("/api/reasignacion/save", this.editForm)
+        .then((data) => {
+          this.$notify.success({
+            title: "Cambios guardados",
+            message: "Se realizo cambios al Activo seleccionado exitosamente",
+            duration: 0,
+          });
+          this.$router.push({
+            name: "active",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
 
-<style> 
+<style>
 .bg-purple {
   background: #d3dce6;
 }
