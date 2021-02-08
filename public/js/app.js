@@ -7825,7 +7825,8 @@ __webpack_require__.r(__webpack_exports__);
         paterno: "",
         materno: "",
         nombres: "",
-        modalidad: ""
+        modalidad: "",
+        id_modalidad: ""
       },
       //requisites: {},
       texto: "Loasdasdsadsad",
@@ -7878,7 +7879,7 @@ __webpack_require__.r(__webpack_exports__);
         /*de acuerdo a la postulacion se debe imprimir los valores*/
 
         axios.post("/api/valuesprocedure", {
-          description: 'EXCELENCIA',
+          id: app.postulations.id_modalidad,
           year: app.year
         }).then(function (response) {
           app.valuesPostulations = response.data;
@@ -112708,8 +112709,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

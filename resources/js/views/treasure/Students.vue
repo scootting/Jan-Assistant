@@ -101,6 +101,7 @@ export default {
         materno: "",
         nombres: "",
         modalidad: "",
+        id_modalidad: "",
       },
       //requisites: {},
       texto: "Loasdasdsadsad",
@@ -159,7 +160,7 @@ export default {
           /*de acuerdo a la postulacion se debe imprimir los valores*/
           axios
             .post("/api/valuesprocedure", {
-              description: 'EXCELENCIA',
+              id: app.postulations.id_modalidad,
               year: app.year,
             })
             .then((response) => {
