@@ -137,7 +137,23 @@ export default {
       alert("se esta reseteando todo");
     },
     saveTransaction() {
-      alert("se esta guardando todo");
+      var app = this;
+      var newPostulations = app.postulations;
+      var newValuesPostulations = app.valuesPostulations;
+      //console.log("REGISTRAR");
+      axios
+        .post("/api/valuesforStudent", {
+          postulations: newPostulations,
+          valuesPostulations: newValuesPostulations,
+          marker: "registrar"
+        })
+        .then(function(response) {
+          alert("se ha creado el registro de los valores del estudiante");
+        })
+        .catch(function(response) {
+          console.log(response);
+          alert("no se puede crear el registro de los valores del estudiante");
+        });
     },
     printTransactions() {
       axios({
@@ -201,11 +217,6 @@ export default {
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
         callback: (action) => {
-          /*
-          this.$message({
-            type: "info",
-            message: `action: ${action}`,
-          });*/
         },
       });
     },

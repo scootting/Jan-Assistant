@@ -71,4 +71,34 @@ class TreasureController extends Controller
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
     }
+
+    public function storeValuesforStudent(Request $request){
+        $dataPostulations = $request->get('postulations');
+        $dataValuesPostulations = $request->get('valuesPostulations');
+
+        \Log::info("Estas son las pruebas ya reales");
+        \Log::info($dataPostulations);
+        \Log::info($dataValuesPostulations);
+        /*
+        $personal = $data['personal'];
+        $nombres = strtoupper($data['nombres']);
+        $paterno = strtoupper($data['paterno']);
+        $materno = strtoupper($data['materno']);
+        $sexo = strtoupper($data['sexo']);
+        $nacimiento = $data['nacimiento'];
+
+        $marcador = $request->get('marker');
+
+        switch ($marcador) {
+            case 'registrar':
+                $data = General::AddPerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+                break;
+            case 'editar':
+                $data = General::UpdatePerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+            break;
+            default:
+                break;
+        }
+        return json_encode($data);    */
+    }
 }

@@ -7856,7 +7856,20 @@ __webpack_require__.r(__webpack_exports__);
       alert("se esta reseteando todo");
     },
     saveTransaction: function saveTransaction() {
-      alert("se esta guardando todo");
+      var app = this;
+      var newPostulations = app.postulations;
+      var newValuesPostulations = app.valuesPostulations; //console.log("REGISTRAR");
+
+      axios.post("/api/valuesforStudent", {
+        postulations: newPostulations,
+        valuesPostulations: newValuesPostulations,
+        marker: "registrar"
+      }).then(function (response) {
+        alert("se ha creado el registro de los valores del estudiante");
+      })["catch"](function (response) {
+        console.log(response);
+        alert("no se puede crear el registro de los valores del estudiante");
+      });
     },
     printTransactions: function printTransactions() {
       axios({
@@ -7918,13 +7931,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
-        callback: function callback(action) {
-          /*
-          this.$message({
-            type: "info",
-            message: `action: ${action}`,
-          });*/
-        }
+        callback: function callback(action) {}
       });
     }
   }
@@ -112724,8 +112731,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
