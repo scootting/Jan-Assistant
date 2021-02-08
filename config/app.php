@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        JasperPHP\JasperPHPServiceProvider::class,
 
         /*
          * Application Service Providers...

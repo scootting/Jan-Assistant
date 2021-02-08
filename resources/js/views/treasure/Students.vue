@@ -3,10 +3,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>venta de valores para estudiantes nuevos</span>
-        <el-button
-          style="float: right; padding: 3px 0"
-          type="text"
-          @click="test"
+        <el-button style="float: right; padding: 3px 0" type="text" @click="test"
           >ayuda</el-button
         >
       </div>
@@ -64,12 +61,7 @@
               </el-table-column>
               <el-table-column prop="des_val" label="descripcion" width="480">
               </el-table-column>
-              <el-table-column
-                prop="pre_uni_val"
-                sortable
-                label="Precio"
-                align="right"
-              >
+              <el-table-column prop="pre_uni_val" sortable label="Precio" align="right">
               </el-table-column>
             </el-table></div
         ></el-col>
@@ -77,7 +69,7 @@
       <el-button type="primary" size="small" @click="saveTransaction()"
         >procesar</el-button
       >
-      <el-button type="primary" size="small" @click="saveTransaction()"
+      <el-button type="primary" size="small" @click="printTransactions()"
         >imprimir</el-button
       >
       <el-button size="small" @click="resetTransaction()">cancel</el-button>
@@ -94,7 +86,7 @@ export default {
       writtenTextParameter: "",
       year: "",
       messages: {},
-      valuesPostulations:[],
+      valuesPostulations: [],
       postulations: {
         nro_dip: "",
         paterno: "",
@@ -146,6 +138,28 @@ export default {
     },
     saveTransaction() {
       alert("se esta guardando todo");
+    },
+    printTransactions() {
+      axios({
+        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        console.log(response.data);
+        console.log("1");
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        console.log(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+        /*
+        link.download = "test.pdf";
+        link.click();
+        */
+      });
     },
     initSearchNewStudent() {
       let app = this;

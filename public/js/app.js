@@ -7657,14 +7657,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VentaEstudiantesNuevos",
   data: function data() {
@@ -7718,6 +7710,29 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveTransaction: function saveTransaction() {
       alert("se esta guardando todo");
+    },
+    printTransactions: function printTransactions() {
+      axios({
+        url: "/api/reports/lionel",
+        //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        console.log(response.data);
+        console.log("1");
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        console.log(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
+        /*
+        link.download = "test.pdf";
+        link.click();
+        */
+      });
     },
     initSearchNewStudent: function initSearchNewStudent() {
       var _this = this;
@@ -93148,7 +93163,7 @@ var render = function() {
               attrs: { type: "primary", size: "small" },
               on: {
                 click: function($event) {
-                  return _vm.saveTransaction()
+                  return _vm.printTransactions()
                 }
               }
             },
@@ -112391,8 +112406,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
