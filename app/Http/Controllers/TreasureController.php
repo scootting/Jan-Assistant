@@ -76,16 +76,22 @@ class TreasureController extends Controller
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
 
-        \Log::info("Estas son las pruebas ya reales");
-        \Log::info($dataPostulations);
-        \Log::info($dataValuesPostulations);
+        $personal = strtoupper($dataPostulations['nro_dip']);
+        $nombres = strtoupper($dataPostulations['nombres']);
+        $paterno = strtoupper($dataPostulations['paterno']);
+        $materno = strtoupper($dataPostulations['materno']);
+        if ($paterno != "")
+            $descripcion = $paterno ." ". $materno .",". $nombres;
+        else
+            $descripcion = $materno .",". $nombres;
+        foreach ($dataValuesPostulations as $item) {
+            # code...
+            $gestion = $item['gestion'];
+            $codigo_valor = $item['cod_val'];
+            $cantidad_valor = $item['can_val'];
+            $pu_valor = $item['pre_uni_val'];
+        }
         /*
-        $personal = $data['personal'];
-        $nombres = strtoupper($data['nombres']);
-        $paterno = strtoupper($data['paterno']);
-        $materno = strtoupper($data['materno']);
-        $sexo = strtoupper($data['sexo']);
-        $nacimiento = $data['nacimiento'];
 
         $marcador = $request->get('marker');
 
