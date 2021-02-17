@@ -7871,14 +7871,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VentaEstudiantesNuevos",
   data: function data() {
@@ -7931,7 +7923,43 @@ __webpack_require__.r(__webpack_exports__);
       alert("se esta reseteando todo");
     },
     saveTransaction: function saveTransaction() {
-      alert("se esta guardando todo");
+      var app = this;
+      var newPostulations = app.postulations;
+      var newValuesPostulations = app.valuesPostulations; //console.log("REGISTRAR");
+
+      axios.post("/api/valuesforStudent", {
+        postulations: newPostulations,
+        valuesPostulations: newValuesPostulations,
+        marker: "registrar"
+      }).then(function (response) {
+        alert("se ha creado el registro de los valores del estudiante");
+      })["catch"](function (response) {
+        console.log(response);
+        alert("no se puede crear el registro de los valores del estudiante");
+      });
+    },
+    printTransactions: function printTransactions() {
+      axios({
+        url: "/api/reports/lionel",
+        //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        console.log(response.data);
+        console.log("1");
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        console.log(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
+        /*
+        link.download = "test.pdf";
+        link.click();
+        */
+      });
     },
     initSearchNewStudent: function initSearchNewStudent() {
       var _this = this;
@@ -7970,13 +7998,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
-        callback: function callback(action) {
-          /*
-          this.$message({
-            type: "info",
-            message: `action: ${action}`,
-          });*/
-        }
+        callback: function callback(action) {}
       });
     }
   }
@@ -93659,7 +93681,7 @@ var render = function() {
               attrs: { type: "primary", size: "small" },
               on: {
                 click: function($event) {
-                  return _vm.saveTransaction()
+                  return _vm.printTransactions()
                 }
               }
             },
@@ -112989,8 +113011,13 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+=======
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5
 
 
 /***/ })

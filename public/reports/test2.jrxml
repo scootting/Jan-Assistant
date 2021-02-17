@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<<<<<<< HEAD
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalle_Inv" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="105f53e5-d201-4a1a-90be-2361b9c744a4">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Daf_help_Remoto"/>
@@ -59,19 +60,37 @@
 	<group name="doc_cod">
 		<groupExpression><![CDATA[$F{doc_cod}]]></groupExpression>
 	</group>
+=======
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Test" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0888f099-c79a-4c6b-aaaf-fc472399f249">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[select gestion from public.sis_gestion]]>
+	</queryString>
+	<field name="gestion" class="java.lang.String"/>
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
+<<<<<<< HEAD
 				<reportElement x="200" y="20" width="180" height="30" uuid="3c03d609-5219-4a95-8c98-df0de3620a9d"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[UNIVERSIDAD AUTÓNOMA TOMÁS FRÍAS]]></text>
+=======
+				<reportElement x="60" y="10" width="421" height="55" uuid="68d912ae-c0ab-438b-93dd-63c51d9c4d02"/>
+				<textElement>
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD ]]></text>
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
+<<<<<<< HEAD
 		<band height="51" splitType="Stretch">
 			<textField>
 				<reportElement x="80" y="10" width="100" height="30" uuid="e937af5a-2ea9-47b8-a917-9b1b84bf020c"/>
@@ -102,10 +121,29 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de2554cf-1fef-4135-bb54-4d8b7b0bddbf"/>
 				</reportElement>
 				<text><![CDATA[id_act]]></text>
+=======
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="108" splitType="Stretch">
+			<rectangle>
+				<reportElement x="250" y="20" width="170" height="88" uuid="faad501d-bd07-44dc-a431-d7faffec4ec4"/>
+			</rectangle>
+			<textField>
+				<reportElement x="40" y="58" width="100" height="30" uuid="ff9d33d7-828f-4ed6-b5b0-72b24186e8c5"/>
+				<textFieldExpression><![CDATA[$P{Parameter1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="81" y="0" width="100" height="30" uuid="0578ae87-8f63-4492-9b48-8e97f28f77b1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74f7b392-2344-42f0-a19d-48d59227985f"/>
+				</reportElement>
+				<text><![CDATA[gestion]]></text>
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
+<<<<<<< HEAD
 		<band height="31" splitType="Stretch">
 			<textField>
 				<reportElement x="455" y="0" width="100" height="30" uuid="025c4b95-4bf3-48ee-97fc-9a7c65384896">
@@ -124,6 +162,14 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de2554cf-1fef-4135-bb54-4d8b7b0bddbf"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{id_act}]]></textFieldExpression>
+=======
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="100" height="20" uuid="3fc7a167-18a7-4d4c-ad1e-74d7745f0a22">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74f7b392-2344-42f0-a19d-48d59227985f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{gestion}]]></textFieldExpression>
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5
 			</textField>
 		</band>
 	</detail>
@@ -136,4 +182,8 @@
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>
+<<<<<<< HEAD
 </jasperReport>
+=======
+</jasperReport>
+>>>>>>> 11df7f4ebd5900d1763bc483527c96b7c3979ab5

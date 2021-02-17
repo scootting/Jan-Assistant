@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use PHPJasper\PHPJasper;
+use JasperPHP\JasperPHP as JasperPHP;
 
 class InventoryController extends Controller
 {
@@ -54,66 +54,30 @@ class InventoryController extends Controller
     //reportes usando Jasper
     public function getReport(Request $request, $cod_soa)
     {
-        \Log::info($cod_soa);
-        $input = public_path() .
-            '/reports/assets.jrxml';
-
-        $jasper = new PHPJasper;
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/assets.jrxml';
         $jasper->compile($input)->execute();
-        $input = public_path() .
-            '/reports/assets.jasper';
-        $output = public_path() .
-            '/reports';
-        $options = [
-            'format' => ['pdf'],
-            'params' => [
-                'p_ofc_cod' => $cod_soa,
-            ],
-            'db_connection' => [
-                'driver' => 'postgres', //mysql, ....
+
+        $input = public_path() . '/reports/assets.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('p_ofc_cod' => $cod_soa),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
                 'username' => 'postgres',
                 'password' => '12345678',
                 'host' => '192.168.25.64',
                 'database' => 'daf_help',
                 'port' => '5432',
-            ],/**/
-        ];
-        /*
-        'db_connection' => [
-        'driver' => env('DB_CONNECTION'),
-        'username' => env('DB_USERNAME'),
-        'password' => env('DB_PASSWORD'),
-        'host' => env('DB_HOST'),
-        'database' => env('DB_DATABASE'),
-        'port' => env('DB_PORT')
-        ],*/
-
-        //];
-        $jasper = new PHPJasper;
-        \Log::info($options);
-        $jasper->process(
-            $input,
-            $output,
-            $options
+            )  
         )->execute();
 
-        $pathToFile = public_path() .
-            '/reports/assets.pdf';
-        // Render
-        //return response()->file($pathToFile);
-        // Download
-        //return response()->download($pathToFile);
-
+        $pathToFile = public_path() . '/reports/assets.pdf';
         $filename = 'assets.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
-        /*
-
-        return Response::make(file_get_contents($pathToFile), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="'.$filename.'"'
-        ]);*/
-        \Log::info("pruebas de algo");
-        \Log::info(response()->download($pathToFile, $filename, $headers));
         return response()->download($pathToFile, $filename, $headers);
     }
 
@@ -217,7 +181,7 @@ class InventoryController extends Controller
             $data->count(),
             $perPage,
             $page,
-            [],
+            []
         );
         return json_encode($paginate);
     }
@@ -303,7 +267,7 @@ class InventoryController extends Controller
             $data->count(),
             $perPage,
             $page,
-            [],
+            []
         );
         return json_encode($paginate);
     }

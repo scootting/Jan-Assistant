@@ -74,5 +74,9 @@ Route::group([
     Route::post('newstudent', 'TreasureController@getNewStudentByDNI');
     // *** - Buscar los valores pertenecientes a un tramite - ***
     Route::post('valuesprocedure', 'TreasureController@getValuesProcedure');
-    
+    // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos - ***
+    Route::get('reports/{id}', 'TreasureController@getReportValuesQr');
+    // *** - Almacenar - ***
+    Route::post('valuesforStudent', 'TreasureController@storeValuesforStudent');
+
 });
