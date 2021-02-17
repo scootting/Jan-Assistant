@@ -30,13 +30,10 @@
                   ></el-button>
                   <h4>facilito</h4>
                   <p>
-                    Donec id elit non mi porta gravida at
-                    eget metus. Fusce dapibus, tellus ac
-                    cursus commodo, tortor mauris
-                    condimentum nibh, ut fermentum massa
-                    justo sit amet risus. Etiam porta sem
-                    malesuada magna mollis euismod. Donec
-                    sed odio dui.
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -50,13 +47,10 @@
                   ></el-button>
                   <h4>tramites</h4>
                   <p>
-                    Donec id elit non mi porta gravida at
-                    eget metus. Fusce dapibus, tellus ac
-                    cursus commodo, tortor mauris
-                    condimentum nibh, ut fermentum massa
-                    justo sit amet risus. Etiam porta sem
-                    malesuada magna mollis euismod. Donec
-                    sed odio dui.
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -65,13 +59,10 @@
                   <el-button type="text" icon="el-icon-check" circle></el-button>
                   <h4>personas</h4>
                   <p>
-                    Donec id elit non mi porta gravida at
-                    eget metus. Fusce dapibus, tellus ac
-                    cursus commodo, tortor mauris
-                    condimentum nibh, ut fermentum massa
-                    justo sit amet risus. Etiam porta sem
-                    malesuada magna mollis euismod. Donec
-                    sed odio dui.
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -80,13 +71,10 @@
                   <el-button type="text" icon="el-icon-delete" circle></el-button>
                   <h4>valores</h4>
                   <p>
-                    Donec id elit non mi porta gravida at
-                    eget metus. Fusce dapibus, tellus ac
-                    cursus commodo, tortor mauris
-                    condimentum nibh, ut fermentum massa
-                    justo sit amet risus. Etiam porta sem
-                    malesuada magna mollis euismod. Donec
-                    sed odio dui.
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -97,37 +85,28 @@
               <el-col :span="8">
                 <h5>Heading 1</h5>
                 <p>
-                  Donec id elit non mi porta gravida at
-                  eget metus. Fusce dapibus, tellus ac
-                  cursus commodo, tortor mauris
-                  condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem
-                  malesuada magna mollis euismod. Donec
-                  sed odio dui.
+                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                  Donec sed odio dui.
                 </p>
               </el-col>
               <el-col :span="8">
                 <h5>Heading 2</h5>
                 <p>
-                  Donec id elit non mi porta gravida at
-                  eget metus. Fusce dapibus, tellus ac
-                  cursus commodo, tortor mauris
-                  condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem
-                  malesuada magna mollis euismod. Donec
-                  sed odio dui.
+                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                  Donec sed odio dui.
                 </p>
               </el-col>
               <el-col :span="8">
                 <h5>Heading 3</h5>
                 <p>
-                  Donec id elit non mi porta gravida at
-                  eget metus. Fusce dapibus, tellus ac
-                  cursus commodo, tortor mauris
-                  condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem
-                  malesuada magna mollis euismod. Donec
-                  sed odio dui.
+                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
+                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                  Donec sed odio dui.
                 </p>
                 <el-row>
                   <el-button>Default</el-button>
@@ -198,7 +177,6 @@ textarea {
 }
 
 .el-header {
-  /*background-color: #000;*/
   background: #212120;
   color: #fff;
   line-height: 60px;
