@@ -130,11 +130,11 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="prymary" size="default" @click="saveAsset"
+                <el-button type="prymary" size="default" @click="saveInventory"
                   >Guardar Cambios</el-button
                 >
                 <el-button type="default" size="default" @click="initNewInventory"
-                  >Realizar Inventario</el-button
+                  >Atras</el-button
                 >
               </el-row>
             </el-form-item>
@@ -165,7 +165,6 @@
         >
         </el-option>
       </el-select>
-
       <span slot="footer">
         <el-button @click="onCancelDialog">Cancel</el-button>
         <el-button type="primary" @click="onConfirmDialog">Confirmar</el-button>
@@ -187,7 +186,7 @@ export default {
         ofc_cod:"",
         sub_ofc_cod:[],
         ci_res: [],
-        estado: [],
+        //estado: [],
       },
       unidades: [],
       subUnidades: [],
@@ -392,8 +391,8 @@ export default {
       let addEncargado = this.searchEncargados.filter((e) => {
         return e.nro_dip === this.selectEncargado;
       })[0];
-      this.NewInvent.encargados.push(addEncargado.nro_dip);
-      this.encargados.push(addEncargado);
+      this.editForm.res_enc.push(addEncargado.nro_dip);
+      this.res_enc.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
     },

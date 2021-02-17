@@ -62,7 +62,7 @@
           <el-table-column prop="descripcion" label="SUB OFICINA" width="150" ></el-table-column>
           <el-table-column prop="des" label="DESCRIPCION" width="330" ></el-table-column>
           <el-table-column prop="estado" label="ESTADO"  width="180"></el-table-column>
-          <el-table-column align="right"  width="110" >
+          <el-table-column  align="right-center" width="220" label="Operaciones" >
             <template slot-scope="scope">
               <el-button
                 @click="EditActive(scope.$index, scope.row)"
@@ -70,6 +70,13 @@
                 plain
                 size="mini"
                 >Editar</el-button
+              >
+              <el-button
+                @click="selectActiveQr(scope.row)"
+                type="primary"
+                plain
+                size="mini"
+                >Obtener QR</el-button
               >
             </template>
           </el-table-column>
@@ -83,12 +90,29 @@
         ></el-pagination>
       </div>
     </el-card>
+    <el-dialog
+      title="QR"
+      :visible.sync="showQR"
+      width="30%"
+      @close="showQR=false">
+      <el-row type="flex" justify="center">
+        <vue-qr :text="JSON.stringify(activoSelectQR)" :size="400"></vue-qr>
+      </el-row>
+      <span slot="footer">
+        <el-button @click=" showQR = false">Cancel</el-button> 
+        <el-button @click="$router.push({name:'qrprint',params:{id: activoSelectQR.id,activo: activoSelectQR}}) ">Imprimir</el-button>
+      </span>
+    </el-dialog>
+    
   </div>
 </template>
 
 <script>
+//QR,para usar con los activos fijos
+import VueQr from 'vue-qr';
 export default {
   name: "Reasignar_activos",
+  components: { VueQr },
   data() {
     return {
       loading: false,
@@ -103,6 +127,8 @@ export default {
       idsSubOffices: [],
       unidades: [],
       subUnidades: [],
+      activoSelectQR:null,
+      showQR:false,
     };
   },
   mounted() {
@@ -178,7 +204,10 @@ export default {
         },
       });
     },
-
+  	selectActiveQr(actv){
+      this.activoSelectQR=actv;
+      this.showQR=true;
+    },
     test() {
       alert("bienvenido al modulo");
     },

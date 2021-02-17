@@ -36,7 +36,7 @@ import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
 import Active from './views/inventory/Active'
 import EditActive from './views/inventory/EditActive'
-
+import QrPrint from './views/inventory/QrPrint'
 //tesoreria
 import Solvency from './views/treasure/Solvency'
 import Students from './views/treasure/Students'
@@ -107,6 +107,11 @@ const router = new VueRouter({
             meta: {
                 requiresAuth: true,
             }
+        },
+        {
+            path: '/QrPrint/:id',
+            name: 'qrprint',
+            component: QrPrint,
         },
         {
             path: '/404',

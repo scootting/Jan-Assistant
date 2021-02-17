@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalle_Inv" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="105f53e5-d201-4a1a-90be-2361b9c744a4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Daf_help_Remoto"/>
+	<queryString language="SQL">
+		<![CDATA[select * from  inv.detalle_doc_act]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="doc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="doc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="doc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="cod_ges" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cod_ges"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_ges"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="cod_act" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_act"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_act"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="id_act" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_act"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_act"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="id_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="fec_cre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fec_cre"/>
+		<property name="com.jaspersoft.studio.field.label" value="fec_cre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="est_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="est_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="est_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="obs_est" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obs_est"/>
+		<property name="com.jaspersoft.studio.field.label" value="obs_est"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="validacion" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="validacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="validacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<group name="doc_cod">
+		<groupExpression><![CDATA[$F{doc_cod}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="20" width="180" height="30" uuid="3c03d609-5219-4a95-8c98-df0de3620a9d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UNIVERSIDAD AUTÓNOMA TOMÁS FRÍAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="10" width="100" height="30" uuid="e937af5a-2ea9-47b8-a917-9b1b84bf020c"/>
+				<textFieldExpression><![CDATA[$F{doc_cod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="10" width="100" height="30" uuid="01399abe-c2f1-4ffb-a312-333637a6e1cd"/>
+				<textFieldExpression><![CDATA[$F{cod_ges}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="30" uuid="5ee58491-a69c-4021-9bf6-b473ea27d7b4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf1fb487-4e90-4004-b2d8-d05f474b4ed0"/>
+				</reportElement>
+				<text><![CDATA[obs_est]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="0" width="100" height="30" uuid="7a4166bc-5576-454f-9f70-da8d4121c176">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2c84e8c8-2675-4926-9e3a-53701a4b9132"/>
+				</reportElement>
+				<text><![CDATA[validacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="30" uuid="93b7c3fa-50d9-41b8-878b-553e8c150ca1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de2554cf-1fef-4135-bb54-4d8b7b0bddbf"/>
+				</reportElement>
+				<text><![CDATA[id_act]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="0" width="100" height="30" uuid="025c4b95-4bf3-48ee-97fc-9a7c65384896">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf1fb487-4e90-4004-b2d8-d05f474b4ed0"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{obs_est}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="100" height="30" uuid="ceb6f560-1963-44d6-a1ca-420cb447affc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2c84e8c8-2675-4926-9e3a-53701a4b9132"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{validacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="100" height="30" uuid="d97a78e8-ded7-4f47-a260-977d5fe6de27">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de2554cf-1fef-4135-bb54-4d8b7b0bddbf"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_act}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
