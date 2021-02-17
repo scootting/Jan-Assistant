@@ -5615,6 +5615,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-qr'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 //
 //
 //
@@ -5703,8 +5704,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//QR,para usar con los activos fijos
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Reasignar_activos",
+  components: {
+    VueQr: !(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-qr'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+  },
   data: function data() {
     return {
       loading: false,
@@ -5718,7 +5745,9 @@ __webpack_require__.r(__webpack_exports__);
       idOficce: null,
       idsSubOffices: [],
       unidades: [],
-      subUnidades: []
+      subUnidades: [],
+      activoSelectQR: null,
+      showQR: false
     };
   },
   mounted: function mounted() {
@@ -5793,6 +5822,10 @@ __webpack_require__.r(__webpack_exports__);
           id: row.id
         }
       });
+    },
+    selectActiveQr: function selectActiveQr(actv) {
+      this.activoSelectQR = actv;
+      this.showQR = true;
     },
     test: function test() {
       alert("bienvenido al modulo");
@@ -6239,7 +6272,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Edit_Inventory2",
   data: function data() {
@@ -6251,8 +6283,8 @@ __webpack_require__.r(__webpack_exports__);
         car_cod: [],
         ofc_cod: "",
         sub_ofc_cod: [],
-        ci_res: [],
-        estado: []
+        ci_res: [] //estado: [],
+
       },
       unidades: [],
       subUnidades: [],
@@ -6463,8 +6495,8 @@ __webpack_require__.r(__webpack_exports__);
       var addEncargado = this.searchEncargados.filter(function (e) {
         return e.nro_dip === _this8.selectEncargado;
       })[0];
-      this.NewInvent.encargados.push(addEncargado.nro_dip);
-      this.encargados.push(addEncargado);
+      this.editForm.res_enc.push(addEncargado.nro_dip);
+      this.res_enc.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
     },
@@ -6716,16 +6748,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Inventarios2",
   data: function data() {
@@ -6766,7 +6788,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getInventories();
     },
     editInventory: function editInventory(index, row) {
-      console.log(row);
+      console.log("prueba de ruta" + row);
       this.$router.push({
         name: "editinventory2",
         params: {
@@ -7597,6 +7619,48 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-qr'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueQr: !(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-qr'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+  },
+  data: function data() {
+    return {
+      activo: null
+    };
+  },
+  created: function created() {
+    this.activo = this.$route.params.activo;
+  },
+  mounted: function mounted() {
+    setTimeout(function () {
+      window.print();
+    }, 3000);
   }
 });
 
@@ -91043,7 +91107,11 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { align: "right", width: "110" },
+                  attrs: {
+                    align: "right-center",
+                    width: "220",
+                    label: "Operaciones"
+                  },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -91064,6 +91132,23 @@ var render = function() {
                               }
                             },
                             [_vm._v("Editar")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: {
+                                type: "primary",
+                                plain: "",
+                                size: "mini"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.selectActiveQr(scope.row)
+                                }
+                              }
+                            },
+                            [_vm._v("Obtener QR")]
                           )
                         ]
                       }
@@ -91086,7 +91171,72 @@ var render = function() {
           ],
           1
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "QR", visible: _vm.showQR, width: "30%" },
+          on: {
+            "update:visible": function($event) {
+              _vm.showQR = $event
+            },
+            close: function($event) {
+              _vm.showQR = false
+            }
+          }
+        },
+        [
+          _c(
+            "el-row",
+            { attrs: { type: "flex", justify: "center" } },
+            [
+              _c("vue-qr", {
+                attrs: { text: JSON.stringify(_vm.activoSelectQR), size: 400 }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.showQR = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.push({
+                        name: "qrprint",
+                        params: {
+                          id: _vm.activoSelectQR.id,
+                          activo: _vm.activoSelectQR
+                        }
+                      })
+                    }
+                  }
+                },
+                [_vm._v("Imprimir")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -91744,7 +91894,7 @@ var render = function() {
                               "el-button",
                               {
                                 attrs: { type: "prymary", size: "default" },
-                                on: { click: _vm.saveAsset }
+                                on: { click: _vm.saveInventory }
                               },
                               [_vm._v("Guardar Cambios")]
                             ),
@@ -91755,7 +91905,7 @@ var render = function() {
                                 attrs: { type: "default", size: "default" },
                                 on: { click: _vm.initNewInventory }
                               },
-                              [_vm._v("Realizar Inventario")]
+                              [_vm._v("Atras")]
                             )
                           ],
                           1
@@ -92136,18 +92286,6 @@ var render = function() {
         _c(
           "div",
           [
-            _c(
-              "el-table",
-              { attrs: { border: "", stripe: "" } },
-              _vm._l(_vm.columns, function(col) {
-                return _c("el-table-column", {
-                  key: col.id,
-                  attrs: { prop: col.id, label: col.label, width: col.width }
-                })
-              }),
-              1
-            ),
-            _vm._v(" "),
             _c(
               "el-table",
               {
@@ -93258,6 +93396,58 @@ var render = function() {
             ],
             1
           )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "el-button",
+        {
+          attrs: { type: "primary", size: "default" },
+          on: {
+            click: function($event) {
+              return _vm.$router.go(-1)
+            }
+          }
+        },
+        [_vm._v("Volver Atras")]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        { attrs: { type: "flex", justify: "center" } },
+        [
+          _c("vue-qr", {
+            attrs: { text: JSON.stringify(_vm.activo), size: 400 }
+          })
         ],
         1
       )
@@ -110259,9 +110449,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_clients_AddTaxExemption__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./views/clients/AddTaxExemption */ "./resources/js/views/clients/AddTaxExemption.vue");
 /* harmony import */ var _views_inventory_Active__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./views/inventory/Active */ "./resources/js/views/inventory/Active.vue");
 /* harmony import */ var _views_inventory_EditActive__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./views/inventory/EditActive */ "./resources/js/views/inventory/EditActive.vue");
-/* harmony import */ var _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./views/treasure/Solvency */ "./resources/js/views/treasure/Solvency.vue");
-/* harmony import */ var _views_treasure_Students__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./views/treasure/Students */ "./resources/js/views/treasure/Students.vue");
-/* harmony import */ var _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./views/treasure/SaleStudents */ "./resources/js/views/treasure/SaleStudents.vue");
+/* harmony import */ var _views_inventory_QrPrint__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./views/inventory/QrPrint */ "./resources/js/views/inventory/QrPrint.vue");
+/* harmony import */ var _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./views/treasure/Solvency */ "./resources/js/views/treasure/Solvency.vue");
+/* harmony import */ var _views_treasure_Students__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./views/treasure/Students */ "./resources/js/views/treasure/Students.vue");
+/* harmony import */ var _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./views/treasure/SaleStudents */ "./resources/js/views/treasure/SaleStudents.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Pages
@@ -110284,6 +110475,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
  //bienes e inventarios
+
 
 
 
@@ -110418,20 +110610,24 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     {
       path: 'solvency',
       name: 'solvency',
-      component: _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_28__["default"]
+      component: _views_treasure_Solvency__WEBPACK_IMPORTED_MODULE_29__["default"]
     }, //{ path: 'students', name: 'students', component: Students },
     {
       path: 'salestudents',
       name: 'salestudents',
-      component: _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_30__["default"]
+      component: _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_31__["default"]
     }, {
       path: 'salestudents/:id',
       name: 'students',
-      component: _views_treasure_Students__WEBPACK_IMPORTED_MODULE_29__["default"]
+      component: _views_treasure_Students__WEBPACK_IMPORTED_MODULE_30__["default"]
     }],
     meta: {
       requiresAuth: true
     }
+  }, {
+    path: '/QrPrint/:id',
+    name: 'qrprint',
+    component: _views_inventory_QrPrint__WEBPACK_IMPORTED_MODULE_28__["default"]
   }, {
     path: '/404',
     name: '404',
@@ -112928,6 +113124,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewInventory_vue_vue_type_template_id_57c635ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewInventory_vue_vue_type_template_id_57c635ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/QrPrint.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/views/inventory/QrPrint.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QrPrint.vue?vue&type=template&id=62d7c7ca& */ "./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca&");
+/* harmony import */ var _QrPrint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QrPrint.vue?vue&type=script&lang=js& */ "./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QrPrint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/inventory/QrPrint.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrPrint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./QrPrint.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/QrPrint.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QrPrint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./QrPrint.vue?vue&type=template&id=62d7c7ca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/inventory/QrPrint.vue?vue&type=template&id=62d7c7ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrPrint_vue_vue_type_template_id_62d7c7ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

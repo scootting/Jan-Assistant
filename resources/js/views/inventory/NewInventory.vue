@@ -360,6 +360,7 @@ export default {
       this.selectEncargado = null;
       this.showDialogEncargado = false;
     },
+    
     listActive(){
        this.$router.push({
         name: "inventory2detail",

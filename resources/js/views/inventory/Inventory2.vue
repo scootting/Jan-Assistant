@@ -30,16 +30,6 @@
       </div>
       <br />
       <div>
-        <el-table border stripe>
-          <el-table-column
-            v-for="col in columns"
-            :prop="col.id"
-            :key="col.id"
-            :label="col.label"
-            :width="col.width"
-          >
-          </el-table-column>
-        </el-table>
         <el-table v-loading="loading" :data="data" style="width: 100%">
           <el-table-column label="Nro Doc">
             <template slot-scope="scope">
@@ -130,7 +120,7 @@ export default {
       this.getInventories();
     },
     editInventory(index, row) {
-      console.log(row);
+      console.log("prueba de ruta"+row);
       this.$router.push({
         name: "editinventory2",
         params: {

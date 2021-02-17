@@ -155,7 +155,7 @@ class InventoryController extends Controller
         $no_doc = $request->no_doc;
         $res_enc = $request->encargados;
         $car_cod_enc = [];
-        for ($i = 0; $i < count($res_enc); $i++)
+        for ($i = 0; $i < count([$res_enc]); $i++)
             $car_cod_enc[] = 3;
         $car_cod = $car_cod_enc;
         $ofc_cod = $request->unidad;
@@ -214,10 +214,11 @@ class InventoryController extends Controller
     } 
     public function saveChangeDocInventory(Request $request)
     {
+        //dd($request);
         $id = $request->id;
         $res_enc = $request->encargados;
         $car_cod_enc = [];
-        for ($i = 0; $i < count($res_enc); $i++)
+        for ($i = 0; $i < count([$res_enc]); $i++)
             $car_cod_enc[] = 3;
         $car_cod = $car_cod_enc;
         $ofc_cod = $request->unidad;
