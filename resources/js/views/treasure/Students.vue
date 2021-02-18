@@ -146,14 +146,11 @@ export default {
         method: "GET",
         responseType: "blob",
       }).then((response) => {
-        console.log(response.data);
-        console.log("1");
         let blob = new Blob([response.data], {
           type: "application/pdf",
         });
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
       });
