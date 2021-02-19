@@ -72,21 +72,23 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
-    public function storeValuesforStudent(Request $request){
-        //$dataDayTransactions = $request->get('dayTransactions');
+    public function storeTransactionsByStudents(Request $request){
+        $saleOfDay = $request->get('saleOfDay');
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
 
-        $id_dia = '6999'; //se debe definir un dia para el usuario
+        $id_dia = $saleOfDay['id_dia']; 
+        $fec_tra = $saleOfDay['fec_tra']; 
+        $usr_cre = $saleOfDay['usr_cre'];
 
-        $personal = strtoupper($dataPostulations['nro_dip']);
+        $nro_dip = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
         if ($paterno != "")
-            $descripcion = $paterno ." ". $materno .",". $nombres;
+            $des_per = $paterno ." ". $materno .",". $nombres;
         else
-            $descripcion = $materno .",". $nombres;
+            $des_per = $materno .",". $nombres;
         foreach ($dataValuesPostulations as $item) {
             # code...
             $gestion = $item['gestion'];
@@ -101,7 +103,7 @@ class TreasureController extends Controller
 
         switch ($marcador) {
             case 'registrar':
-                $data = Treasure::AddTransactions($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
                                                   $nro_com, $ci_per, $des_per, $tip_tra, $tra_imp, $gestion);
                 break;
             case 'editar':

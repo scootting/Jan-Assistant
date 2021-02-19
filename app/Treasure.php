@@ -52,4 +52,11 @@ class Treasure extends Model
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }
+
+    public static function addTransactionsByStudents(){
+        //select * from val.diario vd where vd.id_dia = '1234' and vd.usr_cre = 'rcallizaya' and vd.gestion = '2020'
+        $query = "select * from val.diario vd where vd.id_dia = '".$id."' and vd.usr_cre = '".$user."' and vd.gestion = '".$year."'";
+        $data = collect(DB::select(DB::raw($query)));    
+        return $data;
+    }
 }

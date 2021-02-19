@@ -8049,7 +8049,9 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
-      axios.post("/api/valuesforStudent", {
+      var newSaleOfDay = app.saleOfDay;
+      axios.post("/api/storeTransactionsByStudents", {
+        saleOfDay: newSaleOfDay,
         postulations: newPostulations,
         valuesPostulations: newValuesPostulations,
         marker: "registrar"
@@ -8058,22 +8060,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (response) {
         console.log(response);
         alert("no se puede crear el registro de los valores del estudiante");
-      });
-    },
-    printTransactions: function printTransactions() {
-      axios({
-        url: "/api/reports/lionel",
-        //+ this.oficina.cod_soa,
-        method: "GET",
-        responseType: "blob"
-      }).then(function (response) {
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
-        });
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        var url = window.URL.createObjectURL(blob);
-        window.open(url);
       });
     },
     initGetDataOfStudent: function initGetDataOfStudent() {
@@ -8115,6 +8101,22 @@ __webpack_require__.r(__webpack_exports__);
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
         callback: function callback(action) {}
+      });
+    },
+    printTransactions: function printTransactions() {
+      axios({
+        url: "/api/reports/lionel",
+        //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
     }
   }
@@ -94001,7 +94003,7 @@ var render = function() {
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "450"
+                            width: "550"
                           }
                         }),
                         _vm._v(" "),

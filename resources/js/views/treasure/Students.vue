@@ -58,7 +58,7 @@
               size="small"
             >
               <el-table-column prop="cod_val" label="cod." width="65"> </el-table-column>
-              <el-table-column prop="des_val" label="descripcion" width="450">
+              <el-table-column prop="des_val" label="descripcion" width="550">
               </el-table-column>
               <el-table-column prop="pre_uni_val" sortable label="Precio" align="right">
               </el-table-column>
@@ -126,8 +126,10 @@ export default {
       var app = this;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
+      var newSaleOfDay = app.saleOfDay;
       axios
-        .post("/api/valuesforStudent", {
+        .post("/api/storeTransactionsByStudents", {
+          saleOfDay: newSaleOfDay,
           postulations: newPostulations,
           valuesPostulations: newValuesPostulations,
           marker: "registrar",
@@ -139,21 +141,6 @@ export default {
           console.log(response);
           alert("no se puede crear el registro de los valores del estudiante");
         });
-    },
-    printTransactions() {
-      axios({
-        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
     },
     initGetDataOfStudent() {
       let app = this;
@@ -196,6 +183,21 @@ export default {
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
         callback: (action) => {},
+      });
+    },
+    printTransactions() {
+      axios({
+        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
     },
   },
