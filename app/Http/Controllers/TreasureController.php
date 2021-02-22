@@ -61,7 +61,7 @@ class TreasureController extends Controller
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
-                'database' => 'daf',
+                'database' => 'daf_help',
                 'port' => '5432',
             )  
         )->execute();
