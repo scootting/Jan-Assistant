@@ -81,6 +81,7 @@ class TreasureController extends Controller
         $fec_tra = $saleOfDay['fec_tra']; 
         $usr_cre = $saleOfDay['usr_cre'];
 
+        
         $nro_dip = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
@@ -103,12 +104,9 @@ class TreasureController extends Controller
 
         switch ($marcador) {
             case 'registrar':
-                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
-                                                  $nro_com, $ci_per, $des_per, $tip_tra, $tra_imp, $gestion);
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)                
                 break;
             case 'editar':
-                $data = Treasure::UpdateTransactions($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
-                                                  $nro_com, $ci_per, $des_per, $tip_tra, $tra_imp, $gestion);
             break;
             default:
                 break;
