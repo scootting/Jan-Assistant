@@ -61,7 +61,7 @@ class TreasureController extends Controller
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
-                'database' => 'daf',
+                'database' => 'daf_help',
                 'port' => '5432',
             )  
         )->execute();
@@ -72,6 +72,7 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
+<<<<<<< HEAD
     public function storeValuesforStudent(Request $request){
         $dataDayTransactions = $request->get('dayTransactions');
         $dataPostulations = $request->get('postulations');
@@ -80,15 +81,26 @@ class TreasureController extends Controller
         $id_dia = $dataDayTransactions['id_dia']; 
         $fec_tra = $dataDayTransactions['fec_tra'];
         $usr_cre = $dataDayTransactions['usr_cre'];
+=======
+    public function storeTransactionsByStudents(Request $request){
+        $saleOfDay = $request->get('saleOfDay');
+        $dataPostulations = $request->get('postulations');
+        $dataValuesPostulations = $request->get('valuesPostulations');
 
-        $personal = strtoupper($dataPostulations['nro_dip']);
+        $id_dia = $saleOfDay['id_dia']; 
+        $fec_tra = $saleOfDay['fec_tra']; 
+        $usr_cre = $saleOfDay['usr_cre'];
+>>>>>>> 7cff525e7077329fbbf6ce31a08957787d9b89cf
+
+        
+        $nro_dip = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
         if ($paterno != "")
-            $descripcion = $paterno ." ". $materno .",". $nombres;
+            $des_per = $paterno ." ". $materno .",". $nombres;
         else
-            $descripcion = $materno .",". $nombres;
+            $des_per = $materno .",". $nombres;
         foreach ($dataValuesPostulations as $item) {
             # code...
             $gestion = $item['gestion'];
@@ -103,12 +115,9 @@ class TreasureController extends Controller
 
         switch ($marcador) {
             case 'registrar':
-                $data = Treasure::AddTransactions($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
-                                                  $nro_com, $ci_per, $des_per, $tip_tra, $tra_imp, $gestion);
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)                
                 break;
             case 'editar':
-                $data = Treasure::UpdateTransactions($id_dia, $cod_val, $can_val, $pre_uni, $imp_val, $fec_tra, $usr_cre,
-                                                  $nro_com, $ci_per, $des_per, $tip_tra, $tra_imp, $gestion);
             break;
             default:
                 break;

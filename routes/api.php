@@ -77,7 +77,7 @@ Route::group([
     // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos - ***
     Route::get('reports/{id}', 'TreasureController@getReportValuesQr');
     // *** - Almacenar - ***
-    Route::post('valuesforStudent', 'TreasureController@storeValuesforStudent'); 
+    Route::post('storeTransactionsByStudents', 'TreasureController@storeTransactionsByStudents'); 
     // *** - Obtener los dias para la venta de valores de un usuario - ***
     Route::post('getSaleOfDaysByDescription', 'TreasureController@getSaleOfDaysByDescription'); 
     // *** - Obtener los dias para la venta de valores de un usuario - ***
