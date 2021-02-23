@@ -66,7 +66,7 @@
         ></el-col>
       </el-row>
       <el-button type="primary" size="small" @click="saveTransaction()"
-        >procesar</el-button
+        >guardar</el-button
       >
       <el-button type="primary" size="small" @click="printTransactions()"
         >imprimir</el-button
@@ -124,10 +124,12 @@ export default {
     },
     saveTransaction() {
       var app = this;
+      var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
       axios
         .post("/api/valuesforStudent", {
+          dayTransactions: newDayTransactions,
           postulations: newPostulations,
           valuesPostulations: newValuesPostulations,
           marker: "registrar",

@@ -73,11 +73,13 @@ class TreasureController extends Controller
     }
 
     public function storeValuesforStudent(Request $request){
-        //$dataDayTransactions = $request->get('dayTransactions');
+        $dataDayTransactions = $request->get('dayTransactions');
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
 
-        $id_dia = '6999'; //se debe definir un dia para el usuario
+        $id_dia = $dataDayTransactions['id_dia']; 
+        $fec_tra = $dataDayTransactions['fec_tra'];
+        $usr_cre = $dataDayTransactions['usr_cre'];
 
         $personal = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
