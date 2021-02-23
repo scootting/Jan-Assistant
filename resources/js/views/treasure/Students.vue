@@ -127,15 +127,14 @@ export default {
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
-      var newSaleOfDay = app.saleOfDay;
+      //var newSaleOfDay = app.saleOfDay;
       axios
-<<<<<<< HEAD
+        /*
         .post("/api/valuesforStudent", {
           dayTransactions: newDayTransactions,
-=======
+*/
         .post("/api/storeTransactionsByStudents", {
-          saleOfDay: newSaleOfDay,
->>>>>>> 7cff525e7077329fbbf6ce31a08957787d9b89cf
+          dayTransactions: newDayTransactions,
           postulations: newPostulations,
           valuesPostulations: newValuesPostulations,
           marker: "registrar",

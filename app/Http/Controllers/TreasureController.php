@@ -72,8 +72,7 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
-<<<<<<< HEAD
-    public function storeValuesforStudent(Request $request){
+    public function storeTransactionsByStudents(Request $request){
         $dataDayTransactions = $request->get('dayTransactions');
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
@@ -81,16 +80,6 @@ class TreasureController extends Controller
         $id_dia = $dataDayTransactions['id_dia']; 
         $fec_tra = $dataDayTransactions['fec_tra'];
         $usr_cre = $dataDayTransactions['usr_cre'];
-=======
-    public function storeTransactionsByStudents(Request $request){
-        $saleOfDay = $request->get('saleOfDay');
-        $dataPostulations = $request->get('postulations');
-        $dataValuesPostulations = $request->get('valuesPostulations');
-
-        $id_dia = $saleOfDay['id_dia']; 
-        $fec_tra = $saleOfDay['fec_tra']; 
-        $usr_cre = $saleOfDay['usr_cre'];
->>>>>>> 7cff525e7077329fbbf6ce31a08957787d9b89cf
 
         
         $nro_dip = strtoupper($dataPostulations['nro_dip']);
