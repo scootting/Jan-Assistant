@@ -80,12 +80,6 @@ class TreasureController extends Controller
         $id_dia = $dataDayTransactions['id_dia']; 
         $fec_tra = $dataDayTransactions['fec_tra'];
         $usr_cre = $dataDayTransactions['usr_cre'];
-<<<<<<< HEAD
-        $gestion = $dataDayTransactions['gestion'];
-        
-        $nro_com = '-1'; //esto aun falta asignar
-=======
->>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
         
         $ci_per = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
@@ -108,9 +102,13 @@ class TreasureController extends Controller
             $pre_uni = $item['pre_uni_val'];
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             //$imp_val = $can_val * $pre_uni;
 =======
             $imp_val = $can_val * $pre_uni;
+=======
+            $imp_val = $can_val * $pre_uni;            
+>>>>>>> 4b4875308e1dcb000658d0bf45968c5bc0d39609
 =======
             $imp_val = $can_val * $pre_uni;            
 >>>>>>> 4b4875308e1dcb000658d0bf45968c5bc0d39609
