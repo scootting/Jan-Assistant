@@ -167,7 +167,7 @@ export default {
             .catch((error) => {
               this.error = error.response.data;
               this.$notify.error({
-                title: "GRAN ERROR",
+                title: "error",
                 message: this.error.message,
               });
             });

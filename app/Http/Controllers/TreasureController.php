@@ -80,12 +80,15 @@ class TreasureController extends Controller
         $id_dia = $dataDayTransactions['id_dia']; 
         $fec_tra = $dataDayTransactions['fec_tra'];
         $usr_cre = $dataDayTransactions['usr_cre'];
-
         
-        $nro_dip = strtoupper($dataPostulations['nro_dip']);
+        $ci_per = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
+
+        $nro_com = '000001';
+        $tip_tra = '10';
+
         if ($paterno != "")
             $des_per = $paterno ." ". $materno .",". $nombres;
         else
@@ -97,21 +100,28 @@ class TreasureController extends Controller
             $can_val = $item['can_val'];
             $pre_uni = $item['pre_uni_val'];
             $imp_val = $can_val * $pre_uni;
+            $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
         }
+            /*
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+                return json_encode($data);
+            
+            */ 
         /*
-
         $marcador = $request->get('marker');
 
         switch ($marcador) {
             case 'registrar':
-                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)                
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+                \Log::info("Esto es parte de data".$data);             
                 break;
             case 'editar':
             break;
             default:
                 break;
         }
-        return json_encode($data);    */
+        */
+        //return json_encode('Hola');
     }
 
     public function getSaleOfDaysByDescription(Request $request){
