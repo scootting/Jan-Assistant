@@ -89,6 +89,7 @@ class TreasureController extends Controller
         $nro_com = '000001';
         $tip_tra = '10';
         // mas pruebas para potosi
+        //quiero mas pruebas
 
         if ($paterno != "")
             $des_per = $paterno ." ". $materno .",". $nombres;
