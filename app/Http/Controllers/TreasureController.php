@@ -101,8 +101,20 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $can_val = $item['can_val'];
             $pre_uni = $item['pre_uni_val'];
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            //$imp_val = $can_val * $pre_uni;
+=======
+            $imp_val = $can_val * $pre_uni;
+=======
             $imp_val = $can_val * $pre_uni;            
+>>>>>>> 4b4875308e1dcb000658d0bf45968c5bc0d39609
+=======
+            $imp_val = $can_val * $pre_uni;            
+>>>>>>> 4b4875308e1dcb000658d0bf45968c5bc0d39609
             $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+>>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
         }
             /*
                 $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
@@ -114,8 +126,12 @@ class TreasureController extends Controller
 
         switch ($marcador) {
             case 'registrar':
+<<<<<<< HEAD
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $gestion)   
+=======
                 $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
                 \Log::info("Esto es parte de data".$data);             
+>>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
                 break;
             case 'editar':
             break;
