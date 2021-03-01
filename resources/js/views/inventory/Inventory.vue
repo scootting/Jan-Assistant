@@ -44,7 +44,7 @@
                 type="primary"
                 plain
                 size="mini"
-                >Mostrar</el-button
+                >Inventario</el-button
               >
             </template>
           </el-table-column>
