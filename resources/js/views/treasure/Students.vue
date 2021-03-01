@@ -127,12 +127,7 @@ export default {
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
-      //var newSaleOfDay = app.saleOfDay;
       axios
-        /*
-        .post("/api/valuesforStudent", {
-          dayTransactions: newDayTransactions,
-*/
         .post("/api/storeTransactionsByStudents", {
           dayTransactions: newDayTransactions,
           postulations: newPostulations,
@@ -172,7 +167,7 @@ export default {
             .catch((error) => {
               this.error = error.response.data;
               this.$notify.error({
-                title: "GRAN ERROR",
+                title: "error",
                 message: this.error.message,
               });
             });

@@ -80,14 +80,21 @@ class TreasureController extends Controller
         $id_dia = $dataDayTransactions['id_dia']; 
         $fec_tra = $dataDayTransactions['fec_tra'];
         $usr_cre = $dataDayTransactions['usr_cre'];
+<<<<<<< HEAD
         $gestion = $dataDayTransactions['gestion'];
         
         $nro_com = '-1'; //esto aun falta asignar
+=======
+>>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
         
-        $nro_dip = strtoupper($dataPostulations['nro_dip']);
+        $ci_per = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
+
+        $nro_com = '000001';
+        $tip_tra = '10';
+
         if ($paterno != "")
             $des_per = $paterno ." ". $materno .",". $nombres;
         else
@@ -98,22 +105,37 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $can_val = $item['can_val'];
             $pre_uni = $item['pre_uni_val'];
+<<<<<<< HEAD
             //$imp_val = $can_val * $pre_uni;
+=======
+            $imp_val = $can_val * $pre_uni;
+            $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+>>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
         }
+            /*
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+                return json_encode($data);
+            
+            */ 
         /*
-
         $marcador = $request->get('marker');
 
         switch ($marcador) {
             case 'registrar':
+<<<<<<< HEAD
                 $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $gestion)   
+=======
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+                \Log::info("Esto es parte de data".$data);             
+>>>>>>> 420f8e09a528d9536f40c1dd06dac041cd16507b
                 break;
             case 'editar':
             break;
             default:
                 break;
         }
-        return json_encode($data);    */
+        */
+        //return json_encode('Hola');
     }
 
     public function getSaleOfDaysByDescription(Request $request){

@@ -52,14 +52,16 @@ class Treasure extends Model
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }
-
-    public static function addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $gestion){
+    public static function addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion){
+        
+        \Log::info("Entra aca por si acaso");
         //insert into val.tra_dia( ... ) values ( ... ) RETURNING id_tran
         $query = "INSERT INTO val.tra_dia(id_dia, cod_val, can_val, pre_uni, fec_tra, usr_cre,".
                  "nro_com, ci_per, des_per, tip_tra, gestion) VALUES ". 
                  "('" .$id_dia. "','" .$cod_val. "','" .$can_val. "','" .$pre_uni."','" .$fec_tra. "','" .$usr_cre. "','" .
                  $nro_com. "','". $ci_per. "','" .$des_per. "','10','" .$gestion. "') RETURNING id_tran";
-        $data = collect(DB::select(DB::raw($query)));    
+        $data = collect(DB::select(DB::raw($query))); 
+        \Log::info("Data". $data);
         return $data;
     }
 
