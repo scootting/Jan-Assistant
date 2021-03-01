@@ -88,6 +88,7 @@ class TreasureController extends Controller
 
         $nro_com = '000001';
         $tip_tra = '10';
+        // mas pruebas para potosi
 
         if ($paterno != "")
             $des_per = $paterno ." ". $materno .",". $nombres;
@@ -99,7 +100,7 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $can_val = $item['can_val'];
             $pre_uni = $item['pre_uni_val'];
-            $imp_val = $can_val * $pre_uni;
+            $imp_val = $can_val * $pre_uni;            
             $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
         }
             /*
