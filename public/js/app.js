@@ -8185,14 +8185,8 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
-      var newValuesPostulations = app.valuesPostulations; //var newSaleOfDay = app.saleOfDay;
-
-      axios
-      /*
-      .post("/api/valuesforStudent", {
-        dayTransactions: newDayTransactions,
-      */
-      .post("/api/storeTransactionsByStudents", {
+      var newValuesPostulations = app.valuesPostulations;
+      axios.post("/api/storeTransactionsByStudents", {
         dayTransactions: newDayTransactions,
         postulations: newPostulations,
         valuesPostulations: newValuesPostulations,
@@ -8228,7 +8222,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.error = error.response.data;
 
           _this.$notify.error({
-            title: "GRAN ERROR",
+            title: "error",
             message: _this.error.message
           });
         });
@@ -113779,8 +113773,13 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+=======
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+>>>>>>> 9ac48b80835b09abf1d140342aafd41ed1fff277
 
 
 /***/ })
