@@ -9,7 +9,7 @@
       </div>
       <div style="margin-top: 15px">
         <el-input
-          placeholder="INSERTE EL NUMERO DE CARNET DEL INTERESADO"
+          placeholder="INSERTE EL NUMERO DE CARNET DE IDENTIDAD"
           v-model="writtenTextParameter"
           class="input-with-select"
         >
@@ -21,7 +21,9 @@
         </el-input>
       </div>
       <br />
-      <el-tag type="success">{{ texto }}</el-tag>
+      <!--
+        <el-tag type="success">{{ texto }}</el-tag>        
+      -->
       <el-row :gutter="20">
         <el-col :span="11"
           ><div class="grid-content bg-purple">
@@ -65,13 +67,13 @@
             </el-table></div
         ></el-col>
       </el-row>
-      <el-button type="primary" size="small" @click="saveTransaction()"
+      <el-button type="success" size="small" @click="saveTransaction()"
         >guardar</el-button
       >
       <el-button type="primary" size="small" @click="printTransactions()"
         >imprimir</el-button
       >
-      <el-button size="small" @click="resetTransaction()">cancel</el-button>
+      <el-button size="small" @click="resetTransaction()">nuevo</el-button>
       <el-row> </el-row>
     </el-card>
   </div>
@@ -83,6 +85,7 @@ export default {
   data() {
     return {
       writtenTextParameter: "",
+      activation: 1,
       user: this.$store.state.user,
       day: "",
       saleOfDay: [],
@@ -123,14 +126,15 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    resetTransaction() {
-      alert("se esta reseteando todo");
-    },
     saveTransaction() {
       var app = this;
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
+      if (app.activation != 2) {
+        alert("no puede realizar esta accion");
+        return;
+      }
       axios
         .post("/api/storeTransactionsByStudents", {
           dayTransactions: newDayTransactions,
@@ -140,6 +144,7 @@ export default {
         })
         .then(function (response) {
           alert("se ha creado el registro de los valores del estudiante");
+          app.activation = 3;
         })
         .catch(function (response) {
           console.log(response);
@@ -148,7 +153,11 @@ export default {
     },
     initGetDataOfStudent() {
       let app = this;
-      alert(app.user.gestion);
+      //alert(app.user.gestion);
+      if (app.activation != 1) {
+        alert("no puede realizar esta accion");
+        return;
+      }
       axios
         .post("/api/getDataOfStudentById", {
           id: app.writtenTextParameter,
@@ -165,7 +174,8 @@ export default {
             })
             .then((response) => {
               app.valuesPostulations = response.data;
-              app.texto = JSON.stringify(app.postulations);
+              app.activation = 2;
+              //app.texto = JSON.stringify(app.postulations);
               /*de acuerdo a la postulacion se debe imprimir los valores*/
             })
             .catch((error) => {
@@ -190,8 +200,12 @@ export default {
       });
     },
     printTransactions() {
+      if (this.activation != 3) {
+        alert("no puede realizar esta accion");
+        return;
+      }
       axios({
-        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
+        url: "/api/reports/9031/6600648/2021/rcallizaya", //+ this.oficina.cod_soa,
         method: "GET",
         responseType: "blob",
       }).then((response) => {
@@ -202,7 +216,26 @@ export default {
         link.href = window.URL.createObjectURL(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
+        this.activation = 4;
       });
+    },
+    resetTransaction() {
+      if (this.activation != 4) {
+        alert("no puede realizar esta accion");
+        return;
+      }
+
+      (this.writtenTextParameter = ""),
+        (this.valuesPostulations = []),
+        (this.postulations = {
+          nro_dip: "",
+          paterno: "",
+          materno: "",
+          nombres: "",
+          modalidad: "",
+          id_modalidad: "",
+        });
+      this.activation = 1;
     },
   },
 };

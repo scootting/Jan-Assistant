@@ -75,7 +75,7 @@ Route::group([
     // *** - Buscar los valores pertenecientes a un tramite - ***
     Route::post('valuesprocedure', 'TreasureController@getValuesProcedure');
     // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos - ***
-    Route::get('reports/{id}', 'TreasureController@getReportValuesQr');
+    Route::get('reports/{id_dia}/{ci_per}/{gestion}/{usr_cre}', 'TreasureController@getReportValuesQr');
     // *** - Almacenar - ***
     Route::post('storeTransactionsByStudents', 'TreasureController@storeTransactionsByStudents'); 
     // *** - Obtener los dias para la venta de valores de un usuario - ***

@@ -4,26 +4,15 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
-	<parameter name="p_gestion" class="java.lang.Integer"/>
-	<parameter name="p_usr_cre" class="java.lang.String"/>
-	<parameter name="p_ci_per" class="java.lang.String"/>
-	<parameter name="p_id_dia" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT (
-SELECT tt.nro_com FROM trap.tram tt where tt.ci_per='8621080' and tt.id_dia = '9130' LIMIT 1)
-AS nro_com, 
-TRIM(vt.cod_val) AS cod_val,
-(
-SELECT vv.des_val FROM val.valores vv WHERE vv.cod_val = vt.cod_val )
-AS des_val,
-vt.imp_val, trim(vt.ci_per) as ci_per, des_per, vt.fec_tra as fec_tra
+		<![CDATA[SELECT vt.nro_com, trim(vt.cod_val) as cod_val,
+(SELECT vv.des_val FROM val.valores vv WHERE vv.cod_val = vt.cod_val ) as des_val,
+ vt.imp_val, trim(vt.ci_per) as ci_per, des_per, vt.fec_tra::DATE as fec_tra
 FROM val.tra_dia vt
-WHERE vt.id_dia = '$P{p_id_dia}'
-  AND vt.ci_per ='8524182'
-  AND vt.usr_cre = 'rcallizaya'
-  AND vt.gestion = '2020']]>
+WHERE 
+	 vt.ci_per = '8621080' 
+	 AND vt.gestion = '2020' 
+	 AND vt.tip_tra = '10']]>
 	</queryString>
 	<field name="nro_com" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_com"/>
@@ -73,7 +62,7 @@ WHERE vt.id_dia = '$P{p_id_dia}'
 	<detail>
 		<band height="58" splitType="Stretch">
 			<componentElement>
-				<reportElement x="2" y="0" width="47" height="44" uuid="b40586a3-eaf6-4199-81c2-334d6a030df6">
+				<reportElement x="-1" y="-1" width="51" height="48" uuid="b40586a3-eaf6-4199-81c2-334d6a030df6">
 					<property name="com.jaspersoft.studio.unit.margin" value="mm"/>
 				</reportElement>
 				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -129,7 +118,7 @@ WHERE vt.id_dia = '$P{p_id_dia}'
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cod_val}+" - "+$F{des_val}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField>
 				<reportElement x="-1" y="47" width="53" height="7" uuid="709ae659-715a-452f-8bfb-af562612df71"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Narrow" size="4"/>
@@ -141,7 +130,7 @@ WHERE vt.id_dia = '$P{p_id_dia}'
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="6" isBold="true"/>
 				</textElement>
-				<text><![CDATA["TOMAS FRIAS"]]></text>
+				<text><![CDATA["TOMAS FRIAS A"]]></text>
 			</staticText>
 		</band>
 	</detail>

@@ -8008,11 +8008,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       writtenTextParameter: "",
+      activation: 1,
       user: this.$store.state.user,
       day: "",
       saleOfDay: [],
@@ -8048,14 +8051,17 @@ __webpack_require__.r(__webpack_exports__);
     test: function test() {
       alert("bienvenido al modulo");
     },
-    resetTransaction: function resetTransaction() {
-      alert("se esta reseteando todo");
-    },
     saveTransaction: function saveTransaction() {
       var app = this;
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
+
+      if (app.activation != 2) {
+        alert("no puede realizar esta accion");
+        return;
+      }
+
       axios.post("/api/storeTransactionsByStudents", {
         dayTransactions: newDayTransactions,
         postulations: newPostulations,
@@ -8063,6 +8069,7 @@ __webpack_require__.r(__webpack_exports__);
         marker: "registrar"
       }).then(function (response) {
         alert("se ha creado el registro de los valores del estudiante");
+        app.activation = 3;
       })["catch"](function (response) {
         console.log(response);
         alert("no se puede crear el registro de los valores del estudiante");
@@ -8071,8 +8078,13 @@ __webpack_require__.r(__webpack_exports__);
     initGetDataOfStudent: function initGetDataOfStudent() {
       var _this = this;
 
-      var app = this;
-      alert(app.user.gestion);
+      var app = this; //alert(app.user.gestion);
+
+      if (app.activation != 1) {
+        alert("no puede realizar esta accion");
+        return;
+      }
+
       axios.post("/api/getDataOfStudentById", {
         id: app.writtenTextParameter,
         year: app.user.gestion
@@ -8086,7 +8098,8 @@ __webpack_require__.r(__webpack_exports__);
           year: app.user.gestion
         }).then(function (response) {
           app.valuesPostulations = response.data;
-          app.texto = JSON.stringify(app.postulations);
+          app.activation = 2; //app.texto = JSON.stringify(app.postulations);
+
           /*de acuerdo a la postulacion se debe imprimir los valores*/
         })["catch"](function (error) {
           _this.error = error.response.data;
@@ -8110,8 +8123,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     printTransactions: function printTransactions() {
+      var _this2 = this;
+
+      if (this.activation != 3) {
+        alert("no puede realizar esta accion");
+        return;
+      }
+
       axios({
-        url: "/api/reports/lionel",
+        url: "/api/reports/9031/6600648/2021/rcallizaya",
         //+ this.oficina.cod_soa,
         method: "GET",
         responseType: "blob"
@@ -8123,7 +8143,24 @@ __webpack_require__.r(__webpack_exports__);
         link.href = window.URL.createObjectURL(blob);
         var url = window.URL.createObjectURL(blob);
         window.open(url);
+        _this2.activation = 4;
       });
+    },
+    resetTransaction: function resetTransaction() {
+      if (this.activation != 4) {
+        alert("no puede realizar esta accion");
+        return;
+      }
+
+      this.writtenTextParameter = "", this.valuesPostulations = [], this.postulations = {
+        nro_dip: "",
+        paterno: "",
+        materno: "",
+        nombres: "",
+        modalidad: "",
+        id_modalidad: ""
+      };
+      this.activation = 1;
     }
   }
 });
@@ -93802,7 +93839,7 @@ var render = function() {
                 {
                   staticClass: "input-with-select",
                   attrs: {
-                    placeholder: "INSERTE EL NUMERO DE CARNET DEL INTERESADO"
+                    placeholder: "INSERTE EL NUMERO DE CARNET DE IDENTIDAD"
                   },
                   model: {
                     value: _vm.writtenTextParameter,
@@ -93826,10 +93863,6 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("br"),
-          _vm._v(" "),
-          _c("el-tag", { attrs: { type: "success" } }, [
-            _vm._v(_vm._s(_vm.texto))
-          ]),
           _vm._v(" "),
           _c(
             "el-row",
@@ -93999,7 +94032,7 @@ var render = function() {
           _c(
             "el-button",
             {
-              attrs: { type: "primary", size: "small" },
+              attrs: { type: "success", size: "small" },
               on: {
                 click: function($event) {
                   return _vm.saveTransaction()
@@ -94032,7 +94065,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("cancel")]
+            [_vm._v("nuevo")]
           ),
           _vm._v(" "),
           _c("el-row")

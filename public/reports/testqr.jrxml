@@ -20,10 +20,10 @@ SELECT vv.des_val FROM val.valores vv WHERE vv.cod_val = vt.cod_val )
 AS des_val,
 vt.imp_val, trim(vt.ci_per) as ci_per, des_per, vt.fec_tra as fec_tra
 FROM val.tra_dia vt
-WHERE vt.id_dia = '$P{p_id_dia}'
-  AND vt.ci_per ='8524182'
-  AND vt.usr_cre = 'rcallizaya'
-  AND vt.gestion = '2020']]>
+WHERE vt.id_dia = $P{p_id_dia}
+  AND vt.ci_per = $P{p_ci_per}
+  AND vt.usr_cre = $P{p_usr_cre}
+  AND vt.gestion = $P{p_gestion}]]>
 	</queryString>
 	<field name="nro_com" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_com"/>
