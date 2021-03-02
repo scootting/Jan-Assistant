@@ -7721,6 +7721,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Dias",
   data: function data() {
@@ -7777,7 +7781,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     initAddDay: function initAddDay() {
-      alert("el modulo esta a desicion del usuario");
+      alert("el modulo esta aun en contruccion");
     },
     initDetailStudents: function initDetailStudents(index, row) {
       var id = row.id_dia;
@@ -7789,8 +7793,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     initSaleStudents: function initSaleStudents(index, row) {
-      var id = row.id_dia;
-      alert(id);
+      var id = row.id_dia; //alert(id);
+
       this.$router.push({
         name: "students",
         params: {
@@ -8033,7 +8037,9 @@ __webpack_require__.r(__webpack_exports__);
       year: app.user.gestion
     }).then(function (response) {
       app.saleOfDay = response.data[0];
-      if (app.saleOfDay.estado == "V") alert("El dia ya esta verificado");
+      if (app.saleOfDay.estado == "V") app.$router.push({
+        name: "salestudents"
+      }); //alert("El dia ya esta verificado");
     })["catch"](function (response) {
       alert("no se puede crear el registro de los valores del estudiante");
     });
@@ -93486,38 +93492,6 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticStyle: { "margin-top": "15px" } },
-          [
-            _c(
-              "el-input",
-              {
-                staticClass: "input-with-select",
-                attrs: { placeholder: "INSERTE UNA DESCRIPCION" },
-                model: {
-                  value: _vm.writtenTextParameter,
-                  callback: function($$v) {
-                    _vm.writtenTextParameter = $$v
-                  },
-                  expression: "writtenTextParameter"
-                }
-              },
-              [
-                _c("el-button", {
-                  attrs: { slot: "append", icon: "el-icon-search" },
-                  on: { click: _vm.test },
-                  slot: "append"
-                })
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c(
-          "div",
           [
             _c(
               "el-table",
@@ -93561,11 +93535,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "importe", label: "importe", width: "100" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { align: "right", width: "220" },
+                  attrs: { align: "right", width: "320" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -93588,7 +93558,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("detalle")]
+                            [_vm._v("detalle del dia")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -93608,7 +93578,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("venta")]
+                            [_vm._v("realizar venta")]
                           )
                         ]
                       }
@@ -113469,8 +113439,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

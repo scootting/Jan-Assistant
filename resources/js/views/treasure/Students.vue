@@ -109,7 +109,11 @@ export default {
       })
       .then(function (response) {
         app.saleOfDay = response.data[0];
-        if (app.saleOfDay.estado == "V") alert("El dia ya esta verificado");
+        if (app.saleOfDay.estado == "V")
+          app.$router.push({
+            name: "salestudents",
+          });
+        //alert("El dia ya esta verificado");
       })
       .catch(function (response) {
         alert("no se puede crear el registro de los valores del estudiante");
