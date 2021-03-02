@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>venta de valores para estudiantes nuevos</span>
+        <span>dia de venta: {{ day }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="test"
           >ayuda</el-button
         >
@@ -16,14 +16,14 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="initSearchNewStudent"
+            @click="initGetDataOfStudent"
           ></el-button>
         </el-input>
       </div>
       <br />
       <el-tag type="success">{{ texto }}</el-tag>
       <el-row :gutter="20">
-        <el-col :span="12"
+        <el-col :span="11"
           ><div class="grid-content bg-purple">
             <el-form
               ref="form"
@@ -48,7 +48,7 @@
               </el-form-item>
             </el-form></div
         ></el-col>
-        <el-col :span="12"
+        <el-col :span="13"
           ><div class="grid-content bg-purple">
             <el-table
               :data="valuesPostulations"
@@ -57,9 +57,8 @@
               style="width: 100%"
               size="small"
             >
-              <el-table-column prop="cod_val" label="codigo" width="75">
-              </el-table-column>
-              <el-table-column prop="des_val" label="descripcion" width="480">
+              <el-table-column prop="cod_val" label="cod." width="65"> </el-table-column>
+              <el-table-column prop="des_val" label="descripcion" width="550">
               </el-table-column>
               <el-table-column prop="pre_uni_val" sortable label="Precio" align="right">
               </el-table-column>
@@ -67,7 +66,7 @@
         ></el-col>
       </el-row>
       <el-button type="primary" size="small" @click="saveTransaction()"
-        >procesar</el-button
+        >guardar</el-button
       >
       <el-button type="primary" size="small" @click="printTransactions()"
         >imprimir</el-button
@@ -80,12 +79,13 @@
 
 <script>
 export default {
-  name: "VentaEstudiantesNuevos",
+  name: "",
   data() {
     return {
       writtenTextParameter: "",
-      year: "",
-      messages: {},
+      user: this.$store.state.user,
+      day: "",
+      saleOfDay: [],
       valuesPostulations: [],
       postulations: {
         nro_dip: "",
@@ -95,39 +95,25 @@ export default {
         modalidad: "",
         id_modalidad: "",
       },
-      //requisites: {},
-      texto: "Loasdasdsadsad",
-      requisites: [
-        {
-          id: "12987122",
-          name: "Tom",
-          amount2: "3.2",
-        },
-        {
-          id: "12987123",
-          name: "Tom",
-          amount2: "4.43",
-        },
-        {
-          id: "12987124",
-          name: "Tom",
-          amount2: "1.9",
-        },
-        {
-          id: "12987125",
-          name: "Tom",
-          amount2: "2.2",
-        },
-        {
-          id: "12987126",
-          name: "Tom",
-          amount2: "4.1",
-        },
-      ],
+      texto: "",
     };
   },
   mounted() {
-    this.year = "2020";
+    let app = this;
+    app.day = app.$route.params.id;
+    axios
+      .post("/api/getSaleOfDayById", {
+        id: app.day,
+        user: app.user.usuario,
+        year: app.user.gestion,
+      })
+      .then(function (response) {
+        app.saleOfDay = response.data[0];
+        if (app.saleOfDay.estado == "V") alert("El dia ya esta verificado");
+      })
+      .catch(function (response) {
+        alert("no se puede crear el registro de los valores del estudiante");
+      });
   },
   methods: {
     test() {
@@ -138,51 +124,36 @@ export default {
     },
     saveTransaction() {
       var app = this;
+      var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
-      //console.log("REGISTRAR");
+      //var newSaleOfDay = app.saleOfDay;
       axios
+        /*
         .post("/api/valuesforStudent", {
+          dayTransactions: newDayTransactions,
+*/
+        .post("/api/storeTransactionsByStudents", {
+          dayTransactions: newDayTransactions,
           postulations: newPostulations,
           valuesPostulations: newValuesPostulations,
-          marker: "registrar"
+          marker: "registrar",
         })
-        .then(function(response) {
+        .then(function (response) {
           alert("se ha creado el registro de los valores del estudiante");
         })
-        .catch(function(response) {
+        .catch(function (response) {
           console.log(response);
           alert("no se puede crear el registro de los valores del estudiante");
         });
     },
-    printTransactions() {
-      axios({
-        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        console.log(response.data);
-        console.log("1");
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-        /*
-        link.download = "test.pdf";
-        link.click();
-        */
-      });
-    },
-    initSearchNewStudent() {
+    initGetDataOfStudent() {
       let app = this;
+      alert(app.user.gestion);
       axios
-        .post("/api/newstudent", {
+        .post("/api/getDataOfStudentById", {
           id: app.writtenTextParameter,
-          year: app.year,
+          year: app.user.gestion,
         })
         .then((response) => {
           app.postulations = response.data[0];
@@ -191,7 +162,7 @@ export default {
           axios
             .post("/api/valuesprocedure", {
               id: app.postulations.id_modalidad,
-              year: app.year,
+              year: app.user.gestion,
             })
             .then((response) => {
               app.valuesPostulations = response.data;
@@ -216,8 +187,22 @@ export default {
 
       this.$alert(this.writtenTextParameter, "mensaje del alumno", {
         confirmButtonText: "OK",
-        callback: (action) => {
-        },
+        callback: (action) => {},
+      });
+    },
+    printTransactions() {
+      axios({
+        url: "/api/reports/lionel", //+ this.oficina.cod_soa,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
     },
   },

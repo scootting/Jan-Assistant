@@ -60,7 +60,7 @@ Route::group([
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
     Route::get('inventory2/edit/{id}','InventoryController@getInventory');
-    Route::post('inventory2/saveChange','InventoryController@saveChangeDocInventory');
+    Route::post('inventory2/saveChange ','InventoryController@saveChangeDocInventory');
     Route::get('inventory2/doc_inv/{no_cod}', 'InventoryController@showDocInventory');
     Route::get('inventory2/doc_detail_by_active/{id}', 'InventoryController@getDocDetailByActivoId');
     Route::get('inventory2/search/{doc_cod}', 'InventoryController@getActivesForDocInv');
@@ -75,12 +75,15 @@ Route::group([
 
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
     // *** - Buscar por su carnet de identidad - ***
-    Route::post('newstudent', 'TreasureController@getNewStudentByDNI');
+    Route::post('getDataOfStudentById', 'TreasureController@getDataOfStudentById');
     // *** - Buscar los valores pertenecientes a un tramite - ***
     Route::post('valuesprocedure', 'TreasureController@getValuesProcedure');
     // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos - ***
     Route::get('reports/{id}', 'TreasureController@getReportValuesQr');
     // *** - Almacenar - ***
-    Route::post('valuesforStudent', 'TreasureController@storeValuesforStudent');
-
+    Route::post('storeTransactionsByStudents', 'TreasureController@storeTransactionsByStudents'); 
+    // *** - Obtener los dias para la venta de valores de un usuario - ***
+    Route::post('getSaleOfDaysByDescription', 'TreasureController@getSaleOfDaysByDescription'); 
+    // *** - Obtener los dias para la venta de valores de un usuario - ***
+    Route::post('getSaleOfDayById', 'TreasureController@getSaleOfDayById');
 });

@@ -73,7 +73,7 @@
               :inline="false"
               size="normal"
             >
-              <el-form-item label="">
+              <el-form-item  align="right-center" width="20" >
                 <el-button
                   style="text-align: right; float: right"
                   size="small"
@@ -169,7 +169,7 @@ export default {
           this.respSelectCI = -1;
           this.encargados = data.data;
           this.encargados.push({
-            nro_dip: -1,
+            ci_resp: -1,
             nombres: "Todos",
             paterno: "",
             materno: "",

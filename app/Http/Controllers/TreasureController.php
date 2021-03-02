@@ -6,16 +6,17 @@ use App\Treasure;
 use Illuminate\Http\Request;
 use JasperPHP\JasperPHP as JasperPHP;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TreasureController extends Controller
 {
     //  * Encontrar a un estudiante nuevo a traves de su carnet de identidad y el año de ingreso.
     //  * {id: numero de carnet de identidad}    
     //  * {year: año de ingreso}    
-    public function getNewStudentByDNI(Request $request){        
+    public function getDataOfStudentById(Request $request){          
         $id = $request->get('id');
         $year = $request->get('year');
-        $data = Treasure::getNewStudentByDNI($id, $year);
+        $data = Treasure::getDataOfStudentById($id, $year);
         return json_encode($data);
     }    
     
@@ -25,7 +26,6 @@ class TreasureController extends Controller
     public function getValuesProcedure(Request $request){
         $id_modalidad = $request->get('id');
         $year = $request->get('year');
-        //\Log::info($id_modalidad . " esta es la modalidad," . $year . " esta es la gestion.");
         switch($id_modalidad) {
             case 1: //EXAMEN PSA          
             case 2: //CURSO PREUNIVERSITARIO          
@@ -61,7 +61,7 @@ class TreasureController extends Controller
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
-                'database' => 'daf',
+                'database' => 'daf_help',
                 'port' => '5432',
             )  
         )->execute();
@@ -72,24 +72,31 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
-    public function storeValuesforStudent(Request $request){
+    public function storeTransactionsByStudents(Request $request){
+        $dataDayTransactions = $request->get('dayTransactions');
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
 
-        $personal = strtoupper($dataPostulations['nro_dip']);
+        $id_dia = $dataDayTransactions['id_dia']; 
+        $fec_tra = $dataDayTransactions['fec_tra'];
+        $usr_cre = $dataDayTransactions['usr_cre'];
+
+        
+        $nro_dip = strtoupper($dataPostulations['nro_dip']);
         $nombres = strtoupper($dataPostulations['nombres']);
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
         if ($paterno != "")
-            $descripcion = $paterno ." ". $materno .",". $nombres;
+            $des_per = $paterno ." ". $materno .",". $nombres;
         else
-            $descripcion = $materno .",". $nombres;
+            $des_per = $materno .",". $nombres;
         foreach ($dataValuesPostulations as $item) {
             # code...
             $gestion = $item['gestion'];
-            $codigo_valor = $item['cod_val'];
-            $cantidad_valor = $item['can_val'];
-            $pu_valor = $item['pre_uni_val'];
+            $cod_val = $item['cod_val'];
+            $can_val = $item['can_val'];
+            $pre_uni = $item['pre_uni_val'];
+            $imp_val = $can_val * $pre_uni;
         }
         /*
 
@@ -97,14 +104,40 @@ class TreasureController extends Controller
 
         switch ($marcador) {
             case 'registrar':
-                $data = General::AddPerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)                
                 break;
             case 'editar':
-                $data = General::UpdatePerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
             break;
             default:
                 break;
         }
         return json_encode($data);    */
+    }
+
+    public function getSaleOfDaysByDescription(Request $request){
+        $descripcion = $request->get('description');// '' cadena vacia
+        $usuario = $request->get('user');
+        $gestion = $request->get('year');
+        $data = Treasure::getSaleOfDaysByDescription($descripcion, $usuario, $gestion);
+        
+        $page = ($request->get('page')? $request->get('page'): 1);
+        $perPage = 10;
+
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/getDaysOfSale')]
+        );
+        return json_encode($paginate);
+    }
+
+    public function getSaleOfDayById(Request $request){
+        $id = $request->get('id');// '' cadena vacia
+        $usuario = $request->get('user');
+        $gestion = $request->get('year');
+        $data = Treasure::getSaleOfDayById($id, $usuario, $gestion);
+        return json_encode($data);
     }
 }

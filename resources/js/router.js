@@ -40,6 +40,7 @@ import QrPrint from './views/inventory/QrPrint'
 //tesoreria
 import Solvency from './views/treasure/Solvency'
 import Students from './views/treasure/Students'
+import SaleStudents from './views/treasure/SaleStudents'
 
 
 // Routes
@@ -100,9 +101,13 @@ const router = new VueRouter({
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
+                
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency },
-                { path: 'students', name: 'students', component: Students },
+                //{ path: 'students', name: 'students', component: Students },
+                { path: 'salestudents', name: 'salestudents', component: SaleStudents },
+                { path: 'salestudents/:id', name: 'students', component: Students },
+
             ],
             meta: {
                 requiresAuth: true,
