@@ -15,7 +15,8 @@ class Inventory extends Model
         $query = "select inv.oficinas.cod_soa,inv.oficinas.descripcion 
                     from inv.oficinas where 
                     inv.oficinas.gestion = '" . $gestion . "' 
-                    and inv.oficinas.descripcion like '%" . $descripcion . "%'";
+                    and inv.oficinas.descripcion like '%" . $descripcion . "%'
+                    order by inv.oficinas.cod_soa ASC";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -38,7 +39,28 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    //Obtener los cargos por cod_soa
+    public static function getCargosByCodSoa($cod_soa)
+    {
+        $query = "select ci_resp, sub_ofc_cod,public.personas.nombres,
+        public.personas.paterno,public.personas.materno   
+        from inv.activos,public.personas 
+        where ofc_cod = '".$cod_soa."'and ci_resp = public.personas.nro_dip
+        group by (ci_resp,sub_ofc_cod,public.personas.nombres,
+        public.personas.paterno,public.personas.materno)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
+    //Obtener activos por codigo soa y el ci del responsable
+    public static function getActivosBySoaAndResp($cod_soa, $ci_resp)
+    {
+        $db = DB::table('inv.activos')->where('inv.activos.ofc_cod',$cod_soa);
+        if($ci_resp){
+            $db->where('inv.activos.sub_ofc_cod',$ci_resp);
+        }
+        return $db->get();
+    }
     // prueba para obtener los activos segun el codigo soa y el id de sub oficina
     public static function getActivosByCodSoaAndSubOffice($cod_soa, $idso)
     {
@@ -150,7 +172,6 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
     public static function getNewCodInv()
     {
         $idmax = DB::table('inv.doc_inv')->max('no_cod');
@@ -347,8 +368,6 @@ class Inventory extends Model
         return $data;
 
     }
-
-
     //Obtener los datos de la tabla de estados
     public static function getEstados()
     {
@@ -361,6 +380,18 @@ class Inventory extends Model
     {
         $fec_cre = Date('d-m-Y');
         $query = "Select * from inv.insertarActivoDocDetail('" . $doc_cod . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $fec_cre . "','" . $est_cod . "','" . $obs_est . "','" . $validacion . "','" . $id . "')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //elegir entre inventario general o detallado
+    public static function selectInventory($tipo,$cod_soa,$resp)
+    {
+        if ($tipo == 1) {
+            $query = "select * from inv.inventario_general('".$cod_soa."', '".$resp."')";
+        }
+        else {
+            $query = "select * from inv.inventario_detalle('".$cod_soa."', '".$resp."')";
+        }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
