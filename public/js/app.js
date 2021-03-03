@@ -7957,12 +7957,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     initDetailStudents: function initDetailStudents(index, row) {
       var id = row.id_dia;
-      this.$router.push({
-        name: "students",
-        params: {
-          id: id
-        }
+      axios({
+        url: "/api/reportDetailStudents/" + row.id_dia,
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
+      alert("llegamos");
     },
     initSaleStudents: function initSaleStudents(index, row) {
       var id = row.id_dia; //alert(id);

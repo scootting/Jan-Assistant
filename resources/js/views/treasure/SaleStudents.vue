@@ -132,12 +132,20 @@ export default {
 
     initDetailStudents(index, row) {
       let id = row.id_dia;
-      this.$router.push({
-        name: "students",
-        params: {
-          id: id,
-        },
+      axios({
+        url: "/api/reportDetailStudents/" + row.id_dia,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
+      alert("llegamos");
     },
     initSaleStudents(index, row) {
       let id = row.id_dia;

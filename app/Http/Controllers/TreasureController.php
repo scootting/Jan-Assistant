@@ -79,6 +79,37 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
+    public function getReportDetailStudents($id){
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/testDetail.jrxml';
+        $jasper->compile($input)->execute();
+
+        $input = public_path() . '/reports/testDetail.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
+            array(
+                'p_id' => $id, 
+                ),
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+
+        $pathToFile = public_path() . '/reports/testDetail.pdf';
+        $filename = 'testDetail.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+
+    }
+
     public function storeTransactionsByStudents(Request $request){
         $id_tran = 0;
         $dataDayTransactions = $request->get('dayTransactions');
@@ -112,7 +143,7 @@ class TreasureController extends Controller
             $imp_val = $item['imp_val'];
             //$imp_val = $can_val * $pre_uni;
             if ($imp_val == 1){
-                $marker = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
+                $marker = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, '-1', $ci_per, $des_per, $tip_tra, $gestion); 
                 $id_tran = $marker[0]->{'id_tran'};
             }
             $data = Treasure::addProcedureByStudents($id_dia, $id_tran, $nro_com, $cod_val, $ci_per, $des_per, $idx, $gestion, $imp_val); 
