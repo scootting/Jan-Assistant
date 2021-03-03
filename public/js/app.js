@@ -3658,6 +3658,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
@@ -3722,6 +3756,10 @@ __webpack_require__.r(__webpack_exports__);
         app.options = response.data;
         app.user.gestion = app.yearSelected;
         app.$store.commit("updateUser", app.user);
+
+        _this2.$router.push({
+          name: "welcome"
+        });
       })["catch"](function (error) {
         _this2.error = error;
 
@@ -10195,7 +10233,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app {\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n    font-family: inherit;\r\n    font-size: inherit;\r\n    line-height: inherit;\r\n    color: inherit;\n}\n.el-aside {\r\n    color: #212120;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n    color: #fff;\r\n    line-height: 60px;\r\n    padding-left: 224px;\n}\n.el-dropdown {\r\n    color: #000a;\r\n    padding: 0px 18px;\n}\n.el-dropdown-link {\r\n    cursor: pointer;\r\n    margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n    font-size: 12px;\n}\n.logo {\r\n    padding: 42px 5px;\r\n    align-content: center;\r\n    text-align: center;\r\n    color: #faebd7;\n}\r\n\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n    display: flex !important;\r\n    align-items: center;\r\n    justify-content: space-between;\n}\n.el-breadcrumb {\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    font-size: 20px !important;\n}\n#right-button {\r\n    align-items: right;\r\n    justify-content: flex-end;\n}\r\n", ""]);
+exports.push([module.i, "\n#app {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #212120;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #fff;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\n.logo {\r\n  padding: 42px 5px;\r\n  align-content: center;\r\n  text-align: center;\r\n  color: #faebd7;\n}\r\n\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 20px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n", ""]);
 
 // exports
 
@@ -87845,9 +87883,9 @@ var render = function() {
                               { attrs: { slot: "title" }, slot: "title" },
                               [
                                 _vm._v(
-                                  "\r\n                                " +
+                                  "\n                " +
                                     _vm._s(option.title.trim()) +
-                                    "\r\n                            "
+                                    "\n              "
                                 )
                               ]
                             )
@@ -87875,9 +87913,9 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\r\n                                    " +
+                                          "\n                  " +
                                             _vm._s(item.title.trim()) +
-                                            "\r\n                                "
+                                            "\n                "
                                         )
                                       ]
                                     )
@@ -87908,7 +87946,7 @@ var render = function() {
                 {
                   staticStyle: {
                     "text-align": "right",
-                    "background-color": "#F4F3EF"
+                    "background-color": "#f4f3ef"
                   }
                 },
                 [
@@ -87917,9 +87955,7 @@ var render = function() {
                     { attrs: { size: "medium" } },
                     [
                       _c("span", { staticClass: "el-dropdown-link" }, [
-                        _vm._v(
-                          "\r\n                        Configuracion\r\n                        "
-                        ),
+                        _vm._v("\n            Configuracion\n            "),
                         _c("i", {
                           staticClass: "el-icon-arrow-down el-icon--right"
                         })
@@ -87984,9 +88020,9 @@ var render = function() {
                     [
                       _c("span", { staticClass: "el-dropdown-link" }, [
                         _vm._v(
-                          "\r\n                        " +
+                          "\n            " +
                             _vm._s(_vm.user.descripcion) +
-                            "\r\n                        "
+                            "\n            "
                         ),
                         _c("i", {
                           staticClass: "el-icon-arrow-down el-icon--right"
