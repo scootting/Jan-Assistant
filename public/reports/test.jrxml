@@ -7,12 +7,12 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<parameter name="p_gestion" class="java.lang.Integer"/>
-	<parameter name="p_usr_cre" class="java.lang.String"/>
 	<parameter name="p_ci_per" class="java.lang.String"/>
+	<parameter name="p_usr_cre" class="java.lang.String"/>
 	<parameter name="p_id_dia" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT (
-SELECT tt.nro_com FROM trap.tram tt where tt.ci_per='8621080' and tt.id_dia = '9130' LIMIT 1)
+SELECT tt.nro_com FROM trap.tram tt where tt.ci_per=$P{p_ci_per} and tt.id_dia = $P{p_id_dia} ORDER BY tt.nro_com DESC LIMIT 1)
 AS nro_com, 
 TRIM(vt.cod_val) AS cod_val,
 (
@@ -20,10 +20,10 @@ SELECT vv.des_val FROM val.valores vv WHERE vv.cod_val = vt.cod_val )
 AS des_val,
 vt.imp_val, trim(vt.ci_per) as ci_per, des_per, vt.fec_tra as fec_tra
 FROM val.tra_dia vt
-WHERE vt.id_dia = '$P{p_id_dia}'
-  AND vt.ci_per ='8524182'
-  AND vt.usr_cre = 'rcallizaya'
-  AND vt.gestion = '2020']]>
+WHERE vt.id_dia = $P{p_id_dia}
+  AND vt.ci_per =$P{p_ci_per}
+  AND vt.usr_cre = $P{p_usr_cre}
+  AND vt.gestion = $P{p_gestion}]]>
 	</queryString>
 	<field name="nro_com" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_com"/>

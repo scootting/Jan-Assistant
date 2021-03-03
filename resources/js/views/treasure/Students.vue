@@ -143,7 +143,15 @@ export default {
           marker: "registrar",
         })
         .then(function (response) {
-          alert("se ha creado el registro de los valores del estudiante");
+          app.$alert(
+            "se ha creado el registro de los valores del estudiante",
+            "mensaje del sistema",
+            {
+              confirmButtonText: "OK",
+              callback: (action) => {},
+            }
+          );
+          //alert("se ha creado el registro de los valores del estudiante");
           app.activation = 3;
         })
         .catch(function (response) {
@@ -193,19 +201,24 @@ export default {
             message: this.error.message,
           });
         });
-
-      this.$alert(this.writtenTextParameter, "mensaje del alumno", {
-        confirmButtonText: "OK",
-        callback: (action) => {},
-      });
     },
     printTransactions() {
+      var app = this;
+      app.ci_per = app.postulations.nro_dip;
       if (this.activation != 3) {
         alert("no puede realizar esta accion");
         return;
       }
       axios({
-        url: "/api/reports/9031/6600648/2021/rcallizaya", //+ this.oficina.cod_soa,
+        url:
+          "/api/reports/" +
+          app.day +
+          "/" +
+          app.ci_per +
+          "/" +
+          app.user.gestion +
+          "/" +
+          app.user.usuario,
         method: "GET",
         responseType: "blob",
       }).then((response) => {

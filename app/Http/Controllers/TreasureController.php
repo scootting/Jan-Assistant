@@ -46,6 +46,7 @@ class TreasureController extends Controller
     //reportes usando Jasper
     public function getReportValuesQr($id_dia, $ci_per, $gestion, $usr_cre)
     {        
+        \Log::info('estos son datos: '. $id_dia.' '.$ci_per.' '.$gestion.' '.$usr_cre);
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/test.jrxml';
         $jasper->compile($input)->execute();
@@ -56,13 +57,13 @@ class TreasureController extends Controller
             $input,
             false, //$output,
             array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
-            array('id_dia'=> '9130'),/*
+            //array('p_ci_per' => $ci_per),
             array(
-                'id_dia' => $id_dia, 
-                'ci_per' => $ci_per, 
-                'gestion' => $gestion, 
-                'usr_cre' => $usr_cre
-                ),*///array('php_version' => phpversion()),// Parámetros del reporte
+                'p_id_dia' => $id_dia, 
+                'p_ci_per' => $ci_per, 
+                'p_gestion' => $gestion, 
+                'p_usr_cre' => $usr_cre
+                ),//array('php_version' => phpversion()),// Parámetros del reporte
             array(
                 'driver' => 'postgres',
                 'username' => 'postgres',

@@ -4312,8 +4312,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -8204,7 +8202,11 @@ __webpack_require__.r(__webpack_exports__);
         valuesPostulations: newValuesPostulations,
         marker: "registrar"
       }).then(function (response) {
-        alert("se ha creado el registro de los valores del estudiante");
+        app.$alert("se ha creado el registro de los valores del estudiante", "mensaje del sistema", {
+          confirmButtonText: "OK",
+          callback: function callback(action) {}
+        }); //alert("se ha creado el registro de los valores del estudiante");
+
         app.activation = 3;
       })["catch"](function (response) {
         console.log(response);
@@ -8253,13 +8255,12 @@ __webpack_require__.r(__webpack_exports__);
           message: _this.error.message
         });
       });
-      this.$alert(this.writtenTextParameter, "mensaje del alumno", {
-        confirmButtonText: "OK",
-        callback: function callback(action) {}
-      });
     },
     printTransactions: function printTransactions() {
       var _this2 = this;
+
+      var app = this;
+      app.ci_per = app.postulations.nro_dip;
 
       if (this.activation != 3) {
         alert("no puede realizar esta accion");
@@ -8267,8 +8268,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios({
-        url: "/api/reports/9031/6600648/2021/rcallizaya",
-        //+ this.oficina.cod_soa,
+        url: "/api/reports/" + app.day + "/" + app.ci_per + "/" + app.user.gestion + "/" + app.user.usuario,
         method: "GET",
         responseType: "blob"
       }).then(function (response) {
@@ -89043,71 +89043,35 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "el-card",
-        { staticClass: "box-card" },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "clearfix",
-              attrs: { slot: "header" },
-              slot: "header"
-            },
-            [
-              _c("span", [_vm._v("bienvenido")]),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  staticStyle: { float: "right", padding: "3px 0" },
-                  attrs: { type: "text" }
-                },
-                [_vm._v("ayuda")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("h1", [_vm._v("bienvenido/a")]),
-          _vm._v(" "),
-          _c("h5", [
-            _vm._v("esta pagina a sido intencionalmente puesta en blanco")
-          ]),
-          _vm._v(" "),
-          _c("example", { attrs: { msg: "Welcome to Your Vue.js App" } }),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "text" }, on: { click: _vm.openModalPerson } },
-            [_vm._v("Personas")]
-          ),
-          _vm._v(" "),
-          _c("persona", {
-            attrs: { centerDialogVisible: _vm.isVisible },
-            on: { "update-visible": _vm.update }
-          }),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "text" }, on: { click: _vm.openModalValued } },
-            [_vm._v("Valorado")]
-          ),
-          _vm._v(" "),
-          _c("valorado", {
-            attrs: { centerDialogVisible: _vm.isValued },
-            on: {
-              "update:centerDialogVisible": function($event) {
-                _vm.isValued = $event
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "clearfix",
+            attrs: { slot: "header" },
+            slot: "header"
+          },
+          [
+            _c("span", [_vm._v("bienvenido")]),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                staticStyle: { float: "right", padding: "3px 0" },
+                attrs: { type: "text" }
               },
-              "update:center-dialog-visible": function($event) {
-                _vm.isValued = $event
-              }
-            }
-          })
-        ],
-        1
-      )
+              [_vm._v("ayuda")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("h1", [_vm._v("bienvenido/a")]),
+        _vm._v(" "),
+        _c("h5", [
+          _vm._v("esta pagina a sido intencionalmente puesta en blanco")
+        ])
+      ])
     ],
     1
   )
@@ -113776,18 +113740,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-<<<<<<< HEAD
-__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> 9ac48b80835b09abf1d140342aafd41ed1fff277
->>>>>>> 34dbf0d43a9801ebfd2af902887923bbead3f700
 
 
 /***/ })
