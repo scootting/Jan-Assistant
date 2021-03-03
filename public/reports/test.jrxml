@@ -95,7 +95,7 @@ WHERE vt.id_dia = $P{p_id_dia}
 				<textFieldExpression><![CDATA[$F{ci_per} +" - "+$F{des_per}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="68" y="15" width="42" height="14" uuid="dd0c1189-df74-4477-8b86-5fdd83fc9f02"/>
+				<reportElement x="68" y="15" width="38" height="14" uuid="dd0c1189-df74-4477-8b86-5fdd83fc9f02"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
 					<font fontName="Arial Narrow" size="12" isBold="true"/>
 				</textElement>
@@ -109,14 +109,14 @@ WHERE vt.id_dia = $P{p_id_dia}
 				<text><![CDATA[No:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="130" y="15" width="36" height="14" uuid="262a0b29-2db2-4737-8b21-36e57efb6e95"/>
+				<reportElement x="128" y="15" width="35" height="14" uuid="262a0b29-2db2-4737-8b21-36e57efb6e95"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial Narrow" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{imp_val}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="112" y="14" width="18" height="14" uuid="0447a839-3c20-4f79-ac35-76cfd52e8afd"/>
+				<reportElement x="110" y="14" width="18" height="14" uuid="0447a839-3c20-4f79-ac35-76cfd52e8afd"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial Narrow" size="9" isBold="true"/>
 				</textElement>

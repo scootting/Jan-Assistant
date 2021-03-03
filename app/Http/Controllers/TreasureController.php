@@ -57,7 +57,6 @@ class TreasureController extends Controller
             $input,
             false, //$output,
             array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
-            //array('p_ci_per' => $ci_per),
             array(
                 'p_id_dia' => $id_dia, 
                 'p_ci_per' => $ci_per, 
@@ -98,7 +97,6 @@ class TreasureController extends Controller
 
         $idx = Treasure::getIdTransactionsByYear($gestion);
         $idx = $idx[0]->{'ff_id_tramite'};
-        //\Log::info("este es el numero de tramite importante fuera: ". json_encode());
         $nro_com = str_pad($idx, 6, "0", STR_PAD_LEFT);
         $tip_tra = '10';
 
