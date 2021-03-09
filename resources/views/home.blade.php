@@ -9,14 +9,14 @@
     -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vue - Laravel SPA</title>
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset( mix('css/app.css')) }}" rel="stylesheet" />
 </head>
 
 <body>
     <div id="app">
         <app></app>
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset( mix('js/app.js')) }}"></script>
 </body>
 
 </html>
