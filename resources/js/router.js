@@ -8,6 +8,7 @@ import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
 import Assets from './views/FixedAssets'
+import AddNotDocument from './views/clients/AddNotDocument'
 
 //usuario
 import Users from './views/application/Users'
@@ -56,6 +57,7 @@ const router = new VueRouter({
                 { path: '', name: 'layout', component: Layout },
                 { path: '/formalities', name: 'formalities', component: Formalities },
                 { path: '/taxExemption', name: 'addTaxExemption', component: AddTaxExemption },
+                { path: '/addNotDocument', name: 'addNotDocument', component: AddNotDocument },
             ],
         },
         {

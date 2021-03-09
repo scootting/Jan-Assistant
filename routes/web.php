@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //  * Ruta añadida para redireccionar a la misma pagina.    
-Route::get('personita/{id}','GeneralController@getPersonById');  
+Route::get('person/{id}', 'GeneralController@getPersonById');
 
 
 
