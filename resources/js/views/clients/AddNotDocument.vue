@@ -3,7 +3,10 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>certificado de no tener cuentas pendientes </span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="test"
+        <el-button
+          style="float: right; padding: 3px 0"
+          type="text"
+          @click="test"
           >ayuda</el-button
         >
       </div>
@@ -27,7 +30,13 @@
       <el-row :gutter="20">
         <el-col :span="11"
           ><div class="grid-content bg-purple">
-            <el-form ref="form" :model="this.person" label-width="200px" size="mini">
+            <p>datos personales</p>
+            <el-form
+              ref="form"
+              :model="this.person"
+              label-width="200px"
+              size="mini"
+            >
               <el-form-item label="carnet de identidad">
                 <el-input v-model="person.personal" disabled></el-input>
               </el-form-item>
@@ -45,8 +54,29 @@
         <el-col :span="13"
           ><div class="grid-content bg-purple">
             <p>convocatorias</p>
-          </div></el-col
-        >
+            <!---->
+            <el-table
+              v-loading="loading"
+              :data="descriptions"
+              style="width: 100%"
+              height="250"
+              @selection-change="handleSelectionChange"
+            >
+              <el-table-column type="selection" width="55"> </el-table-column>
+              <el-table-column prop="fec_pre" label="fecha" width="120">
+                <template slot-scope="scope">
+                  <el-tag size="success" type="info">{{
+                    scope.row.fec_pre
+                  }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="glosa"
+                label="descripcion"
+                width="420"
+              ></el-table-column>
+            </el-table></div
+        ></el-col>
       </el-row>
       <el-button type="success" size="small" @click="saveTransaction()"
         >guardar</el-button
@@ -67,11 +97,25 @@ export default {
     return {
       writtenTextParameter: "",
       user: this.$store.state.user,
+      descriptions: [],
       person: {},
+      loading: false,
     };
   },
   mounted() {
     let app = this;
+    console.log('NDEU')
+    let abr = "NDEU";
+    axios
+      .get("/description/" + abr)
+      .then(function (response) {
+        console.log(response.data);
+        app.descriptions = response.data;
+      })
+      .catch(function () {
+        alert("No se puede hallar el registro de la persona indicada");
+      });    /*
+*/
   },
   methods: {
     test() {
@@ -124,6 +168,19 @@ export default {
           alert("No se puede hallar el registro de la persona indicada");
         });
     },
+    initGetDataofDescription() {
+      let app = this;
+      let abr = "NDEU";
+      axios
+        .get("/description/" + abr)
+        .then(function (response) {
+          console.log(response.data);
+          app.descriptions = response.data[0];
+        })
+        .catch(function () {
+          alert("No se puede hallar el registro de la persona indicada");
+        });
+    },
     printTransactions() {
       /*
       var app = this;
@@ -156,6 +213,9 @@ export default {
       });*/
     },
     resetTransaction() {},
+    handleSelectionChange(val) {
+      console.log(val);
+    },
   },
 };
 </script>

@@ -5371,17 +5371,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       writtenTextParameter: "",
       user: this.$store.state.user,
-      person: {}
+      descriptions: [],
+      person: {},
+      loading: false
     };
   },
   mounted: function mounted() {
     var app = this;
+    console.log('NDEU');
+    var abr = "NDEU";
+    axios.get("/description/" + abr).then(function (response) {
+      console.log(response.data);
+      app.descriptions = response.data;
+    })["catch"](function () {
+      alert("No se puede hallar el registro de la persona indicada");
+    });
+    /*
+    */
   },
   methods: {
     test: function test() {
@@ -5431,6 +5473,16 @@ __webpack_require__.r(__webpack_exports__);
         alert("No se puede hallar el registro de la persona indicada");
       });
     },
+    initGetDataofDescription: function initGetDataofDescription() {
+      var app = this;
+      var abr = "NDEU";
+      axios.get("/description/" + abr).then(function (response) {
+        console.log(response.data);
+        app.descriptions = response.data[0];
+      })["catch"](function () {
+        alert("No se puede hallar el registro de la persona indicada");
+      });
+    },
     printTransactions: function printTransactions() {
       /*
       var app = this;
@@ -5462,7 +5514,10 @@ __webpack_require__.r(__webpack_exports__);
         this.activation = 4;
       });*/
     },
-    resetTransaction: function resetTransaction() {}
+    resetTransaction: function resetTransaction() {},
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+    }
   }
 });
 
@@ -91073,6 +91128,8 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
+                    _c("p", [_vm._v("datos personales")]),
+                    _vm._v(" "),
                     _c(
                       "el-form",
                       {
@@ -91164,9 +91221,69 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("el-col", { attrs: { span: 13 } }, [
-                _c("div", { staticClass: "grid-content bg-purple" }, [
-                  _c("p", [_vm._v("convocatorias")])
-                ])
+                _c(
+                  "div",
+                  { staticClass: "grid-content bg-purple" },
+                  [
+                    _c("p", [_vm._v("convocatorias")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-table",
+                      {
+                        directives: [
+                          {
+                            name: "loading",
+                            rawName: "v-loading",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ],
+                        staticStyle: { width: "100%" },
+                        attrs: { data: _vm.descriptions, height: "250" },
+                        on: { "selection-change": _vm.handleSelectionChange }
+                      },
+                      [
+                        _c("el-table-column", {
+                          attrs: { type: "selection", width: "55" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "fec_pre",
+                            label: "fecha",
+                            width: "120"
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c(
+                                    "el-tag",
+                                    {
+                                      attrs: { size: "success", type: "info" }
+                                    },
+                                    [_vm._v(_vm._s(scope.row.fec_pre))]
+                                  )
+                                ]
+                              }
+                            }
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
+                            prop: "glosa",
+                            label: "descripcion",
+                            width: "420"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
               ])
             ],
             1
@@ -114352,8 +114469,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
