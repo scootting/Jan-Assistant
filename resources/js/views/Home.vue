@@ -71,13 +71,10 @@
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-thumb" circle></el-button>
-                  <h4>solvencias</h4>
+                  <el-button type="text" icon="el-icon-thumb" circle @click.native="LoginToClients"></el-button>
+                  <h4>clientes</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    ingresar
                   </p>
                 </el-card>
               </el-col>
@@ -153,6 +150,9 @@ export default {
     },
     initToDocuments() {
       this.$router.push({ name: "addNotDocument" });
+    },
+    LoginToClients() {
+      this.$router.push({ name: "loginclient" });
     },
   },
 };

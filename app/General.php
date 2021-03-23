@@ -100,4 +100,5 @@ class General extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }        
+
 }
