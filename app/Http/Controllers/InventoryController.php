@@ -6,6 +6,7 @@ use App\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use JasperPHP\JasperPHP as JasperPHP;
+use SebastianBergmann\Environment\Console;
 
 class InventoryController extends Controller
 {
@@ -84,7 +85,7 @@ class InventoryController extends Controller
             $input,
             false, //$output,
             array('pdf', 'rtf'), // Formatos de salida del reporte
-            array('p_ofc_cod' => $cod_soa),//array('php_version' => phpversion()),// Parámetros del reporte
+            array('p_ofc_cod' => '00000001'),//array('php_version' => phpversion()),// Parámetros del reporte
             array(
                 'driver' => 'postgres',
                 'username' => 'postgres',
@@ -132,7 +133,7 @@ class InventoryController extends Controller
     //reporte general
     public function getReportGeneral(Request $request)
     {
-
+        //dd($request);
         $cod_ofc = ($request->get('ofc_cod') ? $request->get('ofc_cod') : '');
         $resp =  ($request->get('resp') || $request->get('resp') == 0 ? $request->get('resp') : '');
         $jasper = new JasperPHP;
@@ -159,6 +160,75 @@ class InventoryController extends Controller
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
     }
+    //generarReporte 
+    public function getGenerarReporte(Request $request)
+    {
+        dd($request);
+        $cod_ofc = $request->cod_soa;
+        $tipo_reporte = ($request->get('reporte'));
+        $tipo_filtro = ($request->get('filtroTipo'));
+        $valor= ($request->get('filtroValor'));
+        if($tipo_reporte=='general'){
+            switch($tipo_filtro){
+                case 'cargo':
+                    $jasper = new JasperPHP;
+                    $input = public_path() . '/reports/cargoGeneral.jrxml';
+                    $jasper->compile($input)->execute();
+                    $input = public_path() . '/reports/cargoGeneral.jasper'; //ReportValuesQr
+                    false; //$output = public_path() . '/reports';
+                    $jasper->process(
+                        $input,
+                        false, //$output,
+                        array('pdf', 'rtf'), // Formatos de salida del reporte
+                        array('cargo' => $valor()),//array('php_version' => phpversion()),// Parámetros del reporte
+                        array(
+                            'driver' => 'postgres',
+                            'username' => 'postgres',
+                            'password' => '12345678',
+                            'host' => '192.168.25.64',
+                            'database' => 'daf_help',
+                            'port' => '5432',
+                        )  
+                    )->execute();
+                    $pathToFile = public_path() . '/reports/cargoGeneral.pdf';
+                    $filename = 'cargoGeneral.pdf';
+                    $headers = ['Content-Type' => 'application/pdf'];
+                    return response()->download($pathToFile, $filename, $headers); break;
+                case'todo':
+                    return response($this->getReport($request, $cod_ofc));
+                    break; 
+            }
+    
+        }
+    }
+
+    public function getPruebita(Request $request)
+    {
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/cargoGeneral.jrxml';
+        $jasper->compile($input)->execute();
+        $input = public_path() . '/reports/cargoGeneral.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('cargo' => '2'),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '12345678',
+                'host' => '192.168.25.64',
+                'database' => 'daf_help',
+                'port' => '5432',
+            )  
+        )->execute();
+        $pathToFile = public_path() . '/reports/cargoGeneral.pdf';
+        $filename = 'cargoGeneral.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+    }
+
     public function getInventories(Request $request, $gestion)
     {
         $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');

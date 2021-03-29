@@ -51,6 +51,8 @@ Route::group([
     Route::get('descargando/{cod_soa}', 'InventoryController@getReport');
     Route::get('inventarioDetalle/', 'InventoryController@getReportDetalle');
     Route::get('inventarioGeneral/', 'InventoryController@getReportGeneral');
+    Route::get('generarReporte/', 'InventoryController@getGenerarReporte');
+    
     //rutas de inventarios 2 
     Route::get('inventory2/unidad', 'InventoryController@getUnidad');
     Route::get('inventory2/sub_unidad', 'InventoryController@getSubUnidad');

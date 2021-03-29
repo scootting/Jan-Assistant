@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargoGeneral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="73688046-215b-4a25-a87d-817f1ab93acf">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conectado a DafHelp"/>
+	<parameter name="cargo" class="java.util.List"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT personas.paterno , personas.materno , personas.nombres ,
+ inv.cargos.descripcion,  inv.activos.cod_ant,
+	inv.activos.can,
+	inv.activos.uni_med,
+	inv.activos.des,
+	inv.activos.estado,
+	inv.activos.nro_doc
+FROM inv.activos, personas , inv.cargos 
+WHERE  $X{EQUAL,cast(inv.activos.car_cod as varchar),cargo} 
+and personas.nro_dip = inv.activos.ci_resp
+ and  inv.cargos.id = inv.activos.car_cod 
+GROUP BY personas.paterno , personas.materno , 
+personas.nombres ,inv.cargos.descripcion,
+inv.activos.cod_ant,
+	inv.activos.can,
+	inv.activos.uni_med,
+	inv.activos.des,
+	inv.activos.estado,
+	inv.activos.nro_doc
+ORDER BY inv.activos.nro_doc DESC]]>
+	</queryString>
+	<field name="paterno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
+		<property name="com.jaspersoft.studio.field.label" value="paterno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="materno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="materno"/>
+		<property name="com.jaspersoft.studio.field.label" value="materno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
+	</field>
+	<field name="cod_ant" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod_ant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="can" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="can"/>
+		<property name="com.jaspersoft.studio.field.label" value="can"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="uni_med" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.label" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="des"/>
+		<property name="com.jaspersoft.studio.field.label" value="des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="nro_doc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<group name="cod_ant">
+		<groupExpression><![CDATA[$F{cod_ant}]]></groupExpression>
+	</group>
+	<group name="can">
+		<groupExpression><![CDATA[$F{can}]]></groupExpression>
+	</group>
+	<group name="uni_med">
+		<groupExpression><![CDATA[$F{uni_med}]]></groupExpression>
+	</group>
+	<group name="des">
+		<groupExpression><![CDATA[$F{des}]]></groupExpression>
+	</group>
+	<group name="estado">
+		<groupExpression><![CDATA[$F{estado}]]></groupExpression>
+	</group>
+	<group name="nro_doc">
+		<groupExpression><![CDATA[$F{nro_doc}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="120" y="0" width="270" height="54" uuid="6b5de110-df94-4d98-945b-36d6e2b67f82"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UNIVERSIDAD AUTÓNOMA TOMAS FRÍAS DIRECCION ADMINISTRATIVA Y FINANCIERA "]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="10" width="40" height="30" uuid="fc498cad-e67e-4250-925a-fb3474e7c534"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="10" width="50" height="30" uuid="8f5c11ad-da45-42c0-8f55-c311f5cf6212"/>
+				<textFieldExpression><![CDATA[$F{paterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="10" width="50" height="30" uuid="9ee9c47f-d290-446c-9e12-8d962322adfe"/>
+				<textFieldExpression><![CDATA[$F{materno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-10" y="10" width="50" height="30" uuid="d416b7ec-5a11-4b5b-aef8-9390d45287f9"/>
+				<textFieldExpression><![CDATA["Encargado :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="10" width="100" height="30" uuid="a506540a-d750-4c9a-8f04-440b2a19fe13"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="10" width="50" height="30" uuid="84b3e34d-8f9b-4ed0-83d4-ad3718e78abc"/>
+				<textFieldExpression><![CDATA["Cargo :"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="ea8e39e4-aaef-44cd-9f04-ec762f948769">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0fd5fcb-1b36-4298-a69a-9a51b42985d5"/>
+				</reportElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="30" uuid="d95a096a-e2ff-4d0e-b4fc-8feeb3849ebe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fae39cd-a0fa-46c1-8316-5ef340bb013f"/>
+				</reportElement>
+				<text><![CDATA[des]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="0" width="100" height="30" uuid="4c1c10e9-9a60-4747-9f8c-3575034ae7b5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c293379-18a4-4acf-8b14-75ad9685b9fc"/>
+				</reportElement>
+				<text><![CDATA[uni_med]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="100" height="30" uuid="f6cf194c-e825-4cd5-bc43-78ea6d386b60">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8804f4c2-fac4-4a1c-acba-7ae4c1b9fa0f"/>
+				</reportElement>
+				<text><![CDATA[estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="828f6bbb-cad7-43b6-8b46-61d51e87b183">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0fd5fcb-1b36-4298-a69a-9a51b42985d5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cod_ant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="220" height="30" uuid="eb39773d-97ef-4cd1-a31d-97a7cd15fc37">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fae39cd-a0fa-46c1-8316-5ef340bb013f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="100" height="30" uuid="8b352421-83bb-4b4d-9054-b33d83cae137">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c293379-18a4-4acf-8b14-75ad9685b9fc"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="100" height="30" uuid="68b5ee78-68f0-4e73-90bb-54eef713e014">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8804f4c2-fac4-4a1c-acba-7ae4c1b9fa0f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="24" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="24" splitType="Stretch"/>
+	</summary>
+</jasperReport>

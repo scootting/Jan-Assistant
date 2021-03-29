@@ -126,8 +126,8 @@ class Inventory extends Model
         inv.sub_oficinas.id=inv.activos.sub_ofc_cod
         and 
         inv.activos.ofc_cod like '%" . $unidad . "%'
-        and 
-        inv.sub_oficinas.id in " . $arrString . "
+        ".(count($sub_unidades)>0? "and 
+        inv.sub_oficinas.id in " . $arrString : "")."
         group by (inv.cargos.id,inv.cargos.descripcion)
         order by (inv.cargos.id)";
 
@@ -156,7 +156,8 @@ class Inventory extends Model
         where inv.activos.ofc_cod like '%" . $unidad . "%'and
         public.personas.nro_dip = inv.activos.ci_resp
         and inv.activos.car_cod = inv.cargos.id
-        and inv.cargos.id in " . $arrString . "
+        ".(count($cargos)>0? "and inv.cargos.id in "
+        .$arrString : "" )."
         group by (public.personas.nro_dip,public.personas.nombres,
         public.personas.paterno,public.personas.materno, inv.cargos.descripcion)";
         $data = collect(DB::select(DB::raw($query)));
@@ -391,6 +392,57 @@ class Inventory extends Model
         }
         else {
             $query = "select * from inv.inventario_detalle('".$cod_soa."', '".$resp."')";
+        }
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //prueba de elegir por responsable inventario 
+    public static function selectByCiResponsable($tipo,$cod_soa,$ci_resp)
+    {
+        $arrString = "{";
+        foreach ($ci_resp as $k => $ci_resp)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
+        $arrString = $arrString . '}';
+        if ($tipo == 1) {
+            
+            $query = "select * from inv.ff_getactivosgeneralbyci('".$cod_soa."', '".$arrString."')";
+        }
+        if ($tipo == 2)  {
+            $query = "select * from inv.ff_getactivosdetallelbyci('".$cod_soa."', '".$arrString."')";
+        }
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //prueba de seleccionar inventario por cargo
+    public static function selectByCargo($tipo,$cod_soa,$cargo)
+    {
+        $arrString = "{";
+        foreach ($cargo as $k => $cargo)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
+        $arrString = $arrString . '}';
+        if ($tipo == 1) {
+            
+            $query = "select * from inv.ff_getactivosgeneralbycargo('".$cod_soa."', '".$arrString."')";
+        }
+        if ($tipo == 2)  {
+            $query = "select * from inv.ff_getactivosdetallelbycargo('".$cod_soa."', '".$arrString."')";
+        }
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //
+    public static function selectBysubUnidad($tipo,$cod_soa,$subUnidad)
+    {
+        $arrString = "{";
+        foreach ($subUnidad as $k => $subUnidad)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
+        $arrString = $arrString . '}';
+        if ($tipo == 1) {
+            
+            $query = "select * from inv.ff_getactivosgeneralbysubunidad('".$cod_soa."', '".$arrString."')";
+        }
+        if ($tipo == 2)  {
+            $query = "select * from inv.ff_getactivosdetallebysubunidad('".$cod_soa."', '".$arrString."')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;

@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ oficina.descripcion }}</span>
-        <el-button
+       <el-button
           style="text-align: right; float: right"
           size="small"
           type="primary"
@@ -35,60 +35,57 @@
       <div class="grid-content bg-purple">
         <el-row :gutter="20">
           <el-col :span="10" :offset="0">
-            <el-form
-              label-width="100px"
-              :inline="false"
-              size="small"
-            >
-              <el-form-item label="oficina:">
-                <el-input
-                  v-model="oficina.descripcion"
-                  placeholder="oficina seleccionada"
-                  size="small"
-                  disabled
-                  style="width: 210px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="Encargados:">
-                <el-select placeholder="Encargados" v-model="respSelectCI">
+            <el-form label-width="100px" :inline="false" size="small">
+              <el-form-item label="Seleccion por:">
+                <el-select placeholder="seleccionar" v-model="filtro.tipo" @change="filtro.values=[]">
                   <el-option
-                    v-for="item in encargados"
-                    :key="item.sub_ofc_cod"
-                    :label="
-                      item.nombres + ' ' + item.paterno + ' ' + item.materno
-                    "
-                    :value="item.sub_ofc_cod"
+                    v-for="item in filtros"
+                    :key="item.id"
+                    :label="item.label"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
-                <el-button type="primary" @click="cargarActivos"
-                  >Cargar Activos</el-button
-                >
+              </el-form-item>
+              <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccion subunidad:">
+                <selectSubUnidad v-if="filtro.tipo == 'subUnidad'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
+                <selectCargos v-if="filtro.tipo == 'cargo'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
+                <select-responsables v-if="filtro.tipo == 'responsable'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
               </el-form-item>
             </el-form>
           </el-col>
+          <el-col>
+            
+              <el-radio-group v-model="reporte.tipo">
+                <el-radio-button
+                  label="detallado"
+                >Detallado</el-radio-button>
+                <el-radio-button
+                  label="general"
+                >General</el-radio-button>
+              </el-radio-group>
+          </el-col>
           <el-col :span="17" :offset="6">
-            <el-form
-              label-width="80px"
-              :inline="false"
-              size="normal"
-            >
-              <el-form-item  align="right-center" width="20" >
-                <el-button
+            <el-form label-width="80px" :inline="false" size="normal">
+              <el-form-item align="right-center" width="20">
+                <el-button type="primary" @click="cargarActivos"
+                  >Cargar Activos</el-button
+                >
+                <!--<el-button
                   style="text-align: right; float: right"
                   size="small"
                   type="primary"
                   icon="el-icon-plus"
                   @click="ReporteDetalle"
                   >Reporte Detallado</el-button
-                >
+                >-->
                 <el-button
                   style="text-align: right; float: right"
                   size="small"
                   type="primary"
                   icon="el-icon-plus"
-                  @click="ReporteGeneral"
-                  >Reporte General</el-button
+                  @click="GenerarReporte"
+                  >Generar Reporte</el-button
                 >
               </el-form-item>
             </el-form>
@@ -106,11 +103,16 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="uni_med"
-            label="MEDIDA"
+            prop="nro_doc"
+            label="NRO. DOCUMENTO"
             width="180"
           ></el-table-column>
           <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
+          <el-table-column
+            prop="imp_bs"
+            label="PRECIO"
+            width="180"
+          ></el-table-column>
           <el-table-column label="ESTADO" width="180">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
@@ -132,10 +134,22 @@
 </template>
 
 <script>
+//Importar Componentes creados
+import selectSubUnidad from './components/selectSubUnidad';
+import selectCargos from './components/selectCargos';
+import selectResponsables from './components/selectResponsables';
 export default {
   name: "InventoryDetail",
+  components: {
+    selectSubUnidad,
+    selectCargos,
+    selectResponsables,
+  },
   data() {
     return {
+      reporte: {
+        tipo: "detallado",
+      },
       loading: false,
       user: this.$store.state.user,
       sub_oficinas: [],
@@ -147,6 +161,30 @@ export default {
       respSelectCI: -1,
       encargados: [],
       generar: 1,
+      //filtro elegido para obtener los activos
+      filtro: {
+        tipo: 'todo',
+        values: [],
+      },
+      //tipos de filtros
+      filtros: [
+        {
+          id: 'todo',
+          label:'TODO',
+        },
+        {
+          id: 'subUnidad',
+          label:'SUB UNIDAD',
+        },
+        {
+          id: 'cargo',
+          label:'CARGO',
+        },
+        {
+          id: 'responsable',
+          label:'RESPONSABLE',
+        },
+      ]
     };
   },
   mounted() {
@@ -230,7 +268,7 @@ export default {
       });
     },
     ReporteDetalle() {
-    let ciResp = null;
+      let ciResp = null;
       if (this.respSelectCI != -1) {
         ciResp = this.encargados.filter((e) => {
           if (e.sub_ofc_cod === this.respSelectCI) {
@@ -266,8 +304,36 @@ export default {
         */
       });
     },
+    GenerarReporte() {
+      axios({
+        url: "/api/generarReporte/",
+        params: {
+          ofc_cod: this.oficina.cod_soa,
+          reporte: this.reporte.tipo,
+          filtroTipo:this.filtro.tipo,
+          filtroValor:this.filtro.values
+        },
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        console.log(response.data);
+        console.log("1");
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        console.log(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+        /*
+        link.download = "test.pdf";
+        link.click();
+        */
+      });
+    },
     ReporteGeneral() {
-      let ciResp 
+      let ciResp;
       if (this.respSelectCI != -1) {
         ciResp = this.encargados.filter((e) => {
           if (e.sub_ofc_cod === this.respSelectCI) {
