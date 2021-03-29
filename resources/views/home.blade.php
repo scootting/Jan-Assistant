@@ -8,7 +8,7 @@
     <!--
     -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vue - Laravel SPA</title>
+    <title>SAU - Direccion Administrativa y Financiera</title>
     <link href="{{ asset( mix('css/app.css')) }}" rel="stylesheet" />
 </head>
 

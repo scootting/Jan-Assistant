@@ -52,6 +52,16 @@ class Treasure extends Model
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }
+
+    public static function addSaleOfDay($user, $year){
+        //insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, gestion, nro_com_min, usr_cre) 
+        //               values (now(), 'Venta: De La Universidad Autónoma "Tomás Frías" En BOLIVIANOS', 'C', 'B', 0, 2021,'-1', 'rcallizaya');
+        $query = "insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, gestion, nro_com_min, usr_cre)".
+                 "values (now(), 'Venta: De La Universidad Autónoma \"Tomás Frías En BOLIVIANOS\"', 'C', 'B', 0, '".$year."','-1', '".$user."')";        
+        $data = collect(DB::select(DB::raw($query)));    
+        return $data;
+    }
+    
     public static function addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion){        
         //insert into val.tra_dia( ... ) values ( ... ) RETURNING id_tran
         $query = "INSERT INTO val.tra_dia(id_dia, cod_val, can_val, pre_uni, fec_tra, usr_cre,".
