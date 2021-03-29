@@ -56,25 +56,25 @@
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-check" circle></el-button>
-                  <h4>personas</h4>
+                  <el-button
+                    type="text"
+                    icon="el-icon-document"
+                    circle
+                    @click.native="initToDocuments"
+                  ></el-button>
+                  <h4>certificado de no deudas</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    Modulo para obtener el certifido de no deudas para la presentacion a
+                    las distintas convocatorias.
                   </p>
                 </el-card>
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-delete" circle></el-button>
-                  <h4>valores</h4>
+                  <el-button type="text" icon="el-icon-thumb" circle @click.native="LoginToClients"></el-button>
+                  <h4>clientes</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    ingresar
                   </p>
                 </el-card>
               </el-col>
@@ -148,15 +148,18 @@ export default {
     initToFormalities() {
       this.$router.push({ name: "formalities" });
     },
+    initToDocuments() {
+      this.$router.push({ name: "addNotDocument" });
+    },
+    LoginToClients() {
+      this.$router.push({ name: "loginclient" });
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-html,
-body {
-}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

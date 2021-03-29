@@ -12,23 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-//  * Ruta añadida para redireccionar a la misma pagina.    
-Route::get('personita/{id}','GeneralController@getPersonById');  
-
-
+Route::get('person/{id}', 'GeneralController@getPersonById');
+Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
+
+//  * Ruta añadida para redireccionar a la misma pagina.    
 
 Route::get('files', 'FileController@index');
 Route::post('upload', 'FileController@uploadFile');
 Route::get('delete/upload-folder/{file}', 'FileController@deleteFile');
 Route::get('download/upload-folder/{file}', 'FileController@downloadFile');
-//Route::get('descargando/{cod_soa}','InventoryController@getReport'); 
-//Route::get('reports/{cod_soa}', 'TreasureController@getReportValuesQr');
-
-
 
 /*
 Route::get('/', function () {

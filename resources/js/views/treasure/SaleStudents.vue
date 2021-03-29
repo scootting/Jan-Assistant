@@ -12,6 +12,7 @@
           >nuevo dia</el-button
         >
       </div>
+      <!--
       <div style="margin-top: 15px">
         <el-input
           placeholder="INSERTE UNA DESCRIPCION"
@@ -22,6 +23,7 @@
         </el-input>
       </div>
       <br />
+      -->
       <div>
         <el-table v-loading="loading" :data="days" style="width: 100%">
           <el-table-column prop="id_dia" label="dia" width="100">
@@ -31,22 +33,24 @@
           </el-table-column>
           <el-table-column prop="fec_tra" label="fecha" width="100"></el-table-column>
           <el-table-column prop="glosa" label="glosa" width="650"></el-table-column>
+          <!--
           <el-table-column prop="importe" label="importe" width="100"></el-table-column>
-          <el-table-column align="right" width="220">
+          -->
+          <el-table-column align="right" width="320">
             <template slot-scope="scope">
               <el-button
                 @click="initDetailStudents(scope.$index, scope.row)"
                 type="primary"
                 size="mini"
                 plain
-                >detalle</el-button
+                >detalle del dia</el-button
               >
               <el-button
                 @click="initSaleStudents(scope.$index, scope.row)"
                 type="danger"
                 plain
                 size="mini"
-                >venta</el-button
+                >realizar venta</el-button
               >
             </template>
           </el-table-column>
@@ -123,21 +127,29 @@ export default {
         });
     },
     initAddDay() {
-      alert("el modulo esta a desicion del usuario");
+      alert("el modulo esta aun en contruccion");
     },
 
     initDetailStudents(index, row) {
       let id = row.id_dia;
-      this.$router.push({
-        name: "students",
-        params: {
-          id: id,
-        },
+      axios({
+        url: "/api/reportDetailStudents/" + row.id_dia,
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
       });
+      alert("llegamos");
     },
     initSaleStudents(index, row) {
       let id = row.id_dia;
-      alert(id);
+      //alert(id);
       this.$router.push({
         name: "students",
         params: {

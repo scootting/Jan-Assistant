@@ -8,6 +8,7 @@ import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
 import Assets from './views/FixedAssets'
+import AddNotDocument from './views/clients/AddNotDocument'
 
 //usuario
 import Users from './views/application/Users'
@@ -43,6 +44,10 @@ import Students from './views/treasure/Students'
 import SaleStudents from './views/treasure/SaleStudents'
 
 
+//clientes 
+import LoginClient from './views/clients/Login'
+import DashboardClient from './views/clients/Dashboard'
+
 // Routes
 const router = new VueRouter({
     mode: 'history',
@@ -56,6 +61,7 @@ const router = new VueRouter({
                 { path: '', name: 'layout', component: Layout },
                 { path: '/formalities', name: 'formalities', component: Formalities },
                 { path: '/taxExemption', name: 'addTaxExemption', component: AddTaxExemption },
+                { path: '/addNotDocument', name: 'addnotdocument', component: AddNotDocument },
             ],
         },
         {
@@ -63,6 +69,18 @@ const router = new VueRouter({
             name: 'login',
             component: Login,
         },
+        {
+            path: '/client', name: 'loginclient', component: LoginClient
+        },
+        {
+            path: '/client/:id', name: 'dashboardclient', component: DashboardClient,
+            children: [
+                { path: '', name: 'addnotdocument2', component: AddNotDocument },
+                { path: 'nodebt', name: 'welcome2', component: Welcome },
+            ],
+
+        },
+
         {
             path: '/logout',
             name: 'logout',
@@ -101,7 +119,7 @@ const router = new VueRouter({
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
-                
+
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency },
                 //{ path: 'students', name: 'students', component: Students },

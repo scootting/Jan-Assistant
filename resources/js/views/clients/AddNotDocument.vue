@@ -2,21 +2,24 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>dia de venta: {{ day }}</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="test"
+        <span>certificado de no tener cuentas pendientes </span>
+        <el-button
+          style="float: right; padding: 3px 0"
+          type="text"
+          @click="test"
           >ayuda</el-button
         >
       </div>
       <div style="margin-top: 15px">
         <el-input
-          placeholder="INSERTE EL NUMERO DE CARNET DE IDENTIDAD"
+          placeholder="INSERTE SU NUMERO DE CARNET DE IDENTIDAD"
           v-model="writtenTextParameter"
           class="input-with-select"
         >
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="initGetDataOfStudent"
+            @click="initGetDataOfPerson"
           ></el-button>
         </el-input>
       </div>
@@ -27,43 +30,51 @@
       <el-row :gutter="20">
         <el-col :span="11"
           ><div class="grid-content bg-purple">
+            <p>datos personales</p>
             <el-form
               ref="form"
-              :model="this.postulations"
+              :model="this.person"
               label-width="200px"
               size="mini"
             >
               <el-form-item label="carnet de identidad">
-                <el-input v-model="postulations.nro_dip" disabled></el-input>
+                <el-input v-model="person.personal" disabled></el-input>
               </el-form-item>
               <el-form-item label="apellido paterno">
-                <el-input v-model="postulations.paterno" disabled></el-input>
+                <el-input v-model="person.paterno" disabled></el-input>
               </el-form-item>
               <el-form-item label="apellido materno">
-                <el-input v-model="postulations.materno" disabled></el-input>
+                <el-input v-model="person.materno" disabled></el-input>
               </el-form-item>
               <el-form-item label="nombres">
-                <el-input v-model="postulations.nombres" disabled></el-input>
-              </el-form-item>
-              <el-form-item label="modalidad de ingreso">
-                <el-input v-model="postulations.modalidad" disabled></el-input>
+                <el-input v-model="person.nombres" disabled></el-input>
               </el-form-item>
             </el-form></div
         ></el-col>
         <el-col :span="13"
           ><div class="grid-content bg-purple">
+            <p>convocatorias</p>
+            <!---->
             <el-table
-              :data="valuesPostulations"
-              border
-              show-summary
+              v-loading="loading"
+              :data="descriptions"
               style="width: 100%"
-              size="small"
+              height="250"
+              @selection-change="handleSelectionChange"
             >
-              <el-table-column prop="cod_val" label="cod." width="65"> </el-table-column>
-              <el-table-column prop="des_val" label="descripcion" width="550">
+              <el-table-column type="selection" width="55"> </el-table-column>
+              <el-table-column prop="fec_pre" label="fecha" width="120">
+                <template slot-scope="scope">
+                  <el-tag size="success" type="info">{{
+                    scope.row.fec_pre
+                  }}</el-tag>
+                </template>
               </el-table-column>
-              <el-table-column prop="pre_uni_val" sortable label="Precio" align="right">
-              </el-table-column>
+              <el-table-column
+                prop="glosa"
+                label="descripcion"
+                width="420"
+              ></el-table-column>
             </el-table></div
         ></el-col>
       </el-row>
@@ -85,48 +96,33 @@ export default {
   data() {
     return {
       writtenTextParameter: "",
-      activation: 1,
       user: this.$store.state.user,
-      day: "",
-      saleOfDay: [],
-      valuesPostulations: [],
-      postulations: {
-        nro_dip: "",
-        paterno: "",
-        materno: "",
-        nombres: "",
-        modalidad: "",
-        id_modalidad: "",
-      },
-      texto: "",
+      descriptions: [],
+      person: {},
+      loading: false,
     };
   },
   mounted() {
     let app = this;
-    app.day = app.$route.params.id;
+    console.log('NDEU')
+    let abr = "NDEU";
     axios
-      .post("/api/getSaleOfDayById", {
-        id: app.day,
-        user: app.user.usuario,
-        year: app.user.gestion,
-      })
+      .get("/description/" + abr)
       .then(function (response) {
-        app.saleOfDay = response.data[0];
-        if (app.saleOfDay.estado == "V")
-          app.$router.push({
-            name: "salestudents",
-          });
-        //alert("El dia ya esta verificado");
+        console.log(response.data);
+        app.descriptions = response.data;
       })
-      .catch(function (response) {
-        alert("no se puede crear el registro de los valores del estudiante");
-      });
+      .catch(function () {
+        alert("No se puede hallar el registro de la persona indicada");
+      });    /*
+*/
   },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
     saveTransaction() {
+      /*
       var app = this;
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
@@ -157,52 +153,36 @@ export default {
         .catch(function (response) {
           console.log(response);
           alert("no se puede crear el registro de los valores del estudiante");
+        });*/
+    },
+    initGetDataOfPerson() {
+      let app = this;
+      let id = app.writtenTextParameter;
+      axios
+        .get("/person/" + id)
+        .then(function (response) {
+          console.log(response.data);
+          app.person = response.data[0];
+        })
+        .catch(function () {
+          alert("No se puede hallar el registro de la persona indicada");
         });
     },
-    initGetDataOfStudent() {
+    initGetDataofDescription() {
       let app = this;
-      //alert(app.user.gestion);
-      if (app.activation != 1) {
-        alert("no puede realizar esta accion");
-        return;
-      }
+      let abr = "NDEU";
       axios
-        .post("/api/getDataOfStudentById", {
-          id: app.writtenTextParameter,
-          year: app.user.gestion,
+        .get("/description/" + abr)
+        .then(function (response) {
+          console.log(response.data);
+          app.descriptions = response.data[0];
         })
-        .then((response) => {
-          app.postulations = response.data[0];
-          app.texto = JSON.stringify(app.postulations);
-          /*de acuerdo a la postulacion se debe imprimir los valores*/
-          axios
-            .post("/api/valuesprocedure", {
-              id: app.postulations.id_modalidad,
-              year: app.user.gestion,
-            })
-            .then((response) => {
-              app.valuesPostulations = response.data;
-              app.activation = 2;
-              //app.texto = JSON.stringify(app.postulations);
-              /*de acuerdo a la postulacion se debe imprimir los valores*/
-            })
-            .catch((error) => {
-              this.error = error.response.data;
-              this.$notify.error({
-                title: "error",
-                message: this.error.message,
-              });
-            });
-        })
-        .catch((error) => {
-          this.error = error.response.data;
-          this.$notify.error({
-            title: "Error",
-            message: this.error.message,
-          });
+        .catch(function () {
+          alert("No se puede hallar el registro de la persona indicada");
         });
     },
     printTransactions() {
+      /*
       var app = this;
       app.ci_per = app.postulations.nro_dip;
       if (this.activation != 3) {
@@ -230,25 +210,11 @@ export default {
         let url = window.URL.createObjectURL(blob);
         window.open(url);
         this.activation = 4;
-      });
+      });*/
     },
-    resetTransaction() {
-      if (this.activation != 4) {
-        alert("no puede realizar esta accion");
-        return;
-      }
-
-      (this.writtenTextParameter = ""),
-        (this.valuesPostulations = []),
-        (this.postulations = {
-          nro_dip: "",
-          paterno: "",
-          materno: "",
-          nombres: "",
-          modalidad: "",
-          id_modalidad: "",
-        });
-      this.activation = 1;
+    resetTransaction() {},
+    handleSelectionChange(val) {
+      console.log(val);
     },
   },
 };

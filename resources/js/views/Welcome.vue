@@ -3,20 +3,18 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>bienvenido</span>
-        <el-button style="float: right; padding: 3px 0" type="text"
-          >ayuda</el-button
-        >
+        <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
       <h1>bienvenido/a</h1>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
+      <!-- 
       <example msg="Welcome to Your Vue.js App" />
 
       <el-button type="text" @click="openModalPerson">Personas</el-button>
       <persona :centerDialogVisible="isVisible" @update-visible="update"></persona>
-      <!-- 
-      -->
       <el-button type="text" @click="openModalValued">Valorado</el-button>
       <valorado :centerDialogVisible.sync="isValued"></valorado>
+      -->
     </el-card>
   </div>
 </template>
@@ -49,12 +47,12 @@ export default {
     openModalPerson() {
       this.isVisible = true;
     },
-    openModalValued(){
+    openModalValued() {
       this.isValued = true;
     },
-    update(isVisible){
+    update(isVisible) {
       this.isVisible = isVisible;
-    }
+    },
   },
 };
 </script>

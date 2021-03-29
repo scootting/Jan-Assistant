@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Treasure;
 use Illuminate\Http\Request;
 use JasperPHP\JasperPHP as JasperPHP;
+use Illuminate\Support\Collection;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -43,8 +44,9 @@ class TreasureController extends Controller
     }
 
     //reportes usando Jasper
-    public function getReportValuesQr(Request $request, $id)
-    {
+    public function getReportValuesQr($id_dia, $ci_per, $gestion, $usr_cre)
+    {        
+        \Log::info('estos son datos: '. $id_dia.' '.trim($ci_per).' '.$gestion.' '.trim($usr_cre));
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/test.jrxml';
         $jasper->compile($input)->execute();
@@ -54,14 +56,19 @@ class TreasureController extends Controller
         $jasper->process(
             $input,
             false, //$output,
-            array('pdf', 'rtf'), // Formatos de salida del reporte
-            array(),//array('php_version' => phpversion()),// Parámetros del reporte
+            array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
+            array(
+                'p_id_dia' => $id_dia, 
+                'p_ci_per' => $ci_per, 
+                'p_gestion' => $gestion, 
+                'p_usr_cre' => $usr_cre
+                ),//array('php_version' => phpversion()),// Parámetros del reporte
             array(
                 'driver' => 'postgres',
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
-                'database' => 'daf_help',
+                'database' => 'daf',
                 'port' => '5432',
             )  
         )->execute();
@@ -72,7 +79,39 @@ class TreasureController extends Controller
         return response()->download($pathToFile, $filename, $headers);
     }
 
+    public function getReportDetailStudents($id){
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/testDetail.jrxml';
+        $jasper->compile($input)->execute();
+
+        $input = public_path() . '/reports/testDetail.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
+            array(
+                'p_id' => $id, 
+                ),
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+
+        $pathToFile = public_path() . '/reports/testDetail.pdf';
+        $filename = 'testDetail.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+
+    }
+
     public function storeTransactionsByStudents(Request $request){
+        $id_tran = 0;
         $dataDayTransactions = $request->get('dayTransactions');
         $dataPostulations = $request->get('postulations');
         $dataValuesPostulations = $request->get('valuesPostulations');
@@ -87,10 +126,10 @@ class TreasureController extends Controller
         $paterno = strtoupper($dataPostulations['paterno']);
         $materno = strtoupper($dataPostulations['materno']);
 
-        $nro_com = '000001';
+        $idx = Treasure::getIdTransactionsByYear($gestion);
+        $idx = $idx[0]->{'ff_id_tramite'};
+        $nro_com = str_pad($idx, 6, "0", STR_PAD_LEFT);
         $tip_tra = '10';
-        // mas pruebas para potosi
-        //quiero mas pruebas
 
         if ($paterno != "")
             $des_per = $paterno ." ". $materno .",". $nombres;
@@ -101,24 +140,15 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $can_val = $item['can_val'];
             $pre_uni = $item['pre_uni_val'];
+            $imp_val = $item['imp_val'];
             //$imp_val = $can_val * $pre_uni;
-            $imp_val = $can_val * $pre_uni;
-            $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion); 
-
+            if ($imp_val == 1){
+                $marker = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, '-1', $ci_per, $des_per, $tip_tra, $gestion); 
+                $id_tran = $marker[0]->{'id_tran'};
+            }
+            $data = Treasure::addProcedureByStudents($id_dia, $id_tran, $nro_com, $cod_val, $ci_per, $des_per, $idx, $gestion, $imp_val); 
+            $id_tran = 0;
         }
-        /*
-        $marcador = $request->get('marker');
-
-        switch ($marcador) {
-            case 'registrar':
-                $data = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $gestion)   
-                break;
-            case 'editar':
-            break;
-            default:
-                break;
-        }
-        */
         //return json_encode($data);
     }
 
