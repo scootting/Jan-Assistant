@@ -83,12 +83,12 @@ Route::group([
     // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos - ***
     Route::get('reports/{id_dia}/{ci_per}/{gestion}/{usr_cre}', 'TreasureController@getReportValuesQr');
     // *** - Obtener el reporte correspondiente a los valores vendidos para alumnos nuevos por dia - ***
-    Route::get('reportDetailStudents/{id}', 'TreasureController@getReportDetailStudents');
-    
+    Route::get('reportDetailStudents/{id}', 'TreasureController@getReportDetailStudents');    
     // *** - Almacenar - ***
     Route::post('storeTransactionsByStudents', 'TreasureController@storeTransactionsByStudents'); 
     // *** - Obtener los dias para la venta de valores de un usuario - ***
     Route::post('getSaleOfDaysByDescription', 'TreasureController@getSaleOfDaysByDescription'); 
+    Route::post('addSaleOfDay', 'TreasureController@addSaleOfDay');
     // *** - Obtener los dias para la venta de valores de un usuario - ***
     Route::post('getSaleOfDayById', 'TreasureController@getSaleOfDayById');
 });

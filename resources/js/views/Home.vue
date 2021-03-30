@@ -64,8 +64,10 @@
                   ></el-button>
                   <h4>certificado de no deudas</h4>
                   <p>
-                    Modulo para obtener el certifido de no deudas para la presentacion a
-                    las distintas convocatorias.
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -74,7 +76,10 @@
                   <el-button type="text" icon="el-icon-thumb" circle @click.native="LoginToClients"></el-button>
                   <h4>clientes</h4>
                   <p>
-                    ingresar
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
+                    euismod. Donec sed odio dui.
                   </p>
                 </el-card>
               </el-col>
@@ -149,7 +154,7 @@ export default {
       this.$router.push({ name: "formalities" });
     },
     initToDocuments() {
-      this.$router.push({ name: "addNotDocument" });
+      this.$router.push({ name: "addnotdocument" });
     },
     LoginToClients() {
       this.$router.push({ name: "loginclient" });

@@ -10,23 +10,6 @@
           >ayuda</el-button
         >
       </div>
-      <div style="margin-top: 15px">
-        <el-input
-          placeholder="INSERTE SU NUMERO DE CARNET DE IDENTIDAD"
-          v-model="writtenTextParameter"
-          class="input-with-select"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="initGetDataOfPerson"
-          ></el-button>
-        </el-input>
-      </div>
-      <br />
-      <!--
-        <el-tag type="success">{{ texto }}</el-tag>        
-      -->
       <el-row :gutter="20">
         <el-col :span="11"
           ><div class="grid-content bg-purple">

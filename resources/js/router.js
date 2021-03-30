@@ -40,9 +40,10 @@ import EditActive from './views/inventory/EditActive'
 import QrPrint from './views/inventory/QrPrint'
 //tesoreria
 import Solvency from './views/treasure/Solvency'
-import Students from './views/treasure/Students'
-import SaleStudents from './views/treasure/SaleStudents'
-
+import SaleStudents from './views/treasure/SaleStudents'    //lista de dias de alumnos nuevos
+import Students from './views/treasure/Students'            //alumnos nuevos
+import AppendDebtors from './views/treasure/AppendDebtors'  //lista de dias de deudores
+import Debtors from './views/treasure/Debtors'              //deudores
 
 //clientes 
 import LoginClient from './views/clients/Login'
@@ -75,8 +76,8 @@ const router = new VueRouter({
         {
             path: '/client/:id', name: 'dashboardclient', component: DashboardClient,
             children: [
-                { path: '', name: 'addnotdocument2', component: AddNotDocument },
-                { path: 'nodebt', name: 'welcome2', component: Welcome },
+                { path: '', name: 'welcome2', component: Welcome },
+                { path: 'nodebt', name: 'addnotdocument2', component: AddNotDocument },
             ],
 
         },
@@ -121,10 +122,14 @@ const router = new VueRouter({
                 { path: 'active/:id', name: 'editactive', component: EditActive },
 
                 //enlaces para la administracion de paginas de tesoreria
-                { path: 'solvency', name: 'solvency', component: Solvency },
-                //{ path: 'students', name: 'students', component: Students },
-                { path: 'salestudents', name: 'salestudents', component: SaleStudents },
-                { path: 'salestudents/:id', name: 'students', component: Students },
+                { path: 'solvency', name: 'solvency', component: Solvency }, // solvencias
+                { path: 'salestudents', name: 'salestudents', component: SaleStudents }, //dia de alumnos nuevos
+                { path: 'salestudents/:id', name: 'students', component: Students }, //alumnos nuevos
+                { path: 'appenddebtors', name: 'appenddebtors', component: AppendDebtors }, //dia de deudores
+                { path: 'appenddebtors/:id', name: 'debtors', component: Debtors }, // deudores
+
+                
+
 
             ],
             meta: {
