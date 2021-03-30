@@ -7670,15 +7670,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //Importar Componentes creados
 
 
@@ -94692,7 +94683,7 @@ var render = function() {
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 10, offset: 0 } },
+                    { attrs: { span: 14, offset: 0 } },
                     [
                       _c(
                         "el-form",
@@ -94711,7 +94702,7 @@ var render = function() {
                               _c(
                                 "el-select",
                                 {
-                                  attrs: { placeholder: "seleccionar" },
+                                  attrs: { placeholder: "Seleccionar" },
                                   on: {
                                     change: function($event) {
                                       _vm.filtro.values = []
@@ -94740,7 +94731,7 @@ var render = function() {
                           _vm.filtro.tipo != "todo"
                             ? _c(
                                 "el-form-item",
-                                { attrs: { label: "Seleccion subunidad:" } },
+                                { attrs: { label: "Seleccionar:" } },
                                 [
                                   _vm.filtro.tipo == "subUnidad"
                                     ? _c("selectSubUnidad", {
@@ -94806,6 +94797,7 @@ var render = function() {
                       _c(
                         "el-radio-group",
                         {
+                          attrs: { size: "small" },
                           model: {
                             value: _vm.reporte.tipo,
                             callback: function($$v) {
@@ -94835,13 +94827,13 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-col",
-                    { attrs: { span: 17, offset: 6 } },
+                    { attrs: { span: 10, offset: 5 } },
                     [
                       _c(
                         "el-form",
                         {
                           attrs: {
-                            "label-width": "80px",
+                            "label-width": "90px",
                             inline: false,
                             size: "normal"
                           }
@@ -94854,7 +94846,7 @@ var render = function() {
                               _c(
                                 "el-button",
                                 {
-                                  attrs: { type: "primary" },
+                                  attrs: { type: "primary", size: "small" },
                                   on: { click: _vm.cargarActivos }
                                 },
                                 [_vm._v("Cargar Activos")]
@@ -94863,14 +94855,10 @@ var render = function() {
                               _c(
                                 "el-button",
                                 {
-                                  staticStyle: {
-                                    "text-align": "right",
-                                    float: "right"
-                                  },
                                   attrs: {
-                                    size: "small",
                                     type: "primary",
-                                    icon: "el-icon-plus"
+                                    icon: "el-icon-plus",
+                                    size: "small"
                                   },
                                   on: { click: _vm.GenerarReporte }
                                 },
