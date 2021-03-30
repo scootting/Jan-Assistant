@@ -91,4 +91,7 @@ Route::group([
     Route::post('addSaleOfDay', 'TreasureController@addSaleOfDay');
     // *** - Obtener los dias para la venta de valores de un usuario - ***
     Route::post('getSaleOfDayById', 'TreasureController@getSaleOfDayById');
+    // *** - Obtener los dias para la venta de valores de un usuario - ***
+    Route::post('documentFixedAssets', 'FixedAssetController@getDocumentFixedAssetByYear');
+
 });

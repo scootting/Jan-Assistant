@@ -38,6 +38,11 @@ import AddTaxExemption from './views/clients/AddTaxExemption'
 import Active from './views/inventory/Active'
 import EditActive from './views/inventory/EditActive'
 import QrPrint from './views/inventory/QrPrint'
+
+//activos fijos
+import DocumentsFixedAssets from './views/fixedasset/DocumentsFixedAssets'
+import SelectedFixedAssetsByDocument from './views/fixedasset/SelectedFixedAssetsByDocument'
+
 //tesoreria
 import Solvency from './views/treasure/Solvency'
 import SaleStudents from './views/treasure/SaleStudents'    //lista de dias de alumnos nuevos
@@ -127,9 +132,8 @@ const router = new VueRouter({
                 { path: 'salestudents/:id', name: 'students', component: Students }, //alumnos nuevos
                 { path: 'appenddebtors', name: 'appenddebtors', component: AppendDebtors }, //dia de deudores
                 { path: 'appenddebtors/:id', name: 'debtors', component: Debtors }, // deudores
-
-                
-
+                { path: 'documentsfixedassets', name: 'documentsfixedassets', component: DocumentsFixedAssets }, //lista de documentos de entrega activos fijos
+                { path: 'documentsfixedassets/:id', name: 'selectedFixedAssetsByDocument', component: SelectedFixedAssetsByDocument }, // documentos de entrega activos fijos impresion
 
             ],
             meta: {
