@@ -34,10 +34,10 @@
       </el-form>
       <div class="grid-content bg-purple">
         <el-row :gutter="20">
-          <el-col :span="10" :offset="0">
+          <el-col :span="14" :offset="0">
             <el-form label-width="100px" :inline="false" size="small">
               <el-form-item label="Seleccion por:">
-                <el-select placeholder="seleccionar" v-model="filtro.tipo" @change="filtro.values=[]">
+                <el-select placeholder="Seleccionar" v-model="filtro.tipo" @change="filtro.values=[]">
                   <el-option
                     v-for="item in filtros"
                     :key="item.id"
@@ -47,7 +47,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccion subunidad:">
+              <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccionar:">
                 <selectSubUnidad v-if="filtro.tipo == 'subUnidad'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
                 <selectCargos v-if="filtro.tipo == 'cargo'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
                 <select-responsables v-if="filtro.tipo == 'responsable'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
@@ -55,8 +55,7 @@
             </el-form>
           </el-col>
           <el-col>
-            
-              <el-radio-group v-model="reporte.tipo">
+              <el-radio-group v-model="reporte.tipo" size="small">
                 <el-radio-button
                   label="detallado"
                 >Detallado</el-radio-button>
@@ -65,26 +64,18 @@
                 >General</el-radio-button>
               </el-radio-group>
           </el-col>
-          <el-col :span="17" :offset="6">
-            <el-form label-width="80px" :inline="false" size="normal">
+          <el-col :span="10" :offset="5">
+            <el-form label-width="90px" :inline="false" size="normal">
               <el-form-item align="right-center" width="20">
-                <el-button type="primary" @click="cargarActivos"
+                <el-button type="primary" 
+                @click="cargarActivos" 
+                size="small"
                   >Cargar Activos</el-button
                 >
-                <!--<el-button
-                  style="text-align: right; float: right"
-                  size="small"
-                  type="primary"
-                  icon="el-icon-plus"
-                  @click="ReporteDetalle"
-                  >Reporte Detallado</el-button
-                >-->
-                <el-button
-                  style="text-align: right; float: right"
-                  size="small"
-                  type="primary"
-                  icon="el-icon-plus"
-                  @click="GenerarReporte"
+                <el-button type="primary" 
+                @click="GenerarReporte"
+                icon="el-icon-plus"
+                size="small"
                   >Generar Reporte</el-button
                 >
               </el-form-item>
