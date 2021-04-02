@@ -8,42 +8,32 @@
           size="small"
           type="primary"
           icon="el-icon-plus"
-          @click="initAddSolvency"
+          @click="initPrintSelectedFixedAssets"
           >imprimir</el-button
-        >          
+        >
       </div>
       <br />
       <div>
-          <!--
-        <el-table v-loading="loading" :data="listSolvency" style="width: 100%">
-          <el-table-column prop="id" label="ID"></el-table-column>
-          <el-table-column prop="fecha" label="FECHA"></el-table-column>
-          <el-table-column prop="operaciones" label="OPERACION"></el-table-column>
-          <el-table-column
-            prop="nombres"
-            label="NOMBRES"
-            width="280"
-          ></el-table-column>
-          <el-table-column align="right" width="220">
+        {{ nro_doc }}
+        <el-table
+          v-loading="loading"
+          :data="dataFixedAssets"
+          style="width: 100%"
+          height="250"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55"> </el-table-column>
+          <el-table-column prop="codigo" label="codigo" width="120">
             <template slot-scope="scope">
-              <el-button
-                @click="initChangeStateSolvency(scope.$index, scope.row)"
-                type="primary"
-                size="mini"
-                plain
-                >Editar</el-button
-              >
+              <el-tag size="success" type="info">{{ scope.row.codigo }}</el-tag>
             </template>
           </el-table-column>
+          <el-table-column
+            prop="act_des"
+            label="descripcion"
+            width="420"
+          ></el-table-column>
         </el-table>
-        <el-pagination
-          :page-size="pagination.per_page"
-          layout="prev, pager, next"
-          :current-page="pagination.current_page"
-          :total="pagination.total"
-          @current-change="getDataPageSelected"
-        ></el-pagination>
-        -->
       </div>
     </el-card>
   </div>
@@ -54,8 +44,10 @@ export default {
   name: "Personas",
   data() {
     return {
+      nro_doc: "",
       messages: {},
       dataFixedAssets: [],
+      selectedFixedAssets: [],
       pagination: {
         page: 1,
       },
@@ -64,16 +56,16 @@ export default {
   },
   mounted() {
     let app = this;
-    console.log();
-    /*
+    app.nro_doc = this.$route.params.id;
+    console.log(app.nro_doc);
     axios
-      .post("/api/solvencies", {
-        descripcion: app.writtenTextParameter,
+      .post("/api/selectedFixedAssetsbyDocument", {
+        id: app.nro_doc,
       })
       .then((response) => {
         app.loading = false;
-        app.solvencies = response.data.data;
-        app.pagination = response.data;
+        app.dataFixedAssets = response.data;
+        console.log(response);
       })
       .catch((error) => {
         this.error = error;
@@ -81,31 +73,38 @@ export default {
           title: "Error",
           message: this.error.message,
         });
-      });*/
+      });
   },
   methods: {
-    getDataPageSelected(page) {
-      let app = this;
-      app.loading = true;
-      /*
-      axios
-        .post("/api/solvencies", {
-          descripcion: app.writtenTextParameter,
-          page: page,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.people = Object.values(response.data.data);
-          app.pagination = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });*/
+    initPrintSelectedFixedAssets() {
+      let list = [];
+
+      for (var item in this.selectedFixedAssets) {
+        list.push(this.selectedFixedAssets[item]["codigo"]);
+      }
+      console.log(list);
+      axios({
+        url: "/api/reportSelectedFixedAssets/",
+        params: {
+          lista: list,
+        },
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });
+      alert("llegamos");
     },
-    initAddSolvency() {
-    },
-    initChangeStateSolvency(index, row) {
-      console.log(index, row);
+
+    handleSelectionChange(val) {
+      this.selectedFixedAssets = val;
+      console.log(val.codigo);
     },
   },
 };

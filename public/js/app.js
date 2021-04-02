@@ -6268,22 +6268,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Personas",
   data: function data() {
     return {
+      nro_doc: "",
       messages: {},
       dataFixedAssets: [],
+      selectedFixedAssets: [],
       pagination: {
         page: 1
       },
@@ -6291,48 +6283,56 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     var app = this;
-    console.log();
-    /*
-    axios
-      .post("/api/solvencies", {
-        descripcion: app.writtenTextParameter,
-      })
-      .then((response) => {
-        app.loading = false;
-        app.solvencies = response.data.data;
-        app.pagination = response.data;
-      })
-      .catch((error) => {
-        this.error = error;
-        this.$notify.error({
-          title: "Error",
-          message: this.error.message,
-        });
-      });*/
+    app.nro_doc = this.$route.params.id;
+    console.log(app.nro_doc);
+    axios.post("/api/selectedFixedAssetsbyDocument", {
+      id: app.nro_doc
+    }).then(function (response) {
+      app.loading = false;
+      app.dataFixedAssets = response.data;
+      console.log(response);
+    })["catch"](function (error) {
+      _this.error = error;
+
+      _this.$notify.error({
+        title: "Error",
+        message: _this.error.message
+      });
+    });
   },
   methods: {
-    getDataPageSelected: function getDataPageSelected(page) {
-      var app = this;
-      app.loading = true;
-      /*
-      axios
-        .post("/api/solvencies", {
-          descripcion: app.writtenTextParameter,
-          page: page,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.people = Object.values(response.data.data);
-          app.pagination = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });*/
+    initPrintSelectedFixedAssets: function initPrintSelectedFixedAssets() {
+      var list = [];
+
+      for (var item in this.selectedFixedAssets) {
+        list.push(this.selectedFixedAssets[item]["codigo"]);
+      }
+
+      console.log(list);
+      axios({
+        url: "/api/reportSelectedFixedAssets/",
+        params: {
+          lista: list
+        },
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });
+      alert("llegamos");
     },
-    initAddSolvency: function initAddSolvency() {},
-    initChangeStateSolvency: function initChangeStateSolvency(index, row) {
-      console.log(index, row);
+    handleSelectionChange: function handleSelectionChange(val) {
+      this.selectedFixedAssets = val;
+      console.log(val.codigo);
     }
   }
 });
@@ -93694,7 +93694,7 @@ var render = function() {
               {
                 staticStyle: { "text-align": "right", float: "right" },
                 attrs: { size: "small", type: "primary", icon: "el-icon-plus" },
-                on: { click: _vm.initAddSolvency }
+                on: { click: _vm.initPrintSelectedFixedAssets }
               },
               [_vm._v("imprimir")]
             )
@@ -93704,7 +93704,57 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("div")
+        _c(
+          "div",
+          [
+            _vm._v("\n      " + _vm._s(_vm.nro_doc) + "\n      "),
+            _c(
+              "el-table",
+              {
+                directives: [
+                  {
+                    name: "loading",
+                    rawName: "v-loading",
+                    value: _vm.loading,
+                    expression: "loading"
+                  }
+                ],
+                staticStyle: { width: "100%" },
+                attrs: { data: _vm.dataFixedAssets, height: "250" },
+                on: { "selection-change": _vm.handleSelectionChange }
+              },
+              [
+                _c("el-table-column", {
+                  attrs: { type: "selection", width: "55" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "codigo", label: "codigo", width: "120" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "el-tag",
+                            { attrs: { size: "success", type: "info" } },
+                            [_vm._v(_vm._s(scope.row.codigo))]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "act_des", label: "descripcion", width: "420" }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
       ])
     ],
     1
@@ -118023,8 +118073,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
