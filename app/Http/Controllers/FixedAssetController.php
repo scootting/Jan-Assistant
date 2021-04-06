@@ -47,10 +47,10 @@ class FixedAssetController extends Controller
         \Log::info('la lista 2 es: '.$lista);
 
         $jasper = new JasperPHP;
-        $input = public_path() . '/reports/Blank_Letter.jrxml';
+        $input = public_path() . '/reports/FixedAssetsQr.jrxml'; //Blank_Letter.jrxml
         $jasper->compile($input)->execute();
 
-        $input = public_path() . '/reports/Blank_Letter.jasper'; //ReportValuesQr
+        $input = public_path() . '/reports/FixedAssetsQr.jasper'; //ReportValuesQr
         $output = public_path() . '/reports';
         $jasper->process(
             $input,
@@ -59,18 +59,18 @@ class FixedAssetController extends Controller
             array(
                 'p_lista' => $lista, 
                 ),
-            array(/*
+            array(
                 'driver' => 'postgres',
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
                 'database' => 'daf',
-                'port' => '5432',*/
+                'port' => '5432',
             )  
         )->execute();
 
-        $pathToFile = public_path() . '/reports/Blank_Letter.pdf';
-        $filename = 'Blank_Letter.pdf';
+        $pathToFile = public_path() . '/reports/FixedAssetsQr.pdf';
+        $filename = 'FixedAssetsQr.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
     }

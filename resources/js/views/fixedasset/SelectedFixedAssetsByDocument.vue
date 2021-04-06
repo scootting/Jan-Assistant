@@ -19,7 +19,7 @@
           v-loading="loading"
           :data="dataFixedAssets"
           style="width: 100%"
-          height="250"
+          height="450"
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
