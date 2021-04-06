@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\FixedAsset;
+use JasperPHP\JasperPHP as JasperPHP;
+use Illuminate\Support\Collection;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -40,12 +42,15 @@ class FixedAssetController extends Controller
     public function getReportSelectedFixedAssets(Request $request){
         \Log::info("vas a ingresar a este punto");
         \Log::info($request->get('lista'));
-        /*
+        $lista = $request->get('lista');
+        $lista = implode(',', $lista);
+        \Log::info('la lista 2 es: '.$lista);
+
         $jasper = new JasperPHP;
-        $input = public_path() . '/reports/testDetail.jrxml';
+        $input = public_path() . '/reports/Blank_Letter.jrxml';
         $jasper->compile($input)->execute();
 
-        $input = public_path() . '/reports/testDetail.jasper'; //ReportValuesQr
+        $input = public_path() . '/reports/Blank_Letter.jasper'; //ReportValuesQr
         $output = public_path() . '/reports';
         $jasper->process(
             $input,
@@ -54,22 +59,19 @@ class FixedAssetController extends Controller
             array(
                 'p_lista' => $lista, 
                 ),
-            array(
+            array(/*
                 'driver' => 'postgres',
                 'username' => 'postgres',
                 'password' => '123456',
                 'host' => '192.168.25.54',
                 'database' => 'daf',
-                'port' => '5432',
+                'port' => '5432',*/
             )  
         )->execute();
 
-        $pathToFile = public_path() . '/reports/testDetail.pdf';
-        $filename = 'testDetail.pdf';
+        $pathToFile = public_path() . '/reports/Blank_Letter.pdf';
+        $filename = 'Blank_Letter.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
-        */
     }
-
-
 }
