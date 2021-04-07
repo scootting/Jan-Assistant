@@ -22,17 +22,13 @@
           height="450"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column prop="codigo" label="codigo" width="120">
+          <el-table-column type="selection"> </el-table-column>
+          <el-table-column prop="codigo" label="codigo">
             <template slot-scope="scope">
               <el-tag size="success" type="info">{{ scope.row.codigo }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="act_des"
-            label="descripcion"
-            width="420"
-          ></el-table-column>
+          <el-table-column prop="act_des" label="descripcion"></el-table-column>
         </el-table>
       </div>
     </el-card>
@@ -57,7 +53,7 @@ export default {
   mounted() {
     let app = this;
     app.nro_doc = this.$route.params.id;
-    console.log(app.nro_doc);
+    //console.log(app.nro_doc);
     axios
       .post("/api/selectedFixedAssetsbyDocument", {
         id: app.nro_doc,
@@ -65,7 +61,7 @@ export default {
       .then((response) => {
         app.loading = false;
         app.dataFixedAssets = response.data;
-        console.log(response);
+        //console.log(response);
       })
       .catch((error) => {
         this.error = error;
@@ -82,29 +78,32 @@ export default {
       for (var item in this.selectedFixedAssets) {
         list.push(this.selectedFixedAssets[item]["codigo"]);
       }
-      console.log(list);
-      axios({
-        url: "/api/reportSelectedFixedAssets/",
-        params: {
-          lista: list,
-        },
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
+      //console.log(list);
+      if (list.length != 0) {
+        axios({
+          url: "/api/reportSelectedFixedAssets/",
+          params: {
+            lista: list,
+          },
+          method: "GET",
+          responseType: "blob",
+        }).then((response) => {
+          let blob = new Blob([response.data], {
+            type: "application/pdf",
+          });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          let url = window.URL.createObjectURL(blob);
+          window.open(url);
         });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
-      alert("llegamos");
+      } else {
+        alert("debe seleccionar por lo menos un elemento");
+      }
     },
 
     handleSelectionChange(val) {
       this.selectedFixedAssets = val;
-      console.log(val.codigo);
+      //console.log(val.codigo);
     },
   },
 };

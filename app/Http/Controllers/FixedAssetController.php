@@ -40,11 +40,11 @@ class FixedAssetController extends Controller
     }    
 
     public function getReportSelectedFixedAssets(Request $request){
-        \Log::info("vas a ingresar a este punto");
+        /*
         \Log::info($request->get('lista'));
+        */
         $lista = $request->get('lista');
         $lista = implode(',', $lista);
-        \Log::info('la lista 2 es: '.$lista);
 
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/FixedAssetsQr.jrxml'; //Blank_Letter.jrxml

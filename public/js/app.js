@@ -6264,10 +6264,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Personas",
   data: function data() {
@@ -6286,14 +6282,13 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var app = this;
-    app.nro_doc = this.$route.params.id;
-    console.log(app.nro_doc);
+    app.nro_doc = this.$route.params.id; //console.log(app.nro_doc);
+
     axios.post("/api/selectedFixedAssetsbyDocument", {
       id: app.nro_doc
     }).then(function (response) {
       app.loading = false;
-      app.dataFixedAssets = response.data;
-      console.log(response);
+      app.dataFixedAssets = response.data; //console.log(response);
     })["catch"](function (error) {
       _this.error = error;
 
@@ -6309,30 +6304,32 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var item in this.selectedFixedAssets) {
         list.push(this.selectedFixedAssets[item]["codigo"]);
-      }
+      } //console.log(list);
 
-      console.log(list);
-      axios({
-        url: "/api/reportSelectedFixedAssets/",
-        params: {
-          lista: list
-        },
-        method: "GET",
-        responseType: "blob"
-      }).then(function (response) {
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
+
+      if (list.length != 0) {
+        axios({
+          url: "/api/reportSelectedFixedAssets/",
+          params: {
+            lista: list
+          },
+          method: "GET",
+          responseType: "blob"
+        }).then(function (response) {
+          var blob = new Blob([response.data], {
+            type: "application/pdf"
+          });
+          var link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          var url = window.URL.createObjectURL(blob);
+          window.open(url);
         });
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        var url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
-      alert("llegamos");
+      } else {
+        alert("debe seleccionar por lo menos un elemento");
+      }
     },
     handleSelectionChange: function handleSelectionChange(val) {
-      this.selectedFixedAssets = val;
-      console.log(val.codigo);
+      this.selectedFixedAssets = val; //console.log(val.codigo);
     }
   }
 });
@@ -93724,12 +93721,10 @@ var render = function() {
                 on: { "selection-change": _vm.handleSelectionChange }
               },
               [
-                _c("el-table-column", {
-                  attrs: { type: "selection", width: "55" }
-                }),
+                _c("el-table-column", { attrs: { type: "selection" } }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "codigo", label: "codigo", width: "120" },
+                  attrs: { prop: "codigo", label: "codigo" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -93747,7 +93742,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { prop: "act_des", label: "descripcion", width: "420" }
+                  attrs: { prop: "act_des", label: "descripcion" }
                 })
               ],
               1
@@ -118073,8 +118068,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
