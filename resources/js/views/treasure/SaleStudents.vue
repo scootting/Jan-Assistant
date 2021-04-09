@@ -133,7 +133,7 @@ export default {
     initDetailStudents(index, row) {
       let id = row.id_dia;
       axios({
-        url: "/api/reportDetailStudents/" + row.id_dia,
+        url: "/api/reportDetailStudents/" + id,
         method: "GET",
         responseType: "blob",
       }).then((response) => {
