@@ -3,14 +3,14 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ oficina.descripcion }}</span>
-       <el-button
+      <!-- <el-button
           style="text-align: right; float: right"
           size="small"
           type="primary"
           icon="el-icon-plus"
           @click="loadReportAssets"
           >imprimir reporte</el-button
-        >
+        >-->
       </div>
       <br />
       <br />

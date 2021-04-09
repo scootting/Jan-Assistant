@@ -95056,24 +95056,7 @@ var render = function() {
               attrs: { slot: "header" },
               slot: "header"
             },
-            [
-              _c("span", [_vm._v(_vm._s(_vm.oficina.descripcion))]),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  staticStyle: { "text-align": "right", float: "right" },
-                  attrs: {
-                    size: "small",
-                    type: "primary",
-                    icon: "el-icon-plus"
-                  },
-                  on: { click: _vm.loadReportAssets }
-                },
-                [_vm._v("imprimir reporte")]
-              )
-            ],
-            1
+            [_c("span", [_vm._v(_vm._s(_vm.oficina.descripcion))])]
           ),
           _vm._v(" "),
           _c("br"),
@@ -117271,8 +117254,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

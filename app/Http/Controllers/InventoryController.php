@@ -118,8 +118,8 @@ class InventoryController extends Controller
                     break;
                 case 'subUnidad':
                     $param = array('subUnidad'=>implode(',',$valor),'unidad'=> $cod_ofc);
-                    $pathToFile = $this->generarReporte('subUnidadGeneral',$param);
-                    $filename = 'subUnidadGeneral.pdf';
+                    $pathToFile = $this->generarReporte('subUnidadGeneralReport',$param);
+                    $filename = 'subUnidadGeneralReport.pdf';
                     $headers = ['Content-Type' => 'application/pdf'];
                     return response()->download($pathToFile, $filename, $headers);
                     break;
