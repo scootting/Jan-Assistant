@@ -56,8 +56,8 @@ class Treasure extends Model
     public static function addSaleOfDay($user, $year){
         //insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, gestion, nro_com_min, usr_cre) 
         //               values (now(), 'Venta: De La Universidad Autónoma "Tomás Frías" En BOLIVIANOS', 'C', 'B', 0, 2021,'-1', 'rcallizaya');
-        $query = "insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, gestion, tip_tra, nro_com_min, usr_cre)".
-                 "values (now(), 'Venta: De La Universidad Autónoma \"Tomás Frías\" En BOLIVIANOS', 'C', 'B', 0, '".$year."', 0, '-1', '".$user."')";        
+        $query = "insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, id_lugar, gestion, tip_tra, nro_com_min, usr_cre)".
+                 "values (now(), 'Venta: De La Universidad Autónoma \"Tomás Frías\" En BOLIVIANOS', 'C', 'B', 0, 'U', '".$year."', 0, '-1', '".$user."')";        
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }

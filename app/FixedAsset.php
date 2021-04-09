@@ -11,8 +11,8 @@ class FixedAsset extends Model
 {
     //
     public static function GetDocumentFixedAssetByYear($year, $type){
-        $year = 2020;
-        $query = "select * from act.asignaciones aa where aa.tip_doc = '".$type."' and aa.gestion = '".$year."' order by aa.fec_cre desc";
+        //$year = 2020;
+        $query = "select * from act.asignaciones aa where aa.tip_doc = '".$type."' and aa.gestion = '".$year."' and aa.estado = 'Verificado' order by aa.fec_cre desc";
         $data = collect(DB::select(DB::raw($query)));    
         return $data;
     }    
