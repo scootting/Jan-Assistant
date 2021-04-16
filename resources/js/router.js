@@ -117,6 +117,7 @@ const router = new VueRouter({
                 { path: 'person/:id', name: 'editperson', component: EditPerson },
                 //{ path: 'person/show/:id', name: 'editperson', component: EditPerson },
                 //{ path: 'welcome', name: 'welcome', component: Welcome },
+                
                 { path: 'inventory', name: 'inventory', component: Inventory },
                 { path: 'inventory/:soa', name: 'inventorydetail', component: InventoryDetail },
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },

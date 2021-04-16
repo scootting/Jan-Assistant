@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ oficina.descripcion }}</span>
-      <!-- <el-button
+        <!-- <el-button
           style="text-align: right; float: right"
           size="small"
           type="primary"
@@ -37,7 +37,11 @@
           <el-col :span="14" :offset="0">
             <el-form label-width="100px" :inline="false" size="small">
               <el-form-item label="Seleccion por:">
-                <el-select placeholder="Seleccionar" v-model="filtro.tipo" @change="filtro.values=[]">
+                <el-select
+                  placeholder="Seleccionar"
+                  v-model="filtro.tipo"
+                  @change="filtro.values = []"
+                >
                   <el-option
                     v-for="item in filtros"
                     :key="item.id"
@@ -48,34 +52,44 @@
                 </el-select>
               </el-form-item>
               <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccionar:">
-                <selectSubUnidad v-if="filtro.tipo == 'subUnidad'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
-                <selectCargos v-if="filtro.tipo == 'cargo'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
-                <select-responsables v-if="filtro.tipo == 'responsable'" v-model="filtro.values" multiple :ofc-cod="oficina.cod_soa" />
+                <selectSubUnidad
+                  v-if="filtro.tipo == 'subUnidad'"
+                  v-model="filtro.values"
+                  multiple
+                  :ofc-cod="oficina.cod_soa"
+                />
+                <selectCargos
+                  v-if="filtro.tipo == 'cargo'"
+                  v-model="filtro.values"
+                  multiple
+                  :ofc-cod="oficina.cod_soa"
+                />
+                <select-responsables
+                  v-if="filtro.tipo == 'responsable'"
+                  v-model="filtro.values"
+                  multiple
+                  :ofc-cod="oficina.cod_soa"
+                />
               </el-form-item>
             </el-form>
           </el-col>
           <el-col>
-              <el-radio-group v-model="reporte.tipo" size="small">
-                <el-radio-button
-                  label="detallado"
-                >Detallado</el-radio-button>
-                <el-radio-button
-                  label="general"
-                >General</el-radio-button>
-              </el-radio-group>
+            <el-radio-group v-model="reporte.tipo" size="small">
+              <el-radio-button label="detallado">Detallado</el-radio-button>
+              <el-radio-button label="general">General</el-radio-button>
+            </el-radio-group>
           </el-col>
           <el-col :span="10" :offset="5">
             <el-form label-width="90px" :inline="false" size="normal">
               <el-form-item align="right-center" width="20">
-                <el-button type="primary" 
-                @click="cargarActivos" 
-                size="small"
+                <el-button type="primary" @click="cargarActivos" size="small"
                   >Cargar Activos</el-button
                 >
-                <el-button type="primary" 
-                @click="GenerarReporte"
-                icon="el-icon-plus"
-                size="small"
+                <el-button
+                  type="primary"
+                  @click="GenerarReporte"
+                  icon="el-icon-plus"
+                  size="small"
                   >Generar Reporte</el-button
                 >
               </el-form-item>
@@ -89,28 +103,42 @@
           <el-table-column label="CODIGO" width="180">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.id }}</el-tag>
+                <el-tag size="medium">{{ scope.row.cod_ant }}</el-tag>
               </div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="nro_doc"
-            label="NRO. DOCUMENTO"
+            prop="can"
+            label="CANTIDAD"
+            width="180"
+          ></el-table-column> 
+          <el-table-column prop="uni_med" label="UNI. MED."></el-table-column>
+          <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
+          
+          <el-table-column
+            v-if="tipoReporte === 'general'"
+            prop="total"
+            label="TOTAL"
             width="180"
           ></el-table-column>
-          <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
           <el-table-column
+            v-if="tipoReporte === 'detallado'"
             prop="imp_bs"
             label="PRECIO"
             width="180"
           ></el-table-column>
-          <el-table-column label="ESTADO" width="180">
+          <el-table-column
+            v-if="tipoReporte === 'detallado'"
+            label="ESTADO"
+            width="180"
+          >
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">{{ scope.row.estado }}</el-tag>
               </div>
             </template>
           </el-table-column>
+
         </el-table>
         <el-pagination
           :page-size="pagination.per_page"
@@ -126,9 +154,9 @@
 
 <script>
 //Importar Componentes creados
-import selectSubUnidad from './components/selectSubUnidad';
-import selectCargos from './components/selectCargos';
-import selectResponsables from './components/selectResponsables';
+import selectSubUnidad from "./components/selectSubUnidad";
+import selectCargos from "./components/selectCargos";
+import selectResponsables from "./components/selectResponsables";
 export default {
   name: "InventoryDetail",
   components: {
@@ -150,32 +178,32 @@ export default {
         page: 1,
       },
       respSelectCI: -1,
-      encargados: [],
+      //encargados: [],
       generar: 1,
       //filtro elegido para obtener los activos
       filtro: {
-        tipo: 'todo',
+        tipo: "todo",
         values: [],
       },
       //tipos de filtros
       filtros: [
         {
-          id: 'todo',
-          label:'TODO',
+          id: "todo",
+          label: "TODO",
         },
         {
-          id: 'subUnidad',
-          label:'SUB UNIDAD',
+          id: "subUnidad",
+          label: "SUB UNIDAD",
         },
         {
-          id: 'cargo',
-          label:'CARGO',
+          id: "cargo",
+          label: "CARGO",
         },
         {
-          id: 'responsable',
-          label:'RESPONSABLE',
+          id: "responsable",
+          label: "RESPONSABLE",
         },
-      ]
+      ],
     };
   },
   mounted() {
@@ -189,9 +217,14 @@ export default {
       })
       .catch((err) => {});
   },
+  computed: {
+    tipoReporte(){
+      return this.reporte.tipo;
+    },
+  },
   methods: {
     //obtener a los encargados que estan dentro de la oficina.
-    getRespBySoa() {
+    /*getRespBySoa() {
       axios
         .get("/api/inventory/cargos/" + this.oficina.cod_soa)
         .then((data) => {
@@ -206,7 +239,7 @@ export default {
           });
         })
         .catch((err) => {});
-    },
+    },*/
     //cargamos los activos con el encargado seleccionado
     getActivosPaginate(page) {
       this.pagination.page = page;
@@ -221,6 +254,9 @@ export default {
       this.loading = true;
       let params = {
         page: this.pagination.page | 1,
+        reporte: this.reporte.tipo,
+        filtroTipo: this.filtro.tipo,
+        filtroValor: this.filtro.values,
       };
       if (this.respSelectCI != -1) params.ci_resp = this.respSelectCI;
       axios
@@ -236,6 +272,7 @@ export default {
           console.log(err);
         });
     },
+    /* 
     loadReportAssets() {
       axios({
         url: "/api/descargando/" + this.oficina.cod_soa,
@@ -252,57 +289,20 @@ export default {
         console.log(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
-        /*
+        
         link.download = "test.pdf";
         link.click();
-        */
+        
       });
-    },
-    ReporteDetalle() {
-      let ciResp = null;
-      if (this.respSelectCI != -1) {
-        ciResp = this.encargados.filter((e) => {
-          if (e.sub_ofc_cod === this.respSelectCI) {
-            return true;
-          }
-          return false;
-        })[0].ci_resp;
-      } else {
-        ciResp = -1;
-      }
-      axios({
-        url: "/api/inventarioDetalle/",
-        params: {
-          ofc_cod: this.oficina.cod_soa,
-          resp: ciResp,
-        },
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        console.log(response.data);
-        console.log("1");
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-        /*
-        link.download = "test.pdf";
-        link.click();
-        */
-      });
-    },
+    },*/
     GenerarReporte() {
       axios({
         url: "/api/generarReporte/",
         params: {
           ofc_cod: this.oficina.cod_soa,
           reporte: this.reporte.tipo,
-          filtroTipo:this.filtro.tipo,
-          filtroValor:this.filtro.values
+          filtroTipo: this.filtro.tipo,
+          filtroValor: this.filtro.values,
         },
         method: "GET",
         responseType: "blob",

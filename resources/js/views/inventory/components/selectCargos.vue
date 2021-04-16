@@ -1,6 +1,6 @@
 <template>
   <el-select
-    v-model="value"
+    v-model="selected"
     placeholder="seleccione el cargo"
     :multiple="multiple"
     :loading="cargosLoading"
@@ -36,10 +36,12 @@ export default {
     return {
       cargos: [],
       cargosLoading: false,
+      selected:'',
     };
   },
   created() {
     this.getCargos();
+    this.selected = this.value;
   },
   watch: {
     ofcCod(newVal){
@@ -54,7 +56,7 @@ export default {
   },
   methods: {
     onChange() {
-      this.$emit("input", this.value);
+      this.$emit('input',this.selected)
     },
     getCargos() {
       this.cargosLoading = true;
