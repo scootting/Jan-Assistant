@@ -33,7 +33,7 @@
               </el-form-item>
               <el-form-item label="carnet de identidad">
                 <el-col :span="8">
-                  <el-input v-model="debtor.nro_dip"></el-input>
+                  <el-input v-model="debtor.nro_dip" @keyup.enter.native="test"></el-input>
                 </el-col>
                 <el-col :span="16">
                   <el-input v-model="debtor.des_per" disabled></el-input>
@@ -41,7 +41,7 @@
               </el-form-item>
               <el-form-item label="numero de cuenta">
                 <el-col :span="8">
-                  <el-input v-model="debtor.nro_cta"></el-input>
+                  <el-input v-model="debtor.nro_cta" ref='nocuenta'></el-input>
                 </el-col>
                 <el-col :span="16">
                   <el-input v-model="debtor.des_cta" disabled></el-input>
@@ -154,6 +154,8 @@ export default {
   methods: {
     test() {
       alert("bienvenido al modulo");
+      this.$refs.nocuenta.focus();
+      //this.$nextTick(() => this.$refs.nocuenta.focus())
     },
     appendDebtor(){
       var app = this;

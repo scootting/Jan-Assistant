@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <el-aside width="260px" style="background-color: #212120; min-height: 100vh">
+      <el-aside width="260px" style="background-color: #010e1f; min-height: 100vh">
         <!--                  
                 *** - menu dinamico usando ElementUI - ***
         -->
@@ -11,7 +11,7 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          background-color="#212120"
+          background-color="#010e1f"
           text-color="#faebd7"
           active-text-color="#faebd7"
           style="border-right: 0 !important"
