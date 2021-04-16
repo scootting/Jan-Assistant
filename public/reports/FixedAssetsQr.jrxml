@@ -6,9 +6,7 @@
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
 	<parameter name="p_lista" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT aa.codigo,aa.act_des,aa.act_fec_adq,aa.act_par_cod,aa.act_cod_con FROM act.activos aa where
-aa.act_ges = '2020'
-AND aa.codigo in (select unnest(string_to_array( $P{p_lista}, ',')))]]>
+		<![CDATA[SELECT aa.codigo,aa.act_des,aa.act_fec_adq,aa.act_par_cod,aa.act_cod_con FROM act.activos aa where aa.codigo in (select unnest(string_to_array( $P{p_lista}, ',')))]]>
 	</queryString>
 	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
@@ -45,7 +43,7 @@ AND aa.codigo in (select unnest(string_to_array( $P{p_lista}, ',')))]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<detail>
-		<band height="58" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<componentElement>
 				<reportElement x="114" y="0" width="52" height="51" uuid="b40586a3-eaf6-4199-81c2-334d6a030df6"/>
 				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
