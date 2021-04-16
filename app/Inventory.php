@@ -396,18 +396,18 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //prueba de elegir por responsable inventario 
+    //prueba de elegir por responsable activos de un inventario 
     public static function selectByCiResponsable($tipo,$cod_soa,$ci_resp)
     {
         $arrString = "{";
         foreach ($ci_resp as $k => $ci_resp)
             $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
         $arrString = $arrString . '}';
-        if ($tipo == 1) {
+        if ($tipo == 'general') {
             
             $query = "select * from inv.ff_getactivosgeneralbyci('".$cod_soa."', '".$arrString."')";
         }
-        if ($tipo == 2)  {
+        else  {
             $query = "select * from inv.ff_getactivosdetallelbyci('".$cod_soa."', '".$arrString."')";
         }
         $data = collect(DB::select(DB::raw($query)));
@@ -420,11 +420,11 @@ class Inventory extends Model
         foreach ($cargo as $k => $cargo)
             $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
         $arrString = $arrString . '}';
-        if ($tipo == 1) {
+        if ($tipo == 'general') {
             
             $query = "select * from inv.ff_getactivosgeneralbycargo('".$cod_soa."', '".$arrString."')";
         }
-        if ($tipo == 2)  {
+        else {
             $query = "select * from inv.ff_getactivosdetallelbycargo('".$cod_soa."', '".$arrString."')";
         }
         $data = collect(DB::select(DB::raw($query)));
@@ -437,11 +437,11 @@ class Inventory extends Model
         foreach ($subUnidad as $k => $subUnidad)
             $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
         $arrString = $arrString . '}';
-        if ($tipo == 1) {
+        if ($tipo == 'general') {
             
             $query = "select * from inv.ff_getactivosgeneralbysubunidad('".$cod_soa."', '".$arrString."')";
         }
-        if ($tipo == 2)  {
+        else {
             $query = "select * from inv.ff_getactivosdetallebysubunidad('".$cod_soa."', '".$arrString."')";
         }
         $data = collect(DB::select(DB::raw($query)));

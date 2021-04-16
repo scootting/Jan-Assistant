@@ -1,6 +1,6 @@
 <template>
   <el-select
-    v-model="value"
+    v-model="selected"
     placeholder="seleccione el Responsable"
     :multiple="multiple"
     :loading="responsablesLoading"
@@ -36,10 +36,12 @@ export default {
     return {
       Responsables: [],
       responsablesLoading: false,
+      selected:'',
     };
   },
   created() {
     this.getResponsables();
+    this.selected = this.value;
   },
   watch: {
     ofcCod(newVal){
@@ -54,7 +56,7 @@ export default {
   },
   methods: {
     onChange() {
-      this.$emit("input", this.value);
+       this.$emit('input',this.selected)
     },
     getResponsables() {
       this.responsablesLoading = true;

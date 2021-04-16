@@ -7914,6 +7914,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //Importar Componentes creados
 
 
@@ -7939,26 +7967,26 @@ __webpack_require__.r(__webpack_exports__);
         page: 1
       },
       respSelectCI: -1,
-      encargados: [],
+      //encargados: [],
       generar: 1,
       //filtro elegido para obtener los activos
       filtro: {
-        tipo: 'todo',
+        tipo: "todo",
         values: []
       },
       //tipos de filtros
       filtros: [{
-        id: 'todo',
-        label: 'TODO'
+        id: "todo",
+        label: "TODO"
       }, {
-        id: 'subUnidad',
-        label: 'SUB UNIDAD'
+        id: "subUnidad",
+        label: "SUB UNIDAD"
       }, {
-        id: 'cargo',
-        label: 'CARGO'
+        id: "cargo",
+        label: "CARGO"
       }, {
-        id: 'responsable',
-        label: 'RESPONSABLE'
+        id: "responsable",
+        label: "RESPONSABLE"
       }]
     };
   },
@@ -7973,24 +8001,30 @@ __webpack_require__.r(__webpack_exports__);
       _this.getRespBySoa();
     })["catch"](function (err) {});
   },
+  computed: {
+    tipoReporte: function tipoReporte() {
+      return this.reporte.tipo;
+    }
+  },
   methods: {
     //obtener a los encargados que estan dentro de la oficina.
-    getRespBySoa: function getRespBySoa() {
-      var _this2 = this;
 
-      axios.get("/api/inventory/cargos/" + this.oficina.cod_soa).then(function (data) {
-        _this2.respSelectCI = -1;
-        _this2.encargados = data.data;
-
-        _this2.encargados.push({
-          ci_resp: -1,
-          nombres: "Todos",
-          paterno: "",
-          materno: "",
-          sub_ofc_cod: -1
-        });
-      })["catch"](function (err) {});
-    },
+    /*getRespBySoa() {
+      axios
+        .get("/api/inventory/cargos/" + this.oficina.cod_soa)
+        .then((data) => {
+          this.respSelectCI = -1;
+          this.encargados = data.data;
+          this.encargados.push({
+            ci_resp: -1,
+            nombres: "Todos",
+            paterno: "",
+            materno: "",
+            sub_ofc_cod: -1,
+          });
+        })
+        .catch((err) => {});
+    },*/
     //cargamos los activos con el encargado seleccionado
     getActivosPaginate: function getActivosPaginate(page) {
       this.pagination.page = page;
@@ -8001,87 +8035,50 @@ __webpack_require__.r(__webpack_exports__);
       this.cargarActivos();
     },
     cargarActivos: function cargarActivos() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.loading = true;
       var params = {
-        page: this.pagination.page | 1
+        page: this.pagination.page | 1,
+        reporte: this.reporte.tipo,
+        filtroTipo: this.filtro.tipo,
+        filtroValor: this.filtro.values
       };
       if (this.respSelectCI != -1) params.ci_resp = this.respSelectCI;
       axios.get("/api/inventory/activosByResp/" + this.oficina.cod_soa, {
         params: params
       }).then(function (data) {
-        _this3.loading = false;
-        _this3.activos = Object.values(data.data.data);
-        _this3.pagination = data.data;
+        _this2.loading = false;
+        _this2.activos = Object.values(data.data.data);
+        _this2.pagination = data.data;
       })["catch"](function (err) {
         console.log(err);
       });
     },
-    loadReportAssets: function loadReportAssets() {
+
+    /* 
+    loadReportAssets() {
       axios({
         url: "/api/descargando/" + this.oficina.cod_soa,
         method: "GET",
-        responseType: "blob"
-      }).then(function (response) {
+        responseType: "blob",
+      }).then((response) => {
         console.log(response.data);
         console.log("1");
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
+        let blob = new Blob([response.data], {
+          type: "application/pdf",
         });
-        var link = document.createElement("a");
+        let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         console.log(blob);
-        var url = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
         window.open(url);
-        /*
+        
         link.download = "test.pdf";
         link.click();
-        */
+        
       });
-    },
-    ReporteDetalle: function ReporteDetalle() {
-      var _this4 = this;
-
-      var ciResp = null;
-
-      if (this.respSelectCI != -1) {
-        ciResp = this.encargados.filter(function (e) {
-          if (e.sub_ofc_cod === _this4.respSelectCI) {
-            return true;
-          }
-
-          return false;
-        })[0].ci_resp;
-      } else {
-        ciResp = -1;
-      }
-
-      axios({
-        url: "/api/inventarioDetalle/",
-        params: {
-          ofc_cod: this.oficina.cod_soa,
-          resp: ciResp
-        },
-        method: "GET",
-        responseType: "blob"
-      }).then(function (response) {
-        console.log(response.data);
-        console.log("1");
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
-        });
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
-        var url = window.URL.createObjectURL(blob);
-        window.open(url);
-        /*
-        link.download = "test.pdf";
-        link.click();
-        */
-      });
-    },
+    },*/
     GenerarReporte: function GenerarReporte() {
       axios({
         url: "/api/generarReporte/",
@@ -8111,13 +8108,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     ReporteGeneral: function ReporteGeneral() {
-      var _this5 = this;
+      var _this3 = this;
 
       var ciResp;
 
       if (this.respSelectCI != -1) {
         ciResp = this.encargados.filter(function (e) {
-          if (e.sub_ofc_cod === _this5.respSelectCI) {
+          if (e.sub_ofc_cod === _this3.respSelectCI) {
             return true;
           }
 
@@ -8634,11 +8631,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       cargos: [],
-      cargosLoading: false
+      cargosLoading: false,
+      selected: ''
     };
   },
   created: function created() {
     this.getCargos();
+    this.selected = this.value;
   },
   watch: {
     ofcCod: function ofcCod(newVal) {
@@ -8652,7 +8651,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onChange: function onChange() {
-      this.$emit("input", this.value);
+      this.$emit('input', this.selected);
     },
     getCargos: function getCargos() {
       var _this = this;
@@ -8719,11 +8718,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       Responsables: [],
-      responsablesLoading: false
+      responsablesLoading: false,
+      selected: ''
     };
   },
   created: function created() {
     this.getResponsables();
+    this.selected = this.value;
   },
   watch: {
     ofcCod: function ofcCod(newVal) {
@@ -8737,7 +8738,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onChange: function onChange() {
-      this.$emit("input", this.value);
+      this.$emit('input', this.selected);
     },
     getResponsables: function getResponsables() {
       var _this = this;
@@ -8804,11 +8805,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       SubUnidad: [],
-      SubUnidadLoading: false
+      SubUnidadLoading: false,
+      selected: ''
     };
   },
   created: function created() {
     this.getSubUnidad();
+    this.selected = this.value;
   },
   watch: {
     ofcCod: function ofcCod(newVal) {
@@ -8822,7 +8825,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onChange: function onChange() {
-      this.$emit("input", this.value);
+      this.$emit('input', this.selected);
     },
     getSubUnidad: function getSubUnidad() {
       var _this = this;
@@ -95916,7 +95919,7 @@ var render = function() {
                               },
                               [
                                 _c("el-tag", { attrs: { size: "medium" } }, [
-                                  _vm._v(_vm._s(scope.row.id))
+                                  _vm._v(_vm._s(scope.row.cod_ant))
                                 ])
                               ],
                               1
@@ -95928,47 +95931,64 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: {
-                      prop: "nro_doc",
-                      label: "NRO. DOCUMENTO",
-                      width: "180"
-                    }
+                    attrs: { prop: "can", label: "CANTIDAD", width: "180" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "uni_med", label: "UNI. MED." }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: { prop: "des", label: "DESCRIPCION" }
                   }),
                   _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: { prop: "imp_bs", label: "PRECIO", width: "180" }
-                  }),
+                  _vm.tipoReporte === "general"
+                    ? _c("el-table-column", {
+                        attrs: { prop: "total", label: "TOTAL", width: "180" }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: { label: "ESTADO", width: "180" },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "name-wrapper",
-                                attrs: { slot: "reference" },
-                                slot: "reference"
-                              },
-                              [
-                                _c("el-tag", { attrs: { size: "medium" } }, [
-                                  _vm._v(_vm._s(scope.row.estado))
-                                ])
-                              ],
-                              1
-                            )
-                          ]
-                        }
-                      }
-                    ])
-                  })
+                  _vm.tipoReporte === "detallado"
+                    ? _c("el-table-column", {
+                        attrs: { prop: "imp_bs", label: "PRECIO", width: "180" }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.tipoReporte === "detallado"
+                    ? _c("el-table-column", {
+                        attrs: { label: "ESTADO", width: "180" },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "name-wrapper",
+                                      attrs: { slot: "reference" },
+                                      slot: "reference"
+                                    },
+                                    [
+                                      _c(
+                                        "el-tag",
+                                        { attrs: { size: "medium" } },
+                                        [_vm._v(_vm._s(scope.row.estado))]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          2721872978
+                        )
+                      })
+                    : _vm._e()
                 ],
                 1
               ),
@@ -96479,11 +96499,11 @@ var render = function() {
         }
       },
       model: {
-        value: _vm.value,
+        value: _vm.selected,
         callback: function($$v) {
-          _vm.value = $$v
+          _vm.selected = $$v
         },
-        expression: "value"
+        expression: "selected"
       }
     },
     _vm._l(_vm.cargos, function(cargo) {
@@ -96531,11 +96551,11 @@ var render = function() {
         }
       },
       model: {
-        value: _vm.value,
+        value: _vm.selected,
         callback: function($$v) {
-          _vm.value = $$v
+          _vm.selected = $$v
         },
-        expression: "value"
+        expression: "selected"
       }
     },
     _vm._l(_vm.Responsables, function(responsable) {
@@ -96591,11 +96611,11 @@ var render = function() {
         }
       },
       model: {
-        value: _vm.value,
+        value: _vm.selected,
         callback: function($$v) {
-          _vm.value = $$v
+          _vm.selected = $$v
         },
-        expression: "value"
+        expression: "selected"
       }
     },
     _vm._l(_vm.SubUnidad, function(so) {

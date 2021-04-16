@@ -1,6 +1,6 @@
 <template>
   <el-select
-    v-model="value"
+    v-model="selected"
     placeholder="seleccione la sub oficina"
     :multiple="multiple"
     :loading="SubUnidadLoading"
@@ -36,10 +36,12 @@ export default {
     return {
       SubUnidad: [],
       SubUnidadLoading: false,
+      selected:'',
     };
   },
   created() {
     this.getSubUnidad();
+    this.selected = this.value;
   },
   watch: {
     ofcCod(newVal){
@@ -54,7 +56,7 @@ export default {
   },
   methods: {
     onChange() {
-      this.$emit("input", this.value);
+       this.$emit('input',this.selected)
     },
     getSubUnidad() {
       this.SubUnidadLoading = true;

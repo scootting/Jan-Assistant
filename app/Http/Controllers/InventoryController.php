@@ -44,8 +44,26 @@ class InventoryController extends Controller
     }
     public function getActivosBySoaAndResp(Request $request, $cod_soa)
     {
-        $ci_resp = ($request->get('ci_resp')) ? $request->get('ci_resp') : null;
-        $data = Inventory::getActivosBySoaAndResp($cod_soa,$ci_resp);
+        $tipo_reporte = ($request->get('reporte'));
+        $tipo_filtro = ($request->get('filtroTipo'));
+        $valor= ($request->get('filtroValor'));
+        $data = [];
+        switch($tipo_filtro){
+            case 'cargo':
+                $data = Inventory::selectByCargo($tipo_reporte,$cod_soa,$valor);
+                break;
+            case 'subUnidad':
+                $data = Inventory::selectBysubUnidad($tipo_reporte,$cod_soa,$valor);
+                break;
+            case 'responsable':
+                $data = Inventory::selectByCiResponsable($tipo_reporte,$cod_soa,$valor);
+                break;         
+            case'todo':
+                $data = Inventory::getActivosBySoaAndResp($cod_soa, false);
+                break; 
+        }
+    
+        //$data = Inventory::getActivosBySoaAndResp($cod_soa,$ci_resp);
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
@@ -118,8 +136,8 @@ class InventoryController extends Controller
                     break;
                 case 'subUnidad':
                     $param = array('subUnidad'=>implode(',',$valor),'unidad'=> $cod_ofc);
-                    $pathToFile = $this->generarReporte('subUnidadGeneralReport',$param);
-                    $filename = 'subUnidadGeneralReport.pdf';
+                    $pathToFile = $this->generarReporte('subUnidadGeneral1',$param);
+                    $filename = 'subUnidadGeneral1.pdf';
                     $headers = ['Content-Type' => 'application/pdf'];
                     return response()->download($pathToFile, $filename, $headers);
                     break;
