@@ -191,7 +191,6 @@ class TreasureController extends Controller
         $gestion = $request->get('year');
         $data = Treasure::getValueById($valor, $gestion);
         return json_encode($data);
-
     }
 
 
