@@ -25,7 +25,11 @@
             >
               <el-form-item label="codigo del valor">
                 <el-col :span="8">
-                  <el-input v-model="debtor.cod_val"></el-input>
+                  <el-input
+                    v-model="debtor.cod_val"
+                    ref="cod_val"
+                    @keyup.enter.native="initSearchValue"
+                  ></el-input>
                 </el-col>
                 <el-col :span="16">
                   <el-input v-model="debtor.des_val" disabled></el-input>
@@ -33,7 +37,11 @@
               </el-form-item>
               <el-form-item label="carnet de identidad">
                 <el-col :span="8">
-                  <el-input v-model="debtor.nro_dip" @keyup.enter.native="test"></el-input>
+                  <el-input
+                    v-model="debtor.nro_dip"
+                    ref="nro_dip"
+                    @keyup.enter.native="initSearchPerson"
+                  ></el-input>
                 </el-col>
                 <el-col :span="16">
                   <el-input v-model="debtor.des_per" disabled></el-input>
@@ -41,7 +49,7 @@
               </el-form-item>
               <el-form-item label="numero de cuenta">
                 <el-col :span="8">
-                  <el-input v-model="debtor.nro_cta" ref='nocuenta'></el-input>
+                  <el-input v-model="debtor.nro_cta" ref="nro_cta"></el-input>
                 </el-col>
                 <el-col :span="16">
                   <el-input v-model="debtor.des_cta" disabled></el-input>
@@ -49,12 +57,12 @@
               </el-form-item>
               <el-form-item label="numero de deposito">
                 <el-col :span="24">
-                  <el-input v-model="debtor.nro_dep"></el-input>
+                  <el-input v-model="debtor.nro_dep" ref="nro_dep"></el-input>
                 </el-col>
               </el-form-item>
               <el-form-item label="importe">
                 <el-col :span="24">
-                  <el-input v-model="debtor.importe"></el-input>
+                  <el-input v-model="debtor.importe" ref="importe"></el-input>
                 </el-col>
               </el-form-item>
             </el-form></div
@@ -122,42 +130,59 @@ export default {
       },
       texto: "",
       dataDebtors: [],
-      /*
-      writtenTextParameter: "",
-      activation: 1,
-      saleOfDay: [],
-      */
+      selectedValue: [],
     };
   },
   mounted() {
     let app = this;
     app.day = app.$route.params.id;
-    /*
-    axios
-      .post("/api/getSaleOfDayById", {
-        id: app.day,
-        user: app.user.usuario,
-        year: app.user.gestion,
-      })
-      .then(function (response) {
-        app.saleOfDay = response.data[0];
-        if (app.saleOfDay.estado == "V")
-          app.$router.push({
-            name: "salestudents",
-          });
-        //alert("El dia ya esta verificado");
-      })
-      .catch(function (response) {
-        alert("no se puede crear el registro de los valores del estudiante");
-      });*/
   },
   methods: {
     test() {
       alert("bienvenido al modulo");
-      this.$refs.nocuenta.focus();
+      //this.$refs.nocuenta.focus();
       //this.$nextTick(() => this.$refs.nocuenta.focus())
     },
-    appendDebtor(){
+    initSearchValue() {
+      let app = this;
+      axios
+        .post("/api/getValueById", {
+          id: app.debtor.cod_val,
+          year: app.user.gestion,
+        })
+        .then(function (response) {
+          app.selectedValue = response.data[0];
+          console.log(response);
+          app.debtor.des_val = app.selectedValue.des_val;
+          app.$refs.nro_dip.focus();
+          //this.$nextTick(() => this.$refs.nro_dip.focus());
+        })
+        .catch(function (response) {
+          alert(
+            "el valor universitario con el identificador no corresponde a uno valido"
+          );
+        });
+    },
+    initSearchPerson() {
+      let app = this;
+      let id = this.debtor.nro_dip;
+      axios
+        .get("/api/person/" + id)
+        .then(function (response) {
+          console.log(response.data);
+          app.selectedPerson = response.data[0];
+          app.debtor.des_per =
+            app.selectedPerson.paterno +" "+
+            app.selectedPerson.materno +","+
+            app.selectedPerson.nombres;
+          app.$nextTick(() => app.$refs.nro_cta.focus());
+        })
+        .catch(function () {
+          alert("No se puede hallar el registro de la persona indicada");
+        });
+    },
+
+    appendDebtor() {
       var app = this;
     },
     saveTransaction() {
