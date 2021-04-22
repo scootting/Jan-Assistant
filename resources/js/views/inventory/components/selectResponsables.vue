@@ -61,7 +61,7 @@ export default {
     getResponsables() {
       this.responsablesLoading = true;
       axios
-        .get("/api/inventory2/responsables", {
+        .get("/api/inventory2/responsables2", {
           params: { unidad: this.ofcCod },
         })
         .then((data) => {

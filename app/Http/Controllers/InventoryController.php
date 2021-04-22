@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inventory;
+use Dotenv\Result\Result;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use JasperPHP\JasperPHP as JasperPHP;
@@ -261,6 +262,12 @@ class InventoryController extends Controller
         $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
         $cargos = ($request->get('cargos') ? $request->get('cargos') : []);
         $data = Inventory::getResponsables($unidad, $cargos);
+        return json_encode($data);
+    }
+    public function getResponsablesByUnidad(Request $request)
+    {
+        $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
+        $data = Inventory::getResponsablesbyUnidad($unidad);
         return json_encode($data);
     }
     public function getEncargados(Request $request)
