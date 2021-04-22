@@ -8744,7 +8744,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.responsablesLoading = true;
-      axios.get("/api/inventory2/responsables", {
+      axios.get("/api/inventory2/responsables2", {
         params: {
           unidad: this.ofcCod
         }
@@ -118071,8 +118071,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

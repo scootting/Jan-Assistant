@@ -163,6 +163,19 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    //obtener los responsables de cada unidad sin contar con el cargo 
+    public static function getResponsablesbyUnidad($unidad)
+    {
+        $query = "select public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno
+        from inv.activos,public.personas
+        where inv.activos.ofc_cod like '%" . $unidad . "%'and
+        public.personas.nro_dip = inv.activos.ci_resp
+        group by (public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno) order by (public.personas.nro_dip)";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
     //obtener los cargos para crear nuevo inventario
     public static function getEncargados($nro_dip)
     {
