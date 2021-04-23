@@ -181,11 +181,11 @@ textarea {
 }
 
 .el-aside {
-  color: #212120;
+  color: #010e1f;
 }
 
 .el-header {
-  background: #212120;
+  background: #010e1f;
   color: #fff;
   line-height: 60px;
 }
@@ -201,7 +201,7 @@ textarea {
 
 .el-footer {
   height: auto !important;
-  background-color: #212120;
+  background-color: #010e1f;
   color: #fff;
   float: left;
 }

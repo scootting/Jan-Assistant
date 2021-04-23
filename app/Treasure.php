@@ -90,5 +90,12 @@ class Treasure extends Model
 
     } 
 
+    public static function getValueById($valor, $gestion){
+        $query = "SELECT * FROM val.val_ue u INNER JOIN val.valores v ON u.cod_val = v.cod_val ".
+                 "WHERE u.gestion = '" .$gestion. "' AND u.cod_val = '" .$valor. "' AND u.estado = 'S'";
+        $data = collect(DB::select(DB::raw($query))); 
+        return $data;
+    }
+
 
 }

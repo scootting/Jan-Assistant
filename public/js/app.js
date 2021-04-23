@@ -9141,6 +9141,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -9158,40 +9166,46 @@ __webpack_require__.r(__webpack_exports__);
         importe: 0
       },
       texto: "",
-      dataDebtors: []
-      /*
-      writtenTextParameter: "",
-      activation: 1,
-      saleOfDay: [],
-      */
-
+      dataDebtors: [],
+      selectedValue: []
     };
   },
   mounted: function mounted() {
     var app = this;
     app.day = app.$route.params.id;
-    /*
-    axios
-      .post("/api/getSaleOfDayById", {
-        id: app.day,
-        user: app.user.usuario,
-        year: app.user.gestion,
-      })
-      .then(function (response) {
-        app.saleOfDay = response.data[0];
-        if (app.saleOfDay.estado == "V")
-          app.$router.push({
-            name: "salestudents",
-          });
-        //alert("El dia ya esta verificado");
-      })
-      .catch(function (response) {
-        alert("no se puede crear el registro de los valores del estudiante");
-      });*/
   },
   methods: {
     test: function test() {
-      alert("bienvenido al modulo");
+      alert("bienvenido al modulo"); //this.$refs.nocuenta.focus();
+      //this.$nextTick(() => this.$refs.nocuenta.focus())
+    },
+    initSearchValue: function initSearchValue() {
+      var app = this;
+      axios.post("/api/getValueById", {
+        id: app.debtor.cod_val,
+        year: app.user.gestion
+      }).then(function (response) {
+        app.selectedValue = response.data[0];
+        console.log(response);
+        app.debtor.des_val = app.selectedValue.des_val;
+        app.$refs.nro_dip.focus(); //this.$nextTick(() => this.$refs.nro_dip.focus());
+      })["catch"](function (response) {
+        alert("el valor universitario con el identificador no corresponde a uno valido");
+      });
+    },
+    initSearchPerson: function initSearchPerson() {
+      var app = this;
+      var id = this.debtor.nro_dip;
+      axios.get("/api/person/" + id).then(function (response) {
+        console.log(response.data);
+        app.selectedPerson = response.data[0];
+        app.debtor.des_per = app.selectedPerson.paterno + " " + app.selectedPerson.materno + "," + app.selectedPerson.nombres;
+        app.$nextTick(function () {
+          return app.$refs.nro_cta.focus();
+        });
+      })["catch"](function () {
+        alert("No se puede hallar el registro de la persona indicada");
+      });
     },
     appendDebtor: function appendDebtor() {
       var app = this;
@@ -11647,7 +11661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #212120;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #212120;\r\n  color: #fff;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #212120;\r\n  color: #fff;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604] {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604] {\r\n  font-size: 15px;\n}\r\n", ""]);
+exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #010e1f;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604] {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604] {\r\n  font-size: 15px;\n}\r\n", ""]);
 
 // exports
 
@@ -89582,7 +89596,7 @@ var render = function() {
             "el-aside",
             {
               staticStyle: {
-                "background-color": "#212120",
+                "background-color": "#010e1f",
                 "min-height": "100vh"
               },
               attrs: { width: "260px" }
@@ -89601,7 +89615,7 @@ var render = function() {
                   staticStyle: { "border-right": "0 !important" },
                   attrs: {
                     "default-active": "2",
-                    "background-color": "#212120",
+                    "background-color": "#010e1f",
                     "text-color": "#faebd7",
                     "active-text-color": "#faebd7"
                   }
@@ -96879,6 +96893,24 @@ var render = function() {
                               { attrs: { span: 8 } },
                               [
                                 _c("el-input", {
+                                  ref: "cod_val",
+                                  nativeOn: {
+                                    keyup: function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.initSearchValue($event)
+                                    }
+                                  },
                                   model: {
                                     value: _vm.debtor.cod_val,
                                     callback: function($$v) {
@@ -96921,6 +96953,24 @@ var render = function() {
                               { attrs: { span: 8 } },
                               [
                                 _c("el-input", {
+                                  ref: "nro_dip",
+                                  nativeOn: {
+                                    keyup: function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.initSearchPerson($event)
+                                    }
+                                  },
                                   model: {
                                     value: _vm.debtor.nro_dip,
                                     callback: function($$v) {
@@ -96963,6 +97013,7 @@ var render = function() {
                               { attrs: { span: 8 } },
                               [
                                 _c("el-input", {
+                                  ref: "nro_cta",
                                   model: {
                                     value: _vm.debtor.nro_cta,
                                     callback: function($$v) {
@@ -97005,6 +97056,7 @@ var render = function() {
                               { attrs: { span: 24 } },
                               [
                                 _c("el-input", {
+                                  ref: "nro_dep",
                                   model: {
                                     value: _vm.debtor.nro_dep,
                                     callback: function($$v) {
@@ -97029,6 +97081,7 @@ var render = function() {
                               { attrs: { span: 24 } },
                               [
                                 _c("el-input", {
+                                  ref: "importe",
                                   model: {
                                     value: _vm.debtor.importe,
                                     callback: function($$v) {

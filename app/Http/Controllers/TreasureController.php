@@ -185,4 +185,13 @@ class TreasureController extends Controller
         $data = Treasure::addSaleOfDay($usuario, $gestion);
         return json_encode($data);
     }
+
+    public function getValueById(Request $request){
+        $valor = $request->get('id');
+        $gestion = $request->get('year');
+        $data = Treasure::getValueById($valor, $gestion);
+        return json_encode($data);
+    }
+
+
 }
