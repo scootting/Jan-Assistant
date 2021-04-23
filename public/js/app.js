@@ -7014,7 +7014,8 @@ __webpack_require__.r(__webpack_exports__);
         car_cod: [],
         ofc_cod: "",
         sub_ofc_cod: [],
-        ci_res: [] //estado: [],
+        ci_res: [],
+        car_cod_resp: [] //estado: [],
 
       },
       unidades: [],
@@ -7192,15 +7193,14 @@ __webpack_require__.r(__webpack_exports__);
       //this.editForm.responsables= this.editForm.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
       //tratar de guardar los responsables como un json
       axios.post("/api/inventory2/saveChange", this.editForm).then(function (data) {
-        _this7.$message({
-          message: "Cambios Guardados Exitosamente",
-          type: "success",
-          duration: 5000,
-          showClose: true
+        _this7.$notify.success({
+          title: "Cambios guardados",
+          message: "Se realizo cambios al Activo seleccionado exitosamente",
+          duration: 0
         });
 
-        _this7.route.push({
-          name: 'inventory2'
+        _this7.$router.push({
+          name: "inventory2"
         });
       })["catch"](function (err) {
         console.log(err);
@@ -7519,7 +7519,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getInventories();
     },
     editInventory: function editInventory(index, row) {
-      console.log("prueba de ruta" + row);
+      //console.log("prueba de ruta"+row);
       this.$router.push({
         name: "editinventory2",
         params: {
@@ -95259,7 +95259,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.listActive(scope.row.no_cod)
+                                  return _vm.listActive(scope.row.id)
                                 }
                               }
                             },

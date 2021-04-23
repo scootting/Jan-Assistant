@@ -23,7 +23,7 @@ class Inventory extends Model
     //obtener las unidades por el codigo soa 
     public static function getOfficeByCodSoa($cod_soa)
     {
-        $query = "select inv.oficinas.cod_soa,inv.oficinas.descripcion 
+        $query = "select inv.oficinas.id, inv.oficinas.cod_soa,inv.oficinas.descripcion 
         from inv.oficinas where 
         inv.oficinas.cod_soa = '" . $cod_soa . "'";
         $data = collect(DB::select(DB::raw($query)));
@@ -260,8 +260,7 @@ class Inventory extends Model
     //mostrar el inventario por el ID 
     public static function showInventoryById($id)
     {
-        $query = "select * from inv.doc_inv
-        where id = '" . $id . "'";
+        $query = "select * from inv.doc_inv where id = '" . $id . "'";
         $data = collect(DB::select(DB::raw($query)))[0];
         $data->car_cod = array_map('intval', explode(',', str_replace('{', '', str_replace('}', '', $data->car_cod))));
         $data->res_enc = explode(',', str_replace('{', '', str_replace('}', '', $data->res_enc)));
@@ -317,67 +316,83 @@ class Inventory extends Model
         return $data;
     }
     //Buscar activos por el los datos del documento del inventario
-    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods)
+    public static function SearchActiveForDocInvRegistered($no_cod){
+        $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.doc_cod',$no_cod)->pluck('inv.detalle_doc_act.id_act');
+        $query = DB::table('inv.union_activos')->select('inv.union_activos.*')
+            ->whereIn('inv.union_activos.id', $actIDsInDocDetail);
+        return $query->orderBy('inv.union_activos.id','asc');
+    }
+    public static function SearchActiveNotRegisteredInDocInv($ofc_cod,$sub_ofc_cods,$registereds)
     {
-        //$listActWithDD=DB::table('inv.detail_doc_act')->select('id_act')->where('no_cod',$doc_cod)->get();
-
-        $q1 = " select inv.union_activos.* from inv.union_activos, inv.detalle_doc_act 
-                where inv.union_activos.id = inv.detalle_doc_act.id_act
-                and inv.detalle_doc_act.doc_cod = '" . $no_cod . "'";
-        $l1 = collect(DB::select(DB::raw($q1)));
-        foreach ($l1 as $act) {
-            $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id);
-        }
-        $arrayIds = [];
-        foreach ($l1 as $act) {
-            $arrayIds[] = $act->id;
-        }
         $db = DB::table('inv.union_activos as ua')->select('ua.*')
-            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_ofc')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
-        //$l2->whereNotIn('ua.id',$arrayIds);
+        ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_ofc')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
+        $db->whereNotIn('ua.id',$registereds);
         if ($ofc_cod) {
             $db->where('of.id', $ofc_cod);
         }
         if ($sub_ofc_cods) {
             $db->whereIn('ua.sub_ofc_cod', $sub_ofc_cods);
         }
-        $l2 = $db->get();
-        $data = $l1->concat($l2);
-        return $data;
+        return $db->orderBy('ua.id','asc');
     }
-    //Guardar cambios del documento del Inventario
+    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods,$page = 1,$perPage = 10)
+    {
+        $l1 = static::SearchActiveForDocInvRegistered($no_cod);
+        
+        $arrayIds = $l1->pluck('id');
+        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod,$sub_ofc_cods,$arrayIds);
+
+        $lastPage = (int)ceil(($l1->count()+$l2->count())/$perPage);
+        $total = $l1->count()+$l2->count();
+
+        $p1=$l1->paginate($perPage,['*'],'page',$page);
+        $data = [];
+        if($p1->count() == 0){
+            if($l1->count() > 0){
+                $auxP1 = $l1->paginate($perPage,['*'],'page',$p1->lastPage());
+                $l2page = $page - $p1->lastPage();
+                $skip =$perPage - $auxP1->count() + ($l2page-1)*$perPage;
+                $data = $l2->skip($skip)->take($perPage)->get();
+            }
+            else {
+                $data = $l2->paginate($perPage,['*'],'page',$page)->items();
+            }
+        }
+        else {
+            $data = $p1->items();
+            foreach ($data as $act) {
+                $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id);
+            }
+            if($p1->count() < $perPage){
+                $lack = $perPage - $p1->count();
+                $data = array_merge($data, $l2->take($lack)->get()->toArray());
+            }
+        }
+        
+        $resp = [
+            'current_page' => (int) $page,
+            'data' => $data,
+            'from' => ($page-1)*$perPage+1,
+            'to' => $perPage*$page,
+            'last_page' => $lastPage,
+            'per_page' => $perPage,
+            'total' => $total,
+        ];
+        return $resp;
+    }
+    //Guardar cambios del documento del Inventario boton de edit - > EditInventory2 
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
         /*$query = "select * from inv.f_guardar_cambios_doc( '1','{131033544}', '{3}', '0000001',
          '{1,3}', '{1,3}','{0}')";*/
-         $query = DB::table('inv.doc_inv')
-         ->where('id', $id)
-         ->update(['res_enc' =>json_encode($res_enc),
-         'car_cod '=>$car_cod,
-         'ofc_cod' => $ofc_cod,
-         'sub_ofc_cod' => $sub_ofc_cod,
-         'car_cod_resp' => $car_cod_resp,
-         'ci_res' => $ci_res]);
-       /* $query = " select * from inv.f_guardar_cambios_doc(
-             
-            '" . json_encode($res_enc) ."',
-            '" . json_encode($car_cod) ."',
-            '" . $ofc_cod ."',
-            '" . json_encode($sub_ofc_cod)."',
-            '" . json_encode($car_cod_resp) ."',
-            '" . json_encode($ci_res)."';)"; */
-
-           /* $query = " update inv.doc_inv set 
-            res_enc ='" . str_replace(']', '"', str_replace('[', '"',  json_encode($res_enc))) . "',
-            car_cod ='" . str_replace(']', ' ', str_replace('[', ' ',  json_encode($car_cod))) . "',
-            ofc_cod ='" . $ofc_cod . "',
-            sub_ofc_cod ='" . str_replace(']', '"', str_replace('[', '"',  json_encode($sub_ofc_cod))) . "',
-            car_cod_resp ='" . str_replace(']', '"', str_replace('[', '"',  json_encode($car_cod_resp))) . "',
-            ci_res ='" . str_replace(']', '"', str_replace('[', '"',  json_encode($ci_res))) . "'
-            where id = " . $id . ";";*/
-       /* $data = collect(DB::select(DB::raw($query)));
-        return $data;*/
-        dd($query);
+        $query = " select * from inv.f_guardar_cambios_doc(
+            '" . $id . "',
+            '" . str_replace(']', '}', str_replace('[', '{', json_encode($res_enc))) . "',
+            '" . str_replace(']', '}', str_replace('[', '{', json_encode($car_cod))) . "',
+            '" . $ofc_cod . "',
+            '" . str_replace(']', '}', str_replace('[', '{', json_encode($sub_ofc_cod))) . "',
+            '" . str_replace(']', '}', str_replace('[', '{', json_encode($car_cod_resp))) . "',
+            '" . str_replace(']', '}', str_replace('[', '{', json_encode($ci_res))) . "')"; 
         $data = collect(DB::select(DB::raw($query)));
         return $data;
 

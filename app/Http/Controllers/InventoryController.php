@@ -43,6 +43,7 @@ class InventoryController extends Controller
         $data = Inventory::getCargosByCodSoa($cod_soa);
         return json_encode($data);
     }
+    //obtener activos para la muestra en la página de Inventarios. 
     public function getActivosBySoaAndResp(Request $request, $cod_soa)
     {
         $tipo_reporte = ($request->get('reporte'));
@@ -264,6 +265,7 @@ class InventoryController extends Controller
         $data = Inventory::getResponsables($unidad, $cargos);
         return json_encode($data);
     }
+    //esto es para inventarios (nolmal) que ya se tiene listado. 
     public function getResponsablesByUnidad(Request $request)
     {
         $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
@@ -323,7 +325,8 @@ class InventoryController extends Controller
     }
     public function getDocDetailByActivoId( $id )
     {
-        return json_encode(Inventory::getDocDetailByActivoId($id));
+        $data = Inventory::getDocDetailByActivoId($id);
+        return json_encode($data);
     }
     public function getActive($id)
     {
@@ -352,15 +355,15 @@ class InventoryController extends Controller
     {
         //dd($request);
         $id = $request->id;
-        $res_enc = $request->encargados;
+        $res_enc = $request->res_enc;
         $car_cod_enc = [];
         for ($i = 0; $i < count([$res_enc]); $i++)
             $car_cod_enc[] = 3;
         $car_cod = $car_cod_enc;
-        $ofc_cod = $request->unidad;
-        $sub_ofc_cod = $request->subUnidades;
-        $car_cod_resp = $request->cargos;
-        $ci_res = $request->responsables;
+        $ofc_cod = $request->ofc_cod;
+        $sub_ofc_cod = $request->sub_ofc_cod;
+        $car_cod_resp = $request->car_cod_resp;
+        $ci_res = $request->ci_res;
         $data = Inventory::saveChangeDocInventory($id,$res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res);
         return json_encode($data);
     }
@@ -395,17 +398,11 @@ class InventoryController extends Controller
         $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
         $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
         //dd($descripcion,$ofc_ids,$sub_ofc_ids);
-        $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_id, $sub_ofc_ids);
-        $page = ($request->get('page')) ? $request->get('page') : null;
+        $page = ($request->get('page')) ? $request->get('page') : 1;
         $perPage = 10;
-        $paginate = new LengthAwarePaginator(
-            $data->forPage($page, $perPage),
-            $data->count(),
-            $perPage,
-            $page,
-            []
-        );
-        return json_encode($paginate);
+        $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_id, $sub_ofc_ids,$page,$perPage);
+        
+        return json_encode($data);
     }
     public function getEstados()
     {

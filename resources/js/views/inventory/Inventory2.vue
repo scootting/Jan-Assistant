@@ -57,7 +57,7 @@
                 >Editar</el-button
               > 
               <el-button
-                @click="listActive(scope.row.no_cod)"
+                @click="listActive(scope.row.id)"
                 type="primary"
                 plain
                 size="mini"
@@ -120,7 +120,7 @@ export default {
       this.getInventories();
     },
     editInventory(index, row) {
-      console.log("prueba de ruta"+row);
+      //console.log("prueba de ruta"+row);
       this.$router.push({
         name: "editinventory2",
         params: {

@@ -186,6 +186,7 @@ export default {
         ofc_cod:"",
         sub_ofc_cod:[],
         ci_res: [],
+        car_cod_resp: [],
         //estado: [],
       },
       unidades: [],
@@ -362,13 +363,15 @@ export default {
       axios
         .post("/api/inventory2/saveChange", this.editForm)
         .then((data) => {
-          this.$message({
-            message: "Cambios Guardados Exitosamente",
-            type: "success",
-            duration: 5000,
-            showClose: true,
+          this.$notify.success({
+            title: "Cambios guardados",
+            message: "Se realizo cambios al Activo seleccionado exitosamente",
+            duration: 0,
           });
-          this.route.push({ name: 'inventory2' });
+          this.$router.push({
+            name: "inventory2",
+          });
+        
         })
         .catch((err) => {
           console.log(err);
