@@ -340,15 +340,17 @@ class InventoryController extends Controller
     } 
     public function saveChangeActive(Request $request)
     { 
+        //dd($request);
         $des = $request->des;
         $des_det = $request->des_det;
         $vida_util= $request->vida_util;
+        $car_cod = $request -> car_cod;
         $estado= $request->estado;
         $ofc_cod = $request->ofc_cod;
         $sub_ofc_cod = $request->sub_ofc_cod;
         $ci_resp = $request->ci_resp;
         $id = $request->id;
-        $data = Inventory::saveChangeActive($des, $des_det,$vida_util,$estado,$ofc_cod,$sub_ofc_cod,$ci_resp,$id);
+        $data = Inventory::saveChangeActive($des, $des_det,$vida_util,$car_cod,$estado,$ofc_cod,$sub_ofc_cod,$ci_resp,$id);
         return json_encode($data);
     } 
     public function saveChangeDocInventory(Request $request)
@@ -425,6 +427,11 @@ class InventoryController extends Controller
         $obs_est = $request->obs_est;
         $validacion = $request->validacion;
         $data = Inventory::saveActiveInDetailDoc($doc_cod,$cod_ges,$cod_act,$id_act,$id_des,$est_cod,$obs_est,$validacion,$id);
+        return json_encode($data);
+    }
+    public function getAllCargos()
+    {
+        $data = Inventory::getAllCargos();
         return json_encode($data);
     }
 }

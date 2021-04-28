@@ -2,10 +2,9 @@
   <div style="margin-top: 15px 0" class="grid-content bg-purple">
     <el-card class="box-card">
       <el-form
-        :label-position="right"
-        label-width="220px"
-        :model="form"
-        ref="form"
+        label-width="190px"
+        :model="editForm"
+        ref="editForm"
         :inline="false"
         size="normal"
         class="demo-form-inline"
@@ -13,22 +12,53 @@
         <span> Activo: {{ editForm.id }} </span> <br /><br />
         <hr style="color: gray" />
         <br />
-        <el-row>
-          <el-col :span="50">
-            <div>
-              <el-form-item size="mini" label="CI Responsable:" prop="ci_resp">
-                <el-input
-                  v-model="editForm.ci_resp"
-                  style="width: 200px"
-                ></el-input>
-              </el-form-item>
-            </div>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item size="mini" label="CI Responsable:">
+              <el-input
+                v-model="editForm.ci_resp"
+                size="mini"
+                type="text"
+                class="input-with-select"
+                ><el-button
+                  slot="append"
+                  icon="el-icon-search"
+                  @click="getEncargados(editForm.ci_resp)"
+                ></el-button
+              ></el-input>
+            </el-form-item>
+            <el-form-item size="mini" label="Cargo:" prop="car_cod">
+              <el-select
+                v-model="editForm.car_cod"
+                value-key="id"
+                placeholder="Determinar Cargo"
+              >
+                <el-option
+                  v-for="item in cargos"
+                  :key="item.id"
+                  :label="item.descripcion"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item size="mini" label="NOMBRE:">
+              <el-input
+                :value="getNombre"
+                placeholder=""
+                size="mini"
+                readonly
+                style="width: 100%"
+              ></el-input>
+            </el-form-item>
           </el-col>
         </el-row>
         <hr style="color: gray" />
         <br />
-        <el-row>
-          <el-col :span="50">
+        <el-row type="flex" justify="space-between">
+          <el-col :span="12">
             <el-form-item size="mini" label="Unidad:" prop="oficina">
               <el-select
                 v-model="editForm.ofc_cod"
@@ -38,49 +68,56 @@
                 placeholder="Seleccione una unidad"
                 @change="getSubUnidades(editForm.ofc_cod)"
               >
-                <el-option v-for="item in unidades"
+                <el-option
+                  v-for="item in unidades"
                   :key="item.cod_ofc"
                   :label="item.descripcion"
-                  :value="item.cod_ofc">
+                  :value="item.cod_ofc"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item size="mini" label="Vida Util:">
-              <el-input
-                v-model="editForm.vida_util"
-                style="width: 200px"
-              ></el-input>
+              <el-input v-model="editForm.vida_util"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="50">
-            <el-form-item
-              size="mini"
-              label="SubUnidad:"
-              prop="sub_ofc_cod"
-            >
-              <el-select v-model="editForm.sub_ofc_cod" placeholder="Seleccione una subunidad" >
-                <el-option v-for="item in subUnidades"
+          <el-col :span="12">
+            <el-form-item size="mini" label="SubUnidad:" prop="sub_ofc_cod">
+              <el-select
+                v-model="editForm.sub_ofc_cod"
+                placeholder="Seleccione una subunidad"
+              >
+                <el-option
+                  v-for="item in subUnidades"
                   :key="item.id"
                   :label="item.descripcion"
-                  :value="item.id">
+                  :value="item.id"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item size="mini" label="Estado de Activo:" prop="estado">
-             <el-input v-model="editForm.estado" placeholder="" size="normal" clearable></el-input>
+              <el-select
+                v-model="editForm.estado"
+                value-key="desc"
+                placeholder="Determinar estado"
+              >
+                <el-option
+                  v-for="item in estados"
+                  :key="item.desc"
+                  :label="item.desc"
+                  :value="item.desc"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <hr style="color: gray" />
         <br />
-        <el-row>
-          <el-col :span="50">
-            <el-form-item
-              size="mini"
-              label="Descripcion:"
-              prop="descripcion"
-              width="300px"
-            >
+        <el-row type="flex" justify="space-between">
+          <el-col :span="11">
+            <el-form-item size="mini" label="Descripcion:" prop="descripcion">
               <el-input
                 type="textarea"
                 v-model="editForm.des"
@@ -89,25 +126,22 @@
               ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="50">
+          <el-col :span="11">
             <el-form-item
               size="mini"
               label="Descripcion Detallada:"
               prop="descripcion"
-              width="300px"
             >
-              <el-input
-                type="textarea"
-                v-model="editForm.des_det"
-                rows="10"
-                max-rows="10"
-              ></el-input>
+              <DescripcionDetalle v-model="editForm.des_det" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item>
           <el-button size="mini" type="primary" plain @click="saveAsset"
             >Guardar Cambios</el-button
+          >
+          <el-button size="mini" type="primary" plain @click="selectActiveQr"
+            >Obtener QR</el-button
           >
           <el-button size="mini" type="danger" plain @click="Exit"
             >Cancelar</el-button
@@ -117,25 +151,37 @@
     </el-card>
   </div>
 </template>
-
 <script>
+import DescripcionDetalle from "./components/DescripcionDetalle";
 export default {
   name: "EditActive",
+  components: {
+    DescripcionDetalle,
+  },
   data() {
     return {
       gestion: this.$store.state.user.gestion,
       estados: [],
-      unidades:[],
-      subUnidades:[],
+      unidades: [],
+      subUnidades: [],
+      cargos: [],
+      searchEncargado: {},
+      nro_dip: "",
+      exampleDes: "des 1|des 2|des 3",
       editForm: {
+        car_cod: 1,
         des: "",
         des_det: "",
         vida_util: "",
         estado: "",
+        cargo: "",
         ofc_cod: "",
         sub_ofc_cod: "",
         ci_resp: "",
         id: "",
+        nombres: "",
+        paterno: "",
+        materno: "",
       },
     };
   },
@@ -144,6 +190,7 @@ export default {
       "mensaje de recuperacion de datos desde re asignacion de activos "
     );
     this.getEstados();
+    this.getCargos();
   },
   created() {
     //created vs mounted
@@ -153,13 +200,13 @@ export default {
       .get("/api/reasignacion/edit/" + this.id)
       .then((response) => {
         app.editForm = response.data[0];
-        app.unidades.push({ 
+        app.unidades.push({
           cod_ofc: app.editForm.ofc_cod,
-          descripcion:app.editForm.oficina
+          descripcion: app.editForm.oficina,
         });
-        app.subUnidades.push({ 
+        app.subUnidades.push({
           id: app.editForm.sub_ofc_cod,
-          descripcion:app.editForm.descripcion
+          descripcion: app.editForm.descripcion,
         });
       })
       .catch((error) => {
@@ -170,11 +217,26 @@ export default {
         });
       });
   },
+  computed: {
+    getNombre() {
+      return this.editForm.nombres + " " + this.editForm.paterno + " " + this.editForm.materno;
+      
+    },
+  },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
-    
+    selectActiveQr() {
+      this.$notify.info({
+        title: "QR emitido",
+        message: "boton de prueba",
+        duration: 0,
+      });
+      this.$router.push({
+        name: "active",
+      });
+    },
     Exit() {
       this.$notify.info({
         title: "Edicion cancelada",
@@ -195,7 +257,6 @@ export default {
           console.log(err);
         });
     },
-
     getUnidades(keyWord) {
       axios
         .get("/api/inventory2/unidad/", {
@@ -219,6 +280,32 @@ export default {
           this.subUnidadesLoading = false;
           this.subUnidades = data.data;
           this.editForm.sub_ofc_cod = null;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getCargos() {
+      axios
+        .get("/api/activo/cargos/")
+        .then((data) => {
+          this.cargos = data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getEncargados(nro_dip) {
+      axios
+        .get("/api/inventory2/encargados", {
+          params: { nro_dip: nro_dip },
+        })
+        .then((data) => {
+          this.searchEncargado = Object.values(data.data.data);
+          this.editForm.nombres = this.searchEncargado[0].nombres;
+          this.editForm.paterno = this.searchEncargado[0].paterno;
+          this.editForm.materno = this.searchEncargado[0].materno;
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);

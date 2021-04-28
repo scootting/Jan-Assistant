@@ -67,10 +67,11 @@ Route::group([
     Route::get('inventory2/doc_inv/{no_cod}', 'InventoryController@showDocInventory');
     Route::get('inventory2/doc_detail_by_active/{id}', 'InventoryController@getDocDetailByActivoId');
     Route::get('inventory2/search/{doc_cod}', 'InventoryController@getActivesForDocInv');
-    Route::get('activo/estados','InventoryController@getEstados');
     Route::post('inventory2/saveActive','InventoryController@saveActiveInDetailDoc');
     //***rutas de re asignacion de activos***
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
+    Route::get('activo/estados','InventoryController@getEstados');
+    Route::get('activo/cargos', 'InventoryController@getAllCargos'); 
     Route::get('reasignacion/edit/{id}','InventoryController@getActive');
     Route::post('reasignacion/save','InventoryController@saveChangeActive');
     

@@ -100,7 +100,7 @@
                 <el-option
                   v-for="(item, index) in cargos"
                   :key="index"
-                  :label="item.descripcion"
+                  :label="item.cargo"
                   :value="item.id"
                 >
                 </el-option>
@@ -371,7 +371,6 @@ export default {
           this.$router.push({
             name: "inventory2",
           });
-        
         })
         .catch((err) => {
           console.log(err);

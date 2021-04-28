@@ -39,7 +39,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //Obtener los cargos por cod_soa
+    //Obtener los responsables de cargos por cod_soa
     public static function getCargosByCodSoa($cod_soa)
     {
         $query = "select ci_resp, sub_ofc_cod,public.personas.nombres,
@@ -118,7 +118,7 @@ class Inventory extends Model
         foreach ($sub_unidades as $k => $su)
             $arrString = $arrString . ($k > 0 ? ',' : '') . $su;
         $arrString = $arrString . ")";
-        $query = "select inv.cargos.id , inv.cargos.descripcion
+        $query = "select inv.cargos.id , inv.cargos.descripcion as cargo
         from inv.cargos, inv.activos,inv.sub_oficinas
         where 
         inv.cargos.id=inv.activos.car_cod
@@ -130,16 +130,6 @@ class Inventory extends Model
         inv.sub_oficinas.id in " . $arrString : "")."
         group by (inv.cargos.id,inv.cargos.descripcion)
         order by (inv.cargos.id)";
-
-        /*
-        $query = "select inv.cargos.id ,inv.cargos.descripcion
-        from inv.cargos,inv.activos
-        where inv.cargos.id = inv.activos.car_cod
-        and inv.activos.sub_ofc_cod in ".$arrString."
-        and inv.activos.ofc_cod like '%".$unidad."%'   
-        group by ( inv.cargos.id, inv.cargos.descripcion)
-        order by (inv.cargos.id)";
-        */
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -242,18 +232,24 @@ class Inventory extends Model
         if ($sub_ofc_ids) {
             $db->whereIn('ua.sub_ofc_cod', $sub_ofc_ids);
         }
+        $db->orderBy('ua.id','asc');
         return $db->get();
     }
     // mostrar el activo por el ID 
     public static function showActiveById($id)
     {
-        $query = "select ua.des,ua.des_det,ua.vida_util,ua.estado,
-        ua.ofc_cod,ua.sub_ofc_cod,ua.ci_resp,ua.id, of.descripcion as oficina,sof.descripcion
-         from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof
-         where ua.id = " . $id . " and 
-         of.cod_ofc = ua.ofc_cod and sof.id = ua.sub_ofc_cod
-         group by (ua.des,ua.des_det,ua.vida_util,ua.estado,
-        ua.ofc_cod,ua.sub_ofc_cod,ua.ci_resp,ua.id, of.descripcion,sof.descripcion)";
+        $query = "select ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,
+        ua.ci_resp,ua.id,of.descripcion as oficina,sof.descripcion,c.descripcion as cargo,
+        p.nombres,p.paterno,p.materno
+        from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof,inv.cargos c,public.personas p
+            where ua.id = " . $id . " 
+                and of.cod_ofc = ua.ofc_cod 
+                and sof.id = ua.sub_ofc_cod
+                and c.id = ua.car_cod
+                and p.nro_dip = ua.ci_resp
+                group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,
+                    ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
+                    p.nombres,p.paterno,p.materno)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -309,9 +305,9 @@ class Inventory extends Model
         return $data[0];
     }
     //Guardar cambios del Activo
-    public static function saveChangeActive($des, $des_det, $vida_util, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
+    public static function saveChangeActive($des, $des_det, $vida_util, $car_cod ,$estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
-        $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
+        $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -403,7 +399,14 @@ class Inventory extends Model
         $query = "select * from inv.estado";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-    }
+    } 
+     //Obtener los datos de la tabla de estados
+     public static function getAllCargos()
+     {
+         $query = "select * from inv.cargos";
+         $data = collect(DB::select(DB::raw($query)));
+         return $data;
+     }
     //Guardar datos de los activos en Documento Detalle
     public static function saveActiveInDetailDoc($doc_cod, $cod_ges, $cod_act, $id_act, $id_des, $est_cod, $obs_est, $validacion, $id)
     {

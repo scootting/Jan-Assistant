@@ -130,10 +130,18 @@
             </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
-                <el-button type="prymary" size="default" @click="saveInventory" :disabled="guardado"
+                <el-button
+                  type="prymary"
+                  size="default"
+                  @click="saveInventory"
+                  :disabled="guardado"
                   >Guardar</el-button
                 >
-                <el-button type="default" size="default" @click="listActive" :disabled="!guardado"
+                <el-button
+                  type="default"
+                  size="default"
+                  @click="listActive"
+                  :disabled="!guardado"
                   >Realizar Inventario</el-button
                 >
               </el-row>
@@ -150,7 +158,7 @@
     >
       <el-select
         v-model="selectEncargado"
-        placeholder="busque un carnet"
+        placeholder="Busque un carnet"
         :loading="searchEncargadoLoading"
         clearable
         filterable
@@ -165,7 +173,6 @@
         >
         </el-option>
       </el-select>
-
       <span slot="footer">
         <el-button @click="onCancelDialog">Cancel</el-button>
         <el-button type="primary" @click="onConfirmDialog">CONFIRMAR</el-button>
@@ -331,8 +338,8 @@ export default {
             duration: 5000,
             showClose: true,
           });
-          this.No_Doc=data.data.no_doc;
-          this.guardado=true;
+          this.No_Doc = data.data.no_doc;
+          this.guardado = true;
         })
         .catch((err) => {
           console.log(err);
@@ -360,13 +367,13 @@ export default {
       this.selectEncargado = null;
       this.showDialogEncargado = false;
     },
-    
-    listActive(){
-       this.$router.push({
+
+    listActive() {
+      this.$router.push({
         name: "inventory2detail",
         params: {
           no_cod: this.No_Doc,
-        }
+        },
       });
     },
   },
