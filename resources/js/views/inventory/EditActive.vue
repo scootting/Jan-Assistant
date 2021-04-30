@@ -61,7 +61,7 @@
           <el-col :span="12">
             <el-form-item size="mini" label="Unidad:" prop="oficina">
               <el-select
-                v-model="editForm.ofc_cod"
+                v-model="editForm.cod_soa"
                 filterable
                 remote
                 :remote-method="getUnidades"
@@ -70,9 +70,9 @@
               >
                 <el-option
                   v-for="item in unidades"
-                  :key="item.cod_ofc"
+                  :key="item.cod_soa"
                   :label="item.descripcion"
-                  :value="item.cod_ofc"
+                  :value="item.cod_soa"
                 >
                 </el-option>
               </el-select>
@@ -166,16 +166,17 @@ export default {
       subUnidades: [],
       cargos: [],
       searchEncargado: {},
-      nro_dip: "",
       exampleDes: "des 1|des 2|des 3",
       editForm: {
         car_cod: 1,
+        oficina:"",
         des: "",
         des_det: "",
         vida_util: "",
         estado: "",
         cargo: "",
         ofc_cod: "",
+        cod_soa:"",
         sub_ofc_cod: "",
         ci_resp: "",
         id: "",
@@ -202,6 +203,7 @@ export default {
         app.editForm = response.data[0];
         app.unidades.push({
           cod_ofc: app.editForm.ofc_cod,
+          cod_soa: app.editForm.cod_soa,
           descripcion: app.editForm.oficina,
         });
         app.subUnidades.push({
@@ -220,7 +222,6 @@ export default {
   computed: {
     getNombre() {
       return this.editForm.nombres + " " + this.editForm.paterno + " " + this.editForm.materno;
-      
     },
   },
   methods: {

@@ -218,7 +218,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return ['data' => $data, 'no_doc' => $no_doc];
     }
-    // peticiones de busqueda para activos segun id de oficina, de la subOficina y descripción  
+    // peticiones de busqueda para activos segun id de oficina, de la subOficina o descripción  
     public static function SearchActive($ofc_id, $sub_ofc_ids, $descripcion)
     {
         $db = DB::table('inv.union_activos as ua')->select('ua.id', 'of.descripcion as oficina', 'sof.descripcion', 'ua.des', 'ua.estado')
@@ -238,7 +238,10 @@ class Inventory extends Model
     // mostrar el activo por el ID 
     public static function showActiveById($id)
     {
-        $query = "select ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,
+        $query = "select ua.des,
+        ua.des_det,
+        ua.vida_util,
+        ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,ua.cod_soa,
         ua.ci_resp,ua.id,of.descripcion as oficina,sof.descripcion,c.descripcion as cargo,
         p.nombres,p.paterno,p.materno
         from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof,inv.cargos c,public.personas p
@@ -247,7 +250,7 @@ class Inventory extends Model
                 and sof.id = ua.sub_ofc_cod
                 and c.id = ua.car_cod
                 and p.nro_dip = ua.ci_resp
-                group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,
+                group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,ua.cod_soa,
                     ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
                     p.nombres,p.paterno,p.materno)";
         $data = collect(DB::select(DB::raw($query)));
@@ -305,9 +308,9 @@ class Inventory extends Model
         return $data[0];
     }
     //Guardar cambios del Activo
-    public static function saveChangeActive($des, $des_det, $vida_util, $car_cod ,$estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
+    public static function saveChangeActive($cod_soa,$des, $des_det, $vida_util, $car_cod ,$estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
-        $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
+        $query = "select * from inv.f_guardar_activo('".$cod_soa."','" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

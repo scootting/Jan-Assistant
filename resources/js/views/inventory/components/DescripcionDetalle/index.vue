@@ -29,6 +29,11 @@ export default{
       items: [],
     };
   },
+  watch:{
+    value(newVal){
+      this.divideString();
+    },
+  },
   created(){
     this.divideString();
   },

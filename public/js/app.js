@@ -6743,16 +6743,17 @@ __webpack_require__.r(__webpack_exports__);
       subUnidades: [],
       cargos: [],
       searchEncargado: {},
-      nro_dip: "",
       exampleDes: "des 1|des 2|des 3",
       editForm: {
         car_cod: 1,
+        oficina: "",
         des: "",
         des_det: "",
         vida_util: "",
         estado: "",
         cargo: "",
         ofc_cod: "",
+        cod_soa: "",
         sub_ofc_cod: "",
         ci_resp: "",
         id: "",
@@ -6777,6 +6778,7 @@ __webpack_require__.r(__webpack_exports__);
       app.editForm = response.data[0];
       app.unidades.push({
         cod_ofc: app.editForm.ofc_cod,
+        cod_soa: app.editForm.cod_soa,
         descripcion: app.editForm.oficina
       });
       app.subUnidades.push({
@@ -8790,6 +8792,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       items: []
     };
+  },
+  watch: {
+    value: function value(newVal) {
+      this.divideString();
+    }
   },
   created: function created() {
     this.divideString();
@@ -94552,19 +94559,19 @@ var render = function() {
                                 }
                               },
                               model: {
-                                value: _vm.editForm.ofc_cod,
+                                value: _vm.editForm.cod_soa,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.editForm, "ofc_cod", $$v)
+                                  _vm.$set(_vm.editForm, "cod_soa", $$v)
                                 },
-                                expression: "editForm.ofc_cod"
+                                expression: "editForm.cod_soa"
                               }
                             },
                             _vm._l(_vm.unidades, function(item) {
                               return _c("el-option", {
-                                key: item.cod_ofc,
+                                key: item.cod_soa,
                                 attrs: {
                                   label: item.descripcion,
-                                  value: item.cod_ofc
+                                  value: item.cod_soa
                                 }
                               })
                             }),
