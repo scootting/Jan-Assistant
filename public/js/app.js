@@ -9512,23 +9512,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
     var app = this;
-    axios.post("/api/persons", {
-      descripcion: app.writtenTextParameter
-    }).then(function (response) {
-      app.loading = false;
-      app.people = response.data.data;
-      app.pagination = response.data;
-    })["catch"](function (error) {
-      _this.error = error;
-
-      _this.$notify.error({
-        title: "Error",
-        message: _this.error.message
-      });
-    });
+    /*
+    axios
+      .post("/api/persons", {
+        descripcion: app.writtenTextParameter,
+      })
+      .then((response) => {
+        app.loading = false;
+        app.people = response.data.data;
+        app.pagination = response.data;
+      })
+      .catch((error) => {
+        this.error = error;
+        this.$notify.error({
+          title: "Error",
+          message: this.error.message,
+        });
+      });*/
   },
   methods: {
     test: function test() {
@@ -9564,22 +9565,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     initSearchPerson: function initSearchPerson() {
-      var _this2 = this;
+      var _this = this;
 
       var app = this;
       app.loading = true;
-      axios.post("/api/persons", {
-        descripcion: app.writtenTextParameter
+      axios.post("/api/getTransactionsByPerson", {
+        id: app.writtenTextParameter
       }).then(function (response) {
         app.loading = false;
         app.people = response.data.data;
+        console.log(response.data);
         app.pagination = response.data;
       })["catch"](function (error) {
-        _this2.error = error;
+        _this.error = error;
 
-        _this2.$notify.error({
+        _this.$notify.error({
           title: "Error",
-          message: _this2.error.message
+          message: _this.error.message
         });
       });
     },

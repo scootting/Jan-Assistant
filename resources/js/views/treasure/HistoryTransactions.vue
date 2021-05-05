@@ -72,6 +72,7 @@ export default {
   },
   mounted() {
     let app = this;
+    /*
     axios
       .post("/api/persons", {
         descripcion: app.writtenTextParameter,
@@ -87,7 +88,7 @@ export default {
           title: "Error",
           message: this.error.message,
         });
-      });
+      });*/
   },
   methods: {
     test() {
@@ -129,12 +130,13 @@ export default {
       let app = this;
       app.loading = true;
       axios
-        .post("/api/persons", {
-          descripcion: app.writtenTextParameter,
+        .post("/api/getTransactionsByPerson", {
+          id: app.writtenTextParameter,
         })
         .then((response) => {
           app.loading = false;
           app.people = response.data.data;
+          console.log(response.data);
           app.pagination = response.data;
         })
         .catch((error) => {

@@ -95,7 +95,7 @@ Route::group([
     Route::post('getSaleOfDayById', 'TreasureController@getSaleOfDayById');
     Route::post('getValueById', 'TreasureController@getValueById');
 
-    // *** - Obtener los dias para la venta de valores de un usuario - ***
+    // *** - Obtener las transacciones por persona por su el carnet de identidad - ***
     Route::post('getTransactionsByPerson', 'TreasureController@getTransactionsByPerson');
 
 

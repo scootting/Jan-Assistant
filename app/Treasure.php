@@ -103,8 +103,8 @@ class Treasure extends Model
     public static function getTransactionsByPerson($id){
         //SELECT *, (SELECT u.des_val FROM val.valores u WHERE u.cod_val = v.cod_val), (SELECT t.des_tip FROM val.tip_tra t WHERE t.tip_tra = v.tip_tra) 
         //FROM val.tra_dia v WHERE v.ci_per = '6600648' AND v.tip_tra NOT IN (9,20)
-        
-        $query = "SELECT *, (SELECT u.des_val FROM val.valores u WHERE u.cod_val = v.cod_val), (SELECT t.des_tip FROM val.tip_tra t WHERE t.tip_tra = v.tip_tra)".
+        $query = "SELECT *, (SELECT u.des_val FROM val.valores u WHERE u.cod_val = v.cod_val) as des_val,".
+                 "(SELECT t.des_tip FROM val.tip_tra t WHERE t.tip_tra = v.tip_tra) as des_tip".
                  "FROM val.tra_dia v WHERE v.ci_per = '" .$id. "' AND v.tip_tra NOT IN (9,20)";
         \Log::info($query);         
         $data = collect(DB::select(DB::raw($query))); 
