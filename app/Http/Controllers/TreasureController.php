@@ -194,4 +194,14 @@ class TreasureController extends Controller
     }
 
 
+    //  * Buscar transacciones hechas por una persona a traves de su carnet de identidad.
+    //  * {id: numero de carnet de identidad}    
+    public function getTransactionsByPerson(Request $request){
+        $id = $request->get('id');// '' cadena vacia
+        $usuario = $request->get('user');
+        $gestion = $request->get('year');
+        $data = Treasure::getSaleOfDayById($id, $usuario, $gestion);
+        return json_encode($data);
+    }
+
 }

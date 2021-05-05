@@ -49,6 +49,7 @@ import SaleStudents from './views/treasure/SaleStudents'    //lista de dias de a
 import Students from './views/treasure/Students'            //alumnos nuevos
 import AppendDebtors from './views/treasure/AppendDebtors'  //lista de dias de deudores
 import Debtors from './views/treasure/Debtors'              //deudores
+import HistoryTransactions from './views/treasure/HistoryTransactions'              //historial de transacciones
 
 //clientes 
 import LoginClient from './views/clients/Login'
@@ -135,7 +136,7 @@ const router = new VueRouter({
                 { path: 'appenddebtors/:id', name: 'debtors', component: Debtors }, // deudores
                 { path: 'documentsfixedassets', name: 'documentsfixedassets', component: DocumentsFixedAssets }, //lista de documentos de entrega activos fijos
                 { path: 'documentsfixedassets/:id', name: 'selectedFixedAssetsByDocument', component: SelectedFixedAssetsByDocument }, // documentos de entrega activos fijos impresion
-
+                { path: 'historytransactions', name: 'historytransactions', component: HistoryTransactions }, // historial de transacciones por persona
             ],
             meta: {
                 requiresAuth: true,
