@@ -3,39 +3,14 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ oficina.descripcion }}</span>
-        <!-- <el-button
-          style="text-align: right; float: right"
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          @click="loadReportAssets"
-          >imprimir reporte</el-button
-        >-->
       </div>
       <br />
       <br />
-      <el-form label-width="160px" :inline="true" size="normal">
-        <!--  <el-form-item label="SUB-OFICINAS">
-          <el-select placeholder="TODO" v-model="subOficinaSelectId">
-            <el-option
-              v-for="item in sub_oficinas"
-              :key="item.id"
-              :label="item.descripcion"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="CargarActivos"
-            >Cargar Activos</el-button
-          >
-        </el-form-item> -->
-      </el-form>
+      <el-form label-width="160px" :inline="true" size="normal"> </el-form>
       <div class="grid-content bg-purple">
         <el-row :gutter="20">
-          <el-col :span="14" :offset="0">
-            <el-form label-width="100px" :inline="false" size="small">
+          <el-col :span="24" :offset="0">
+            <el-form label-width="180px" :inline="true" size="small">
               <el-form-item label="Seleccion por:">
                 <el-select
                   placeholder="Seleccionar"
@@ -51,6 +26,28 @@
                   </el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item>
+                <el-radio-group v-model="reporte.tipo" size="small" :span="20">
+                  <el-radio-button label="general">General</el-radio-button>
+                  <el-radio-button label="detallado">Detallado</el-radio-button>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="cargarActivos" size="small"
+                  >Cargar Activos</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  @click="GenerarReporte"
+                  icon="el-icon-plus"
+                  size="small"
+                  >Generar Reporte</el-button
+                >
+              </el-form-item>
+            </el-form>
+            <el-form label-width="180px" :inline="true" size="small">
               <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccionar:">
                 <selectSubUnidad
                   v-if="filtro.tipo == 'subUnidad'"
@@ -73,28 +70,6 @@
               </el-form-item>
             </el-form>
           </el-col>
-          <el-col>
-            <el-radio-group v-model="reporte.tipo" size="small">
-              <el-radio-button label="detallado">Detallado</el-radio-button>
-              <el-radio-button label="general">General</el-radio-button>
-            </el-radio-group>
-          </el-col>
-          <el-col :span="10" :offset="5">
-            <el-form label-width="90px" :inline="false" size="normal">
-              <el-form-item align="right-center" width="20">
-                <el-button type="primary" @click="cargarActivos" size="small"
-                  >Cargar Activos</el-button
-                >
-                <el-button
-                  type="primary"
-                  @click="GenerarReporte"
-                  icon="el-icon-plus"
-                  size="small"
-                  >Generar Reporte</el-button
-                >
-              </el-form-item>
-            </el-form>
-          </el-col>
         </el-row>
       </div>
       <!--Inicio de generar la tabla-->
@@ -111,10 +86,9 @@
             prop="can"
             label="CANTIDAD"
             width="180"
-          ></el-table-column> 
+          ></el-table-column>
           <el-table-column prop="uni_med" label="UNI. MED."></el-table-column>
           <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
-          
           <el-table-column
             v-if="tipoReporte === 'general'"
             prop="total"
@@ -138,7 +112,6 @@
               </div>
             </template>
           </el-table-column>
-
         </el-table>
         <el-pagination
           :page-size="pagination.per_page"
@@ -167,7 +140,7 @@ export default {
   data() {
     return {
       reporte: {
-        tipo: "detallado",
+        tipo: "general",
       },
       loading: false,
       user: this.$store.state.user,
@@ -218,7 +191,7 @@ export default {
       .catch((err) => {});
   },
   computed: {
-    tipoReporte(){
+    tipoReporte() {
       return this.reporte.tipo;
     },
   },

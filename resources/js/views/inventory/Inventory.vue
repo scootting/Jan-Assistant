@@ -44,7 +44,7 @@
                 type="primary"
                 plain
                 size="mini"
-                >Inventario</el-button
+                >Ver Activos</el-button
               >
             </template>
           </el-table-column>

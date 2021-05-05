@@ -151,8 +151,12 @@ class InventoryController extends Controller
                     return response()->download($pathToFile, $filename, $headers);
                     break;         
                 case'todo':
-                    return $this->getReport($request, $cod_ofc);
-                    break; 
+                    $param = array('unidad'=> $cod_ofc);
+                    $pathToFile = $this->generarReporte('todo_general',$param);
+                    $filename = 'todo_general.pdf';
+                    $headers = ['Content-Type' => 'application/pdf'];
+                    return response()->download($pathToFile, $filename, $headers);
+                    break;    
             }
     
         }
@@ -179,9 +183,13 @@ class InventoryController extends Controller
                     $headers = ['Content-Type' => 'application/pdf'];
                     return response()->download($pathToFile, $filename, $headers);
                     break;         
-                case'todo':
-                    return $this->getReport($request, $cod_ofc);
-                    break; 
+                    case'todo':
+                        $param = array('unidad'=> $cod_ofc);
+                        $pathToFile = $this->generarReporte('todo_detallado',$param);
+                        $filename = 'todo_detallado.pdf';
+                        $headers = ['Content-Type' => 'application/pdf'];
+                        return response()->download($pathToFile, $filename, $headers);
+                        break;
             }
     
         }

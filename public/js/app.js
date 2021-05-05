@@ -8006,33 +8006,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //Importar Componentes creados
 
 
@@ -8047,7 +8020,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       reporte: {
-        tipo: "detallado"
+        tipo: "general"
       },
       loading: false,
       user: this.$store.state.user,
@@ -95360,7 +95333,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("Inventario")]
+                            [_vm._v("Ver Activos")]
                           )
                         ]
                       }
@@ -96030,14 +96003,14 @@ var render = function() {
                 [
                   _c(
                     "el-col",
-                    { attrs: { span: 14, offset: 0 } },
+                    { attrs: { span: 24, offset: 0 } },
                     [
                       _c(
                         "el-form",
                         {
                           attrs: {
-                            "label-width": "100px",
-                            inline: false,
+                            "label-width": "180px",
+                            inline: true,
                             size: "small"
                           }
                         },
@@ -96075,6 +96048,87 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            [
+                              _c(
+                                "el-radio-group",
+                                {
+                                  attrs: { size: "small", span: 20 },
+                                  model: {
+                                    value: _vm.reporte.tipo,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.reporte, "tipo", $$v)
+                                    },
+                                    expression: "reporte.tipo"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "el-radio-button",
+                                    { attrs: { label: "general" } },
+                                    [_vm._v("General")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-radio-button",
+                                    { attrs: { label: "detallado" } },
+                                    [_vm._v("Detallado")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            [
+                              _c(
+                                "el-button",
+                                {
+                                  attrs: { type: "primary", size: "small" },
+                                  on: { click: _vm.cargarActivos }
+                                },
+                                [_vm._v("Cargar Activos")]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            [
+                              _c(
+                                "el-button",
+                                {
+                                  attrs: {
+                                    type: "primary",
+                                    icon: "el-icon-plus",
+                                    size: "small"
+                                  },
+                                  on: { click: _vm.GenerarReporte }
+                                },
+                                [_vm._v("Generar Reporte")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form",
+                        {
+                          attrs: {
+                            "label-width": "180px",
+                            inline: true,
+                            size: "small"
+                          }
+                        },
+                        [
                           _vm.filtro.tipo != "todo"
                             ? _c(
                                 "el-form-item",
@@ -96131,89 +96185,6 @@ var render = function() {
                                 1
                               )
                             : _vm._e()
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    [
-                      _c(
-                        "el-radio-group",
-                        {
-                          attrs: { size: "small" },
-                          model: {
-                            value: _vm.reporte.tipo,
-                            callback: function($$v) {
-                              _vm.$set(_vm.reporte, "tipo", $$v)
-                            },
-                            expression: "reporte.tipo"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-radio-button",
-                            { attrs: { label: "detallado" } },
-                            [_vm._v("Detallado")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-radio-button",
-                            { attrs: { label: "general" } },
-                            [_vm._v("General")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    { attrs: { span: 10, offset: 5 } },
-                    [
-                      _c(
-                        "el-form",
-                        {
-                          attrs: {
-                            "label-width": "90px",
-                            inline: false,
-                            size: "normal"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-form-item",
-                            { attrs: { align: "right-center", width: "20" } },
-                            [
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "primary", size: "small" },
-                                  on: { click: _vm.cargarActivos }
-                                },
-                                [_vm._v("Cargar Activos")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: {
-                                    type: "primary",
-                                    icon: "el-icon-plus",
-                                    size: "small"
-                                  },
-                                  on: { click: _vm.GenerarReporte }
-                                },
-                                [_vm._v("Generar Reporte")]
-                              )
-                            ],
-                            1
-                          )
                         ],
                         1
                       )
