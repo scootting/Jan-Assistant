@@ -95,6 +95,11 @@ Route::group([
     Route::post('getSaleOfDayById', 'TreasureController@getSaleOfDayById');
     Route::post('getValueById', 'TreasureController@getValueById');
 
+    // *** - Obtener las transacciones por persona por su el carnet de identidad - ***
+    Route::post('getTransactionsByPerson', 'TreasureController@getTransactionsByPerson');
+
+
+
     // *** -  - ***
     Route::post('documentFixedAssets', 'FixedAssetController@getDocumentFixedAssetByYear');
     // *** -  - ***
