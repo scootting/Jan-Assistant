@@ -89,7 +89,7 @@ class Inventory extends Model
         $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id
         from inv.oficinas 
         where inv.oficinas.descripcion like '%" . $keyWord . "%' or 
-        inv.oficinas.cod_soa like '%" . $keyWord . "%'";
+        inv.oficinas.cod_soa like '%" . $keyWord . "%' group by (inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -241,7 +241,7 @@ class Inventory extends Model
         $query = "select ua.des,
         ua.des_det,
         ua.vida_util,
-        ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,ua.cod_soa,
+        ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.cod_soa,
         ua.ci_resp,ua.id,of.descripcion as oficina,sof.descripcion,c.descripcion as cargo,
         p.nombres,p.paterno,p.materno
         from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof,inv.cargos c,public.personas p

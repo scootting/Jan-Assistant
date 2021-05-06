@@ -38,6 +38,7 @@ import AddTaxExemption from './views/clients/AddTaxExemption'
 import Active from './views/inventory/Active'
 import EditActive from './views/inventory/EditActive'
 import QrPrint from './views/inventory/QrPrint'
+import NewActive from './views/inventory/NewActive'
 
 //activos fijos
 import DocumentsFixedAssets from './views/fixedasset/DocumentsFixedAssets'
@@ -53,6 +54,7 @@ import Debtors from './views/treasure/Debtors'              //deudores
 //clientes 
 import LoginClient from './views/clients/Login'
 import DashboardClient from './views/clients/Dashboard'
+//import { component } from 'vue/types/umd'
 
 // Routes
 const router = new VueRouter({
@@ -126,6 +128,7 @@ const router = new VueRouter({
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
+                { path: 'newactive', name: 'newactive' , component: NewActive },
 
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency }, // solvencias

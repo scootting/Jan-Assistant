@@ -18,6 +18,7 @@ inv.activos.des,
 inv.activos.des_det ,
 inv.activos.imp_bs ,
 (select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc)*inv.activos.imp_bs as total,
+(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc) as cantidad,
 inv.activos.estado,
 inv.activos.nro_doc ,
 inv.sub_oficinas.descripcion as sub_ofc_des,
@@ -72,6 +73,10 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<property name="com.jaspersoft.studio.field.name" value="total"/>
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
 	</field>
+	<field name="cantidad" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+	</field>
 	<field name="estado" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="estado"/>
 		<property name="com.jaspersoft.studio.field.label" value="estado"/>
@@ -123,7 +128,7 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<groupHeader>
 			<band height="33">
 				<textField>
-					<reportElement x="2" y="6" width="548" height="20" uuid="a067c089-cea9-444a-b36f-9a288cab2ec3"/>
+					<reportElement isPrintRepeatedValues="false" x="2" y="6" width="548" height="20" uuid="a067c089-cea9-444a-b36f-9a288cab2ec3"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -250,16 +255,7 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
-			<textField>
-				<reportElement x="-20" y="0" width="60" height="20" uuid="d55ebea8-7159-4253-8ce8-0d8482a0b2d3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0fd5fcb-1b36-4298-a69a-9a51b42985d5"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cod_ant}]]></textFieldExpression>
-			</textField>
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="90" y="0" width="42" height="20" uuid="137ff022-2f8d-4670-85dd-0098c60625e2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c293379-18a4-4acf-8b14-75ad9685b9fc"/>
@@ -268,15 +264,6 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="40" y="0" width="50" height="20" uuid="da0a151c-a086-4f63-9f80-821907c614ba">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7df7303f-8c21-4704-849a-9328987cf56c"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Auto">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="140" y="0" width="340" height="20" isPrintWhenDetailOverflows="true" uuid="e08d380f-481c-42b8-a723-4558c9f08630">
@@ -296,8 +283,26 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="46" y="0" width="34" height="20" uuid="304fa8c3-7504-4d30-a9c3-f11acbcf2dec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d19198df-391d-4922-8075-f2a0c3344dea"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="48" height="20" uuid="fb99927b-6bb0-4137-bd6f-2b2b52d24931">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="718ee4d7-09d4-46ed-b216-49777c1474b3"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
+			</textField>
 		</band>
-		<band height="48">
+		<band height="42">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField evaluationTime="Auto" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="154" y="0" width="326" height="42" isRemoveLineWhenBlank="true" uuid="7b9e3076-3f6c-4b2d-8bd8-c43bcc9641ba">

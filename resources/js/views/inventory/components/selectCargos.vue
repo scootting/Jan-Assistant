@@ -9,7 +9,7 @@
     <el-option
       v-for="cargo in cargos"
       :key="cargo.id"
-      :label="cargo.descripcion"
+      :label="cargo.cargo"
       :value="cargo.id"
     >
     </el-option>

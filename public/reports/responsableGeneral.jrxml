@@ -23,7 +23,8 @@ inv.activos.nro_doc,
 inv.activos.par_cod,
  act.partida.par_des,
  inv.activos.ofc_cod,
-(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc)*inv.activos.imp_bs as total
+(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc)*inv.activos.imp_bs as total,
+(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc) as cantidad
 FROM inv.activos, personas , inv.cargos ,  inv.oficinas , act.partida 
 WHERE CAST(inv.activos.ci_resp AS text) IN (select unnest(string_to_array( $P{ci_list}  , ',')) as ci_resp)
 and personas.nro_dip = inv.activos.ci_resp
@@ -32,9 +33,7 @@ and  inv.activos.ofc_cod like $P{unidad}
 and  inv.activos.ofc_cod =  inv.oficinas.cod_soa 
 and  act.partida.par_cod =  inv.activos.par_cod 
 and  act.partida.gestion = 2020
-ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc
-
-]]>
+ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc]]>
 	</queryString>
 	<field name="paterno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
@@ -109,6 +108,10 @@ ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc
 	<field name="total" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="total"/>
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<field name="cantidad" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
 	</field>
 	<group name="cod_ant">
 		<groupExpression><![CDATA[$F{cod_ant}]]></groupExpression>
@@ -230,7 +233,7 @@ ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="afe00585-a1dd-4cfe-84a0-9913a7a4911c"/>
 				</reportElement>
 				<textElement>
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
@@ -239,23 +242,20 @@ ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="99a82ee7-3d41-4c73-9ca3-cfa5050e15e8"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="0" width="100" height="29" uuid="108dbc2d-4db5-4993-9743-765a8f5a3bd1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3d3ce4e-8eed-4420-808d-c244dc09ac32"/>
+				</reportElement>
+				<text><![CDATA[nro_doc]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
-			<textField>
-				<reportElement x="-5" y="2" width="70" height="18" uuid="bfa517d5-b1a2-4376-b919-d3dc51e4f7be">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0fd5fcb-1b36-4298-a69a-9a51b42985d5"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cod_ant}]]></textFieldExpression>
-			</textField>
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="160" y="0" width="320" height="20" uuid="b7c319e4-3bb4-4db4-a0a2-70ef26139ec2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fae39cd-a0fa-46c1-8316-5ef340bb013f"/>
@@ -275,26 +275,32 @@ ORDER BY  inv.activos.ofc_cod , inv.activos.par_cod, inv.activos.nro_doc
 				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="65" y="0" width="45" height="20" uuid="e8abf47c-d4dc-4105-af55-1ecb54e92b8a">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="afe00585-a1dd-4cfe-84a0-9913a7a4911c"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="480" y="2" width="80" height="18" uuid="7f64d9c7-ad90-48dd-a2a7-06c15b8768c0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="99a82ee7-3d41-4c73-9ca3-cfa5050e15e8"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="65" y="0" width="45" height="20" uuid="fb31ed87-34ee-4dd6-a634-6667784a4cc9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c1fcb54-472c-47d9-8d3c-790a9e8afe5f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-5" y="0" width="70" height="20" uuid="93899e1e-ccc3-438b-8085-e88677c7b85e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3d3ce4e-8eed-4420-808d-c244dc09ac32"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
+			</textField>
 		</band>
-		<band height="49" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="180" y="0" width="300" height="34" isRemoveLineWhenBlank="true" uuid="c0100d4f-eade-4edc-83dc-a135ae4b65c4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22e9a93d-1eec-4527-8c74-7c0be2e55852"/>
 				</reportElement>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des_det}]]></textFieldExpression>
 			</textField>
