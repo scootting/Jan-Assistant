@@ -10,29 +10,29 @@
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT 
-inv.activos.cod_ant,
-inv.activos.can,
-inv.activos.uni_med,
-inv.activos.des,
-inv.activos.des_det ,
-inv.activos.imp_bs ,
-inv.activos.estado,
-inv.activos.nro_doc ,
-inv.sub_oficinas.descripcion as sub_ofc_des,
-inv.oficinas.descripcion as ofc_des,
-inv.activos.ofc_cod , 
-inv.activos.sub_ofc_cod , 
-inv.activos.par_cod, 
-inv.activos.idc ,
- act.partida.par_des 
-FROM inv.activos,inv.cargos , inv.sub_oficinas,  inv.oficinas , act.partida 
-WHERE   inv.cargos.id = inv.activos.car_cod
-and  inv.activos.ofc_cod like $P{unidad} 
-and  inv.sub_oficinas.id = inv.activos.sub_ofc_cod 
-and  inv.activos.ofc_cod =  inv.oficinas.cod_soa 
-and  act.partida.par_cod =  inv.activos.par_cod 
-and  act.partida.gestion = 2020
-ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod,inv.activos.nro_doc]]>
+ac.cod_ant,
+ac.can,
+ac.uni_med,
+ac.des,
+ac.des_det ,
+ac.imp_bs ,
+ac.estado,
+ac.nro_doc ,
+sof.descripcion as sub_ofc_des,
+of.descripcion as ofc_des,
+ac.ofc_cod , 
+ac.sub_ofc_cod , 
+ac.par_cod, 
+ac.idc ,
+p.par_des  
+FROM inv.activos ac 
+INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
+INNER JOIN inv.cargos c ON ac.car_cod = c.id 
+INNER JOIN inv.sub_oficinas sof ON ac.sub_ofc_cod = sof.id
+INNER JOIN  act.partida p ON ac.par_cod = p.par_cod
+and  ac.ofc_cod like $P{unidad} 
+and p.gestion = 2020
+ORDER BY ac.ofc_cod , ac.sub_ofc_cod ,ac.par_cod,ac.nro_doc]]>
 	</queryString>
 	<field name="cod_ant" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>

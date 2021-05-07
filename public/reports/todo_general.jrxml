@@ -5,43 +5,41 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="216"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="776"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="548"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="438"/>
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT distinct
-inv.activos.nro_doc,
-inv.activos.can,
-inv.activos.uni_med,
-inv.activos.des,
-inv.activos.des_det ,
-inv.activos.imp_bs ,
- inv.activos.cod_ant ,
-(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc)*inv.activos.imp_bs as total,
-(select count(*)from inv.activos ac where ac.nro_doc = inv.activos.nro_doc) as cantidad,
-inv.activos.estado,
-inv.sub_oficinas.descripcion as sub_ofc_des,
-inv.oficinas.descripcion as ofc_des,
-inv.activos.ofc_cod , 
-inv.activos.sub_ofc_cod , 
-inv.activos.par_cod,
- act.partida.par_des 
-FROM inv.activos, inv.cargos , inv.sub_oficinas,  inv.oficinas , act.partida 
-WHERE 
-inv.cargos.id = inv.activos.car_cod
-and  inv.activos.ofc_cod like $P{unidad} 
-and  inv.sub_oficinas.id = inv.activos.sub_ofc_cod 
-and  inv.activos.ofc_cod =  inv.oficinas.cod_soa 
-and  act.partida.par_cod =  inv.activos.par_cod 
-and  act.partida.gestion = 2020
-ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, inv.activos.nro_doc , inv.activos.cod_ant]]>
+ac.nro_doc,
+ac.can_t,
+ac.uni_med,
+ac.des,
+ac.des_det ,
+of.descripcion as ofc_des,
+ac.can_t*ac.imp_bs as total,
+ac.ofc_cod, 
+ac.sub_ofc_cod,
+ac.par_cod,
+sof.descripcion as sub_ofc_des,
+p.par_des 
+FROM inv.activos ac 
+INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
+INNER JOIN inv.sub_oficinas sof ON ac.sub_ofc_cod = sof.id 
+INNER JOIN act.partida p ON ac.par_cod = p.par_cod 
+and ac.ofc_cod like '00000001' 
+and  p.gestion = 2020
+ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
+
+]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="can" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="can"/>
-		<property name="com.jaspersoft.studio.field.label" value="can"/>
+	<field name="can_t" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="can_t"/>
+		<property name="com.jaspersoft.studio.field.label" value="can_t"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
 	<field name="uni_med" class="java.lang.String">
@@ -59,38 +57,14 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="imp_bs" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.label" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="cod_ant" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.label" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="total" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="total"/>
-		<property name="com.jaspersoft.studio.field.label" value="total"/>
-	</field>
-	<field name="cantidad" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
-		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
-	</field>
-	<field name="estado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="estado"/>
-		<property name="com.jaspersoft.studio.field.label" value="estado"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="sub_ofc_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="sub_oficinas"/>
-	</field>
 	<field name="ofc_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
 		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
 	</field>
 	<field name="ofc_cod" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
@@ -106,6 +80,11 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="sub_ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sub_oficinas"/>
 	</field>
 	<field name="par_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
@@ -267,10 +246,16 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 	<columnHeader>
 		<band height="9" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="103" y="0" width="100" height="9" uuid="02c98130-f5f6-4d79-9202-9b0ec956e6dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2175b03a-a723-447b-9053-f4aff52cf317"/>
+				</reportElement>
+				<text><![CDATA[can_t]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="34" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="150" y="0" width="50" height="30" uuid="daee455a-d9c1-4507-a725-ebefdf589ebc">
@@ -309,14 +294,13 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="1" width="52" height="18" uuid="8729521a-bb97-48b6-b7d0-2fc4519c236f"/>
-				<textElement textAlignment="Right">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				<reportElement x="70" y="0" width="62" height="20" uuid="c5f129b2-17d1-4be9-b374-012fd373bf65">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2175b03a-a723-447b-9053-f4aff52cf317"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{can_t}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="31">
+		<band height="30">
 			<textField>
 				<reportElement x="210" y="0" width="260" height="30" isRemoveLineWhenBlank="true" uuid="e02b0ecf-8f7b-43e4-8bee-a8e1efc4de6c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4e6c70b0-b0eb-4261-b92a-39eed7b08617"/>

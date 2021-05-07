@@ -210,9 +210,9 @@ class InventoryController extends Controller
             array(
                 'driver' => 'postgres',
                 'username' => 'postgres',
-                'password' => '12345678',
-                'host' => '192.168.25.64',
-                'database' => 'daf_help',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
                 'port' => '5432',
             )
         )->execute();

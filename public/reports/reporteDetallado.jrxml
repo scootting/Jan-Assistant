@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteDetallado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a529a6e7-2f6e-48dd-9a5a-469302b65eb9">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conectado a DafHelp"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="166"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="827"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="806"/>
@@ -13,30 +13,33 @@
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
- personas.paterno ,
- personas.materno , 
- personas.nombres ,
- inv.cargos.descripcion, 
- inv.activos.cod_ant,
- inv.activos.can,
-inv.activos.uni_med,
-inv.activos.des,
-inv.activos.estado,
-inv.activos.nro_doc,
-inv.activos.idc ,
-inv.activos.imp_bs , 
-inv.activos.des_det ,
-inv.activos.par_cod , 
-act.partida.par_des 
-FROM inv.activos, personas , inv.cargos , act.partida, inv.oficinas 
-WHERE CAST(inv.activos.ci_resp AS text) IN (select unnest(string_to_array( $P{ci_resp} , ',')) as ci_resp)
-and personas.nro_dip = inv.activos.ci_resp
-and  inv.cargos.id = inv.activos.car_cod
-and  inv.activos.ofc_cod like  $P{unidad} 
-and  inv.oficinas.cod_soa = inv.activos.ofc_cod
-and inv.activos.par_cod =  act.partida.par_cod
-and  act.partida.gestion = 2020
-ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.activos.nro_doc
+per.paterno ,
+per.materno , 
+per.nombres ,
+ac.cod_ant,
+ac.can,
+ac.uni_med,
+ac.des,
+ac.des_det ,
+ac.imp_bs ,
+ac.estado,
+ac.nro_doc ,
+ac.ofc_cod , 
+ac.sub_ofc_cod , 
+ac.par_cod, 
+ac.idc ,
+p.par_des ,
+c.descripcion
+FROM inv.activos ac 
+INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
+INNER JOIN inv.cargos c ON ac.car_cod = c.id 
+INNER JOIN act.partida p ON ac.par_cod = p.par_cod
+INNER JOIN personas per ON ac.ci_resp = per.nro_dip 
+and  CAST(ac.ci_resp AS text) IN (select unnest(string_to_array( $P{ci_resp} , ',')) as ci_resp)
+and  ac.ofc_cod like  $P{unidad} 
+and  p.gestion = 2020
+ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
+
 
 ]]>
 	</queryString>
@@ -54,11 +57,6 @@ ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.act
 		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="descripcion" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
 	</field>
 	<field name="cod_ant" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>
@@ -80,6 +78,16 @@ ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.act
 		<property name="com.jaspersoft.studio.field.label" value="des"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
+	<field name="des_det" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="des_det"/>
+		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="imp_bs" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="imp_bs"/>
+		<property name="com.jaspersoft.studio.field.label" value="imp_bs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
 	<field name="estado" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="estado"/>
 		<property name="com.jaspersoft.studio.field.label" value="estado"/>
@@ -90,19 +98,14 @@ ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.act
 		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="idc" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="idc"/>
-		<property name="com.jaspersoft.studio.field.label" value="idc"/>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="imp_bs" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.label" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="des_det" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="des_det"/>
-		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
+	<field name="sub_ofc_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
 	<field name="par_cod" class="java.lang.String">
@@ -110,10 +113,20 @@ ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.act
 		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
+	<field name="idc" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idc"/>
+		<property name="com.jaspersoft.studio.field.label" value="idc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
 	<field name="par_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
 	</field>
 	<group name="Group1Partida">
 		<groupHeader>
@@ -332,23 +345,31 @@ ORDER BY inv.activos.ofc_cod ,inv.activos.ci_resp , inv.activos.par_cod, inv.act
 	<summary>
 		<band height="213" splitType="Stretch">
 			<textField>
-				<reportElement x="220" y="150" width="40" height="20" uuid="364db536-be90-49f7-8681-7c9cafd89083"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="200" y="150" width="60" height="20" uuid="364db536-be90-49f7-8681-7c9cafd89083"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="260" y="150" width="50" height="20" uuid="8c3ed351-a12b-4c89-9e11-1f4db3928a1b"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{paterno}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="310" y="150" width="50" height="20" uuid="5b3faaa3-3b2b-47a3-b5b1-61e1a2a0b96b"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{materno}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="240" y="170" width="100" height="20" uuid="098f64de-9899-41e0-bd3c-9b945975233e"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<line>

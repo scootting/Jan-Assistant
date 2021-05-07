@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargoDetalle" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1db735d1-e119-47da-89d7-656ad6c2c972">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conectado a DafHelp"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="206"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="794"/>
@@ -9,35 +9,36 @@
 	<parameter name="cargo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT 
-personas.paterno, 
-personas.materno , 
-personas.nombres ,
-inv.activos.cod_ant,
-inv.activos.can,
-inv.activos.uni_med,
-inv.activos.des,
-inv.activos.des_det ,
-inv.activos.imp_bs ,
-inv.activos.estado,
-inv.activos.nro_doc ,
-inv.sub_oficinas.descripcion as sub_ofc_des,
-inv.oficinas.descripcion as ofc_des,
-inv.activos.ofc_cod , 
-inv.activos.sub_ofc_cod , 
-inv.activos.par_cod, 
-inv.activos.idc ,
- act.partida.par_des 
-FROM inv.activos, personas , inv.cargos , inv.sub_oficinas,  inv.oficinas , act.partida 
-WHERE 
-CAST(inv.activos.car_cod AS text) IN (select unnest(string_to_array( $P{cargo}    , ',')) as cargo)
-and personas.nro_dip = inv.activos.ci_resp
-and  inv.cargos.id = inv.activos.car_cod
-and  inv.activos.ofc_cod like    $P{unidad} 
-and  inv.sub_oficinas.id = inv.activos.sub_ofc_cod 
-and  inv.activos.ofc_cod =  inv.oficinas.cod_soa 
-and  act.partida.par_cod =  inv.activos.par_cod 
-and  act.partida.gestion = 2020
-ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, inv.activos.nro_doc]]>
+per.paterno ,
+per.materno , 
+per.nombres ,
+ac.cod_ant,
+ac.can,
+ac.uni_med,
+ac.des,
+ac.des_det ,
+ac.imp_bs ,
+ac.estado,
+ac.nro_doc ,
+ac.ofc_cod , 
+ac.sub_ofc_cod , 
+ac.par_cod, 
+ac.idc ,
+sof.descripcion as sub_ofc_des,
+of.descripcion as ofc_des,
+p.par_des 
+FROM inv.activos ac 
+INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
+INNER JOIN inv.sub_oficinas sof ON ac.sub_ofc_cod = sof.id
+INNER JOIN inv.cargos c ON ac.car_cod = c.id 
+INNER JOIN act.partida p ON ac.par_cod = p.par_cod
+INNER JOIN personas per ON ac.ci_resp = per.nro_dip 
+and CAST(ac.car_cod AS text) IN (select unnest(string_to_array( $P{cargo}    , ',')) as cargo)
+and  ac.ofc_cod like    $P{unidad} 
+and  p.gestion = 2020
+ORDER BY ac.ofc_cod , ac.sub_ofc_cod ,ac.par_cod, ac.nro_doc 
+
+]]>
 	</queryString>
 	<field name="paterno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
@@ -94,16 +95,6 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="sub_ofc_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="sub_oficinas"/>
-	</field>
-	<field name="ofc_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
-	</field>
 	<field name="ofc_cod" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
@@ -123,6 +114,16 @@ ORDER BY inv.activos.ofc_cod , inv.activos.sub_ofc_cod , inv.activos.par_cod, in
 		<property name="com.jaspersoft.studio.field.name" value="idc"/>
 		<property name="com.jaspersoft.studio.field.label" value="idc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="sub_ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sub_oficinas"/>
+	</field>
+	<field name="ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
 	</field>
 	<field name="par_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
