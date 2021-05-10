@@ -22,7 +22,7 @@
       </div>
       <br />
       <div>
-        <el-table v-loading="loading" :data="people" style="width: 100%">
+        <el-table v-loading="loading" :data="dataTransactions" style="width: 100%">
           <el-table-column prop="personal" label="CARNET"></el-table-column>
           <el-table-column prop="paterno" label="PATERNO"></el-table-column>
           <el-table-column prop="materno" label="MATERNO"></el-table-column>
@@ -62,54 +62,18 @@ export default {
   data() {
     return {
       messages: {},
-      people: [],
-      pagination: {
-        page: 1,
-      },
+      dataTransactions: [],
       writtenTextParameter: "",
       loading: true,
     };
   },
   mounted() {
     let app = this;
-    /*
-    axios
-      .post("/api/persons", {
-        descripcion: app.writtenTextParameter,
-      })
-      .then((response) => {
-        app.loading = false;
-        app.people = response.data.data;
-        app.pagination = response.data;
-      })
-      .catch((error) => {
-        this.error = error;
-        this.$notify.error({
-          title: "Error",
-          message: this.error.message,
-        });
-      });*/
   },
+
   methods: {
     test() {
       alert("bienvenido al modulo");
-    },
-    getDataPageSelected(page) {
-      let app = this;
-      app.loading = true;
-      axios
-        .post("/api/persons", {
-          descripcion: app.writtenTextParameter,
-          page: page,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.people = Object.values(response.data.data);
-          app.pagination = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     initAddPerson() {
       this.$router.push({
@@ -135,9 +99,8 @@ export default {
         })
         .then((response) => {
           app.loading = false;
-          app.people = response.data.data;
+          app.dataTransactions = response.data.data;
           console.log(response.data);
-          app.pagination = response.data;
         })
         .catch((error) => {
           this.error = error;

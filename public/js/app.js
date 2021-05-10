@@ -9854,51 +9854,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       messages: {},
-      people: [],
-      pagination: {
-        page: 1
-      },
+      dataTransactions: [],
       writtenTextParameter: "",
       loading: true
     };
   },
   mounted: function mounted() {
     var app = this;
-    /*
-    axios
-      .post("/api/persons", {
-        descripcion: app.writtenTextParameter,
-      })
-      .then((response) => {
-        app.loading = false;
-        app.people = response.data.data;
-        app.pagination = response.data;
-      })
-      .catch((error) => {
-        this.error = error;
-        this.$notify.error({
-          title: "Error",
-          message: this.error.message,
-        });
-      });*/
   },
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
-    },
-    getDataPageSelected: function getDataPageSelected(page) {
-      var app = this;
-      app.loading = true;
-      axios.post("/api/persons", {
-        descripcion: app.writtenTextParameter,
-        page: page
-      }).then(function (response) {
-        app.loading = false;
-        app.people = Object.values(response.data.data);
-        app.pagination = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
     },
     initAddPerson: function initAddPerson() {
       this.$router.push({
@@ -9924,9 +9890,8 @@ __webpack_require__.r(__webpack_exports__);
         id: app.writtenTextParameter
       }).then(function (response) {
         app.loading = false;
-        app.people = response.data.data;
+        app.dataTransactions = response.data.data;
         console.log(response.data);
-        app.pagination = response.data;
       })["catch"](function (error) {
         _this.error = error;
 
@@ -98933,7 +98898,7 @@ var render = function() {
                   }
                 ],
                 staticStyle: { width: "100%" },
-                attrs: { data: _vm.people }
+                attrs: { data: _vm.dataTransactions }
               },
               [
                 _c("el-table-column", {
@@ -120242,8 +120207,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
