@@ -144,7 +144,6 @@ export default {
       },
       loading: false,
       user: this.$store.state.user,
-      sub_oficinas: [],
       oficina: {},
       activos: [],
       pagination: {
@@ -183,7 +182,7 @@ export default {
     this.getActivosPaginate();
     let cod_soa = this.$route.params.soa;
     axios
-      .get("/api/inventory/show/" + cod_soa)
+      .get("/api/inventory/show/"+cod_soa)
       .then((data) => {
         this.oficina = data.data;
         this.getRespBySoa();
@@ -196,23 +195,6 @@ export default {
     },
   },
   methods: {
-    //obtener a los encargados que estan dentro de la oficina.
-    /*getRespBySoa() {
-      axios
-        .get("/api/inventory/cargos/" + this.oficina.cod_soa)
-        .then((data) => {
-          this.respSelectCI = -1;
-          this.encargados = data.data;
-          this.encargados.push({
-            ci_resp: -1,
-            nombres: "Todos",
-            paterno: "",
-            materno: "",
-            sub_ofc_cod: -1,
-          });
-        })
-        .catch((err) => {});
-    },*/
     //cargamos los activos con el encargado seleccionado
     getActivosPaginate(page) {
       this.pagination.page = page;
@@ -233,7 +215,7 @@ export default {
       };
       if (this.respSelectCI != -1) params.ci_resp = this.respSelectCI;
       axios
-        .get("/api/inventory/activosByResp/" + this.oficina.cod_soa, {
+        .get("/api/inventory/activosByFilter/" + this.oficina.cod_soa, {
           params: params,
         })
         .then((data) => {
@@ -245,29 +227,6 @@ export default {
           console.log(err);
         });
     },
-    /* 
-    loadReportAssets() {
-      axios({
-        url: "/api/descargando/" + this.oficina.cod_soa,
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        console.log(response.data);
-        console.log("1");
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-        
-        link.download = "test.pdf";
-        link.click();
-        
-      });
-    },*/
     GenerarReporte() {
       axios({
         url: "/api/generarReporte/",

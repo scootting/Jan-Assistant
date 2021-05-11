@@ -60,10 +60,9 @@ export default {
     },
     getSubUnidad() {
       this.SubUnidadLoading = true;
+      let cod_soa = this.ofcCod;
       axios
-        .get("/api/inventory2/sub_unidad", {
-          params: { cod_soa: this.ofcCod },
-        })
+        .get("/api/inventory/sub_offices/" + cod_soa)
         .then((data) => {
           this.SubUnidadLoading = false;
           this.SubUnidad = data.data;

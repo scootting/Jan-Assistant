@@ -9,7 +9,7 @@
     <el-option
       v-for="cargo in cargos"
       :key="cargo.id"
-      :label="cargo.cargo"
+      :label="cargo.descripcion"
       :value="cargo.id"
     >
     </el-option>
@@ -60,10 +60,9 @@ export default {
     },
     getCargos() {
       this.cargosLoading = true;
+      let cod_soa = this.ofcCod;
       axios
-        .get("/api/inventory2/cargos", {
-          params: { cod_soa: this.ofcCod },
-        })
+        .get("/api/inventory/cargos/" + cod_soa)
         .then((data) => {
           this.cargosLoading = false;
           this.cargos = data.data;

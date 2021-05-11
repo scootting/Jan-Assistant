@@ -8058,7 +8058,6 @@ __webpack_require__.r(__webpack_exports__);
       },
       loading: false,
       user: this.$store.state.user,
-      sub_oficinas: [],
       oficina: {},
       activos: [],
       pagination: {
@@ -8105,24 +8104,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    //obtener a los encargados que estan dentro de la oficina.
-
-    /*getRespBySoa() {
-      axios
-        .get("/api/inventory/cargos/" + this.oficina.cod_soa)
-        .then((data) => {
-          this.respSelectCI = -1;
-          this.encargados = data.data;
-          this.encargados.push({
-            ci_resp: -1,
-            nombres: "Todos",
-            paterno: "",
-            materno: "",
-            sub_ofc_cod: -1,
-          });
-        })
-        .catch((err) => {});
-    },*/
     //cargamos los activos con el encargado seleccionado
     getActivosPaginate: function getActivosPaginate(page) {
       this.pagination.page = page;
@@ -8143,7 +8124,7 @@ __webpack_require__.r(__webpack_exports__);
         filtroValor: this.filtro.values
       };
       if (this.respSelectCI != -1) params.ci_resp = this.respSelectCI;
-      axios.get("/api/inventory/activosByResp/" + this.oficina.cod_soa, {
+      axios.get("/api/inventory/activosByFilter/" + this.oficina.cod_soa, {
         params: params
       }).then(function (data) {
         _this2.loading = false;
@@ -8153,30 +8134,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-
-    /* 
-    loadReportAssets() {
-      axios({
-        url: "/api/descargando/" + this.oficina.cod_soa,
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        console.log(response.data);
-        console.log("1");
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
-        });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-        
-        link.download = "test.pdf";
-        link.click();
-        
-      });
-    },*/
     GenerarReporte: function GenerarReporte() {
       axios({
         url: "/api/generarReporte/",
@@ -9219,11 +9176,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.cargosLoading = true;
-      axios.get("/api/inventory2/cargos", {
-        params: {
-          cod_soa: this.ofcCod
-        }
-      }).then(function (data) {
+      var cod_soa = this.ofcCod;
+      axios.get("/api/inventory/cargos/" + cod_soa).then(function (data) {
         _this.cargosLoading = false;
         _this.cargos = data.data;
       })["catch"](function (err) {
@@ -9306,11 +9260,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.responsablesLoading = true;
-      axios.get("/api/inventory2/responsables2", {
-        params: {
-          unidad: this.ofcCod
-        }
-      }).then(function (data) {
+      var cod_soa = this.ofcCod;
+      axios.get("/api/inventory/responsables/" + cod_soa).then(function (data) {
         _this.responsablesLoading = false;
         _this.Responsables = data.data;
       })["catch"](function (err) {
@@ -9393,11 +9344,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.SubUnidadLoading = true;
-      axios.get("/api/inventory2/sub_unidad", {
-        params: {
-          cod_soa: this.ofcCod
-        }
-      }).then(function (data) {
+      var cod_soa = this.ofcCod;
+      axios.get("/api/inventory/sub_offices/" + cod_soa).then(function (data) {
         _this.SubUnidadLoading = false;
         _this.SubUnidad = data.data;
       })["catch"](function (err) {
@@ -98127,7 +98075,7 @@ var render = function() {
     _vm._l(_vm.cargos, function(cargo) {
       return _c("el-option", {
         key: cargo.id,
-        attrs: { label: cargo.cargo, value: cargo.id }
+        attrs: { label: cargo.descripcion, value: cargo.id }
       })
     }),
     1

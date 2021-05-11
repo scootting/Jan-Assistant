@@ -33,18 +33,24 @@ class InventoryController extends Controller
     }
     public function getSubOfficesByCodSoa($cod_soa)
     {
-        $cod_soa=$cod_soa=='null'? null : $cod_soa;
+        $cod_soa=='null'? null : $cod_soa;
         $data = Inventory::getSubOfficesByCodSoa($cod_soa);
         return json_encode($data);
     }
-    public function getRespToCargosByCodSoa($cod_soa)
+    public function getCargosByCodSoa($cod_soa)
     {
-        $cod_soa = $cod_soa == 'null' ? null : $cod_soa;
-        $data = Inventory::getCargosByCodSoa($cod_soa);
+        $cod_soa=='null'? null : $cod_soa;
+        $data = Inventory::getCargorsForActive($cod_soa);
+        return json_encode($data);
+    }
+    public function getResponsablesByCodSoa($cod_soa)
+    {
+        $cod_soa=='null'? null : $cod_soa;
+        $data = Inventory::getResponsablesForActive($cod_soa);
         return json_encode($data);
     }
     //obtener activos para la muestra en la página de Inventarios. 
-    public function getActivosBySoaAndResp(Request $request, $cod_soa)
+    public function getActivosByFilter(Request $request, $cod_soa)
     {
         $tipo_reporte = ($request->get('reporte'));
         $tipo_filtro = ($request->get('filtroTipo'));
@@ -66,21 +72,6 @@ class InventoryController extends Controller
         }
     
         //$data = Inventory::getActivosBySoaAndResp($cod_soa,$ci_resp);
-        $page = ($request->get('page')) ? $request->get('page') : null;
-        $perPage = 10;
-        $paginate = new LengthAwarePaginator(
-            $data->forPage($page, $perPage),
-            $data->count(),
-            $perPage,
-            $page,
-            ['path' => url('api/inventory/activos/' . $cod_soa)]
-        );
-        return json_encode($paginate);
-    }
-    public function getActivosByCodSoaAndSubOffice(Request $request, $cod_soa)
-    {
-        $idso = ($request->get('idSubOffice')) ? $request->get('idSubOffice') : null;
-        $data = Inventory::getActivosByCodSoaAndSubOffice($cod_soa, $idso);
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
