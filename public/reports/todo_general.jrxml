@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="todo_general" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8270a4bf-bc98-44b0-816f-b95f8171dc75">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter Production"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="136"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="856"/>
@@ -10,39 +10,37 @@
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 
-b.nro_doc, 
-b.par_cod,
-b.des, 
-b.des_det, 
-b.uni_med, 
-sum(b.can), 
-sum(b.imp_bs) as total,
-o.descripcion as oficina,
-p.par_des as partida
-from ((select
-a.ofc_cod,
-iif(POSITION('.' in a.codigo)<>0,substr(a.codigo,0,POSITION('.' in a.codigo)),a.codigo ) as nro_doc,
-a.act_par_cod AS par_cod,
-a.act_can AS can,
-'PZA' AS uni_med,
-a.act_des AS des,
-a.act_des_det AS des_det,
-a.act_imp_bs AS imp_bs
-from act.activos a)
-UNION ALL
-(select 
-i.ofc_cod,
-i.nro_doc,
-i.par_cod,
-i.can,
-i.uni_med,
-i.des,
-i.des_det,
-i.imp_bs 
-from inv.activos i)) as b , inv.oficinas o , act.partida p
-where b.ofc_cod =  $P{unidad}  and b.ofc_cod = o.cod_soa and b.par_cod = p.par_cod
-group by b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med , o.descripcion ,p.par_des
-order by b.par_cod asc]]>
+b.nro_doc::VARCHAR(20), 
+   					   b.par_cod,
+(select p.par_des from act.partida p
+where p.par_cod = b.par_cod and p.gestion = '2021') as partida,                       
+                       b.des, 
+                       b.des_det, 
+                       b.uni_med, 
+                       sum(b.can), 
+                       sum(b.imp_bs) as total, 
+                       b.ofc_cod,
+(select d.descripcion from inv.oficinas d
+where d.cod_soa = '00000001') as oficina,
+                       b.sub_ofc_cod, 
+                       b.car_cod, 
+                       b.ci_resp::VARCHAR(10) 
+   				  FROM ((SELECT a.ofc_cod, iif(POSITION('.' IN a.codigo)<>0,substr(a.codigo,0,POSITION('.' IN a.codigo)),a.codigo ) AS nro_doc,
+                                a.act_par_cod AS par_cod, a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des,
+                                a.act_des_det AS des_det, a.act_imp_bs AS imp_bs, a.sub_ofc_cod, a.car_cod,
+                                a.act_ci_resp AS ci_resp
+                           FROM act.activos a)
+                       UNION ALL
+                        (SELECT i.ofc_cod, i.nro_doc,
+                                i.par_cod, i.can, i.uni_med, i.des,
+                                i.des_det, i.imp_bs, i.sub_ofc_cod, i.car_cod,
+                                i.ci_resp
+                           FROM inv.activos i)
+                       ) AS b
+   			     WHERE b.ofc_cod = '00000001'
+              GROUP BY b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med, b.ofc_cod, b.sub_ofc_cod, b.car_cod, b.ci_resp
+              ORDER BY b.par_cod asc
+]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
