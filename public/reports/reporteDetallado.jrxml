@@ -12,37 +12,107 @@
 	</parameter>
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT
-per.paterno ,
-per.materno , 
-per.nombres ,
-ac.cod_ant,
-ac.can,
-ac.uni_med,
-ac.des,
-ac.des_det ,
-ac.imp_bs ,
-ac.estado,
-ac.nro_doc ,
-ac.ofc_cod , 
-ac.sub_ofc_cod , 
-ac.par_cod, 
-ac.idc ,
-p.par_des ,
-c.descripcion
-FROM inv.activos ac 
-INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
-INNER JOIN inv.cargos c ON ac.car_cod = c.id 
-INNER JOIN act.partida p ON ac.par_cod = p.par_cod
-INNER JOIN personas per ON ac.ci_resp = per.nro_dip 
-and  CAST(ac.ci_resp AS text) IN (select unnest(string_to_array( $P{ci_resp} , ',')) as ci_resp)
-and  ac.ofc_cod like  $P{unidad} 
-and  p.gestion = 2020
-ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
-
-
-]]>
+		<![CDATA[SELECT b.nro_doc, 
+                       b.par_cod,
+                       b.des, b.des_det, 
+                       b.uni_med, 
+                       b.can, 
+                       b.imp_bs, 
+                       b.estado, 
+                       b.ofc_cod,
+                       b.sub_ofc_cod, 
+                       b.car_cod, 
+                       b.ci_resp::VARCHAR(10),
+                       p.par_des,
+                       per.paterno,per.materno,per.nombres
+   				  FROM ((SELECT a.ofc_cod, a.codigo AS nro_doc, a.act_par_cod AS par_cod,
+                       			a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des, a.act_des_det AS des_det, 
+                       			a.act_imp_bs AS imp_bs, a.act_estado AS estado, a.sub_ofc_cod, a.car_cod,
+                       			a.act_ci_resp AS ci_resp
+                  		   FROM act.activos a)
+                       UNION ALL
+                       (SELECT i.ofc_cod, (i.nro_doc ||'.'|| i.idc) as nro_doc, i.par_cod,
+                                i.can, i.uni_med, i.des, i.des_det,
+                                i.imp_bs, i.estado, i.sub_ofc_cod, i.car_cod,
+                                i.ci_resp
+                       	   FROM inv.activos i) 
+                       ) AS b , act.partida p,personas per
+                 WHERE b.ofc_cod = $P{unidad} 
+                 and  CAST(b.ci_resp AS text) IN (select unnest(string_to_array( $P{ci_resp} , ',')) as ci_resp)
+                 and b.par_cod = p.par_cod and b.ci_resp = per.nro_dip
+                 group by b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med ,b.can, 
+                       b.imp_bs, 
+                       b.estado, 
+                       b.ofc_cod,
+                       b.sub_ofc_cod, 
+                       b.car_cod, 
+                       b.ci_resp::VARCHAR(10),
+                       p.par_des, per.paterno,per.materno,per.nombres
+                order by b.par_cod]]>
 	</queryString>
+	<field name="nro_doc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="par_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="des"/>
+		<property name="com.jaspersoft.studio.field.label" value="des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="des_det" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="des_det"/>
+		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="uni_med" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.label" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="can" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="can"/>
+		<property name="com.jaspersoft.studio.field.label" value="can"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="imp_bs" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="imp_bs"/>
+		<property name="com.jaspersoft.studio.field.label" value="imp_bs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="sub_ofc_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="car_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="car_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="car_cod"/>
+	</field>
+	<field name="ci_resp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ci_resp"/>
+		<property name="com.jaspersoft.studio.field.label" value="ci_resp"/>
+	</field>
+	<field name="par_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
+	</field>
 	<field name="paterno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
 		<property name="com.jaspersoft.studio.field.label" value="paterno"/>
@@ -58,91 +128,19 @@ ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
 		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
 	</field>
-	<field name="cod_ant" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.label" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="can" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="can"/>
-		<property name="com.jaspersoft.studio.field.label" value="can"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="uni_med" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="uni_med"/>
-		<property name="com.jaspersoft.studio.field.label" value="uni_med"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="des"/>
-		<property name="com.jaspersoft.studio.field.label" value="des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="des_det" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="des_det"/>
-		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="imp_bs" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.label" value="imp_bs"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="estado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="estado"/>
-		<property name="com.jaspersoft.studio.field.label" value="estado"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="nro_doc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
-		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="ofc_cod" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
-		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="sub_ofc_cod" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
-		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="par_cod" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
-		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="idc" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="idc"/>
-		<property name="com.jaspersoft.studio.field.label" value="idc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="par_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
-	</field>
-	<field name="descripcion" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
-	</field>
-	<group name="Group1Partida">
+	<group name="Group1partida">
+		<groupExpression><![CDATA[$F{par_cod}]]></groupExpression>
 		<groupHeader>
-			<band height="23">
+			<band height="40">
 				<textField>
-					<reportElement x="2" y="0" width="558" height="20" uuid="8fd31408-4feb-4cb5-b369-4dc600b2f290"/>
-					<textElement textAlignment="Center">
+					<reportElement x="210" y="10" width="250" height="30" uuid="079388bc-4b4f-441c-924c-2ad468b5c8c3"/>
+					<textElement textAlignment="Left">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{par_cod}.concat( "-" + $F{par_des} )]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{par_cod}.concat( "-" + $F{par_des} .toUpperCase())]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
-		<groupFooter>
-			<band height="50"/>
-		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -269,7 +267,7 @@ ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
 				<reportElement x="140" y="0" width="70" height="17" uuid="af7d3dff-6a94-4ddc-943c-165437507e27">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cd915f16-1c91-427c-9cda-cfbb5e08279c"/>
@@ -298,22 +296,6 @@ ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
 				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="-20" y="0" width="70" height="17" uuid="10291ab2-969c-4a96-b7d1-b32a483536f0">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1aa927d1-1a77-4b2d-b25d-a1511e8042c2"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cod_ant}.concat(".")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="50" y="-1" width="30" height="18" uuid="d48c75bf-ce62-4d5a-8825-77d31582c0ff">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ead16ff5-aa43-4973-bf07-fa869d46294a"/>
-				</reportElement>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{idc}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="415" y="-1" width="65" height="18" uuid="17d8c923-5f08-4591-9b1a-0b1aea59e2ed">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df40af65-7866-48e3-84e4-a8f6398dd10d"/>
 				</reportElement>
@@ -326,12 +308,21 @@ ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="10" y="-1" width="70" height="18" uuid="2051fe35-2e04-4ba8-8322-865e63bf9178">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="504b4a4d-e273-4262-ad3a-cce2a29df7bf"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="50" splitType="Stretch">
 			<textField>
 				<reportElement x="220" y="0" width="190" height="50" isRemoveLineWhenBlank="true" uuid="791e5b16-8519-4679-8aa1-c2086fec70c9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d84ecdba-703c-4b3f-922b-399df6a20263"/>
 				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{des_det}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -364,13 +355,6 @@ ORDER BY ac.ofc_cod  , ac.par_cod, ac.nro_doc ,ac.ci_resp
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{materno}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="240" y="170" width="100" height="20" uuid="098f64de-9899-41e0-bd3c-9b945975233e"/>
-				<textElement textAlignment="Center">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="180" y="140" width="200" height="1" uuid="b39271b6-05b1-4aa5-804f-7fd3e21419c4">

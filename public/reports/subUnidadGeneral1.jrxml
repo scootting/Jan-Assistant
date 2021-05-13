@@ -5,67 +5,51 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="150"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="843"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="828"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="158"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="731"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="255"/>
 	<parameter name="subUnidad" class="java.lang.String"/>
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT distinct 
-ac.cod_ant,
-ac.can,
-ac.estado,
-ac.nro_doc,
-ac.can_t,
-ac.uni_med,
-ac.des,
-ac.des_det ,
-of.descripcion as ofc_des, 
-ac.can_t*ac.imp_bs as total,
-ac.ofc_cod, 
-ac.sub_ofc_cod,
-ac.par_cod,
-sof.descripcion as sub_ofc_des,
-p.par_des 
-FROM inv.activos ac
-INNER JOIN inv.oficinas of ON ac.ofc_cod = of.cod_soa
-INNER JOIN inv.sub_oficinas sof ON ac.sub_ofc_cod = sof.id 
-INNER JOIN act.partida p ON ac.par_cod = p.par_cod
-and CAST(ac.sub_ofc_cod AS text) IN (select unnest(string_to_array($P{subUnidad} , ',')) as subUnidad)
-and  ac.ofc_cod like $P{unidad} 
-and  p.gestion = 2020
-ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
-
-
-]]>
+		<![CDATA[SELECT b.nro_doc::VARCHAR(20), 
+   					   b.par_cod,
+                       b.des, 
+                       b.des_det, 
+                       b.uni_med, 
+                       sum(b.can), 
+                       sum(b.imp_bs) as total, 
+                       b.ofc_cod,
+                       b.sub_ofc_cod, 
+                       b.car_cod, 
+                       b.ci_resp::VARCHAR(10) ,
+                       o.descripcion as oficina,
+					p.par_des as partida,
+					per.paterno,per.materno,per.nombres ,c.descripcion as cargo
+   				  FROM ((SELECT a.ofc_cod, iif(POSITION('.' IN a.codigo)<>0,substr(a.codigo,0,POSITION('.' IN a.codigo)),a.codigo ) AS nro_doc,
+                                a.act_par_cod AS par_cod, a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des,
+                                a.act_des_det AS des_det, a.act_imp_bs AS imp_bs, a.sub_ofc_cod, a.car_cod,
+                                a.act_ci_resp AS ci_resp
+                           FROM act.activos a)
+                       UNION ALL
+                        (SELECT i.ofc_cod, i.nro_doc,
+                                i.par_cod, i.can, i.uni_med, i.des,
+                                i.des_det, i.imp_bs, i.sub_ofc_cod, i.car_cod,
+                                i.ci_resp
+                           FROM inv.activos i) 
+                       ) AS b , inv.oficinas o , act.partida p,personas per ,inv.cargos c
+   			     WHERE b.ofc_cod = $P{unidad} 
+   			     and CAST(b.sub_ofc_cod AS text) IN (select unnest(string_to_array($P{subUnidad}  , ',')) as sub_ofc_cod)
+   			     and b.ofc_cod = o.cod_soa and b.par_cod = p.par_cod and b.ci_resp = per.nro_dip and b.car_cod = c.id
+              GROUP BY b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med, b.ofc_cod, b.sub_ofc_cod, b.car_cod, b.ci_resp, o.descripcion,p.par_des,per.paterno,per.materno,per.nombres,c.descripcion
+              ORDER BY b.par_cod]]>
 	</queryString>
-	<field name="cod_ant" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.label" value="cod_ant"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="can" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="can"/>
-		<property name="com.jaspersoft.studio.field.label" value="can"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="estado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="estado"/>
-		<property name="com.jaspersoft.studio.field.label" value="estado"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="can_t" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="can_t"/>
-		<property name="com.jaspersoft.studio.field.label" value="can_t"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
-	</field>
-	<field name="uni_med" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="uni_med"/>
-		<property name="com.jaspersoft.studio.field.label" value="uni_med"/>
+	<field name="par_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
 	<field name="des" class="java.lang.String">
@@ -78,10 +62,14 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 		<property name="com.jaspersoft.studio.field.label" value="des_det"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="ofc_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
+	<field name="uni_med" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.label" value="uni_med"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="sum" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="sum"/>
+		<property name="com.jaspersoft.studio.field.label" value="sum"/>
 	</field>
 	<field name="total" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="total"/>
@@ -97,27 +85,44 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
-	<field name="par_cod" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
-		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	<field name="car_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="car_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="car_cod"/>
 	</field>
-	<field name="sub_ofc_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="sub_oficinas"/>
+	<field name="ci_resp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ci_resp"/>
+		<property name="com.jaspersoft.studio.field.label" value="ci_resp"/>
 	</field>
-	<field name="par_des" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
-		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
+	<field name="oficina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="oficina"/>
+		<property name="com.jaspersoft.studio.field.label" value="oficina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
+	</field>
+	<field name="partida" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="partida"/>
+		<property name="com.jaspersoft.studio.field.label" value="partida"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
 	</field>
-	<variable name="ofc_des1" class="java.lang.Integer" calculation="Count">
-		<variableExpression><![CDATA[$F{ofc_des}]]></variableExpression>
-	</variable>
-	<variable name="ofc_des2" class="java.lang.Integer" calculation="Count">
-		<variableExpression><![CDATA[$F{ofc_des}]]></variableExpression>
-	</variable>
+	<field name="paterno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
+		<property name="com.jaspersoft.studio.field.label" value="paterno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="materno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="materno"/>
+		<property name="com.jaspersoft.studio.field.label" value="materno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
+	</field>
+	<field name="cargo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cargo"/>
+		<property name="com.jaspersoft.studio.field.label" value="cargo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
+	</field>
 	<group name="Group1Partida">
 		<groupExpression><![CDATA[$F{par_cod}]]></groupExpression>
 		<groupHeader>
@@ -127,7 +132,7 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{par_cod}.concat(" - " + $F{par_des}.toUpperCase() )]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{par_cod}.concat(" - " + $F{partida}.toUpperCase() )]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -185,20 +190,12 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 			</staticText>
 			<textField>
 				<reportElement x="50" y="80" width="180" height="20" uuid="aab6a28b-ab0f-4112-9732-22bd0610da7e"/>
-				<textFieldExpression><![CDATA[$P{unidad}.concat( "-"+$F{ofc_des})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{unidad}.concat( "-"+$F{oficina} )]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="33" splitType="Stretch">
-			<textField>
-				<reportElement x="-20" y="10" width="595" height="20" uuid="ea290c86-ab93-4682-a996-ed9e08e9be91"/>
-				<textElement textAlignment="Center">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{sub_ofc_des}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="33" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="23" splitType="Stretch">
@@ -250,7 +247,7 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="90" y="0" width="42" height="20" uuid="137ff022-2f8d-4670-85dd-0098c60625e2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c293379-18a4-4acf-8b14-75ad9685b9fc"/>
@@ -288,13 +285,10 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="0" width="40" height="20" uuid="1f34d6f8-f801-4cbd-ab16-2e6997f200df">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd47fa3f-7d69-472c-936c-6f1157e41693"/>
+				<reportElement x="53" y="0" width="38" height="20" uuid="d8253dc2-165f-48ab-aefc-e2bcaf412b35">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01546cdb-c434-43aa-9e44-01b0f458b428"/>
 				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{can_t}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="42">
@@ -304,7 +298,7 @@ ORDER BY ac.ofc_cod,ac.sub_ofc_cod,ac.par_cod,ac.nro_doc
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08c38a5d-eec2-4365-b3a5-174e17ccae47"/>
 				</reportElement>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des_det}]]></textFieldExpression>
 			</textField>

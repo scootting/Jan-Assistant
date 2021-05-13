@@ -96757,7 +96757,7 @@ var render = function() {
                               },
                               [
                                 _c("el-tag", { attrs: { size: "medium" } }, [
-                                  _vm._v(_vm._s(scope.row.cod_ant))
+                                  _vm._v(_vm._s(scope.row.nro_doc))
                                 ])
                               ],
                               1
@@ -96769,7 +96769,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "can", label: "CANTIDAD", width: "180" }
+                    attrs: { prop: "act_can", label: "CANTIDAD", width: "180" }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -96777,18 +96777,26 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "des", label: "DESCRIPCION" }
+                    attrs: { prop: "act_des", label: "DESCRIPCION" }
                   }),
                   _vm._v(" "),
                   _vm.tipoReporte === "general"
                     ? _c("el-table-column", {
-                        attrs: { prop: "total", label: "TOTAL", width: "180" }
+                        attrs: {
+                          prop: "act_imp_bs",
+                          label: "TOTAL",
+                          width: "180"
+                        }
                       })
                     : _vm._e(),
                   _vm._v(" "),
                   _vm.tipoReporte === "detallado"
                     ? _c("el-table-column", {
-                        attrs: { prop: "imp_bs", label: "PRECIO", width: "180" }
+                        attrs: {
+                          prop: "act_imp_bs",
+                          label: "PRECIO",
+                          width: "180"
+                        }
                       })
                     : _vm._e(),
                   _vm._v(" "),
@@ -120155,8 +120163,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\PERSONAL\Documents\TrabajoDirigido\Presentacion\Jan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

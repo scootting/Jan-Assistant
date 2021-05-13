@@ -51,7 +51,8 @@ class InventoryController extends Controller
     }
     //obtener activos para la muestra en la página de Inventarios. 
     public function getActivosByFilter(Request $request, $cod_soa)
-    {
+    { 
+        //dd($request);
         $tipo_reporte = ($request->get('reporte'));
         $tipo_filtro = ($request->get('filtroTipo'));
         $valor= ($request->get('filtroValor'));
@@ -67,7 +68,7 @@ class InventoryController extends Controller
                 $data = Inventory::selectByCiResponsable($tipo_reporte,$cod_soa,$valor);
                 break;         
             case'todo':
-                $data = Inventory::getActivosBySoaAndResp($cod_soa, false);
+                $data = Inventory::getActivosBySoaAndResp($tipo_reporte,$cod_soa, false);
                 break; 
         }
     

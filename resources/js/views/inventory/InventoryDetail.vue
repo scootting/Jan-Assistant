@@ -78,26 +78,26 @@
           <el-table-column label="CODIGO" width="180">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.cod_ant }}</el-tag>
+                <el-tag size="medium">{{ scope.row.nro_doc }}</el-tag>
               </div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="can"
+            prop="act_can"
             label="CANTIDAD"
             width="180"
           ></el-table-column>
           <el-table-column prop="uni_med" label="UNI. MED."></el-table-column>
-          <el-table-column prop="des" label="DESCRIPCION"></el-table-column>
+          <el-table-column prop="act_des" label="DESCRIPCION"></el-table-column>
           <el-table-column
             v-if="tipoReporte === 'general'"
-            prop="total"
+            prop="act_imp_bs"
             label="TOTAL"
             width="180"
           ></el-table-column>
           <el-table-column
             v-if="tipoReporte === 'detallado'"
-            prop="imp_bs"
+            prop="act_imp_bs"
             label="PRECIO"
             width="180"
           ></el-table-column>

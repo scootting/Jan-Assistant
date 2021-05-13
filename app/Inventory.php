@@ -40,7 +40,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //obtener la tabla de sub oficina por el codigo soa
+    //obtener la tabla de sub oficina por el codigo soa para listar u obtener reportes
     public static function getSubOfficesByCodSoa($cod_soa)
     {
         $query = "select * from inv.sub_oficinas 
@@ -50,7 +50,7 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     } 
-    //Obtener los responsables para filtrar los activos
+    //Obtener los responsables para filtrar los activos para realizar los listados o generar los reportes 
     public static function getResponsablesForActive($cod_soa)
     {
         $query = "select * from public.personas p
@@ -60,15 +60,29 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //Obtener activos cuando el filtro este en TODO 
-    public static function getActivosBySoaAndResp($cod_soa, $ci_resp)
+    //Obtener activos cuando el filtro este en TODO (esta funcion se está reutilizando)
+    public static function getActivosBySoaAndResp($tipo,$cod_soa, $ci_resp)
     {
-        $db = DB::table('inv.activos')->where('inv.activos.ofc_cod', $cod_soa);
-        if ($ci_resp) {
-            $db->where('inv.activos.sub_ofc_cod', $ci_resp);
+        
+        // $db = DB::table('inv.activos')->where('inv.activos.ofc_cod', $cod_soa);
+        //  if ($ci_resp) {
+        //  $db->where('inv.activos.sub_ofc_cod', $ci_resp);
+        //  }
+        // return $db->get();
+        if ($tipo == 'general') {
+
+            //$query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')"; 
+            $query = "select * from act.ff_activos_general('". $cod_soa ."')";
+        } else {
+            //$query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_detallado('". $cod_soa ."')";
         }
-        return $db->get();
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
     } 
+
+
+    // parte de Inventarios 2 (renombrado como INVENTARIO)
     //obtener inventarios creados
     public static function getInventories($gestion, $descripcion)
     {
@@ -82,13 +96,14 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //ontener la unidad a la que se hará el inventario
+    //obtener la unidad a la que se hará el inventario introduciendo la descripcion de la unidad o codigo soa
     public static function getUnidad($keyWord)
     {
         $query = "select inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id
         from inv.oficinas 
         where inv.oficinas.descripcion like '%" . $keyWord . "%' or 
-        inv.oficinas.cod_soa like '%" . $keyWord . "%' group by (inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id)";
+        inv.oficinas.cod_soa like '%" . $keyWord . "%' 
+        group by (inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -430,15 +445,19 @@ class Inventory extends Model
     //prueba de elegir por responsable activos de un inventario 
     public static function selectByCiResponsable($tipo, $cod_soa, $ci_resp)
     {
-        $arrString = "{";
-        foreach ($ci_resp as $k => $ci_resp)
-            $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
-        $arrString = $arrString . '}';
+         $arrString = "{";
+         foreach ($ci_resp as $k => $ci_resp)
+             $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
+         $arrString = $arrString . '}';
         if ($tipo == 'general') {
 
-            $query = "select * from inv.ff_getactivosgeneralbyci('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosgeneralbyci('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
+            WHERE t.ci_resp in ('". $ci_resp ."')";
         } else {
-            $query = "select * from inv.ff_getactivosdetallelbyci('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosdetallelbyci('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
+            WHERE t.ci_resp in ('". $ci_resp ."')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -446,15 +465,19 @@ class Inventory extends Model
     //prueba de seleccionar inventario por cargo
     public static function selectByCargo($tipo, $cod_soa, $cargo)
     {
-        $arrString = "{";
-        foreach ($cargo as $k => $cargo)
-            $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
-        $arrString = $arrString . '}';
+         $arrString = "{";
+         foreach ($cargo as $k => $cargo)
+             $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
+         $arrString = $arrString . '}';
         if ($tipo == 'general') {
 
-            $query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')"; 
+            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
+            WHERE t.car_cod in ('". $cargo ."')";
         } else {
-            $query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
+            WHERE t.car_cod in ('". $cargo ."')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -462,15 +485,19 @@ class Inventory extends Model
     //
     public static function selectBysubUnidad($tipo, $cod_soa, $subUnidad)
     {
-        $arrString = "{";
-        foreach ($subUnidad as $k => $subUnidad)
-            $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
-        $arrString = $arrString . '}';
+         $arrString = "";
+         foreach ($subUnidad as $k => $subUnidad)
+             $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
+         $arrString = $arrString . "";
         if ($tipo == 'general') {
 
-            $query = "select * from inv.ff_getactivosgeneralbysubunidad('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosgeneralbysubunidad('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
+            WHERE t.sub_ofc_cod in ('". $subUnidad ."')";
         } else {
-            $query = "select * from inv.ff_getactivosdetallebysubunidad('" . $cod_soa . "', '" . $arrString . "')";
+            //$query = "select * from inv.ff_getactivosdetallebysubunidad('" . $cod_soa . "', '" . $arrString . "')";
+            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
+            WHERE t.sub_ofc_cod in ('". $subUnidad ."')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
