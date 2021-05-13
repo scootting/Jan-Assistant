@@ -10,20 +10,22 @@
 	<parameter name="subUnidad" class="java.lang.String"/>
 	<parameter name="unidad" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT b.nro_doc::VARCHAR(20), 
+		<![CDATA[select 
+						b.nro_doc::VARCHAR(20), 
    					   b.par_cod,
+(select p.par_des from act.partida p
+where p.par_cod = b.par_cod and p.gestion = '2021') as partida,                       
                        b.des, 
                        b.des_det, 
                        b.uni_med, 
                        sum(b.can), 
                        sum(b.imp_bs) as total, 
                        b.ofc_cod,
+(select d.descripcion from inv.oficinas d
+where d.cod_soa = $P{unidad}  ) as oficina,
                        b.sub_ofc_cod, 
                        b.car_cod, 
-                       b.ci_resp::VARCHAR(10) ,
-                       o.descripcion as oficina,
-					p.par_des as partida,
-					per.paterno,per.materno,per.nombres ,c.descripcion as cargo
+                       b.ci_resp::VARCHAR(10) 
    				  FROM ((SELECT a.ofc_cod, iif(POSITION('.' IN a.codigo)<>0,substr(a.codigo,0,POSITION('.' IN a.codigo)),a.codigo ) AS nro_doc,
                                 a.act_par_cod AS par_cod, a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des,
                                 a.act_des_det AS des_det, a.act_imp_bs AS imp_bs, a.sub_ofc_cod, a.car_cod,
@@ -34,13 +36,11 @@
                                 i.par_cod, i.can, i.uni_med, i.des,
                                 i.des_det, i.imp_bs, i.sub_ofc_cod, i.car_cod,
                                 i.ci_resp
-                           FROM inv.activos i) 
-                       ) AS b , inv.oficinas o , act.partida p,personas per ,inv.cargos c
-   			     WHERE b.ofc_cod = $P{unidad} 
-   			     and CAST(b.sub_ofc_cod AS text) IN (select unnest(string_to_array($P{subUnidad}  , ',')) as sub_ofc_cod)
-   			     and b.ofc_cod = o.cod_soa and b.par_cod = p.par_cod and b.ci_resp = per.nro_dip and b.car_cod = c.id
-              GROUP BY b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med, b.ofc_cod, b.sub_ofc_cod, b.car_cod, b.ci_resp, o.descripcion,p.par_des,per.paterno,per.materno,per.nombres,c.descripcion
-              ORDER BY b.par_cod]]>
+                           FROM inv.activos i)
+                       ) AS b
+   			     WHERE b.ofc_cod =  $P{unidad} AND CAST(b.sub_ofc_cod AS text) IN (SELECT unnest(string_to_array($P{subUnidad}  , ',')) AS sub_ofc_cod)
+              GROUP BY b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med, b.ofc_cod, b.sub_ofc_cod, b.car_cod, b.ci_resp
+              ORDER BY b.par_cod asc]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
@@ -51,6 +51,11 @@
 		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="partida" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="partida"/>
+		<property name="com.jaspersoft.studio.field.label" value="partida"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
 	</field>
 	<field name="des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="des"/>
@@ -80,6 +85,11 @@
 		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
 	</field>
+	<field name="oficina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="oficina"/>
+		<property name="com.jaspersoft.studio.field.label" value="oficina"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
+	</field>
 	<field name="sub_ofc_cod" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
 		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
@@ -92,36 +102,6 @@
 	<field name="ci_resp" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ci_resp"/>
 		<property name="com.jaspersoft.studio.field.label" value="ci_resp"/>
-	</field>
-	<field name="oficina" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="oficina"/>
-		<property name="com.jaspersoft.studio.field.label" value="oficina"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
-	</field>
-	<field name="partida" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="partida"/>
-		<property name="com.jaspersoft.studio.field.label" value="partida"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
-	</field>
-	<field name="paterno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
-		<property name="com.jaspersoft.studio.field.label" value="paterno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="materno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="materno"/>
-		<property name="com.jaspersoft.studio.field.label" value="materno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="nombres" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="cargo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="cargo"/>
-		<property name="com.jaspersoft.studio.field.label" value="cargo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cargos"/>
 	</field>
 	<group name="Group1Partida">
 		<groupExpression><![CDATA[$F{par_cod}]]></groupExpression>

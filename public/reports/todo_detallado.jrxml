@@ -20,7 +20,8 @@
                        b.sub_ofc_cod, 
                        b.car_cod, 
                        b.ci_resp::VARCHAR(10),
-                       p.par_des
+                       (select p.par_des from act.partida p
+where p.par_cod = b.par_cod and p.gestion = '2021') AS par_des  
    				  FROM ((SELECT a.ofc_cod, a.codigo AS nro_doc, a.act_par_cod AS par_cod,
                        			a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des, a.act_des_det AS des_det, 
                        			a.act_imp_bs AS imp_bs, a.act_estado AS estado, a.sub_ofc_cod, a.car_cod,
@@ -31,19 +32,10 @@
                                 i.can, i.uni_med, i.des, i.des_det,
                                 i.imp_bs, i.estado, i.sub_ofc_cod, i.car_cod,
                                 i.ci_resp
-                       	   FROM inv.activos i) 
-                       ) AS b , act.partida p
-                 WHERE b.ofc_cod = $P{unidad} 
-                 and b.par_cod = p.par_cod
-                 group by b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med ,b.can, 
-                       b.imp_bs, 
-                       b.estado, 
-                       b.ofc_cod,
-                       b.sub_ofc_cod, 
-                       b.car_cod, 
-                       b.ci_resp::VARCHAR(10),
-                       p.par_des
-                order by b.par_cod]]>
+                       	   FROM inv.activos i)
+                       ) AS b
+                 WHERE b.ofc_cod =  $P{unidad} 
+                 ORDER BY b.par_cod]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
@@ -106,7 +98,6 @@
 	<field name="par_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
 	</field>
 	<group name="Group1partida">
 		<groupExpression><![CDATA[$F{par_cod}]]></groupExpression>

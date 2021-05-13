@@ -21,8 +21,8 @@
                        b.sub_ofc_cod, 
                        b.car_cod, 
                        b.ci_resp::VARCHAR(10),
-                       p.par_des,
-                       per.paterno,per.materno,per.nombres
+                       (select p.par_des from act.partida p
+where p.par_cod = b.par_cod and p.gestion = '2021') AS par_des  
    				  FROM ((SELECT a.ofc_cod, a.codigo AS nro_doc, a.act_par_cod AS par_cod,
                        			a.act_can AS can, 'PIEZA' AS uni_med, a.act_des AS des, a.act_des_det AS des_det, 
                        			a.act_imp_bs AS imp_bs, a.act_estado AS estado, a.sub_ofc_cod, a.car_cod,
@@ -33,20 +33,10 @@
                                 i.can, i.uni_med, i.des, i.des_det,
                                 i.imp_bs, i.estado, i.sub_ofc_cod, i.car_cod,
                                 i.ci_resp
-                       	   FROM inv.activos i) 
-                       ) AS b , act.partida p,personas per
-                 WHERE b.ofc_cod = $P{unidad} 
-                 and  CAST(b.sub_ofc_cod AS text) IN (select unnest(string_to_array( $P{subUnidad}  , ',')) as subUnidad)
-                 and b.par_cod = p.par_cod and b.ci_resp = per.nro_dip
-                 group by b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med ,b.can, 
-                       b.imp_bs, 
-                       b.estado, 
-                       b.ofc_cod,
-                       b.sub_ofc_cod, 
-                       b.car_cod, 
-                       b.ci_resp::VARCHAR(10),
-                       p.par_des, per.paterno,per.materno,per.nombres
-                order by b.par_cod]]>
+                       	   FROM inv.activos i)
+                       ) AS b
+                 WHERE b.ofc_cod =  $P{unidad}  and  CAST(b.sub_ofc_cod AS text) IN (select unnest(string_to_array( $P{subUnidad}  , ',')) as subUnidad)
+                 ORDER BY b.par_cod]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
@@ -110,21 +100,6 @@
 		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
-	</field>
-	<field name="paterno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="paterno"/>
-		<property name="com.jaspersoft.studio.field.label" value="paterno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="materno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="materno"/>
-		<property name="com.jaspersoft.studio.field.label" value="materno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
-	</field>
-	<field name="nombres" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="personas"/>
 	</field>
 	<group name="Group1Particiones">
 		<groupFooter>

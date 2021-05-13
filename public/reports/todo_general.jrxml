@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="todo_general" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8270a4bf-bc98-44b0-816f-b95f8171dc75">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter Production"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="136"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="856"/>
@@ -21,7 +21,7 @@ where p.par_cod = b.par_cod and p.gestion = '2021') as partida,
                        sum(b.imp_bs) as total, 
                        b.ofc_cod,
 (select d.descripcion from inv.oficinas d
-where d.cod_soa = '00000001') as oficina,
+where d.cod_soa = $P{unidad}  ) as oficina,
                        b.sub_ofc_cod, 
                        b.car_cod, 
                        b.ci_resp::VARCHAR(10) 
@@ -37,10 +37,9 @@ where d.cod_soa = '00000001') as oficina,
                                 i.ci_resp
                            FROM inv.activos i)
                        ) AS b
-   			     WHERE b.ofc_cod = '00000001'
+   			     WHERE b.ofc_cod =  $P{unidad} 
               GROUP BY b.nro_doc, b.par_cod, b.des, b.des_det, b.uni_med, b.ofc_cod, b.sub_ofc_cod, b.car_cod, b.ci_resp
-              ORDER BY b.par_cod asc
-]]>
+              ORDER BY b.par_cod asc]]>
 	</queryString>
 	<field name="nro_doc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
@@ -51,6 +50,11 @@ where d.cod_soa = '00000001') as oficina,
 		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="partida" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="partida"/>
+		<property name="com.jaspersoft.studio.field.label" value="partida"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
 	</field>
 	<field name="des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="des"/>
@@ -75,15 +79,26 @@ where d.cod_soa = '00000001') as oficina,
 		<property name="com.jaspersoft.studio.field.name" value="total"/>
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
 	</field>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
+	</field>
 	<field name="oficina" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="oficina"/>
 		<property name="com.jaspersoft.studio.field.label" value="oficina"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="oficinas"/>
 	</field>
-	<field name="partida" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="partida"/>
-		<property name="com.jaspersoft.studio.field.label" value="partida"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="partida"/>
+	<field name="sub_ofc_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
+	</field>
+	<field name="car_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="car_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="car_cod"/>
+	</field>
+	<field name="ci_resp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ci_resp"/>
+		<property name="com.jaspersoft.studio.field.label" value="ci_resp"/>
 	</field>
 	<group name="Unidad">
 		<groupHeader>
