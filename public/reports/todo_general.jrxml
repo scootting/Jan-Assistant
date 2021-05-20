@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="todo_general" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8270a4bf-bc98-44b0-816f-b95f8171dc75">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="136"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="856"/>
@@ -248,24 +248,6 @@ where d.cod_soa = $P{unidad}  ) as oficina,
 	<columnHeader>
 		<band height="9" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<staticText>
-				<reportElement x="103" y="0" width="100" height="9" uuid="02c98130-f5f6-4d79-9202-9b0ec956e6dc">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2175b03a-a723-447b-9053-f4aff52cf317"/>
-				</reportElement>
-				<text><![CDATA[can_t]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="96" y="0" width="100" height="9" uuid="d25cd021-7016-4d5a-92ca-df08f4882809">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a8775003-4d54-4334-8878-44cbcb1b5472"/>
-				</reportElement>
-				<text><![CDATA[can]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="99" y="0" width="100" height="9" uuid="6227f3c8-aa4c-4e4c-98d3-bd21ff055a09">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0901ca1f-642a-474d-ac93-e88476ee24bc"/>
-				</reportElement>
-				<text><![CDATA[sum]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
