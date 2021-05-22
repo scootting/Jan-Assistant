@@ -6347,6 +6347,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_qr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-qr */ "./node_modules/vue-qr/dist/vue-qr.js");
 /* harmony import */ var vue_qr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_qr__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_selectSubUnidad_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/selectSubUnidad.vue */ "./resources/js/views/inventory/components/selectSubUnidad.vue");
+//
+//
 //
 //
 //
@@ -6487,10 +6490,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //QR,para usar con los activos fijos
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Reasignar_activos",
   components: {
-    VueQr: vue_qr__WEBPACK_IMPORTED_MODULE_0___default.a
+    VueQr: vue_qr__WEBPACK_IMPORTED_MODULE_0___default.a,
+    SelectSubUnidad: _components_selectSubUnidad_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -6502,7 +6507,7 @@ __webpack_require__.r(__webpack_exports__);
         page: 1
       },
       writtenTextParameter: "",
-      idOficce: null,
+      idOffice: null,
       idsSubOffices: [],
       unidades: [],
       subUnidades: [],
@@ -6514,30 +6519,32 @@ __webpack_require__.r(__webpack_exports__);
     this.getActives();
     this.getUnidades("");
   },
-  watch: {
-    idOficce: function idOficce(newVal, oldVal) {
-      if (newVal) this.onChangeUnidades();else {
-        this.subUnidades = [];
-      }
-      this.idSubOffices = [];
+  computed: {
+    codSoa: function codSoa() {
+      var _this = this;
+
+      if (!this.idOffice) return null;
+      return this.unidades.find(function (u) {
+        return u.id === _this.idOffice;
+      }).cod_soa;
     }
   },
   methods: {
     getActives: function getActives() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       axios.get("/api/reasignacion/", {
         params: {
           page: this.pagination.page,
           descripcion: this.writtenTextParameter.toUpperCase(),
-          idOffice: this.idOficce,
+          codSoa: this.codSoa,
           idSubOffice: this.idsSubOffices
         }
       }).then(function (data) {
-        _this.loading = false;
-        _this.data = Object.values(data.data.data);
-        _this.pagination = data.data;
+        _this2.loading = false;
+        _this2.data = Object.values(data.data.data);
+        _this2.pagination = data.data;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -6547,30 +6554,14 @@ __webpack_require__.r(__webpack_exports__);
       this.getActives("");
     },
     getUnidades: function getUnidades(keyWord) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/api/inventory2/unidad/", {
         params: {
           keyWord: keyWord.toUpperCase()
         }
       }).then(function (data) {
-        _this2.unidades = Object.values(data.data.data);
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    },
-    onChangeUnidades: function onChangeUnidades() {
-      this.getSubUnidades();
-    },
-    getSubUnidades: function getSubUnidades() {
-      var _this3 = this;
-
-      axios.get("/api/inventory2/sub_unidad", {
-        params: {
-          idOffice: this.idOficce
-        }
-      }).then(function (data) {
-        _this3.subUnidades = data.data;
+        _this3.unidades = Object.values(data.data.data);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -94594,11 +94585,11 @@ var render = function() {
                   "remote-method": _vm.getUnidades
                 },
                 model: {
-                  value: _vm.idOficce,
+                  value: _vm.idOffice,
                   callback: function($$v) {
-                    _vm.idOficce = $$v
+                    _vm.idOffice = $$v
                   },
-                  expression: "idOficce"
+                  expression: "idOffice"
                 }
               },
               _vm._l(_vm.unidades, function(item) {
@@ -94610,31 +94601,16 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: {
-                  multiple: "",
-                  placeholder: "SELECIONAR SUB UNIDAD",
-                  clearable: "",
-                  filterable: ""
+            _c("select-sub-unidad", {
+              attrs: { "ofc-cod": this.codSoa, multiple: "" },
+              model: {
+                value: _vm.idsSubOffices,
+                callback: function($$v) {
+                  _vm.idsSubOffices = $$v
                 },
-                model: {
-                  value: _vm.idsSubOffices,
-                  callback: function($$v) {
-                    _vm.idsSubOffices = $$v
-                  },
-                  expression: "idsSubOffices"
-                }
-              },
-              _vm._l(_vm.subUnidades, function(item) {
-                return _c("el-option", {
-                  key: item.id,
-                  attrs: { label: item.descripcion, value: item.id }
-                })
-              }),
-              1
-            ),
+                expression: "idsSubOffices"
+              }
+            }),
             _vm._v(" "),
             _c("el-button", {
               attrs: { icon: "el-icon-search" },

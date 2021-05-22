@@ -22,7 +22,7 @@
         >
         </el-input>
         <el-select
-          v-model="idOficce"
+          v-model="idOffice"
           placeholder="SELECCIONAR UNIDAD"
           filterable
           remote
@@ -36,7 +36,9 @@
           >
           </el-option>
         </el-select>
-        <el-select
+        
+        <select-sub-unidad :ofc-cod="this.codSoa" v-model="idsSubOffices" multiple />
+        <!-- <el-select
           v-model="idsSubOffices"
           multiple
           placeholder="SELECIONAR SUB UNIDAD"
@@ -50,7 +52,7 @@
             :value="item.id"
           >
           </el-option>
-        </el-select>
+        </el-select> -->
         <el-button icon="el-icon-search" @click="getActives"></el-button>
       </div>
       <br />
@@ -139,9 +141,13 @@
 <script>
 //QR,para usar con los activos fijos
 import VueQr from "vue-qr";
+import SelectSubUnidad from './components/selectSubUnidad.vue';
 export default {
   name: "Reasignar_activos",
-  components: { VueQr },
+  components: { 
+    VueQr,
+    SelectSubUnidad
+  },
   data() {
     return {
       loading: false,
@@ -152,7 +158,7 @@ export default {
         page: 1,
       },
       writtenTextParameter: "",
-      idOficce: null,
+      idOffice: null,
       idsSubOffices: [],
       unidades: [],
       subUnidades: [],
@@ -164,13 +170,11 @@ export default {
     this.getActives();
     this.getUnidades("");
   },
-  watch: {
-    idOficce(newVal, oldVal) {
-      if (newVal) this.onChangeUnidades();
-      else {
-        this.subUnidades = [];
-      }
-      this.idSubOffices = [];
+  computed: {
+    codSoa(){
+      if(!this.idOffice)
+        return null;
+      return this.unidades.find(u => u.id === this.idOffice ).cod_soa;
     },
   },
   methods: {
@@ -181,7 +185,7 @@ export default {
           params: {
             page: this.pagination.page,
             descripcion: this.writtenTextParameter.toUpperCase(),
-            idOffice: this.idOficce,
+            codSoa: this.codSoa,
             idSubOffice: this.idsSubOffices,
           },
         })
@@ -205,21 +209,6 @@ export default {
         })
         .then((data) => {
           this.unidades = Object.values(data.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    onChangeUnidades() {
-      this.getSubUnidades();
-    },
-    getSubUnidades() {
-      axios
-        .get("/api/inventory2/sub_unidad", {
-          params: { idOffice: this.idOficce },
-        })
-        .then((data) => {
-          this.subUnidades = data.data;
         })
         .catch((err) => {
           console.log(err);

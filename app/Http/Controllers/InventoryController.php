@@ -33,7 +33,7 @@ class InventoryController extends Controller
     }
     public function getSubOfficesByCodSoa($cod_soa)
     {
-        $cod_soa=='null'? null : $cod_soa;
+        $cod_soa = $cod_soa=='null'? null : $cod_soa;
         $data = Inventory::getSubOfficesByCodSoa($cod_soa);
         return json_encode($data);
     }
@@ -307,16 +307,19 @@ class InventoryController extends Controller
     }
     public function SearchActivo(Request $request)
     {
+        //dd($request);
         $descripcion = ($request->get('descripcion')) ? $request->get('descripcion') : null;
-        $ofc_ids = ($request->get('idOffice')) ? $request->get('idOffice') : null;
+        $cod_soa = ($request->get('codSoa')) ? $request->get('codSoa') : null;
         $sub_ofc_ids = ($request->get('idSubOffice')) ? $request->get('idSubOffice') : null;
-        //dd($descripcion,$ofc_ids,$sub_ofc_ids);
-        $data = Inventory::SearchActive($ofc_ids, $sub_ofc_ids,$descripcion);
+        //dd($descripcion,$ofc_id,$sub_ofc_ids);
+        $data = Inventory::SearchActive($cod_soa, $sub_ofc_ids,$descripcion);
+        
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
+        $paginator = $data->paginate($perPage,['*'],'page',$page);
         $paginate = new LengthAwarePaginator(
-            $data->forPage($page, $perPage),
-            $data->count(),
+            $paginator->items(),
+            $paginator->total(),
             $perPage,
             $page,
             []

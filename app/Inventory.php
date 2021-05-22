@@ -34,7 +34,7 @@ class Inventory extends Model
     {
         $query = "select * from inv.cargos c
         where c.id in (
-        select a.car_cod from inv.activos a
+        select a.car_cod from inv.union_activos a
         where a.ofc_cod = '" . $cod_soa . "'
         group by a.car_cod)";
         $data = collect(DB::select(DB::raw($query)));
@@ -45,7 +45,7 @@ class Inventory extends Model
     {
         $query = "select * from inv.sub_oficinas 
         where inv.sub_oficinas.id in (select sub_ofc_cod
-        from inv.activos where ofc_cod = '" . $cod_soa . "' 
+        from inv.union_activos ".($cod_soa? ("where ofc_cod = '" . $cod_soa . "'"):"")." 
         group by sub_ofc_cod)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -55,7 +55,7 @@ class Inventory extends Model
     {
         $query = "select * from public.personas p
         where p.nro_dip in (select ci_resp
-        from inv.activos where ofc_cod = '" . $cod_soa . "' 
+        from inv.union_activos where ofc_cod = '" . $cod_soa . "' 
         group by ci_resp)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -103,25 +103,26 @@ class Inventory extends Model
         from inv.oficinas 
         where inv.oficinas.descripcion like '%" . $keyWord . "%' or 
         inv.oficinas.cod_soa like '%" . $keyWord . "%' 
-        group by (inv.oficinas.descripcion, inv.oficinas.cod_soa, inv.oficinas.cod_ofc ,inv.oficinas.id)";
+        ";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     //obtener las sub unidades de la unidad a la que se hará el inventario
     public static function getSubUnidades($unidad, $idUnidad, $cod_ofc)
     {
-        $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
-        from inv.sub_oficinas, inv.activos,inv.oficinas
+        $query = "select sof.descripcion, sof.id
+        from inv.sub_oficinas sof, inv.union_activos ua ,inv.oficinas of
         WHERE
-        inv.activos.sub_ofc_cod = inv.sub_oficinas.id
-        and inv.oficinas.cod_soa = inv.activos.ofc_cod ";
+        ua.sub_ofc_cod = sof.id
+        and of.cod_soa = ua.ofc_cod ";
         if ($unidad)
-            $query = $query . " and inv.oficinas.cod_soa like '%" . $unidad . "%' ";
+            $query = $query . " and of.cod_soa like '%" . $unidad . "%' ";
         if ($idUnidad)
-            $query = $query . " and inv.oficinas.id = " . $idUnidad . " ";
+            $query = $query . " and of.id = " . $idUnidad . " ";
         if ($cod_ofc)
-            $query = $query . " and inv.oficinas.cod_ofc = " . $cod_ofc . " ";
-        $query = $query . "group by (inv.sub_oficinas.descripcion,inv.sub_oficinas.id)";
+            $query = $query . " and of.cod_ofc = " . $cod_ofc . " ";
+       $query = $query . "
+       group by sof.id, sof.descripcion";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -146,7 +147,7 @@ class Inventory extends Model
         order by (inv.cargos.id)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-    }
+                                                        }
 
     //obtener los responsables que realizaran el nuevo inventario
     public static function getResponsables($unidad, $cargos)
@@ -234,21 +235,20 @@ class Inventory extends Model
         return ['data' => $data, 'no_doc' => $no_doc];
     }
     // peticiones de busqueda para activos segun id de oficina, de la subOficina o descripción  
-    public static function SearchActive($ofc_id, $sub_ofc_ids, $descripcion)
+    public static function SearchActive($cod_soa, $sub_ofc_ids, $descripcion)
     {
         $db = DB::table('inv.union_activos as ua')->select('ua.id', 'of.descripcion as oficina', 'sof.descripcion', 'ua.des', 'ua.estado')
-            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_ofc')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
+            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
         if ($descripcion) {
             $db->where('ua.des', 'like', '%' . $descripcion . '%');
         }
-        if ($ofc_id) {
-            $db->where('of.id', $ofc_id);
+        if ($cod_soa) {
+            $db->where('of.cod_soa', $cod_soa);
         }
         if ($sub_ofc_ids) {
             $db->whereIn('ua.sub_ofc_cod', $sub_ofc_ids);
         }
-        $db->orderBy('ua.id', 'asc');
-        return $db->get();
+        return $db;
     }
     // mostrar el activo por el ID 
     public static function showActiveById($id)
@@ -256,18 +256,27 @@ class Inventory extends Model
         $query = "select ua.des,
         ua.des_det,
         ua.vida_util,
-        ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.cod_soa,
-        ua.ci_resp,ua.id,of.descripcion as oficina,sof.descripcion,c.descripcion as cargo,
-        p.nombres,p.paterno,p.materno
+        ua.estado,
+        ua.car_cod,
+        ua.sub_ofc_cod,
+        ua.ofc_cod,
+        ua.ci_resp,
+        ua.id,
+        of.descripcion as oficina,
+        sof.descripcion,
+        c.descripcion as cargo,
+        p.nombres,
+        p.paterno,
+        p.materno
         from inv.union_activos ua, inv.oficinas of,inv.sub_oficinas as sof,inv.cargos c,public.personas p
             where ua.id = " . $id . " 
-                and of.cod_ofc = ua.ofc_cod 
+                and of.cod_soa= ua.ofc_cod 
                 and sof.id = ua.sub_ofc_cod
                 and c.id = ua.car_cod
-                and p.nro_dip = ua.ci_resp
-                group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.ofc_cod,ua.sub_ofc_cod,ua.cod_soa,
-                    ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
-                    p.nombres,p.paterno,p.materno)";
+                and p.nro_dip = ua.ci_resp";
+                // group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.ofc_cod,
+                //     ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
+                //     p.nombres,p.paterno,p.materno)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

@@ -42,12 +42,13 @@ Route::group([
     /*
     Route::post('upload', 'FileController@uploadFile');
     */
-    Route::get('inventory/{gestion}', 'InventoryController@getOffices');
+    
     Route::get('inventory/show/{cod_soa}', 'InventoryController@getOfficeByCodSoa');
     Route::get('inventory/sub_offices/{cod_soa}', 'InventoryController@getSubOfficesByCodSoa');
     Route::get('inventory/cargos/{cod_soa}', 'InventoryController@getCargosByCodSoa');
     Route::get('inventory/responsables/{cod_soa}','InventoryController@getResponsablesByCodSoa');
     Route::get('inventory/activosByFilter/{cod_soa}', 'InventoryController@getActivosByFilter');
+    Route::get('inventory/{gestion}', 'InventoryController@getOffices');
     Route::get('descargando/{cod_soa}', 'InventoryController@getReport');
     Route::get('inventarioDetalle/', 'InventoryController@getReportDetalle');
     Route::get('inventarioGeneral/', 'InventoryController@getReportGeneral');
