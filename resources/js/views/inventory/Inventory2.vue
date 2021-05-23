@@ -4,14 +4,14 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Inventario</span>
-        <el-button
+        <!-- <el-button
           style="text-align: right; float: right"
           size="small"
           type="primary"
           icon="el-icon-plus"
           @click="newInventory"
           >Nuevo Inventario</el-button
-        >
+        > -->
       </div>
 
       <div style="margin-top: 15px">
@@ -128,9 +128,9 @@ export default {
         },
       });
     },
-    newInventory() {
-      this.$router.push({ name: "newinventory" });
-    },
+    // newInventory() {
+    //   this.$router.push({ name: "newinventory" });
+    // },
     listActive(no_cod){
       this.$router.push({
         name: "inventory2detail",

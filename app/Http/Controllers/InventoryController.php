@@ -29,6 +29,7 @@ class InventoryController extends Controller
     public function getOfficeByCodSoa($cod_soa)
     {
         $data = Inventory::getOfficeByCodSoa($cod_soa);
+        $data->so_cargos = Inventory::getDatosByCodSoa($cod_soa);
         return json_encode($data);
     }
     public function getSubOfficesByCodSoa($cod_soa)
@@ -286,7 +287,8 @@ class InventoryController extends Controller
             ['path' => url('api/inventory2/encargados')]
         );
         return json_encode($paginate);
-    }
+    } 
+    
     public function saveNewInventory(Request $request)
     {
         //dd($request);

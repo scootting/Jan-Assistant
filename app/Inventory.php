@@ -164,8 +164,8 @@ class Inventory extends Model
         and inv.activos.car_cod = inv.cargos.id
         " . (count($cargos) > 0 ? "and inv.cargos.id in "
             . $arrString : "") . "
-        group by (public.personas.nro_dip,public.personas.nombres,
-        public.personas.paterno,public.personas.materno, inv.cargos.descripcion)";
+        group by public.personas.nro_dip,public.personas.nombres,
+        public.personas.paterno,public.personas.materno, inv.cargos.descripcion";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -198,6 +198,12 @@ class Inventory extends Model
         $newId = ((int)$idmax) + 1;
         $cad = '0000' . $newId;
         return substr($cad, strlen($cad) - 4);
+    }
+    public static function getDatosByCodSoa($cod_soa)
+    {
+        $query = "select * from inv.ff_getdatosbycodsoa('". $cod_soa ."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
     }
     //guardar datos del nuevo inventario
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion)

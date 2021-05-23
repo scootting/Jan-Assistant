@@ -31,6 +31,10 @@ export default {
     value: {
       default: null,
     },
+    defaultAll: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -61,11 +65,17 @@ export default {
     getSubUnidad() {
       this.SubUnidadLoading = true;
       let cod_soa = this.ofcCod;
+      if(cod_soa)
       axios
         .get("/api/inventory/sub_offices/" + cod_soa)
         .then((data) => {
           this.SubUnidadLoading = false;
           this.SubUnidad = data.data;
+          if(this.defaultAll){
+            this.selected = this.SubUnidad.map(e=>e.id);
+            this.onChange();
+          }
+            
         })
         .catch((err) => {
           console.log(err);

@@ -187,7 +187,9 @@ export default {
         this.oficina = data.data;
         this.getRespBySoa();
       })
-      .catch((err) => {});
+      .catch((err) => {
+        
+      });
   },
   computed: {
     tipoReporte() {

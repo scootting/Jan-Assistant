@@ -31,6 +31,10 @@ export default {
     value: {
       default: null,
     },
+    defaultAll: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -61,11 +65,16 @@ export default {
     getCargos() {
       this.cargosLoading = true;
       let cod_soa = this.ofcCod;
+      if(cod_soa)
       axios
         .get("/api/inventory/cargos/" + cod_soa)
         .then((data) => {
           this.cargosLoading = false;
           this.cargos = data.data;
+          if(this.defaultAll){
+            this.selected = this.cargos.map(c => c.id);
+            this.onChange();
+          }
         })
         .catch((err) => {
           console.log(err);

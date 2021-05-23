@@ -32,6 +32,7 @@ import Inventory2 from './views/inventory/Inventory2'
 import EditInventory2 from './views/inventory/EditInventory2'
 import InventoryDetail from './views/inventory/InventoryDetail'
 import NewInventory from './views/inventory/NewInventory'
+import NewInventoryDetail from './views/inventory/NewInventoryDetail'
 import Inventory2Detail from './views/inventory/Inventory2Detail'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
@@ -39,7 +40,6 @@ import Active from './views/inventory/Active'
 import EditActive from './views/inventory/EditActive'
 import QrPrint from './views/inventory/QrPrint'
 import NewActive from './views/inventory/NewActive'
-
 //activos fijos
 import DocumentsFixedAssets from './views/fixedasset/DocumentsFixedAssets'
 import SelectedFixedAssetsByDocument from './views/fixedasset/SelectedFixedAssetsByDocument'
@@ -127,6 +127,7 @@ const router = new VueRouter({
                 { path: 'inventory2/:id', name: 'editinventory2', component: EditInventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
+                { path: 'newinventory/cod_soa', name: 'newinventorydetail',component: NewInventoryDetail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
                 { path: 'newactive', name: 'newactive' , component: NewActive },
