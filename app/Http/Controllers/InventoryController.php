@@ -424,15 +424,15 @@ class InventoryController extends Controller
             $id= $request->id;
         else
         $id = -1;
-        $doc_cod = $request->doc_cod;
+        $nro_doc_inv = $request->doc_cod;
         $cod_ges = $request->cod_ges;
         $cod_act = $request->cod_act;
         $id_act = $request->id_act;
         $id_des = $request->id_des;
-        $est_cod = $request->est_cod;
+        $est_act = $request->est_cod;
         $obs_est = $request->obs_est;
         $validacion = $request->validacion;
-        $data = Inventory::saveActiveInDetailDoc($doc_cod,$cod_ges,$cod_act,$id_act,$id_des,$est_cod,$obs_est,$validacion,$id);
+        $data = Inventory::saveActiveInDetailDoc($nro_doc_inv,$cod_ges,$cod_act,$id_act,$id_des,$est_act,$obs_est,$validacion,$id);
         return json_encode($data);
     }
     public function getAllCargos()

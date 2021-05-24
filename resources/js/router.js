@@ -32,7 +32,8 @@ import Inventory2 from './views/inventory/Inventory2'
 import EditInventory2 from './views/inventory/EditInventory2'
 import InventoryDetail from './views/inventory/InventoryDetail'
 import NewInventory from './views/inventory/NewInventory'
-import NewInventoryDetail from './views/inventory/NewInventoryDetail'
+import NewInventoryDetail from './views/inventory/NewInventoryDetail' 
+import EditNewInventoryDetail from './views/inventory/EditNewInventoryDetail'
 import Inventory2Detail from './views/inventory/Inventory2Detail'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
@@ -126,8 +127,9 @@ const router = new VueRouter({
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },
                 { path: 'inventory2/:id', name: 'editinventory2', component: EditInventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
+                { path: 'newinventory/:cod_soa', name: 'newinventorydetail',component: NewInventoryDetail },
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
-                { path: 'newinventory/cod_soa', name: 'newinventorydetail',component: NewInventoryDetail },
+                { path: 'editnewinventory/:id', name: 'editnewinventorydetail',component: EditNewInventoryDetail },
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
                 { path: 'newactive', name: 'newactive' , component: NewActive },

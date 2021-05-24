@@ -143,8 +143,8 @@ class Inventory extends Model
         inv.activos.ofc_cod like '%" . $unidad . "%'
         " . (count($sub_unidades) > 0 ? "and 
         inv.sub_oficinas.id in " . $arrString : "") . "
-        group by (inv.cargos.id,inv.cargos.descripcion)
-        order by (inv.cargos.id)";
+        group by inv.cargos.id,inv.cargos.descripcion
+        ";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
                                                         }
@@ -296,7 +296,6 @@ class Inventory extends Model
         $data->sub_ofc_cod = array_map('intval', explode(',', str_replace('{', '', str_replace('}', '', $data->sub_ofc_cod))));
         $data->car_cod_resp = array_map('intval', explode(',', str_replace('{', '', str_replace('}', '', $data->car_cod_resp))));
         $data->ci_res =  explode(',', str_replace('{', '', str_replace('}', '', $data->ci_res)));
-
         return $data;
     }
     //Obtener la oficina por el Id 
@@ -313,8 +312,7 @@ class Inventory extends Model
     {
         $query = "select inv.sub_oficinas.descripcion,inv.sub_oficinas.id
         from inv.sub_oficinas
-        WHERE inv.sub_oficinas.id = " . $id . "
-        group by (inv.sub_oficinas.descripcion,inv.sub_oficinas.id)";
+        WHERE inv.sub_oficinas.id = '" . $id . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
@@ -322,11 +320,9 @@ class Inventory extends Model
     public static function getCargoById($id)
     {
         $query = "select inv.cargos.id , inv.cargos.descripcion
-        from inv.cargos, inv.activos,inv.sub_oficinas
+        from inv.cargos
         where 
-        inv.cargos.id=" . $id . "
-        group by (inv.cargos.id,inv.cargos.descripcion)
-        order by (inv.cargos.id)";
+        inv.cargos.id='" . $id ."'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -337,6 +333,8 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
+
+
     //Guardar cambios del Activo
     public static function saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
@@ -347,7 +345,7 @@ class Inventory extends Model
     //Buscar activos por el los datos del documento del inventario
     public static function SearchActiveForDocInvRegistered($no_cod)
     {
-        $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.doc_cod', $no_cod)->pluck('inv.detalle_doc_act.id_act');
+        $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
         $query = DB::table('inv.union_activos')->select('inv.union_activos.*')
             ->whereIn('inv.union_activos.id', $actIDsInDocDetail);
         return $query->orderBy('inv.union_activos.id', 'asc');
@@ -355,7 +353,7 @@ class Inventory extends Model
     public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $registereds)
     {
         $db = DB::table('inv.union_activos as ua')->select('ua.*')
-            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_ofc')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
+            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
         $db->whereNotIn('ua.id', $registereds);
         if ($ofc_cod) {
             $db->where('of.id', $ofc_cod);
@@ -439,10 +437,10 @@ class Inventory extends Model
         return $data;
     }
     //Guardar datos de los activos en Documento Detalle
-    public static function saveActiveInDetailDoc($doc_cod, $cod_ges, $cod_act, $id_act, $id_des, $est_cod, $obs_est, $validacion, $id)
+    public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $id)
     {
         $fec_cre = Date('d-m-Y');
-        $query = "Select * from inv.insertarActivoDocDetail('" . $doc_cod . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $fec_cre . "','" . $est_cod . "','" . $obs_est . "','" . $validacion . "','" . $id . "')";
+        $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $fec_cre . "','" . $est_act . "','" . $obs_est . "','" . $validacion . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

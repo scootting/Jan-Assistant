@@ -120,7 +120,6 @@ export default {
       this.getInventories();
     },
     editInventory(index, row) {
-      //console.log("prueba de ruta"+row);
       this.$router.push({
         name: "editinventory2",
         params: {
@@ -128,9 +127,6 @@ export default {
         },
       });
     },
-    // newInventory() {
-    //   this.$router.push({ name: "newinventory" });
-    // },
     listActive(no_cod){
       this.$router.push({
         name: "inventory2detail",

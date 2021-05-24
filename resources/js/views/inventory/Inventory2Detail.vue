@@ -43,10 +43,10 @@
       </div>
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
-          <el-table-column label="Identificador" width="140">
+          <el-table-column label="Identificador" width="150">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="small">{{ scope.row.id }}</el-tag>
+                <el-tag size="small">{{ scope.row.cod_ant }}</el-tag>
               </div>
             </template>
           </el-table-column>
@@ -59,7 +59,7 @@
             label="ESTADO"
             width="180"
           > 
-          <el-select slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.est_cod" value-key="desc" placeholder="desterminar estado" >
+          <el-select slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.est_act" value-key="desc" placeholder="desterminar estado" >
             <el-option v-for="item in estados"
               :key="item.id"
               :label="item.desc"
@@ -134,7 +134,7 @@ export default {
     },
     whenDontHaveDocDetail(){
       return {
-        est_cod: 1,
+        est_act: 1,
         validacion: false,
       };
     },
@@ -158,10 +158,10 @@ export default {
           this.data=info.map(a=>{
             if(!a.detalle_doc_act)
               a.detalle_doc_act=this.whenDontHaveDocDetail();
-            a.detalle_doc_act.id_act=a.id;
-            a.detalle_doc_act.id_des=a.esquema;
-            a.detalle_doc_act.doc_cod=this.doc_inv.no_cod;
-            a.detalle_doc_act.cod_act=this.doc_inv.cod_nue;
+              a.detalle_doc_act.id_act=a.id;
+              a.detalle_doc_act.id_des=a.esquema;
+              a.detalle_doc_act.doc_cod=this.doc_inv.no_cod;
+              a.detalle_doc_act.cod_act=this.doc_inv.cod_nue;
             return a;
           })
           this.pagination = data.data;

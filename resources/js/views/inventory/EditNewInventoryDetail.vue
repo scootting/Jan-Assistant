@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Iniciar inventario de : {{ oficina.descripcion }}</span>
+        <span>Editar inventario de : {{ EditInvent.unidad }}</span>
       </div>
       <br />
       <br />
@@ -11,49 +11,40 @@
         <el-row :gutter="20">
           <el-col :span="24" :offset="0">
             <el-form label-width="180px" :inline="true" size="small">
-              <el-form-item label="Seleccion por:">
-                <el-select
-                  placeholder="Seleccionar"
-                  v-model="filtro.tipo"
-                  @change="filtro.values = []"
-                >
-                  <el-option
-                    v-for="item in filtros"
-                    :key="item.id"
-                    :label="item.label"
-                    :value="item.id"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" size="small" 
-                  >Cargar Responsables</el-button
-                >
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  size="mini"
-                  type="text"
-                  class="input-with-select"
-                ></el-input>
-              </el-form-item>
-            </el-form>
-            <el-form label-width="180px" :inline="true" size="small">
-              <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccionar:">
-                <selectSubUnidad
-                  v-if="filtro.tipo == 'subUnidad'"
-                  v-model="filtro.values"
-                  multiple
-                  :ofc-cod="oficina.cod_soa"
-                />
-                <selectCargos
-                  v-if="filtro.tipo == 'cargo'"
-                  v-model="filtro.values"
-                  multiple
-                  :ofc-cod="oficina.cod_soa"
-                />
-              </el-form-item>
+              <el-form-item label="Oficina:">
+            <el-input v-model="EditInvent.unidad" style="width: 200px" disabled></el-input> 
+          </el-form-item> 
+          
+          <el-form-item label="Sub Oficinas:">
+            <el-tag
+              v-for="sub_oficina in EditInvent.subUnidades"
+              :key="sub_oficina.id"
+              type="default"
+              size="normal"
+              effect="dark"
+              >{{ sub_oficina.descripcion }}</el-tag
+            >
+          </el-form-item>
+          <el-form-item label="Cargos:">
+            <el-tag
+              v-for="cargos in EditInvent.cargos"
+              :key="cargos.id"
+              type="default"
+              size="normal"
+              effect="dark"
+              >{{ cargos.descripcion }}</el-tag
+            >
+          </el-form-item>
+          <el-form-item label="Encargados:">
+            <el-tag
+              v-for="encargado in EditInvent.encargados"
+              :key="encargado.nro_dip"
+              type="default"
+              size="normal"
+              effect="dark"
+              >{{ formatResponsable(encargado).responsable }}</el-tag
+            >
+          </el-form-item>
             </el-form>
           </el-col>
         </el-row>
@@ -63,7 +54,7 @@
         <el-form label-width="180px" :inline="false" size="small">
           <el-form-item label="Fecha de creación">
             <el-date-picker
-              v-model="NewInvent.date"
+              v-model="EditInvent.date"
               type="datetime"
               placeholder="Selecionar Fecha"
             >
@@ -73,7 +64,7 @@
           <el-form-item size="small" label="Encargados de Inventario">
             <el-select
               class="enc-select"
-              v-model="NewInvent.encargados"
+              v-model="EditInvent.encargados"
               multiple
               placeholder="Seleccione encargados a realizar inventario"
               maxlength="30"
@@ -134,32 +125,27 @@
 </template>
 
 <script>
-//Importar Componentes creados
-import selectSubUnidad from "./components/selectSubUnidad";
-import selectCargos from "./components/selectCargos";
 export default {
-  name: "InventoryDetail",
-  components: {
-    selectSubUnidad,
-    selectCargos,
-  },
+  name: "EditNewInventoryDetail",
   data() {
     return {
-      reporte: {
-        tipo: "general",
-      },
       loading: false,
       user: this.$store.state.user,
-      oficina: {},
+      gestion: this.$store.state.user.gestion,
+      doc_inv:null,
       //encargados = los que haran el inventario ,  responsables = a quienes se asigna los activos
-      NewInvent: {
+      EditInvent: {
         date: "",
-        unidad: "",
-        subUnidades: [],
-        responsables: [],
-        encargados: [],
-        cargos: [],
+        no_doc: "",
+        no_doc: "",
+        res_enc: [],
+        car_cod: [],
+        ofc_cod:"",
+        sub_ofc_cod:[],
+        ci_res: [],
+        car_cod_resp: [],
       },
+      unidades: [],
       subUnidades: [],
       cargos: [],
       responsables: [],
@@ -168,64 +154,39 @@ export default {
       selectEncargado: null,
       searchEncargadoLoading: false,
       subUnidadesLoading: false,
+      unidadLoading: false,
       cargosLoading: false,
       responsablesLoading: false,
       showDialogEncargado: false,
-      guardado: false,
-      //filtro elegido para obtener los activos
-      filtro: {
-        tipo: "todo",
-        values: [],
-      },
-      //tipos de filtros
-      filtros: [
-        {
-          id: "todo",
-          label: "TODO",
-        },
-        {
-          id: "subUnidad",
-          label: "SUB UNIDAD",
-        },
-        {
-          id: "cargo",
-          label: "CARGO",
-        },
-      ],
     };
   },
-  mounted() {
-    let cod_soa = this.$route.params.soa;
+
+created(){
+    this.id = this.$route.params.id;
     axios
-      .get("/api/inventory/show/" + cod_soa)
-      .then((data) => {
-        this.oficina = data.data;
-      })
-      .catch((err) => {});
-  },
-  methods: {
-   getResponsables(cod_soa, cargos) {
-      this.cargosLoading = true;
-      this.responsablesLoading = true;
-      axios
-        .get("/api/inventory2/responsables", {
-          params: {
-            cod_soa: cod_soa,
-            cargos: cargos,
-          },
-        })
-        .then((data) => {
-          this.cargosLoading = false;
-          this.responsablesLoading = false;
-          this.responsables = data.data;
-          this.NewInvent.responsables = this.responsables.map(
-            (resp) => resp.nro_dip
-          );
-        })
-        .catch((err) => {
-          console.log(err);
+      .get("/api/inventory2/edit/" + this.id)
+      .then((response) => {
+        this.editForm = response.data;
+        this.getSubUnidades(this.editForm.ofc_cod,false);
+        this.remoteMethod(this.editForm.ofc_cod);
+        this.editForm.res_enc.forEach(nd => {
+          	this.getEncargados(nd,(list)=>{
+              	list.forEach(en=>{
+                    if(en.nro_dip===nd.trim())
+                      this.encargados.push(en);
+                });
+            });
         });
-    },
+      })
+      .catch((error) => {
+        this.error = error;
+        this.$notify.error({
+          title: "Error",
+          message: this.error.message,
+        });
+      });
+},
+  methods: {
     getEncargados(nro_dip) {
       this.searchEncargadoLoading = true;
       axios
@@ -236,6 +197,17 @@ export default {
           this.searchEncargadoLoading = false;
           this.searchEncargados = Object.values(data.data.data);
           console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getDocInventory() {
+      axios
+        .get("/api/inventory2/doc_inv/" + this.doc_inv_no_cod)
+        .then((data) => {
+          this.doc_inv = data.data;
+          this.getActivesSearch();
         })
         .catch((err) => {
           console.log(err);
@@ -254,13 +226,11 @@ export default {
       };
     },
     saveInventory() {
-      //this.NewInvent.responsables= this.NewInvent.responsables.map(r => this.formatResponsable(this.responsables.filter(r2=> r===r2.nro_dip)[0]));
-      //tratar de guardar los responsables como un json
       axios
-        .post("/api/inventory2/save", this.NewInvent)
+        .post("/api/inventory2/save", this.EditInvent)
         .then((data) => {
           this.$message({
-            message: "Inventario creado exitosamente",
+            message: "Cambiado exitosamente",
             type: "success",
             duration: 5000,
             showClose: true,
@@ -289,19 +259,19 @@ export default {
       let addEncargado = this.searchEncargados.filter((e) => {
         return e.nro_dip === this.selectEncargado;
       })[0];
-      this.NewInvent.encargados.push(addEncargado.nro_dip);
+      this.EditInvent.encargados.push(addEncargado.nro_dip);
       this.encargados.push(addEncargado);
       this.selectEncargado = null;
       this.showDialogEncargado = false;
     },
     returnPage() {
       this.$notify.info({
-        title: "Creación cancelada",
-        message: "No se creo inventario nuevo",
+        title: "Edición cancelada",
+        message: "No se edito inventario",
         duration: 0,
       });
       this.$router.push({
-        name: "newinventory",
+        name: "inventory2",
       });
     },
   },

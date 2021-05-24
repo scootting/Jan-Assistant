@@ -11,9 +11,115 @@
           placeholder="Nro de documento"
         />
       </div>
-      <div>
+      <div class="grid-content bg-purple">
         <el-row>
-          <el-form label-width="160px" :inline="false" size="small">
+          <el-form label-width="160px" :inline="true" size="small">
+            <el-form-item label="Unidad " size="small">
+              <el-select
+                v-model="editForm.ofc_cod"
+                filterable
+                remote
+                reserve-keyword
+                placeholder="Seleccione una Unidad"
+                :remote-method="remoteMethod"
+                maxlength="30"
+                style="width: 250"
+                :loading="unidadLoading" 
+                disabled
+              >
+                <el-option
+                  v-for="(item, index) in unidades"
+                  :key="index"
+                  :label="item.descripcion"
+                  :value="item.cod_soa"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Sub-Unidad" size="small">
+              <el-select
+                v-model="editForm.sub_ofc_cod"
+                filterable
+                remote
+                multiple
+                reserve-keyword
+                placeholder="Sub Oficina"
+                :remote-method="getSubUnidades"
+                maxlength="30"
+                style="width: 250"
+                disabled
+                
+              >
+                <el-option
+                  v-for="(item, index) in subUnidades"
+                  :key="index"
+                  :label="item.descripcion"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Cargo" size="small">
+              <el-select
+                v-model="editForm.car_cod_resp"
+                filterable
+                remote
+                multiple
+                reserve-keyword
+                placeholder="Cargos"
+                :remote-method="getCargosResp"
+                maxlength="30"
+                style="width: 250px"
+                @change="onChangeCargos"
+                :loading="cargosLoading"
+                disabled
+              >
+                <el-option
+                  v-for="(item, index) in cargos"
+                  :key="index"
+                  :label="item.cargo"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Responsable" size="small">
+              <el-select
+                v-model="editForm.ci_res"
+                filterable
+                remote
+                multiple
+                reserve-keyword
+                placeholder="Responsables"
+                :remote-method="getResponsables"
+                maxlength="30"
+                style="width: 250px"
+                :loading="responsablesLoading"
+                disabled
+              >
+                <el-option
+                  v-for="(item, index) in responsables"
+                  :key="index"
+                  :label="item.nombres + item.paterno"
+                  :value="item.nro_dip"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item> 
+          </el-form>
+        </el-row>
+      </div>
+      <div>
+         <el-divider content-position="left">Datos editables</el-divider>
+             <el-form  label-width="160px" :inline="false" size="small">
+               <el-form-item label="fecha de inicio" size="small">
+                 <el-date-picker
+              v-model="editForm.fec_cre"
+              type="datetime"
+              placeholder="Selecionar Fecha"
+            >
+            </el-date-picker>
+            </el-form-item>
             <el-form-item size="small" label="Encargados">
               <el-select
                 class="enc-select"
@@ -37,97 +143,6 @@
                 >Buscar</el-button
               >
             </el-form-item>
-
-            <el-form-item label="Unidad " size="small">
-              <el-select
-                v-model="editForm.ofc_cod"
-                filterable
-                remote
-                reserve-keyword
-                placeholder="Seleccione una Unidad"
-                :remote-method="remoteMethod"
-                maxlength="30"
-                style="width: 100%"
-                @change="onChangeUnidad"
-                :loading="unidadLoading"
-              >
-                <el-option
-                  v-for="(item, index) in unidades"
-                  :key="index"
-                  :label="item.descripcion"
-                  :value="item.cod_soa"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="Sub-Unidad" size="small">
-              <el-select
-                v-model="editForm.sub_ofc_cod"
-                filterable
-                remote
-                multiple
-                reserve-keyword
-                placeholder="Sub Oficina"
-                :remote-method="getSubUnidades"
-                maxlength="30"
-                style="width: 100%"
-                @change="onChangeSubUnidades"
-                :loading="subUnidadesLoading"
-              >
-                <el-option
-                  v-for="(item, index) in subUnidades"
-                  :key="index"
-                  :label="item.descripcion"
-                  :value="item.id"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="Cargo" size="small">
-              <el-select
-                v-model="editForm.car_cod_resp"
-                filterable
-                remote
-                multiple
-                reserve-keyword
-                placeholder="Cargos"
-                :remote-method="getCargosResp"
-                maxlength="30"
-                style="width: 100%"
-                @change="onChangeCargos"
-                :loading="cargosLoading"
-              >
-                <el-option
-                  v-for="(item, index) in cargos"
-                  :key="index"
-                  :label="item.cargo"
-                  :value="item.id"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="Responsable" size="small">
-              <el-select
-                v-model="editForm.ci_res"
-                filterable
-                remote
-                multiple
-                reserve-keyword
-                placeholder="Responsables"
-                :remote-method="getResponsables"
-                maxlength="30"
-                style="width: 100%"
-                :loading="responsablesLoading"
-              >
-                <el-option
-                  v-for="(item, index) in responsables"
-                  :key="index"
-                  :label="item.nombres + item.paterno"
-                  :value="item.nro_dip"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
             <el-form-item label="" size="small">
               <el-row type="flex" justify="end">
                 <el-button type="prymary" size="default" @click="saveInventory"
@@ -138,8 +153,7 @@
                 >
               </el-row>
             </el-form-item>
-          </el-form>
-        </el-row>
+             </el-form>
       </div>
     </el-card>
     <el-dialog
@@ -203,9 +217,6 @@ export default {
       responsablesLoading: false,
       showDialogEncargado: false,
     };
-  },
-  mounted() {
-    
   },
   created() {
     this.id = this.$route.params.id;
@@ -365,7 +376,7 @@ export default {
         .then((data) => {
           this.$notify.success({
             title: "Cambios guardados",
-            message: "Se realizo cambios al Activo seleccionado exitosamente",
+            message: "Se realizo cambios al Inventario seleccionado exitosamente",
             duration: 0,
           });
           this.$router.push({
@@ -435,6 +446,30 @@ export default {
 }
 .enc-select {
   width: calc(100% - 100px);
-  margin-right: 15px;
+  margin-right: 15px; 
+}
+.el-row {
+  margin-bottom: 20px;
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

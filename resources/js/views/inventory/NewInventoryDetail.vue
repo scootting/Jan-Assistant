@@ -94,6 +94,7 @@
               v-model="NewInvent.encargados"
               multiple
               placeholder="Seleccione encargados a realizar inventario"
+               style="width: 250px"
               maxlength="30"
             >
               <el-option
@@ -179,6 +180,7 @@ export default {
         responsables: [],
         encargados: [],
         cargos: [],
+        nombres:"",
       },
       subUnidades: [],
       unidades:[],
@@ -224,6 +226,7 @@ export default {
         this.oficina = data.data;
         this.selectAll();
         this.NewInvent.unidad=this.oficina.cod_soa;
+        this.NewInvent.responsables = this.responsables.nro_dip;
       })
       .catch((err) => {});
   },
