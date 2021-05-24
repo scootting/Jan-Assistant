@@ -32,13 +32,27 @@
                 >
               </el-form-item>
               <el-form-item>
-                <el-input
-                :value="getNombre"
-                placeholder=""
-                size="mini"
-                readonly
-                style="width: 100%"
-              ></el-input>
+                <el-select
+                v-model="NewInvent.responsables"
+                filterable
+                remote
+                multiple
+                reserve-keyword
+                placeholder="Responsables"
+                :remote-method="getResponsables"
+                maxlength="30"
+                style="width: 250px"
+                :loading="responsablesLoading"
+                disabled
+              >
+                <el-option
+                  v-for="(item, index) in responsables"
+                  :key="index"
+                  :label="item.nombres + item.paterno"
+                  :value="item.nro_dip"
+                >
+                </el-option>
+              </el-select>
               </el-form-item>
             </el-form>
             <el-form label-width="180px" :inline="true" size="small">

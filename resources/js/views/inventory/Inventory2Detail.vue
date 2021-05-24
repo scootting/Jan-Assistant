@@ -92,6 +92,10 @@
           :total="pagination.total"
           @current-change="getActivesPaginate"
         ></el-pagination>
+        <div>
+        <el-button  style="margin: 10px; text-align: right; float: right " type="primary" size="small" @click="returnPage">VERIFICAR</el-button> 
+        <el-button  style="margin: 10px; text-align: right; float: right " type="danger" size="small" @click="returnPage">ATRAS</el-button>
+        </div>
       </div>
     </el-card>
   </div>
@@ -211,6 +215,16 @@ export default {
         });
     }
 
+    },
+        returnPage() {
+      this.$notify.info({
+        title: "Edicion cancelada",
+        message: "prueba de boton",
+        duration: 0,
+      });
+      this.$router.push({
+        name: "inventory2",
+      });
     },
   },
 };
