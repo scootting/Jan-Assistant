@@ -4,6 +4,10 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PSQL Data Adapter Production"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="mm"/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin"/>
+	<property name="ireport.jasperserver.report.resource" value="/reports/interactive/FixedAssetsQr_files/FixedAssetsQr_"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/interactive/FixedAssetsQr"/>
 	<parameter name="p_lista" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT aa.codigo,aa.act_des,aa.act_fec_adq,aa.act_par_cod,aa.act_cod_con FROM act.activos aa where aa.codigo in (select unnest(string_to_array( $P{p_lista}, ',')))]]>

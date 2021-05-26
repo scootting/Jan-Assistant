@@ -107,4 +107,5 @@ Route::group([
     Route::post('selectedFixedAssetsbyDocument', 'FixedAssetController@getFixedAssetsbyDocument');
     //Route::get('reportSelectedFixedAssets/{id}', 'FixedAssetController@getReportSelectedFixedAssets');
     Route::get('reportSelectedFixedAssets/', 'FixedAssetController@getReportSelectedFixedAssets');
+    Route::get('reportSelectedFixedAssets2/', 'FixedAssetController@getReportSelectedFixedAssets2');
 });
