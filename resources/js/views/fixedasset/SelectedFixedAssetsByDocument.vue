@@ -77,10 +77,10 @@ export default {
 
       for (var item in this.selectedFixedAssets) {
         list.push(this.selectedFixedAssets[item]["codigo"]);
+        //list.push(this.selectedFixedAssets[item]["codigo"].replaceAll('/','-'));
       }
-      //console.log(list);
+      console.log(list);
       if (list.length != 0) {
-        /*
         axios({
           url: "/api/reportSelectedFixedAssets/",
           params: {
@@ -97,7 +97,7 @@ export default {
           let url = window.URL.createObjectURL(blob);
           window.open(url);
         });
-        */
+       /*
         axios
           .get(
             "/api/reportSelectedFixedAssets/",
@@ -118,7 +118,7 @@ export default {
             //link.click();
             let url = window.URL.createObjectURL(blob);
             window.open(url);
-          });
+          });*/
       } else {
         alert("debe seleccionar por lo menos un elemento");
       }

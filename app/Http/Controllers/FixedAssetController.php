@@ -80,9 +80,8 @@ class FixedAssetController extends Controller
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
         */
-
         $client = new Client(
-            "http://localhost:8080/jasperserver",
+            "http://192.168.25.5:8080/jasperserver",
             "jasperadmin",
             "jasperadmin",
             ""
@@ -92,7 +91,9 @@ class FixedAssetController extends Controller
         $report = $client->reportService()->runReport('/reports/interactive/FixedAssetsQr', 'pdf', null, null, $controls);
         \Log::info("este es el reporte que usamos".$report);
 
-        //Storage::put('/valores.pdf',$report) ;
+        //Storage::put('/valores.pdf',$report) ;*/
+        //$report = get_file_contents('http://localhost:8080/jasperserver/rest_v2/resources/reports/interactive/FixedAssetsQr.pdf?p_lista='.$lista.'&j_username=jasperadmin&j_password=jasperadmin');
+        \Log::info($report);
         return $report;
     }
 
