@@ -36,7 +36,6 @@
           >
           </el-option>
         </el-select>
-        
         <select-sub-unidad :ofc-cod="this.codSoa" v-model="idsSubOffices" multiple />
         <!-- <el-select
           v-model="idsSubOffices"

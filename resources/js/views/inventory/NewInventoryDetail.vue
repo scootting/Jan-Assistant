@@ -173,7 +173,7 @@
 import selectSubUnidad from "./components/selectSubUnidad";
 import selectCargos from "./components/selectCargos";
 export default {
-  name: "InventoryDetail",
+  name: "NewInventoryDetail",
   components: {
     selectSubUnidad,
     selectCargos,

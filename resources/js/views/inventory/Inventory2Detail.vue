@@ -2,8 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span
-          >Lista de activos para la realizacion del Inventario</span>
+        <span>Lista de activos para la realizacion del Inventario</span>
         <el-button style="float: right; padding: 3px 0" type="text"
           >Ayuda</el-button
         >
@@ -17,7 +16,11 @@
           size="mini"
         >
           <el-form-item label="Oficina:">
-            <el-input v-model="doc_inv.oficina.descripcion" style="width: 200px" disabled></el-input> 
+            <el-input
+              v-model="doc_inv.oficina.descripcion"
+              style="width: 200px"
+              disabled
+            ></el-input>
           </el-form-item>
           <el-form-item label="Sub Oficinas:">
             <el-tag
@@ -41,6 +44,21 @@
           </el-form-item>
         </el-form>
       </div>
+      <div style="margin-top: 15px">
+        <el-input
+          placeholder="INSERTE UNA DESCRIPCION"
+          v-model="writtenTextParameter"
+          class="input-with-select"
+          @keyup.enter.native="getActivesSearch"
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getActivesSearch"
+          ></el-button>
+        </el-input>
+      </div>
+      <br />
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
           <el-table-column label="Identificador" width="150">
@@ -55,34 +73,46 @@
             label="DESCRIPCION"
             width="330"
           ></el-table-column>
-          <el-table-column
-            label="ESTADO"
-            width="180"
-          > 
-          <el-select slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.est_act" value-key="desc" placeholder="desterminar estado" >
-            <el-option v-for="item in estados"
-              :key="item.id"
-              :label="item.desc"
-              :value="item.id">
-            </el-option>
-          </el-select>  
-          </el-table-column> 
-           <el-table-column
-            label="OBSERVACIONES"
-            width="250">
-          <input type="text" slot-scope="scope" v-model="data[scope.$index].detalle_doc_act.obs_est" style="width: 200px">
+          <el-table-column label="ESTADO" width="180">
+            <el-select
+              slot-scope="scope"
+              v-model="data[scope.$index].detalle_doc_act.est_act"
+              value-key="desc"
+              placeholder="desterminar estado"
+            >
+              <el-option
+                v-for="item in estados"
+                :key="item.id"
+                :label="item.desc"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
           </el-table-column>
-          <el-table-column
-            label="VALIDACION"
-            width="180">
-            <template slot-scope="scope" >
-              <el-checkbox v-model="data[scope.$index].detalle_doc_act.validacion" label="Verificado"></el-checkbox>
+          <el-table-column label="OBSERVACIONES" width="250">
+            <input
+              type="text"
+              slot-scope="scope"
+              v-model="data[scope.$index].detalle_doc_act.obs_est"
+              style="width: 200px"
+            />
+          </el-table-column>
+          <el-table-column label="VALIDACION" width="180">
+            <template slot-scope="scope">
+              <el-checkbox
+                v-model="data[scope.$index].detalle_doc_act.validacion"
+                label="Verificado"
+              ></el-checkbox>
             </template>
-          </el-table-column> 
-          <el-table-column
-            width="180">
-            <el-button slot-scope="scope" type="primary" size="default" @click="saveActiveInDetail(scope.$index)">Guardar</el-button>
-            
+          </el-table-column>
+          <el-table-column width="180">
+            <el-button
+              slot-scope="scope"
+              type="primary"
+              size="default"
+              @click="saveActiveInDetail(scope.$index)"
+              >Guardar</el-button
+            >
           </el-table-column>
         </el-table>
         <el-pagination
@@ -93,8 +123,20 @@
           @current-change="getActivesPaginate"
         ></el-pagination>
         <div>
-        <el-button  style="margin: 10px; text-align: right; float: right " type="primary" size="small" @click="returnPage">VERIFICAR</el-button> 
-        <el-button  style="margin: 10px; text-align: right; float: right " type="danger" size="small" @click="returnPage">ATRAS</el-button>
+          <el-button
+            style="margin: 10px; text-align: right; float: right"
+            type="primary"
+            size="small"
+            @click="returnPage"
+            >VERIFICAR</el-button
+          >
+          <el-button
+            style="margin: 10px; text-align: right; float: right"
+            type="danger"
+            size="small"
+            @click="returnPage"
+            >ATRAS</el-button
+          >
         </div>
       </div>
     </el-card>
@@ -105,8 +147,9 @@
 export default {
   name: "DocumentoInventarioDetalle",
   data() {
-    return { 
-      estados:[],
+    return {
+      writtenTextParameter: "",
+      estados: [],
       checked: true,
       doc_inv_no_cod: null,
       doc_inv: null,
@@ -136,38 +179,44 @@ export default {
           console.log(err);
         });
     },
-    whenDontHaveDocDetail(){
+    whenDontHaveDocDetail() {
       return {
         est_act: 1,
         validacion: false,
       };
     },
-    getEstados(){
-      axios.get("/api/activo/estados/").then((data) => { 
-        this.estados = data.data;
-      }).catch((err) => {
+    getEstados() {
+      axios
+        .get("/api/activo/estados/")
+        .then((data) => {
+          this.estados = data.data;
+        })
+        .catch((err) => {
           console.log(err);
         });
     },
     getActivesSearch() {
-      axios.get("/api/inventory2/search/" + this.doc_inv.no_cod, {
-        params: {
-          page: this.pagination.page,
-          idOffice: this.doc_inv.oficina.id,
-          idSubOffices: this.doc_inv.sub_ofc_cod,
-        },
-      }).then((data) => {
+      axios
+        .get("/api/inventory2/search/" + this.doc_inv.no_cod, {
+          params: {
+            page: this.pagination.page,
+            idOffice: this.doc_inv.oficina.id,
+            idSubOffices: this.doc_inv.sub_ofc_cod,
+            keyWord: this.writtenTextParameter.toUpperCase(),
+          },
+        })
+        .then((data) => {
           this.loading = false;
           var info = Object.values(data.data.data);
-          this.data=info.map(a=>{
-            if(!a.detalle_doc_act)
-              a.detalle_doc_act=this.whenDontHaveDocDetail();
-              a.detalle_doc_act.id_act=a.id;
-              a.detalle_doc_act.id_des=a.esquema;
-              a.detalle_doc_act.doc_cod=this.doc_inv.no_cod;
-              a.detalle_doc_act.cod_act=this.doc_inv.cod_nue;
+          this.data = info.map((a) => {
+            if (!a.detalle_doc_act)
+              a.detalle_doc_act = this.whenDontHaveDocDetail();
+            a.detalle_doc_act.id_act = a.id;
+            a.detalle_doc_act.id_des = a.esquema;
+            a.detalle_doc_act.doc_cod = this.doc_inv.no_cod;
+            a.detalle_doc_act.cod_act = this.doc_inv.cod_nue;
             return a;
-          })
+          });
           this.pagination = data.data;
         })
         .catch((err) => {
@@ -192,31 +241,39 @@ export default {
         nro_dip: responsable.nro_dip,
       };
     },
-    change(checked){
-      this.checked=true;
+    change(checked) {
+      this.checked = true;
     },
-     saveActiveInDetail(index){ 
-       {
-      axios
-        .post("/api/inventory2/saveActive", {
-          ... this.data[index].detalle_doc_act,
-          cod_ges: this.user.gestion
-        })
-        .then((data) => {
-          this.$notify.success({
-            title: "Cambios guardados",
-            message: "Se realizo cambios al Documento de inventario seleccionado exitosamente",
-            duration: 0,
+    saveActiveInDetail(index) {
+      {
+        axios
+          .post("/api/inventory2/saveActive", {
+            ...this.data[index].detalle_doc_act,
+            cod_ges: this.user.gestion,
+          })
+          .then((data) => {
+            this.$notify.success({
+              title: "Cambios guardados",
+              message:
+                "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+              duration: 0,
+            });
+            this.getActivesSearch();
+          })
+          .catch((err) => {
+            console.log(err);
           });
-          this.getActivesSearch();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      }
+    },
+    getActives() {
+      this.$notify.info({
+        title: "Prueba de boton",
+        message: "prueba de boton",
+        duration: 0,
+      });
 
     },
-        returnPage() {
+    returnPage() {
       this.$notify.info({
         title: "Edicion cancelada",
         message: "prueba de boton",

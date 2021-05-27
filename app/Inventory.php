@@ -338,22 +338,30 @@ class Inventory extends Model
     //Guardar cambios del Activo
     public static function saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
-        $query = "select * from inv.f_guardar_activo('" . $cod_soa . "','" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
+        $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     //Buscar activos por el los datos del documento del inventario
-    public static function SearchActiveForDocInvRegistered($no_cod)
+    public static function SearchActiveForDocInvRegistered($no_cod , $keyWord)
     {
         $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
-        $query = DB::table('inv.union_activos')->select('inv.union_activos.*')
+        $query = DB::table('inv.union_activos')
+            ->select('inv.union_activos.*')
             ->whereIn('inv.union_activos.id', $actIDsInDocDetail);
+        if ($keyWord){
+            $query ->where ('inv.union_activos.des' ,'like','%'.$keyWord.'%');
+        };
         return $query->orderBy('inv.union_activos.id', 'asc');
+        
     }
-    public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $registereds)
+    //buscar los activos de unidad y sub unidad seleccionados pero que NO estan en
+    //el documento de nuevo Inventario para verificarlos en el documento del inventario
+    public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord , $registereds)
     {
         $db = DB::table('inv.union_activos as ua')->select('ua.*')
-            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
+            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')
+            ->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
         $db->whereNotIn('ua.id', $registereds);
         if ($ofc_cod) {
             $db->where('of.id', $ofc_cod);
@@ -361,14 +369,18 @@ class Inventory extends Model
         if ($sub_ofc_cods) {
             $db->whereIn('ua.sub_ofc_cod', $sub_ofc_cods);
         }
+        if ($keyWord){
+            $db->where('ua.des' ,'like', '%'.$keyWord.'%' );
+        }
         return $db->orderBy('ua.id', 'asc');
     }
-    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods, $page = 1, $perPage = 10)
+    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods,$keyWord, $page = 1, $perPage = 10)
     {
-        $l1 = static::SearchActiveForDocInvRegistered($no_cod);
+        $l1 = static::SearchActiveForDocInvRegistered($no_cod , $keyWord);
 
-        $arrayIds = $l1->pluck('id');
-        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $arrayIds);
+        $arrayIds = $l1->pluck('id'); 
+        
+        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord , $arrayIds);
 
         $lastPage = (int)ceil(($l1->count() + $l2->count()) / $perPage);
         $total = $l1->count() + $l2->count();
