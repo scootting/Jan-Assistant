@@ -80,13 +80,14 @@ export default {
       }
       //console.log(list);
       if (list.length != 0) {
+        /*
         axios({
           url: "/api/reportSelectedFixedAssets/",
           params: {
             lista: list,
           },
           method: "GET",
-          responseType: "blob",
+          responseType: "arraybuffer",
         }).then((response) => {
           let blob = new Blob([response.data], {
             type: "application/pdf",
@@ -96,6 +97,28 @@ export default {
           let url = window.URL.createObjectURL(blob);
           window.open(url);
         });
+        */
+        axios
+          .get(
+            "/api/reportSelectedFixedAssets/",
+            {
+              params: {
+                lista: list,
+              },
+            },
+            {
+              responseType: "arraybuffer",
+            }
+          )
+          .then((response) => {
+            let blob = new Blob([response.data], { type: "application/pdf" });
+            let link = document.createElement("a");
+            //link.href = window.URL.createObjectURL(blob);
+            //link.download = "test.pdf";
+            //link.click();
+            let url = window.URL.createObjectURL(blob);
+            window.open(url);
+          });
       } else {
         alert("debe seleccionar por lo menos un elemento");
       }

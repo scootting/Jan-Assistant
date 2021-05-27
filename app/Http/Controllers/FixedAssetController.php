@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\FixedAsset;
-use JasperPHP\JasperPHP as JasperPHP;
-use Illuminate\Support\Collection;
-
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
+use JasperPHP\JasperPHP as JasperPHP;
+use Jaspersoft\Client\Client;
+use Illuminate\Support\Facades\Storage;
+//$report = get_file_contents(JASPERREPORTS_URL . '/rest_v2/reports/reports/userHistory.pdf?user_id=123&j_username=' . JASPERREPORTS_USER . '&j_password=' . JASPERREPORTS_PASS);
+
 
 class FixedAssetController extends Controller
 {
     //
 
     //  * Obtener una lista de documentos de entrega de el recurso utilizado.
-    //  * {year: año , type: tipo del documento}    
-    public function getDocumentFixedAssetByYear(Request $request){
+    //  * {year: año , type: tipo del documento}
+    public function getDocumentFixedAssetByYear(Request $request)
+    {
         $year = $request->get('year');
         $type = 1;
-        $data = FixedAsset::GetDocumentFixedAssetByYear($year, $type);        
-        $page = ($request->get('page')? $request->get('page'): 1);
+        $data = FixedAsset::GetDocumentFixedAssetByYear($year, $type);
+        $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
             $data->forPage($page, $perPage),
@@ -32,20 +36,22 @@ class FixedAssetController extends Controller
     }
 
     //  * Obtener una lista de documentos de entrega de el recurso utilizado.
-    //  * {year: año , type: tipo del documento}    
-    public function getFixedAssetsbyDocument(Request $request){
+    //  * {year: año , type: tipo del documento}
+    public function getFixedAssetsbyDocument(Request $request)
+    {
         $document = $request->get('id');
-        $data = FixedAsset::getFixedAssetsbyDocument($document);        
+        $data = FixedAsset::getFixedAssetsbyDocument($document);
         return json_encode($data);
-    }    
+    }
 
-    public function getReportSelectedFixedAssets(Request $request){
+    public function getReportSelectedFixedAssets(Request $request)
+    {
         /*
         \Log::info($request->get('lista'));
-        */
+         */
         $lista = $request->get('lista');
         $lista = implode(',', $lista);
-
+        /*
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/FixedAssetsQr.jrxml'; //Blank_Letter.jrxml
         $jasper->compile($input)->execute();
@@ -55,10 +61,10 @@ class FixedAssetController extends Controller
         $jasper->process(
             $input,
             false, //$output,
-            array('pdf'),//array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('pdf'), //array('pdf', 'rtf'), // Formatos de salida del reporte
             array(
-                'p_lista' => $lista, 
-                ),
+                'p_lista' => $lista,
+            ),
             array(
                 'driver' => 'postgres',
                 'username' => 'postgres',
@@ -66,12 +72,48 @@ class FixedAssetController extends Controller
                 'host' => '192.168.25.54',
                 'database' => 'daf',
                 'port' => '5432',
-            )  
+            )
         )->execute();
 
         $pathToFile = public_path() . '/reports/FixedAssetsQr.pdf';
         $filename = 'FixedAssetsQr.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
+        */
+
+        $client = new Client(
+            "http://localhost:8080/jasperserver",
+            "jasperadmin",
+            "jasperadmin",
+            ""
+        );
+        $controls = array('p_lista' => $lista);
+        \Log::info($controls);
+        $report = $client->reportService()->runReport('/reports/interactive/FixedAssetsQr', 'pdf', null, null, $controls);
+        \Log::info("este es el reporte que usamos".$report);
+
+        //Storage::put('/valores.pdf',$report) ;
+        return $report;
+    }
+
+    public function getReportSelectedFixedAssets2(Request $request)
+    {
+        $client = new Client(
+            "http://localhost:8080/jasperserver",
+            "jasperadmin",
+            "jasperadmin",
+            ""
+        );
+        \Log::info($client->serverInfo());
+        $report = $client->reportService()->runReport('/reports/interactive/valores', 'pdf');
+        //Storage::put('/valores.pdf',$report) ;
+        return $report;
+
+        /*
+        $pathToFile = public_path() . '/reports/valorcito.pdf';
+        $filename = 'valorcito.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+        */
     }
 }
