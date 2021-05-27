@@ -46,9 +46,6 @@ class FixedAssetController extends Controller
 
     public function getReportSelectedFixedAssets(Request $request)
     {
-        /*
-        \Log::info($request->get('lista'));
-         */
         $lista = $request->get('lista');
         $lista = implode(',', $lista);
         /*
@@ -100,21 +97,14 @@ class FixedAssetController extends Controller
     public function getReportSelectedFixedAssets2(Request $request)
     {
         $client = new Client(
-            "http://localhost:8080/jasperserver",
+            "http://192.168.25.5:8080/jasperserver",
             "jasperadmin",
             "jasperadmin",
             ""
         );
         \Log::info($client->serverInfo());
         $report = $client->reportService()->runReport('/reports/interactive/valores', 'pdf');
-        //Storage::put('/valores.pdf',$report) ;
         return $report;
 
-        /*
-        $pathToFile = public_path() . '/reports/valorcito.pdf';
-        $filename = 'valorcito.pdf';
-        $headers = ['Content-Type' => 'application/pdf'];
-        return response()->download($pathToFile, $filename, $headers);
-        */
     }
 }
