@@ -230,6 +230,7 @@ export default {
         });
     },
     GenerarReporte() {
+      alert('lio aprender');
       axios({
         url: "/api/generarReporte/",
         params: {

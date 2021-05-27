@@ -6,7 +6,8 @@ use App\Inventory;
 use Dotenv\Result\Result;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use JasperPHP\JasperPHP as JasperPHP;
+//use JasperPHP\JasperPHP as JasperPHP;
+use Jaspersoft\Client\Client;
 use SebastianBergmann\Environment\Console;
 
 class InventoryController extends Controller
@@ -86,31 +87,32 @@ class InventoryController extends Controller
         return json_encode($paginate);
     }
     //reportes usando Jasper
-    public function getReport(Request $request, $cod_soa)
+    public function getReport(Request $request)
     {
-        // $jasper = new JasperPHP;
-        // $input = public_path() . '/reports/assets.jrxml';
-        // $jasper->compile($input)->execute();
-        // $input = public_path() . '/reports/assets.jasper'; //ReportValuesQr
-        // $output = public_path() . '/reports';
-        // $jasper->process(
-        //     $input,
-        //     false, //$output,
-        //     array('pdf', 'rtf'), // Formatos de salida del reporte
-        //     array('p_ofc_cod' => $cod_soa),//array('php_version' => phpversion()),// Parámetros del reporte
-        //     array(
-        //         'driver' => 'postgres',
-        //         'username' => 'postgres',
-        //         'password' => '12345678',
-        //         'host' => '192.168.25.64',
-        //         'database' => 'daf_help',
-        //         'port' => '5432',
-        //     )  
-        // )->execute();
+        $tip_repo = $request->get('reporte');
+        $ofc_cod = $request->get('ofc_cod');
+
+        $client = new Client(
+            "http://192.168.25.5:8080/jasperserver",
+            "jasperadmin",
+            "jasperadmin",
+            ""
+        );
+
+        if($tip_repo == 'general'){
+            $controls = array('p_unidad' => $ofc_cod);
+            \Log::info($controls);
+            $report = $client->reportService()->runReport('/reports/interactive/todo_general', 'pdf', null, null, $controls);
+            return $report;
+        }else
+        {
+            return null;
+        }
+        /*
         $pathToFile = $this->generarReporte('assets',array('p_ofc_cod' => $cod_soa));//public_path() . '/reports/assets.pdf';
         $filename = 'assets.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
-        return response()->download($pathToFile, $filename, $headers);
+        return response()->download($pathToFile, $filename, $headers);*/
     }
     //Funcion para generar reportes desde la vista inventarioDetail
     public function getGenerarReporte(Request $request)
