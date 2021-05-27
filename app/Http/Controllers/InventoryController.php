@@ -352,7 +352,7 @@ class InventoryController extends Controller
         $vida_util= $request->vida_util;
         $car_cod = $request -> car_cod;
         $estado= $request->estado;
-        $ofc_cod = $request->ofc_cod;
+        $ofc_cod = $request->cod_soa;
         $sub_ofc_cod = $request->sub_ofc_cod;
         $ci_resp = $request->ci_resp;
         $id = $request->id;
@@ -405,10 +405,11 @@ class InventoryController extends Controller
     {
         $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
         $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
-        //dd($descripcion,$ofc_ids,$sub_ofc_ids);
+        $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
+        //dd($keyWord,$ofc_id,$sub_ofc_ids);
         $page = ($request->get('page')) ? $request->get('page') : 1;
         $perPage = 10;
-        $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_id, $sub_ofc_ids,$page,$perPage);
+        $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_id, $sub_ofc_ids,$keyWord,$page,$perPage);
         
         return json_encode($data);
     }
