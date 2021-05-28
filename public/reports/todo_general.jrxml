@@ -9,7 +9,8 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="512"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin"/>
-	<property name="ireport.jasperserver.report.resource" value="/reports/interactive/todo_general"/>
+	<property name="ireport.jasperserver.report.resource" value="/reports/interactive/todo_general_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/interactive/todo_general"/>
 	<parameter name="p_unidad" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 
@@ -105,71 +106,84 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 	</field>
 	<group name="Unidad">
 		<groupHeader>
-			<band height="30">
+			<band height="43">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<textField>
-					<reportElement x="0" y="4" width="570" height="20" uuid="89653140-0ae8-4c63-ad1a-1fd891a4378d"/>
-					<textElement>
+					<reportElement x="0" y="20" width="570" height="20" uuid="89653140-0ae8-4c63-ad1a-1fd891a4378d"/>
+					<textElement textAlignment="Center">
 						<font size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{oficina}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="4" y="6" width="548" height="20" uuid="5bd52015-18be-4035-96bf-9616440707ba"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial Narrow" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACTIVOS FIJOS POR CATEGORIA PROGRAMATICA]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="21"/>
 		</groupFooter>
 	</group>
-	<group name="Group_SubOfc">
+	<group name="Group_SubOfc" isReprintHeaderOnEachPage="true">
 		<groupHeader>
-			<band height="39">
+			<band height="33">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<staticText>
-					<reportElement x="210" y="17" width="260" height="20" uuid="69ceefad-5fe8-46a5-9be3-a3e8964fea6f">
+					<reportElement x="210" y="11" width="270" height="20" uuid="69ceefad-5fe8-46a5-9be3-a3e8964fea6f">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6484c72-95de-4562-a463-1cce2d4b4686"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[DESCRIPCION]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="78" y="17" width="60" height="20" uuid="69236c54-e9ba-4bb6-88ad-e59fff78d726">
+					<reportElement x="78" y="11" width="60" height="20" uuid="69236c54-e9ba-4bb6-88ad-e59fff78d726">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0622fdf-f604-4175-888f-965a35fd91b0"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CANTIDAD]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="17" width="70" height="20" uuid="28419c7f-19bb-4ca1-b8d0-c8af6409323e">
+					<reportElement x="0" y="11" width="70" height="20" uuid="28419c7f-19bb-4ca1-b8d0-c8af6409323e">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58274d45-6d78-4464-87cb-c0fcae550521"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CODIGO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="150" y="17" width="50" height="20" uuid="7f47eab3-2223-44d4-b036-510a0a6fc55b">
+					<reportElement x="150" y="11" width="50" height="20" uuid="7f47eab3-2223-44d4-b036-510a0a6fc55b">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3886cd85-2cd8-45f8-9ca4-251ccd817246"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[UNIDAD]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="490" y="17" width="70" height="20" uuid="2503052d-264c-4139-b75e-39737a01067e">
+					<reportElement x="490" y="11" width="62" height="20" uuid="2503052d-264c-4139-b75e-39737a01067e">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="334016b6-8200-4212-bbd7-e5f12b096fb6"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[IMPORTE]]></text>
 				</staticText>
+				<line>
+					<reportElement x="2" y="31" width="551" height="1" uuid="8ff25f07-4145-4903-9a16-ae5bb3cbef19"/>
+					<graphicElement>
+						<pen lineStyle="Double"/>
+					</graphicElement>
+				</line>
 			</band>
 		</groupHeader>
 	</group>
@@ -179,11 +193,11 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 			<band height="23">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<textField>
-					<reportElement isPrintRepeatedValues="false" x="211" y="9" width="354" height="12" uuid="8583b2b7-3bab-4a52-9649-842dfb969099">
+					<reportElement isPrintRepeatedValues="false" x="211" y="9" width="340" height="12" uuid="8583b2b7-3bab-4a52-9649-842dfb969099">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="7" isBold="true"/>
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{par_cod}.concat( "  -  " +$F{partida}.toUpperCase() )]]></textFieldExpression>
 				</textField>
@@ -193,65 +207,87 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="55" splitType="Stretch">
+	<pageHeader>
+		<band height="58" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="0" y="1" width="572" height="20" uuid="363014ac-8cec-45cb-ba41-41f51814031a"/>
+				<reportElement x="4" y="6" width="548" height="20" uuid="12d564f3-c6ec-4c38-98c7-6fe03ca698a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="10" isBold="false"/>
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD AUTÓNOMA "TÓMAS FRÍAS"]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="17" width="572" height="20" forecolor="#000000" uuid="cbcf3a64-fb42-48c0-a52a-fc202e309543"/>
+				<reportElement x="4" y="22" width="548" height="20" forecolor="#000000" uuid="23f3fd78-a589-4254-9096-57b771f56a93"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="9"/>
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DIRECCÍON ADMINISTRATIVA Y FINANCIERA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="31" width="572" height="20" forecolor="#000000" uuid="393dba08-0878-471a-a937-455b875b9e76"/>
+				<reportElement x="4" y="36" width="548" height="20" forecolor="#000000" uuid="61687158-d227-4def-83e2-1071a2d48636"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="9"/>
+					<font fontName="Arial Narrow" size="8" isBold="false" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[DIVISÍON DE BIENES E INVENTARIOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="46" y="9" width="86" height="10" uuid="0526d903-a042-4abf-8292-db92cd870ec2"/>
+				<reportElement x="36" y="27" width="86" height="10" uuid="3948c0e3-d38e-43fa-9ee2-02ba253cabd1"/>
 				<textElement>
-					<font fontName="Berlin Sans FB" size="6"/>
+					<font fontName="Arial Narrow" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SISTEMA DE INFORMACION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="46" y="16" width="108" height="10" uuid="1ae0a65f-ea8a-4995-bca3-494a3db8b16b"/>
+				<reportElement x="36" y="34" width="108" height="10" uuid="595febbe-9771-47da-b437-72945dd3798c"/>
 				<textElement>
-					<font fontName="Berlin Sans FB" size="6"/>
+					<font fontName="Arial Narrow" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ADMINISTRATIVA Y FINANCIERA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="3" width="48" height="35" uuid="ec735a3b-5a55-4e01-8269-89c2c5746566"/>
+				<reportElement x="36" y="7" width="48" height="35" uuid="bd5bae17-3326-4452-8eda-c9abfb8688f7"/>
 				<textElement>
-					<font fontName="Berlin Sans FB" size="20"/>
+					<font fontName="Arial Narrow" size="20" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[SIAF]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="16" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="5" y="8" width="30" height="37" uuid="2a86f7e2-790f-4a01-86c9-3c80256d1208"/>
+				<imageExpression><![CDATA["/JasperImage Library/UATF.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="2" y="47" width="551" height="1" uuid="17c8b71d-048b-4d6f-941f-127699df8978">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="480" y="35" width="40" height="10" uuid="14ea03ac-8b8a-41aa-a3db-0c809949d219">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="35" width="32" height="10" uuid="14aa20a0-1cea-4c22-ae42-048d2060feee">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="16" splitType="Stretch">
+		<band splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="14" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="150" y="0" width="50" height="12" uuid="daee455a-d9c1-4507-a725-ebefdf589ebc">
@@ -259,27 +295,27 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="7" isItalic="false"/>
+					<font fontName="Arial Narrow" size="7" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{uni_med}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="210" y="0" width="260" height="12" uuid="e7fcdd08-15d6-4d12-9d9b-e9ad644dbf1e">
+				<reportElement x="211" y="0" width="268" height="12" uuid="e7fcdd08-15d6-4d12-9d9b-e9ad644dbf1e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4814192-04df-4134-9c46-d49ad027f922"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font size="7" isItalic="false"/>
+					<font fontName="Arial Narrow" size="7" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="490" y="0" width="70" height="12" uuid="d8da78db-fcb2-4207-aa34-8a00dea44683">
+				<reportElement x="490" y="0" width="62" height="12" uuid="d8da78db-fcb2-4207-aa34-8a00dea44683">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ced172a9-81cc-446c-bd77-b3ddddeae69e"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="7"/>
+					<font fontName="Arial Narrow" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
@@ -289,7 +325,7 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="7"/>
+					<font fontName="Arial Narrow" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
 			</textField>
@@ -299,18 +335,18 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="7"/>
+					<font fontName="Arial Narrow" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="14">
+		<band height="15">
 			<textField textAdjust="StretchHeight">
-				<reportElement x="210" y="0" width="260" height="10" isRemoveLineWhenBlank="true" uuid="e02b0ecf-8f7b-43e4-8bee-a8e1efc4de6c">
+				<reportElement x="211" y="0" width="268" height="10" isRemoveLineWhenBlank="true" uuid="e02b0ecf-8f7b-43e4-8bee-a8e1efc4de6c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4e6c70b0-b0eb-4261-b92a-39eed7b08617"/>
 				</reportElement>
 				<textElement>
-					<font size="6"/>
+					<font fontName="Arial Narrow" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des_det}]]></textFieldExpression>
 			</textField>
@@ -320,7 +356,7 @@ where d.cod_soa = $P{p_unidad}  ) as oficina,
 		<band height="22" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="26" splitType="Stretch"/>
+		<band height="47" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

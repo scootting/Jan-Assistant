@@ -40,6 +40,7 @@ class FixedAssetController extends Controller
         return json_encode($data);
     }
 
+    //reporte para la impresion de ticketes de activos fijos
     public function getReportSelectedFixedAssets(Request $request)
     {
         $lista = $request->get('lista');

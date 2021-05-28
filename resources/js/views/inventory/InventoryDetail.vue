@@ -182,14 +182,12 @@ export default {
     this.getActivosPaginate();
     let cod_soa = this.$route.params.soa;
     axios
-      .get("/api/inventory/show/"+cod_soa)
+      .get("/api/inventory/show/" + cod_soa)
       .then((data) => {
         this.oficina = data.data;
         this.getRespBySoa();
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   },
   computed: {
     tipoReporte() {
@@ -230,7 +228,7 @@ export default {
         });
     },
     GenerarReporte() {
-      alert('lio aprender');
+      alert("lio pruebas");
       axios({
         url: "/api/generarReporte/",
         params: {
@@ -240,22 +238,15 @@ export default {
           filtroValor: this.filtro.values,
         },
         method: "GET",
-        responseType: "blob",
+        responseType: "arraybuffer",
       }).then((response) => {
-        console.log(response.data);
-        console.log("1");
         let blob = new Blob([response.data], {
           type: "application/pdf",
         });
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        console.log(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
-        /*
-        link.download = "test.pdf";
-        link.click();
-        */
       });
     },
     ReporteGeneral() {
