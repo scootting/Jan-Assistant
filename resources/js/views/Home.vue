@@ -148,20 +148,10 @@ export default {
       this.$router.push({ name: "login" });
     },
     initAddTaxExemption() {
-            axios
-        .get("/reportSelectedFixedAssets2/", {
-          responseType: "arraybuffer",
-        })
-        .then((response) => {
-          let blob = new Blob([response.data], { type: "application/pdf" });
-          let link = document.createElement("a");
           //link.href = window.URL.createObjectURL(blob);
           //link.download = "test.pdf";
           //link.click();
-          let url = window.URL.createObjectURL(blob);
-          window.open(url);
-        });
-      //this.$router.push({ name: "addTaxExemption" });
+      this.$router.push({ name: "addTaxExemption" });
     },
     initToFormalities() {
       this.$router.push({ name: "formalities" });
