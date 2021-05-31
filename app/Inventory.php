@@ -338,6 +338,7 @@ class Inventory extends Model
     //Guardar cambios del Activo
     public static function saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
+        
         $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -449,10 +450,10 @@ class Inventory extends Model
         return $data;
     }
     //Guardar datos de los activos en Documento Detalle
-    public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $id)
+    public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des , $est_act, $obs_est, $validacion, $id)
     {
-        $fec_cre = Date('d-m-Y');
-        $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $fec_cre . "','" . $est_act . "','" . $obs_est . "','" . $validacion . "','" . $id . "')";
+        //$fec_cre = Date('d-m-Y');
+        $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $validacion . "','" . $est_act . "','" . $obs_est . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -524,6 +525,12 @@ class Inventory extends Model
             $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
             WHERE t.sub_ofc_cod in ('". $subUnidad ."')";
         }
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function saveImage ($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post)
+    {
+        $query = "Select * from act.f_guardar_imagen('" . $cod_act . "','" . $img_fro . "','" . $img_izq . "','" . $img_der . "','" . $img_sup . "','" . $img_post . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

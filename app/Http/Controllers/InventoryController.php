@@ -90,7 +90,6 @@ class InventoryController extends Controller
         $ofc_cod = $request->get('ofc_cod');
         $tipo_filtro = $request->get('filtroTipo');
         $valor = $request->get('filtroValor');
-
         if ($tip_repo == 'general') {
             switch ($tipo_filtro) {
                 case 'cargo':
@@ -463,7 +462,7 @@ class InventoryController extends Controller
         $cod_act = $request->cod_act;
         $id_act = $request->id_act;
         $id_des = $request->id_des;
-        $est_act = $request->est_cod;
+        $est_act = $request->est_act;
         $obs_est = $request->obs_est;
         $validacion = $request->validacion;
         $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $id);
@@ -474,4 +473,39 @@ class InventoryController extends Controller
         $data = Inventory::getAllCargos();
         return json_encode($data);
     }
+    //funcion cargar imagenes de activos para nuevo inventario
+    public function index(){
+        return Storage::files('upload');
+    }
+    public function uploadImage( Request $request){
+        //dd($request);
+        $dataSource = $request->get('datasource');
+        $arrayData = json_decode($dataSource, true);
+        $ofc_cod = $arrayData['ofc_cod'];
+        $id = $arrayData['id'];    
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $file_name = $file->getClientOriginalName();
+            $path = 'upload/'.strval($id).'/'.strval($ofc_cod);
+            $file->storeAs($path, $file_name);
+        } else {
+            return response()->json(['error'=>'File not exist!']);
+        }
+        return response()->json(['success'=>'Cargo exitoso.','path' => '/'.$path.'/'.$file_name]);
+    } 
+
+    public function saveImages(Request $request)
+    {
+        //dd($request);
+        $cod_act = $request->cod_act;
+        $img_fro = $request->img_fro;
+        $img_der = $request->img_der;
+        $img_izq = $request->img_izq;
+        $img_post = $request->img_post;
+        $img_sup = $request->img_sup;
+        $data = Inventory::saveImage($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post);
+        return json_encode($data);
+    }
+
 }

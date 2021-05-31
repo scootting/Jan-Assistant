@@ -4,16 +4,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Inventario</span>
-        <!-- <el-button
-          style="text-align: right; float: right"
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          @click="newInventory"
-          >Nuevo Inventario</el-button
-        > -->
       </div>
-
       <div style="margin-top: 15px">
         <el-input
           placeholder="INSERTE UNA DESCRIPCION"
@@ -47,7 +38,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="right-center" width="220" label="Operaciones">
+          <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
               <el-button
                 @click="editInventory(scope.$index, scope.row)"
@@ -61,7 +52,16 @@
                 type="primary"
                 plain
                 size="mini"
+                :disabled="verificado"
                 >Ver lista </el-button
+              >
+              <el-button
+                @click="printListActive(scope.row.id)"
+                type="primary"
+                plain
+                size="mini"
+                :disabled="!verificado"
+                >Imprimir </el-button
               >
             </template>
           </el-table-column>
@@ -85,6 +85,7 @@ export default {
     return {
       loading: false,
       user: this.$store.state.user,
+      verificado:false,
       messages: {},
       data: [],
       pagination: {
@@ -134,6 +135,9 @@ export default {
           no_cod: no_cod,
         }
       });
+    },
+    printListActive(no_cod){
+      alert("Button to Print New Invent");
     },
     test() {
       alert("bienvenido al modulo");

@@ -48,7 +48,6 @@ export default {
       console.log(file, fileList);
       this.fileList = FileList;
     },
-
     /* *** Cuando se agrega el archivo satisfactoriamente *** */
     handleSuccessFile(response, file, fileList) {
       this.$message({

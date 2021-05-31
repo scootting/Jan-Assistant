@@ -61,7 +61,7 @@
       <br />
       <div>
         <el-table v-loading="loading" :data="data" style="width: 100%">
-          <el-table-column label="Identificador" width="150">
+          <el-table-column label="Identificador" width="130">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
                 <el-tag size="small">{{ scope.row.cod_ant }}</el-tag>
@@ -71,9 +71,9 @@
           <el-table-column
             prop="des"
             label="DESCRIPCION"
-            width="330"
+            width="300"
           ></el-table-column>
-          <el-table-column label="ESTADO" width="180">
+          <el-table-column label="ESTADO" width="150">
             <el-select
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.est_act"
@@ -105,13 +105,22 @@
               ></el-checkbox>
             </template>
           </el-table-column>
-          <el-table-column width="180">
-            <el-button
-              slot-scope="scope"
-              type="primary"
-              size="default"
-              @click="saveActiveInDetail(scope.$index)"
-              >Guardar</el-button
+          <el-table-column align="right-center" width="200" label="Operaciones">
+            <template slot-scope="scope">
+              <el-button
+                plain
+                type="primary"
+                size="mini"
+                @click="saveActiveInDetail(scope.$index)"
+                >Guardar</el-button
+              >
+              <el-button
+                plain
+                type="primary"
+                size="mini"
+                @click="cargarImagen(scope.$index, scope.row)"
+                >Imagen</el-button
+              ></template
             >
           </el-table-column>
         </el-table>
@@ -127,7 +136,8 @@
             style="margin: 10px; text-align: right; float: right"
             type="primary"
             size="small"
-            @click="returnPage"
+            @click="returnPage2"
+            :disabled="verificado"
             >VERIFICAR</el-button
           >
           <el-button
@@ -150,6 +160,7 @@ export default {
     return {
       writtenTextParameter: "",
       estados: [],
+      verificado: false,
       checked: true,
       doc_inv_no_cod: null,
       doc_inv: null,
@@ -265,13 +276,31 @@ export default {
           });
       }
     },
+    cargarImagen(index, row) {
+      this.$router.push({
+        name: "imgdetail",
+        params: {
+          id: row.id,
+        },
+      });
+    },
     getActives() {
       this.$notify.info({
         title: "Prueba de boton",
         message: "prueba de boton",
         duration: 0,
       });
-
+    },
+    returnPage2() {
+      this.$notify.info({
+        title: "Return",
+        message: "prueba de boton de verificado",
+        duration: 0,
+      });
+      (this.verificado = true),
+        this.$router.push({
+          name: "inventory2",
+        });
     },
     returnPage() {
       this.$notify.info({
