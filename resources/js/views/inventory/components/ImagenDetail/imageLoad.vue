@@ -72,18 +72,6 @@ export default {
       });
       this.$emit('on-success',response);
     },
-    // uploadFile() {
-    //   let formData = new FormData();
-    //   formData.append("file", this.file);
-    //   axios
-    //     .post("/api/inventory2/upload", formData)
-    //     .then(res => {
-    //       this.getFiles();
-    //     })
-    //     .catch(err => {
-    //       console.log("Error: ", err);
-    //     });
-    // },
     deleteFile(file) {
       axios.get("/api/inventory2/delete/" + file).then((res) => {
         this.getFiles();
@@ -109,6 +97,5 @@ export default {
   },
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped></style>

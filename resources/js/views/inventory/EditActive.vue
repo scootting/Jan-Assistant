@@ -137,10 +137,10 @@
           </el-col>
         </el-row>
         <el-form-item>
-          <el-button size="mini" type="primary" plain @click="saveAsset"
+          <el-button size="mini" type="primary" :disabled="guardado" plain @click="saveAsset"
             >Guardar Cambios</el-button
           >
-          <el-button size="mini" type="primary" plain @click="selectActiveQr"
+          <el-button size="mini" type="primary" :disabled="!guardado" plain @click="selectActiveQr"
             >Obtener QR</el-button
           >
           <el-button size="mini" type="danger" plain @click="Exit"
@@ -149,18 +149,38 @@
         </el-form-item>
       </el-form>
     </el-card>
+        <el-dialog
+      title="QR"
+      :visible.sync="showQR"
+      width="30%"
+      @close="showQR = false"
+    >
+      <el-row type="flex" justify="center">
+        <vue-qr :text="JSON.stringify(activoQR)" :size="400"></vue-qr>
+      </el-row>
+      <span slot="footer">
+        <el-button @click="showQR = false">Cancel</el-button>
+        <el-button>Imprimir</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import DescripcionDetalle from "./components/DescripcionDetalle";
+import VueQr from "vue-qr";
 export default {
   name: "EditActive",
   components: {
     DescripcionDetalle,
+    VueQr
   },
   data() {
     return {
       gestion: this.$store.state.user.gestion,
+      guardado: false,
+      showQR:false,
+      activoQR:'Prueva de qr',
       estados: [],
       unidades: [],
       subUnidades: [],
@@ -228,15 +248,9 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    selectActiveQr() {
-      this.$notify.info({
-        title: "QR emitido",
-        message: "boton de prueba",
-        duration: 0,
-      });
-      this.$router.push({
-        name: "active",
-      });
+    selectActiveQr(actv) {
+      this.activoQR = actv;
+      this.showQR = true;
     },
     Exit() {
       this.$notify.info({
@@ -316,14 +330,16 @@ export default {
       axios
         .post("/api/reasignacion/save", this.editForm)
         .then((data) => {
+          this.guardado = true;
           this.$notify.success({
             title: "Cambios guardados",
             message: "Se realizo cambios al Activo seleccionado exitosamente",
             duration: 0,
           });
-          this.$router.push({
-            name: "active",
-          });
+          
+          // this.$router.push({
+          //   name: "active",
+          // });
         })
         .catch((err) => {
           console.log(err);
