@@ -143,6 +143,9 @@
           <el-button size="mini" type="primary" :disabled="!guardado" plain @click="selectActiveQr"
             >Obtener QR</el-button
           >
+          <el-button size="mini" type="primary" :disabled="!guardado" plain @click="returnListActives"
+            >Atras</el-button
+          >
           <el-button size="mini" type="danger" plain @click="Exit"
             >Cancelar</el-button
           >
@@ -336,15 +339,21 @@ export default {
             message: "Se realizo cambios al Activo seleccionado exitosamente",
             duration: 0,
           });
-          
-          // this.$router.push({
-          //   name: "active",
-          // });
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    returnListActives(){
+           this.$notify.success({
+            title: "Cambios guardados",
+            message: "Se realizo cambios al Activo seleccionado exitosamente",
+            duration: 0,
+          });
+          this.$router.push({
+          name: "active",
+          });
+    }
   },
 };
 </script>

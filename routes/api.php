@@ -42,7 +42,7 @@ Route::group([
     /*
     Route::post('upload', 'FileController@uploadFile');
     */
-    
+    //Listar activos por unidad
     Route::get('inventory/show/{cod_soa}', 'InventoryController@getOfficeByCodSoa');
     Route::get('inventory/sub_offices/{cod_soa}', 'InventoryController@getSubOfficesByCodSoa');
     Route::get('inventory/cargos/{cod_soa}', 'InventoryController@getCargosByCodSoa');
@@ -75,7 +75,7 @@ Route::group([
     Route::post('inventory2/upload', 'InventoryController@uploadImage');
     Route::get('inventory2/delete/upload-folder/{file}', 'InventoryController@deleteFile');
     Route::get('inventory2/download/upload-folder/{file}', 'InventoryController@downloadFile');
-    //***rutas de re asignacion de activos***
+    //rutas de re asignacion de activos
     Route::get('reasignacion/', 'InventoryController@SearchActivo'); 
     Route::get('activo/estados','InventoryController@getEstados');
     Route::get('activo/cargos', 'InventoryController@getAllCargos'); 

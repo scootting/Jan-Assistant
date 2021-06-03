@@ -529,9 +529,19 @@ class Inventory extends Model
         return $data;
     }
     public static function saveImage ($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post)
+
     {
+        // protected $casts = ['img_fro' => 'varchar']
+        // protected $casts = ['img_izq' => 'varchar']
+        // protected $casts = ['img_der' => 'varchar']
+        // protected $casts = ['img_sup' => 'varchar']
+        // protected $casts = ['img_post' => 'varchar']
         $query = "Select * from act.f_guardar_imagen('" . $cod_act . "','" . $img_fro . "','" . $img_izq . "','" . $img_der . "','" . $img_sup . "','" . $img_post . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
+    }
+    public static function getListActivesbyNroDoc($cod_soa,$sub_ofc_cod,$nro_doc_inv)
+    {
+        $query = "select * from inv.ff_getlistactivosnotdetail('".$cod_soa."','". $sub_ofc_cod ."','".$nro_doc_inv."')";
     }
 }

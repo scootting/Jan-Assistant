@@ -178,6 +178,7 @@ export default {
     this.getDocInventory();
     this.getEstados();
   },
+
   methods: {
     getDocInventory() {
       axios
@@ -226,6 +227,7 @@ export default {
             a.detalle_doc_act.id_des = a.esquema;
             a.detalle_doc_act.doc_cod = this.doc_inv.no_cod;
             a.detalle_doc_act.cod_act = this.doc_inv.cod_nue;
+
             return a;
           });
           this.pagination = data.data;
@@ -261,6 +263,7 @@ export default {
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
             cod_ges: this.user.gestion,
+            cod_act: this.data[index].cod_ant
           })
           .then((data) => {
             this.$notify.success({

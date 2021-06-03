@@ -238,7 +238,7 @@ class InventoryController extends Controller
         $pathToFile = public_path() . '/reports/' . $reportName . '.pdf';
         return $pathToFile;
     }
-
+    //OBTENER LOS INVENTARIOS CREADOS (NUEVOS) BUSCADOR
     public function getInventories(Request $request, $gestion)
     {
         $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');
@@ -271,7 +271,6 @@ class InventoryController extends Controller
     }
     public function getSubUnidad(Request $request)
     {
-
         $unidad = ($request->get('cod_soa') ? $request->get('cod_soa') : '');
         $idoffice = ($request->get('idoffice') ? $request->get('idoffice') : '');
         $cod_ofc = ($request->get('cod_ofc') ? $request->get('cod_ofc') : '');
@@ -292,7 +291,7 @@ class InventoryController extends Controller
         $data = Inventory::getResponsables($unidad, $cargos);
         return json_encode($data);
     }
-    //esto es para inventarios (nolmal) que ya se tiene listado.
+    //esto es para inventarios (normal) que ya se tiene listado.
     public function getResponsablesByUnidad(Request $request)
     {
         $unidad = ($request->get('unidad') ? $request->get('unidad') : '');
@@ -314,7 +313,6 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
-
     public function saveNewInventory(Request $request)
     {
         //dd($request);
@@ -324,7 +322,6 @@ class InventoryController extends Controller
         for ($i = 0; $i < count([$res_enc]); $i++) {
             $car_cod_enc[] = 3;
         }
-
         $car_cod = $car_cod_enc;
         $ofc_cod = $request->unidad;
         $sub_ofc_cod = $request->subUnidades;
@@ -335,6 +332,7 @@ class InventoryController extends Controller
         $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion);
         return json_encode($data);
     }
+    //
     public function SearchActivo(Request $request)
     {
         //dd($request);
@@ -343,7 +341,6 @@ class InventoryController extends Controller
         $sub_ofc_ids = ($request->get('idSubOffice')) ? $request->get('idSubOffice') : null;
         //dd($descripcion,$ofc_id,$sub_ofc_ids);
         $data = Inventory::SearchActive($cod_soa, $sub_ofc_ids, $descripcion);
-
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
         $paginator = $data->paginate($perPage, ['*'], 'page', $page);
@@ -396,7 +393,6 @@ class InventoryController extends Controller
         for ($i = 0; $i < count([$res_enc]); $i++) {
             $car_cod_enc[] = 3;
         }
-
         $car_cod = $car_cod_enc;
         $ofc_cod = $request->ofc_cod;
         $sub_ofc_cod = $request->sub_ofc_cod;
@@ -431,8 +427,10 @@ class InventoryController extends Controller
         }
         return json_encode($data);
     }
+    //reutilizar para traer los activos que no estan aun verificados
     public static function getActivesForDocInv(Request $request, $doc_cod)
     {
+        //dd($request);
         $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
         $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
         $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
@@ -440,8 +438,11 @@ class InventoryController extends Controller
         $page = ($request->get('page')) ? $request->get('page') : 1;
         $perPage = 10;
         $data = Inventory::SearchActiveForDocInv($doc_cod, $ofc_id, $sub_ofc_ids, $keyWord, $page, $perPage);
-
         return json_encode($data);
+    }
+    public function getListActivesToCompar(Type $var = null)
+    {
+        
     }
     public function getEstados()
     {
@@ -456,7 +457,6 @@ class InventoryController extends Controller
         } else {
             $id = -1;
         }
-
         $nro_doc_inv = $request->doc_cod;
         $cod_ges = $request->cod_ges;
         $cod_act = $request->cod_act;
@@ -465,7 +465,7 @@ class InventoryController extends Controller
         $est_act = $request->est_act;
         $obs_est = $request->obs_est;
         $validacion = $request->validacion;
-        $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $id);
+        $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges,$cod_act,$id_act, $id_des, $est_act, $obs_est, $validacion, $id);
         return json_encode($data);
     }
     public function getAllCargos()
@@ -494,7 +494,6 @@ class InventoryController extends Controller
         }
         return response()->json(['success'=>'Cargo exitoso.','path' => '/'.$path.'/'.$file_name]);
     } 
-
     public function saveImages(Request $request)
     {
         //dd($request);
