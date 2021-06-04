@@ -377,6 +377,8 @@ class Inventory extends Model
     }
     public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods,$keyWord, $page = 1, $perPage = 10)
     {
+        $conteo = null; 
+
         $l1 = static::SearchActiveForDocInvRegistered($no_cod , $keyWord);
 
         $arrayIds = $l1->pluck('id'); 
@@ -385,7 +387,7 @@ class Inventory extends Model
 
         $lastPage = (int)ceil(($l1->count() + $l2->count()) / $perPage);
         $total = $l1->count() + $l2->count();
-
+        $conteo = $l2->count();
         $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
         $data = [];
         if ($p1->count() == 0) {
@@ -416,6 +418,7 @@ class Inventory extends Model
             'last_page' => $lastPage,
             'per_page' => $perPage,
             'total' => $total,
+            'conteo' => $conteo,
         ];
         return $resp;
     }
@@ -531,11 +534,6 @@ class Inventory extends Model
     public static function saveImage ($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post)
 
     {
-        // protected $casts = ['img_fro' => 'varchar']
-        // protected $casts = ['img_izq' => 'varchar']
-        // protected $casts = ['img_der' => 'varchar']
-        // protected $casts = ['img_sup' => 'varchar']
-        // protected $casts = ['img_post' => 'varchar']
         $query = "Select * from act.f_guardar_imagen('" . $cod_act . "','" . $img_fro . "','" . $img_izq . "','" . $img_der . "','" . $img_sup . "','" . $img_post . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -543,5 +541,7 @@ class Inventory extends Model
     public static function getListActivesbyNroDoc($cod_soa,$sub_ofc_cod,$nro_doc_inv)
     {
         $query = "select * from inv.ff_getlistactivosnotdetail('".$cod_soa."','". $sub_ofc_cod ."','".$nro_doc_inv."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
     }
 }

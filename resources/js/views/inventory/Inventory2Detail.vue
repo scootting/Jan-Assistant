@@ -171,6 +171,7 @@ export default {
       pagination: {
         page: 1,
       },
+      lista: [],
     };
   },
   mounted() {
@@ -178,7 +179,6 @@ export default {
     this.getDocInventory();
     this.getEstados();
   },
-
   methods: {
     getDocInventory() {
       axios
@@ -227,7 +227,6 @@ export default {
             a.detalle_doc_act.id_des = a.esquema;
             a.detalle_doc_act.doc_cod = this.doc_inv.no_cod;
             a.detalle_doc_act.cod_act = this.doc_inv.cod_nue;
-
             return a;
           });
           this.pagination = data.data;
@@ -263,7 +262,7 @@ export default {
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
             cod_ges: this.user.gestion,
-            cod_act: this.data[index].cod_ant
+            cod_act: this.data[index].cod_ant,
           })
           .then((data) => {
             this.$notify.success({
@@ -295,15 +294,21 @@ export default {
       });
     },
     returnPage2() {
-      this.$notify.info({
+      if (this.pagination.conteo == 0) 
+      {
+        this.verificado = true;
+        this.$router.push({
+          name: "inventory2",
+        });
+      }
+      else 
+      { 
+        this.$notify.info({
         title: "Return",
         message: "prueba de boton de verificado",
         duration: 0,
       });
-      (this.verificado = true),
-        this.$router.push({
-          name: "inventory2",
-        });
+      }
     },
     returnPage() {
       this.$notify.info({

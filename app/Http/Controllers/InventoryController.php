@@ -440,10 +440,7 @@ class InventoryController extends Controller
         $data = Inventory::SearchActiveForDocInv($doc_cod, $ofc_id, $sub_ofc_ids, $keyWord, $page, $perPage);
         return json_encode($data);
     }
-    public function getListActivesToCompar(Type $var = null)
-    {
-        
-    }
+    
     public function getEstados()
     {
         $data = Inventory::getEstados();
