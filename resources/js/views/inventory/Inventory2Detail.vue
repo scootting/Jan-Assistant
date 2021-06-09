@@ -136,6 +136,7 @@
             style="margin: 10px; text-align: right; float: right"
             type="primary"
             size="small"
+            plain
             @click="returnPage2"
             :disabled="verificado"
             >VERIFICAR</el-button
@@ -144,12 +145,39 @@
             style="margin: 10px; text-align: right; float: right"
             type="danger"
             size="small"
+            plain
             @click="returnPage"
             >ATRAS</el-button
+          >
+          <el-button
+            style="margin: 10px; text-align: right; float: right"
+            type="success"
+            size="small"
+            plain
+             @click="showObservacionInventory = true"
+            >OBSERVACIONES</el-button
           >
         </div>
       </div>
     </el-card>
+    <el-dialog
+      title="Realizar observaciones del inventario"
+      :visible.sync="showObservacionInventory"
+      width="30%"
+      @close="showObservacionInventory = false"
+    >
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="añada una observacion del inventario"
+        v-model="inventario.observaciones"
+      >
+      </el-input>
+      <span slot="footer">
+        <el-button @click="onCancelDialog">CANCELAR</el-button>
+        <el-button type="primary" @click="onConfirmDialog">GUARDAR OBSERVACIONES</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -159,8 +187,14 @@ export default {
   data() {
     return {
       writtenTextParameter: "",
+      inventario: {
+        estado: "VERIFICADO",
+        observaciones: "",
+      },
       estados: [],
       verificado: false,
+      showObservacionInventory: false,
+      addObservacion:'',
       checked: true,
       doc_inv_no_cod: null,
       doc_inv: null,
@@ -293,21 +327,47 @@ export default {
         duration: 0,
       });
     },
+    onConfirmDialog() {
+     
+      this.showObservacionInventory = false;
+    },
+    onCancelDialog() {
+       this.inventario.observaciones = this.addObservacion;
+      this.showObservacionInventory = false;
+    },
+    updateState() {
+      axios
+        .post("/api/inventarios2/verificar", {
+          params: {
+            estado: this.inventario.estado,
+            observaciones: this.inventario.observaciones,
+            nro_cod: this.doc_inv.id,
+          },
+        })
+        .then((data) => {
+          this.$notify.success({
+            title: "Estado actualizado",
+            message: "Se habilito el boton de imprimir",
+            duration: 0,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     returnPage2() {
-      if (this.pagination.conteo == 0) 
-      {
+      if (this.pagination.conteo == 0) {
         this.verificado = true;
+        this.updateState();
         this.$router.push({
           name: "inventory2",
         });
-      }
-      else 
-      { 
+      } else {
         this.$notify.info({
-        title: "Return",
-        message: "prueba de boton de verificado",
-        duration: 0,
-      });
+          title: "Return",
+          message: "Aun no a sido verificado todos los activos del inventario",
+          duration: 0,
+        });
       }
     },
     returnPage() {

@@ -465,6 +465,15 @@ class InventoryController extends Controller
         $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges,$cod_act,$id_act, $id_des, $est_act, $obs_est, $validacion, $id);
         return json_encode($data);
     }
+    public function changeStateInventory(Request $request)
+    {
+       dd($request);
+       $estado = $request->estado;
+       $observacion = $request->observaciones;
+       $nro_cod = $request->nro_cod;
+       $data = Inventory::updateState($estado,$observacion,$nro_cod);
+        return json_encode($data);
+    }
     public function getAllCargos()
     {
         $data = Inventory::getAllCargos();
