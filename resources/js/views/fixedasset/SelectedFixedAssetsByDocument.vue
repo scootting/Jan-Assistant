@@ -53,7 +53,6 @@ export default {
   mounted() {
     let app = this;
     app.nro_doc = this.$route.params.id;
-    //console.log(app.nro_doc);
     axios
       .post("/api/selectedFixedAssetsbyDocument", {
         id: app.nro_doc,
@@ -61,7 +60,6 @@ export default {
       .then((response) => {
         app.loading = false;
         app.dataFixedAssets = response.data;
-        //console.log(response);
       })
       .catch((error) => {
         this.error = error;
@@ -97,28 +95,9 @@ export default {
           let url = window.URL.createObjectURL(blob);
           window.open(url);
         });
-       /*
-        axios
-          .get(
-            "/api/reportSelectedFixedAssets/",
-            {
-              params: {
-                lista: list,
-              },
-            },
-            {
-              responseType: "arraybuffer",
-            }
-          )
-          .then((response) => {
-            let blob = new Blob([response.data], { type: "application/pdf" });
-            let link = document.createElement("a");
-            //link.href = window.URL.createObjectURL(blob);
-            //link.download = "test.pdf";
-            //link.click();
-            let url = window.URL.createObjectURL(blob);
-            window.open(url);
-          });*/
+        //link.href = window.URL.createObjectURL(blob);
+        //link.download = "test.pdf";
+        //link.click();
       } else {
         alert("debe seleccionar por lo menos un elemento");
       }
@@ -126,7 +105,6 @@ export default {
 
     handleSelectionChange(val) {
       this.selectedFixedAssets = val;
-      //console.log(val.codigo);
     },
   },
 };
