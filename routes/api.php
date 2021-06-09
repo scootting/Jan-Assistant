@@ -69,6 +69,7 @@ Route::group([
     Route::get('inventory2/doc_detail_by_active/{id}', 'InventoryController@getDocDetailByActivoId');
     Route::get('inventory2/search/{doc_cod}', 'InventoryController@getActivesForDocInv');
     Route::post('inventory2/saveActive','InventoryController@saveActiveInDetailDoc');
+    Route::post('inventarios2/verificar','InventoryController@changeStateInventory');
     Route::post('inventory2/saveImage','InventoryController@saveImages');
     //para cargar las imagenes de los activos
     Route::get('files', 'FileController@index');

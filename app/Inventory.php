@@ -4,6 +4,7 @@ namespace App;
 
 use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Environment\Console;
 
@@ -457,6 +458,14 @@ class Inventory extends Model
     {
         //$fec_cre = Date('d-m-Y');
         $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $validacion . "','" . $est_act . "','" . $obs_est . "','" . $id . "')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function updateState($estado,$observacion,$nro_cod)
+    {
+        $fecha_fin = Date('d-m-Y');
+        $estado = 'VERIFICADO';
+        $query = "Select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','" . $nro_cod . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
