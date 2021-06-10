@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  style="margin-top: 15px 0" class="grid-content bg-purple">
     <el-card class="box-card">
       <el-row>
         <el-col :span="24">
@@ -19,11 +19,12 @@
           </el-form>
         </el-col>
       </el-row>
-      
+      <br><br>
       <load-imgs :info="dataSource" @change="onChangeImgs"/> 
       <br>
       <!-- <uploader :csrf="csrfToken" :info="dataSource"></uploader> -->
       <el-button type="primary" size="mini" @click="saveImage">Guardar Imagenes</el-button>
+      <el-button type="primary" size="mini" @click="returnPage">Atras</el-button>
     </el-card>
     
     
@@ -43,6 +44,7 @@ export default {
       messages: {},
       gestion: this.$store.state.user.gestion,
       image: {},
+      no_doc:this.$route.params.no_cod,
       data: {
         cod_act: '',
       },
@@ -59,6 +61,7 @@ export default {
     //created vs mounted
     var app = this;
     this.id = this.$route.params.id;
+    this.no_doc = this.$route.params.no_cod;
     axios
       .get("/api/reasignacion/edit/" + this.id)
       .then((response) => {
@@ -100,9 +103,26 @@ export default {
           console.log(err);
         });
     },
+    returnPage(no_doc){
+      this.$router.push({
+        name: "inventory2detail",
+        params: {
+          no_doc:this.$route.params.no_cod,
+        }
+      });
+    },
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.bg-purple {
+  background: #d3dce6;
+}
+.grid-content {
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 36px;
+}
+</style>

@@ -464,8 +464,7 @@ class Inventory extends Model
     public static function updateState($estado,$observacion,$nro_cod)
     {
         $fecha_fin = Date('d-m-Y');
-        $estado = 'VERIFICADO';
-        $query = "Select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','" . $nro_cod . "')";
+        $query = "select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','" . $nro_cod . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

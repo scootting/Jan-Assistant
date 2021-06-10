@@ -64,12 +64,12 @@ Route::group([
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
     Route::get('inventory2/edit/{id}','InventoryController@getInventory');
-    Route::post('inventory2/saveChange ','InventoryController@saveChangeDocInventory');
+    Route::post('inventory2/saveChange','InventoryController@saveChangeDocInventory');
     Route::get('inventory2/doc_inv/{no_cod}', 'InventoryController@showDocInventory');
     Route::get('inventory2/doc_detail_by_active/{id}', 'InventoryController@getDocDetailByActivoId');
     Route::get('inventory2/search/{doc_cod}', 'InventoryController@getActivesForDocInv');
     Route::post('inventory2/saveActive','InventoryController@saveActiveInDetailDoc');
-    Route::post('inventarios2/verificar','InventoryController@changeStateInventory');
+    Route::post('inventory2/verificar','InventoryController@changeStateInventory');
     Route::post('inventory2/saveImage','InventoryController@saveImages');
     //para cargar las imagenes de los activos
     Route::get('files', 'FileController@index');

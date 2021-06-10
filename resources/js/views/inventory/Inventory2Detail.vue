@@ -194,7 +194,7 @@ export default {
       estados: [],
       verificado: false,
       showObservacionInventory: false,
-      addObservacion:'',
+      addObservacion:'SIN OBSERVACIONES',
       checked: true,
       doc_inv_no_cod: null,
       doc_inv: null,
@@ -301,8 +301,7 @@ export default {
           .then((data) => {
             this.$notify.success({
               title: "Cambios guardados",
-              message:
-                "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+              message:"Se realizo cambios al Documento de inventario seleccionado exitosamente",
               duration: 0,
             });
             this.getActivesSearch();
@@ -317,32 +316,23 @@ export default {
         name: "imgdetail",
         params: {
           id: row.id,
+          no_cod: this.doc_inv.id,
         },
       });
     },
-    getActives() {
-      this.$notify.info({
-        title: "Prueba de boton",
-        message: "prueba de boton",
-        duration: 0,
-      });
-    },
     onConfirmDialog() {
-     
-      this.showObservacionInventory = false;
+     this.showObservacionInventory = false;
     },
     onCancelDialog() {
-       this.inventario.observaciones = this.addObservacion;
+      this.inventario.observaciones = this.addObservacion;
       this.showObservacionInventory = false;
     },
     updateState() {
       axios
-        .post("/api/inventarios2/verificar", {
-          params: {
+        .post("/api/inventory2/verificar", {
             estado: this.inventario.estado,
             observaciones: this.inventario.observaciones,
-            nro_cod: this.doc_inv.id,
-          },
+            nro_cod: this.doc_inv.id
         })
         .then((data) => {
           this.$notify.success({
@@ -358,16 +348,17 @@ export default {
     returnPage2() {
       if (this.pagination.conteo == 0) {
         this.verificado = true;
-        this.updateState();
         this.$router.push({
           name: "inventory2",
         });
-      } else {
+        this.updateState();
+      } 
+      else{
         this.$notify.info({
-          title: "Return",
-          message: "Aun no a sido verificado todos los activos del inventario",
-          duration: 0,
-        });
+        title: "No puede Verificar Inventario",
+        message: "Aun no a sido verificado todos los activos del inventario",
+        duration: 0,
+      });
       }
     },
     returnPage() {
