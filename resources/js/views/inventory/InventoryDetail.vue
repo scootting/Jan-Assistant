@@ -228,7 +228,6 @@ export default {
         });
     },
     GenerarReporte() {
-      alert("lio pruebas");
       axios({
         url: "/api/generarReporte/",
         params: {
@@ -280,10 +279,6 @@ export default {
         console.log(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
-        /*
-        link.download = "test.pdf";
-        link.click();
-        */
       });
     },
   },
