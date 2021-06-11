@@ -93,21 +93,21 @@ class InventoryController extends Controller
         if ($tip_repo == 'general') {
             switch ($tipo_filtro) {
                 case 'cargo':
-                    $controls = array('cargo' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'cargoGeneral';
+                    $controls = array('p_car_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'car_general_1';//funciona
                     break;
                 case 'subUnidad':
-                    $controls = array('subUnidad' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'subUnidadGeneral1';
+                    $controls = array('p_sub_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'sub_ofc_general_1';//funciona
                     break;
-                    $controls = array('ci_list' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'responsableGeneral';
+                    $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'resp_general_1';
                     break;
                 case 'responsable':
                     break;
                 case 'todo':
                     $controls = array('p_unidad' => $ofc_cod);
-                    $reportName = 'todo_general';
+                    $reportName = 'todo_general';//funciona
                     break;
             }
             $report = JSRClient::GetReportWithParameters($reportName, $controls);
