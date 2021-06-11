@@ -348,20 +348,20 @@ class Inventory extends Model
     public static function SearchActiveForDocInvRegistered($no_cod , $keyWord)
     {
         $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
-        $query = DB::table('inv.union_activos')
-            ->select('inv.union_activos.*')
-            ->whereIn('inv.union_activos.id', $actIDsInDocDetail);
+        $query = DB::table('act.vv_act_detallado')
+            ->select('act.vv_act_detallado.*')
+            ->whereIn('act.vv_act_detallado.id', $actIDsInDocDetail);
         if ($keyWord){
-            $query ->where ('inv.union_activos.des' ,'like','%'.$keyWord.'%');
+            $query ->where ('act.vv_act_detallado.des' ,'like','%'.$keyWord.'%');
         };
-        return $query->orderBy('inv.union_activos.id', 'asc');
+        return $query->orderBy('act.vv_act_detallado.id', 'asc');
         
     }
     //buscar los activos de unidad y sub unidad seleccionados pero que NO estan en
     //el documento de nuevo Inventario para verificarlos en el documento del inventario
     public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord , $registereds)
     {
-        $db = DB::table('inv.union_activos as ua')->select('ua.*')
+        $db = DB::table('act.vv_act_detallado as ua')->select('ua.*')
             ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')
             ->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
         $db->whereNotIn('ua.id', $registereds);
@@ -522,10 +522,10 @@ class Inventory extends Model
     //
     public static function selectBysubUnidad($tipo, $cod_soa, $subUnidad)
     {
-         $arrString = "";
-         foreach ($subUnidad as $k => $subUnidad)
-             $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
-         $arrString = $arrString . "";
+        $arrString = "";
+        foreach ($subUnidad as $k => $subUnidad)
+        $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
+        $arrString = $arrString . "";
         if ($tipo == 'general') {
 
             //$query = "select * from inv.ff_getactivosgeneralbysubunidad('" . $cod_soa . "', '" . $arrString . "')";

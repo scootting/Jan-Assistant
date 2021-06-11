@@ -442,7 +442,7 @@ export default {
       this.$notify.info({
         title: "Creación cancelada",
         message: "No se creo inventario nuevo",
-        duration: 0,
+        duration: 3000,
       });
       this.$router.push({
         name: "newinventory",

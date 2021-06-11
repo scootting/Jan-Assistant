@@ -96,7 +96,7 @@ export default {
           this.$notify.success({
             title: "Imagen (es) guardada (s)",
             message: "Se guardo exitosamente",
-            duration: 0,
+            duration: 3000,
           });
         })
         .catch((err) => {

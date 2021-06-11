@@ -259,7 +259,7 @@ export default {
       this.$notify.info({
         title: "Edicion cancelada",
         message: "No se hizo cambios al Activo seleccionado",
-        duration: 0,
+        duration: 3000,
       });
       this.$router.push({
         name: "active",
@@ -337,7 +337,7 @@ export default {
           this.$notify.success({
             title: "Cambios guardados",
             message: "Se realizo cambios al Activo seleccionado exitosamente",
-            duration: 0,
+            duration: 3000,
           });
         })
         .catch((err) => {
@@ -348,7 +348,7 @@ export default {
            this.$notify.success({
             title: "Cambios guardados",
             message: "Se realizo cambios al Activo seleccionado exitosamente",
-            duration: 0,
+            duration: 3000,
           });
           this.$router.push({
           name: "active",

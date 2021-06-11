@@ -206,7 +206,7 @@ export default {
       this.$notify.info({
         title: "QR emitido",
         message: "boton de prueba",
-        duration: 0,
+        duration: 5000,
       });
       this.$router.push({
         name: "active",
@@ -216,7 +216,7 @@ export default {
       this.$notify.info({
         title: "Creación de activo cancelado",
         message: "No se registro ningún activo nuevo",
-        duration: 0,
+        duration: 3000,
       });
       this.$router.push({
         name: "active",
@@ -293,7 +293,7 @@ export default {
           this.$notify.success({
             title: "Activo registrado exitosamente!",
             message: "Se realizó el registro del al Activo exitosamente",
-            duration: 0,
+            duration: 3000,
           });
           this.$router.push({
             name: "active",

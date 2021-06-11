@@ -64,17 +64,18 @@
           <el-table-column label="Identificador" width="130">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="small">{{ scope.row.cod_ant }}</el-tag>
+                <el-tag size="small">{{ scope.row.id }}</el-tag>
               </div>
             </template>
           </el-table-column>
           <el-table-column
             prop="des"
-            label="DESCRIPCION"
-            width="300"
+            label="DESCRIPCION DE ACTIVO"
+            width="400"
           ></el-table-column>
           <el-table-column label="ESTADO" width="150">
             <el-select
+              :disabled="data[scope.$index].detalle_doc_act.validacion == true"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.est_act"
               value-key="desc"
@@ -91,30 +92,38 @@
           </el-table-column>
           <el-table-column label="OBSERVACIONES" width="250">
             <input
+              :disabled="data[scope.$index].detalle_doc_act.validacion == true"
               type="text"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.obs_est"
               style="width: 200px"
             />
           </el-table-column>
-          <el-table-column label="VALIDACION" width="180">
+          <!-- <el-table-column label="VALIDACION" width="180">
             <template slot-scope="scope">
               <el-checkbox
                 v-model="data[scope.$index].detalle_doc_act.validacion"
                 label="Verificado"
               ></el-checkbox>
             </template>
-          </el-table-column>
-          <el-table-column align="right-center" width="200" label="Operaciones">
+          </el-table-column> -->
+          <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
               <el-button
+                v-model="data[scope.$index].detalle_doc_act.validacion"
+                :disabled="
+                  data[scope.$index].detalle_doc_act.validacion == true
+                "
                 plain
                 type="primary"
                 size="mini"
                 @click="saveActiveInDetail(scope.$index)"
-                >Guardar</el-button
+                >VERIFICAR</el-button
               >
               <el-button
+                :disabled="
+                  data[scope.$index].detalle_doc_act.validacion == true
+                "
                 plain
                 type="primary"
                 size="mini"
@@ -154,7 +163,7 @@
             type="success"
             size="small"
             plain
-             @click="showObservacionInventory = true"
+            @click="showObservacionInventory = true"
             >OBSERVACIONES</el-button
           >
         </div>
@@ -175,7 +184,9 @@
       </el-input>
       <span slot="footer">
         <el-button @click="onCancelDialog">CANCELAR</el-button>
-        <el-button type="primary" @click="onConfirmDialog">GUARDAR OBSERVACIONES</el-button>
+        <el-button type="primary" @click="onConfirmDialog"
+          >GUARDAR OBSERVACIONES</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -194,7 +205,7 @@ export default {
       estados: [],
       verificado: false,
       showObservacionInventory: false,
-      addObservacion:'SIN OBSERVACIONES',
+      addObservacion: "SIN OBSERVACIONES",
       checked: true,
       doc_inv_no_cod: null,
       doc_inv: null,
@@ -205,7 +216,6 @@ export default {
       pagination: {
         page: 1,
       },
-      lista: [],
     };
   },
   mounted() {
@@ -273,9 +283,6 @@ export default {
       this.pagination.page = page;
       this.getActivesSearch();
     },
-    test() {
-      alert("bienvenido al modulo");
-    },
     formatResponsable(responsable) {
       return {
         responsable:
@@ -295,14 +302,16 @@ export default {
         axios
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
+            validacion: true,
             cod_ges: this.user.gestion,
             cod_act: this.data[index].cod_ant,
           })
           .then((data) => {
             this.$notify.success({
               title: "Cambios guardados",
-              message:"Se realizo cambios al Documento de inventario seleccionado exitosamente",
-              duration: 0,
+              message:
+                "Se realizo cambios al Documento de inventario seleccionado exitosamente",
+              duration: 5000,
             });
             this.getActivesSearch();
           })
@@ -321,7 +330,7 @@ export default {
       });
     },
     onConfirmDialog() {
-     this.showObservacionInventory = false;
+      this.showObservacionInventory = false;
     },
     onCancelDialog() {
       this.inventario.observaciones = this.addObservacion;
@@ -330,15 +339,15 @@ export default {
     updateState() {
       axios
         .post("/api/inventory2/verificar", {
-            estado: this.inventario.estado,
-            observaciones: this.inventario.observaciones,
-            nro_cod: this.doc_inv.id
+          estado: this.inventario.estado,
+          observaciones: this.inventario.observaciones,
+          nro_cod: this.doc_inv.id,
         })
         .then((data) => {
           this.$notify.success({
             title: "Estado actualizado",
             message: "Se habilito el boton de imprimir",
-            duration: 0,
+            duration: 3000,
           });
         })
         .catch((err) => {
@@ -352,20 +361,19 @@ export default {
           name: "inventory2",
         });
         this.updateState();
-      } 
-      else{
+      } else {
         this.$notify.info({
-        title: "No puede Verificar Inventario",
-        message: "Aun no a sido verificado todos los activos del inventario",
-        duration: 0,
-      });
+          title: "No puede Verificar Inventario",
+          message: "Aun no a sido verificado todos los activos del inventario",
+          duration: 3000,
+        });
       }
     },
     returnPage() {
       this.$notify.info({
         title: "Edicion cancelada",
         message: "prueba de boton",
-        duration: 0,
+        duration: 5000,
       });
       this.$router.push({
         name: "inventory2",
