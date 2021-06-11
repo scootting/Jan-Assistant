@@ -117,17 +117,16 @@ class InventoryController extends Controller
             \Log::info('tipo filtro: '.$tipo_filtro);
             switch ($tipo_filtro) {
                 case 'cargo':
-                    $controls = array('cargo' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'cargoDetalle';
+                    $controls = array('p_car_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'car_detalle_1';
                     break;
                 case 'subUnidad':
-                    $controls = array('subUnidad' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'subUnidadDetalle';
-                    break;
-                    $controls = array('ci_list' => implode(',', $valor), 'unidad' => $ofc_cod);
-                    $reportName = 'reporteDetallado';
+                    $controls = array('p_sub_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'sub_ofc_detalle_1';
                     break;
                 case 'responsable':
+                    $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
+                    $reportName = 'resp_detalle_1';
                     break;
                 case 'todo':
                     $controls = array('p_unidad' => $ofc_cod);
