@@ -71,7 +71,6 @@ class InventoryController extends Controller
                 break;
         }
 
-        //$data = Inventory::getActivosBySoaAndResp($cod_soa,$ci_resp);
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
@@ -83,6 +82,7 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
+
     //reportes usando Jasper
     public function getReport(Request $request)
     {
@@ -101,7 +101,7 @@ class InventoryController extends Controller
                     $reportName = 'sub_ofc_general_1';//funciona
                     break;
                     $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'resp_general_1';
+                    $reportName = 'resp_general_1';//funciona
                     break;
                 case 'responsable':
                     break;
@@ -118,125 +118,26 @@ class InventoryController extends Controller
             switch ($tipo_filtro) {
                 case 'cargo':
                     $controls = array('p_car_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'car_detalle_1';
+                    $reportName = 'car_detallado_1';//funciona
                     break;
                 case 'subUnidad':
                     $controls = array('p_sub_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'sub_ofc_detalle_1';
+                    $reportName = 'sub_ofc_detallado_1';//funciona
                     break;
                 case 'responsable':
                     $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'resp_detalle_1';
+                    $reportName = 'resp_detallado_1';//funciona
                     break;
                 case 'todo':
                     $controls = array('p_unidad' => $ofc_cod);
-                    $reportName = 'todo_detallado';
+                    $reportName = 'todo_detallado_1';//funciona
                     break;
             }
             $report = JSRClient::GetReportWithParameters($reportName, $controls);
             return $report;
         }
     }
-    //Funcion para generar reportes desde la vista inventarioDetail
-    public function getGenerarReporte(Request $request)
-    {
-        /*
-        $cod_ofc = $request->ofc_cod;
-        $tipo_reporte = ($request->get('reporte'));
-        $tipo_filtro = ($request->get('filtroTipo'));
-        $valor = ($request->get('filtroValor'));
-        if ($tipo_reporte == 'general') {
-            switch ($tipo_filtro) {
-                case 'cargo':
-                    $param = array('cargo' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('cargoGeneral', $param);
-                    $filename = 'cargoGeneral.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'subUnidad':
-                    $param = array('subUnidad' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('subUnidadGeneral1', $param);
-                    $filename = 'subUnidadGeneral1.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'responsable':
-                    $param = array('ci_list' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('responsableGeneral', $param);
-                    $filename = 'responsableGeneral.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'todo':
-                    $param = array('unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('todo_general', $param);
-                    $filename = 'todo_general.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-            }
 
-        }
-        if ($tipo_reporte == 'detallado') {
-            switch ($tipo_filtro) {
-                case 'cargo':
-                    $param = array('cargo' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('cargoDetalle', $param);
-                    $filename = 'cargoDetalle.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'subUnidad':
-                    $param = array('subUnidad' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('subUnidadDetalle', $param);
-                    $filename = 'subUnidadDetalle.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'responsable':
-                    $param = array('ci_resp' => implode(',', $valor), 'unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('reporteDetallado', $param);
-                    $filename = 'reporteDetallado.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-                case 'todo':
-                    $param = array('unidad' => $cod_ofc);
-                    $pathToFile = $this->generarReporte('todo_detallado', $param);
-                    $filename = 'todo_detallado.pdf';
-                    $headers = ['Content-Type' => 'application/pdf'];
-                    return response()->download($pathToFile, $filename, $headers);
-                    break;
-            }
-
-        }*/
-    }
-//generador de reporte (comun denominador)
-    public static function generarReporte($reportName, $parametros)
-    {
-        $jasper = new JasperPHP;
-        $input = public_path() . '/reports/' . $reportName . '.jrxml';
-        $jasper->compile($input)->execute();
-        $input = public_path() . '/reports/' . $reportName . '.jasper'; //ReportValuesQr
-        $output = public_path() . '/reports/';
-        $jasper->process(
-            $input,
-            $output,
-            array('pdf', 'rtf'), // Formatos de salida del reporte
-            $parametros, //array('php_version' => phpversion()),// Parámetros del reporte
-            array(
-                'driver' => 'postgres',
-                'username' => 'postgres',
-                'password' => '123456',
-                'host' => '192.168.25.54',
-                'database' => 'daf',
-                'port' => '5432',
-            )
-        )->execute();
-        $pathToFile = public_path() . '/reports/' . $reportName . '.pdf';
-        return $pathToFile;
-    }
     //OBTENER LOS INVENTARIOS CREADOS (NUEVOS) BUSCADOR
     public function getInventories(Request $request, $gestion)
     {
