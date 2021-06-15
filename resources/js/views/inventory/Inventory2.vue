@@ -116,6 +116,7 @@ export default {
           console.log(err);
         });
     },
+
     getOfficesPaginate(page) {
       this.pagination.page = page;
       this.getInventories();

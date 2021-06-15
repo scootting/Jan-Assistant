@@ -348,7 +348,7 @@ class InventoryController extends Controller
     }
     public function saveActiveInDetailDoc(Request $request)
     {
-        // dd($request);
+        //dd($request);
         if ($request->has('id')) {
             $id = $request->id;
         } else {
@@ -361,7 +361,9 @@ class InventoryController extends Controller
         $id_des = $request->id_des;
         $est_act = $request->est_act;
         $obs_est = $request->obs_est;
-        $validacion = $request->validacion;
+        //$validacion = $request->validacion;
+        $validacion = ($request->validacion) ? $request->validacion :'false';
+        //dd($id,$nro_doc_inv,$cod_ges,$obs_est,$validacion,$validacion);
         $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges,$cod_act,$id_act, $id_des, $est_act, $obs_est, $validacion, $id);
         return json_encode($data);
     }

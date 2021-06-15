@@ -69,13 +69,12 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="des"
+            prop="act_des"
             label="DESCRIPCION DE ACTIVO"
             width="400"
           ></el-table-column>
           <el-table-column label="ESTADO" width="150">
             <el-select
-              :disabled="data[scope.$index].detalle_doc_act.validacion == true"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.est_act"
               value-key="desc"
@@ -92,28 +91,23 @@
           </el-table-column>
           <el-table-column label="OBSERVACIONES" width="250">
             <input
-              :disabled="data[scope.$index].detalle_doc_act.validacion == true"
               type="text"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.obs_est"
               style="width: 200px"
             />
           </el-table-column>
-          <!-- <el-table-column label="VALIDACION" width="180">
+           <el-table-column prop="validacion" label="VALIDACION" width="180">
             <template slot-scope="scope">
               <el-checkbox
                 v-model="data[scope.$index].detalle_doc_act.validacion"
                 label="Verificado"
               ></el-checkbox>
             </template>
-          </el-table-column> -->
+          </el-table-column> 
           <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
               <el-button
-                v-model="data[scope.$index].detalle_doc_act.validacion"
-                :disabled="
-                  data[scope.$index].detalle_doc_act.validacion == true
-                "
                 plain
                 type="primary"
                 size="mini"
@@ -121,9 +115,6 @@
                 >VERIFICAR</el-button
               >
               <el-button
-                :disabled="
-                  data[scope.$index].detalle_doc_act.validacion == true
-                "
                 plain
                 type="primary"
                 size="mini"
@@ -210,6 +201,7 @@ export default {
       doc_inv_no_cod: null,
       doc_inv: null,
       loading: false,
+      validacion:false,
       user: this.$store.state.user,
       messages: {},
       data: [],
@@ -238,7 +230,7 @@ export default {
     whenDontHaveDocDetail() {
       return {
         est_act: 1,
-        validacion: false,
+        //validacion: false,
       };
     },
     getEstados() {
@@ -268,7 +260,7 @@ export default {
             if (!a.detalle_doc_act)
               a.detalle_doc_act = this.whenDontHaveDocDetail();
             a.detalle_doc_act.id_act = a.id;
-            a.detalle_doc_act.id_des = a.esquema;
+            a.detalle_doc_act.id_des = a.per_tab;
             a.detalle_doc_act.doc_cod = this.doc_inv.no_cod;
             a.detalle_doc_act.cod_act = this.doc_inv.cod_nue;
             return a;
@@ -302,7 +294,6 @@ export default {
         axios
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
-            validacion: true,
             cod_ges: this.user.gestion,
             cod_act: this.data[index].cod_ant,
           })
