@@ -10,12 +10,31 @@
 	<property name="ireport.jasperserver.reportUnit" value="/reports/interactive/FixedAssetsQr"/>
 	<parameter name="p_lista" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT aa.codigo,aa.act_des,aa.act_fec_adq,aa.act_par_cod,aa.act_cod_con FROM act.activos aa where aa.codigo in (select unnest(string_to_array( $P{p_lista}, ',')))]]>
+		<![CDATA[ SELECT aa.codigo,
+ 		aa.ofc_cod,
+        (SELECT o.descripcion 
+           FROM inv.oficinas o
+          WHERE o.cod_soa = aa.ofc_cod limit 1) as ofc_des,
+        aa.act_des,
+        aa.act_fec_adq,
+        aa.act_par_cod,
+        aa.act_cod_con 
+   FROM act.activos aa 
+ WHERE aa.codigo IN (SELECT unnest(string_to_array( $P{p_lista}, ',')))]]>
 	</queryString>
 	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
 		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activos"/>
+	</field>
+	<field name="ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
 	</field>
 	<field name="act_des" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="act_des"/>
@@ -51,7 +70,7 @@
 			<componentElement>
 				<reportElement x="114" y="0" width="52" height="51" uuid="b40586a3-eaf6-4199-81c2-334d6a030df6"/>
 				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<jr:codeExpression><![CDATA[$F{codigo}+"|"+$F{act_fec_adq}+"|"+$F{act_par_cod}+"|"+$F{act_des}]]></jr:codeExpression>
+					<jr:codeExpression><![CDATA[$F{codigo}+"|"+$F{ofc_des}+"|"+$F{act_fec_adq}+"|"+$F{act_par_cod}+"|"+$F{act_des}]]></jr:codeExpression>
 				</jr:QRCode>
 			</componentElement>
 			<staticText>

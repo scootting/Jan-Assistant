@@ -17,6 +17,8 @@ import EditUser from './views/application/EditUser'
 import ShowUser from './views/application/ShowUser'
 import EditUserProfiles from './views/application/EditUserProfiles'
 
+//certificado de diplomados
+import AddGraduateCertificate from './views/document/AddGraduateCertificate'
 
 //persona
 import Persons from './views/application/Persons'
@@ -135,6 +137,8 @@ const router = new VueRouter({
                 { path: 'active', name: 'active', component: Active },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
                 { path: 'newactive', name: 'newactive' , component: NewActive },
+
+                { path: 'addgraduatecertificate', name: 'addgraduatecertificate' , component: AddGraduateCertificate },
 
                 //enlaces para la administracion de paginas de tesoreria
                 { path: 'solvency', name: 'solvency', component: Solvency }, // solvencias
