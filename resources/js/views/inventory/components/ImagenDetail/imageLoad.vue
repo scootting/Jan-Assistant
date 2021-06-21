@@ -3,7 +3,7 @@
     <el-upload
       class="upload-demo"
       drag
-      action="inventory2/upload"
+      action="/api/inventory2/upload"
       accept=".png"
       :on-success="handleSuccessFile"
       :on-remove="handleRemove"
@@ -50,17 +50,12 @@ export default {
       };
     }
   },
-  mounted() {},
   methods: {
-    test() {
-      alert("bienvenido al modulo");
-    },
     /* *** Cuando se eliminar el archivo satisfactoriamente *** */
     handleRemove(file, fileList) {
       axios.get("/api/inventory2/delete/upload-folder/" + file).then((res) => {
         this.getFiles();
       });
-
       console.log(file, fileList);
       this.fileList = FileList;
     },
@@ -75,11 +70,6 @@ export default {
     deleteFile(file) {
       axios.get("/api/inventory2/delete/" + file).then((res) => {
         this.getFiles();
-      });
-    },
-    getFiles() {
-      axios.get("/api/inventory2/files").then((res) => {
-        this.files = res.data;
       });
     },
     downloadFile(file) {

@@ -20,11 +20,11 @@
         </el-col>
       </el-row>
       <br><br>
-      <load-imgs :info="dataSource" @change="onChangeImgs"/> 
+      <load-imgs :info="dataSource" :default-values="data" @change="onChangeImgs"/> 
       <br>
       <!-- <uploader :csrf="csrfToken" :info="dataSource"></uploader> -->
-      <el-button type="primary" size="mini" @click="saveImage">Guardar Imagenes</el-button>
-      <el-button type="primary" size="mini" @click="returnPage">Atras</el-button>
+      <el-button type="primary" size="mini" plain @click="saveImage">Guardar Imagenes</el-button>
+      <el-button type="danger" size="mini" plain @click="returnPage">Atras</el-button>
     </el-card>
     
     
@@ -41,6 +41,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       messages: {},
       gestion: this.$store.state.user.gestion,
       image: {},
@@ -48,19 +49,14 @@ export default {
       data: {
         cod_act: '',
       },
-      //  image: {
-      //    descripcion: "MESA",
-      //   codigo: "cod-98",
-      //   oficina: "00000001",
-      //   gestion: "2021",
-      //   tipo: "Bono de Te"
-      // }
     };
   },
   created() {
     //created vs mounted
     var app = this;
     this.id = this.$route.params.id;
+    //recuperar
+  	this.getData();
     this.no_doc = this.$route.params.no_cod;
     axios
       .get("/api/reasignacion/edit/" + this.id)
@@ -77,15 +73,22 @@ export default {
       });
   },
   computed: {
-    // un getter computado
-    reversedMessage: function () {
-      return "hola";
-    },
     dataSource: function () {
       return this.image;
     },
   },
   methods: {
+    getData(){
+      axios
+        .get("/api/inventory2/image/"+this.id)
+        .then((data) => {
+          if(data.data[0] != undefined)
+            this.data = data.data[0];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     onChangeImgs(imgs){
       this.data = {...this.data, ...imgs};
     },

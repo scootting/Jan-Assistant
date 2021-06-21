@@ -64,7 +64,7 @@
           <el-table-column label="Identificador" width="130">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="small">{{ scope.row.id }}</el-tag>
+                <el-tag size="small">{{ scope.row.id }}-{{ scope.row.per_tab }}</el-tag>
               </div>
             </template>
           </el-table-column>
@@ -73,8 +73,14 @@
             label="DESCRIPCION DE ACTIVO"
             width="400"
           ></el-table-column>
+          <el-table-column
+            prop="per_tab"
+            label="esquema"
+            width="90"
+          ></el-table-column>
           <el-table-column label="ESTADO" width="150">
             <el-select
+              :disabled="data[scope.$index].detalle_doc_act.guardado == true"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.est_act"
               value-key="desc"
@@ -91,23 +97,26 @@
           </el-table-column>
           <el-table-column label="OBSERVACIONES" width="250">
             <input
+              :disabled="data[scope.$index].detalle_doc_act.guardado == true"
               type="text"
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.obs_est"
               style="width: 200px"
             />
           </el-table-column>
-           <el-table-column prop="validacion" label="VALIDACION" width="180">
+          <el-table-column label="VALIDACION" width="180">
             <template slot-scope="scope">
               <el-checkbox
+                :disabled="data[scope.$index].detalle_doc_act.guardado == true"
                 v-model="data[scope.$index].detalle_doc_act.validacion"
                 label="Verificado"
               ></el-checkbox>
             </template>
-          </el-table-column> 
+          </el-table-column>
           <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
               <el-button
+                :disabled="data[scope.$index].detalle_doc_act.guardado == true"
                 plain
                 type="primary"
                 size="mini"
@@ -115,6 +124,7 @@
                 >VERIFICAR</el-button
               >
               <el-button
+                :disabled="data[scope.$index].detalle_doc_act.guardado == true"
                 plain
                 type="primary"
                 size="mini"
@@ -197,14 +207,15 @@ export default {
       verificado: false,
       showObservacionInventory: false,
       addObservacion: "SIN OBSERVACIONES",
-      checked: true,
+      guardado: false,
       doc_inv_no_cod: null,
       doc_inv: null,
       loading: false,
-      validacion:false,
       user: this.$store.state.user,
       messages: {},
-      data: [],
+      data: [
+        
+      ],
       pagination: {
         page: 1,
       },
@@ -230,7 +241,6 @@ export default {
     whenDontHaveDocDetail() {
       return {
         est_act: 1,
-        //validacion: false,
       };
     },
     getEstados() {
@@ -286,14 +296,12 @@ export default {
         nro_dip: responsable.nro_dip,
       };
     },
-    change(checked) {
-      this.checked = true;
-    },
     saveActiveInDetail(index) {
       {
         axios
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
+            guardado: true,
             cod_ges: this.user.gestion,
             cod_act: this.data[index].cod_ant,
           })
@@ -364,7 +372,7 @@ export default {
       this.$notify.info({
         title: "Edicion cancelada",
         message: "prueba de boton",
-        duration: 5000,
+        duration: 3000,
       });
       this.$router.push({
         name: "inventory2",

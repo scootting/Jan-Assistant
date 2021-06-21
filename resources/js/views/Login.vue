@@ -13,7 +13,8 @@
                 style="float: right; padding: 3px 0"
                 type="text"
                 @click.native="drawer = true"
-              >ayuda</el-button>
+                >ayuda</el-button
+              >
             </div>
             <div>
               <el-form
@@ -29,7 +30,11 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input v-model="model.password" placeholder="Contaseña" type="password">
+                  <el-input
+                    v-model="model.password"
+                    placeholder="Contaseña"
+                    type="password"
+                  >
                     <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                   </el-input>
                 </el-form-item>
@@ -40,7 +45,8 @@
                     type="primary"
                     native-type="submit"
                     block
-                  >acceder</el-button>
+                    >acceder</el-button
+                  >
                 </el-form-item>
               </el-form>
             </div>
@@ -52,7 +58,15 @@
       </el-row>
       <!-- *** Formulario de Ayuda al Usuario *** -->
       <el-drawer title="Ayuda" :visible.sync="drawer" :with-header="false">
-        <span>Hola te puedo ayudar?</span>
+        <span>Hola te puedo ayudar?</span> <br /><br />
+        <span
+          >Se encuentra en la pantalla de ingreso por favor ingrese su nombre de
+          usuario que puede ser la inicial de su primer nombre y primer apellido
+          y contraseña asignado por el encargado de sistemas </span
+        ><br />
+        <h4>EJ: Jesus Pérez -> JPEREZ</h4>
+        <br />
+        <h4>contraseña -> 123456</h4>
       </el-drawer>
     </el-main>
   </div>

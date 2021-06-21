@@ -87,7 +87,7 @@
             label="CANTIDAD"
             width="180"
           ></el-table-column>
-          <el-table-column prop="uni_med" label="UNI. MED."></el-table-column>
+          <el-table-column prop="uni_med" label="UNI. MED." width="180"></el-table-column>
           <el-table-column prop="act_des" label="DESCRIPCION"></el-table-column>
           <el-table-column
             v-if="tipoReporte === 'general'"
@@ -179,16 +179,15 @@ export default {
     };
   },
   mounted() {
-    this.getActivosPaginate();
+    
     let cod_soa = this.$route.params.soa;
     axios
       .get("/api/inventory/show/" + cod_soa)
       .then((data) => {
         this.oficina = data.data;
-        this.getRespBySoa();
-      })
+        })
       .catch((err) => {});
-  },
+      },
   computed: {
     tipoReporte() {
       return this.reporte.tipo;
@@ -196,24 +195,19 @@ export default {
   },
   methods: {
     //cargamos los activos con el encargado seleccionado
-    getActivosPaginate(page) {
-      this.pagination.page = page;
-      this.selectEncargado();
+     getActivosPaginate(page) {
+       this.pagination.page = page;
+       this.cargarActivos();
     },
-    selectEncargado(sub_ofc_cod) {
-      this.respSelectCI = sub_ofc_cod;
-      this.cargarActivos();
-    },
-
     cargarActivos() {
-      this.loading = true;
-      let params = {
+      this.loading = true; 
+      let params = { 
+        cod_soa: this.oficina.cod_soa,
         page: this.pagination.page | 1,
         reporte: this.reporte.tipo,
         filtroTipo: this.filtro.tipo,
         filtroValor: this.filtro.values,
       };
-      if (this.respSelectCI != -1) params.ci_resp = this.respSelectCI;
       axios
         .get("/api/inventory/activosByFilter/" + this.oficina.cod_soa, {
           params: params,

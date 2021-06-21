@@ -26,8 +26,9 @@ class InventoryController extends Controller
     }
     public function getOfficeByCodSoa($cod_soa)
     {
+        $tipo_reporte = 'todo';
         $data = Inventory::getOfficeByCodSoa($cod_soa);
-        $data->so_cargos = Inventory::getDatosByCodSoa($cod_soa);
+        $data->lista = Inventory::getActivosBySoa($tipo_reporte, $cod_soa);
         return json_encode($data);
     }
     public function getSubOfficesByCodSoa($cod_soa)
@@ -48,7 +49,7 @@ class InventoryController extends Controller
         $data = Inventory::getResponsablesForActive($cod_soa);
         return json_encode($data);
     }
-    //obtener activos para la muestra en la página de Inventarios.
+    //obtener activos para la lista en la página de Inventarios (ACTIVOS POR UNIDAD).
     public function getActivosByFilter(Request $request, $cod_soa)
     {
         //dd($request);
@@ -67,10 +68,9 @@ class InventoryController extends Controller
                 $data = Inventory::selectByCiResponsable($tipo_reporte, $cod_soa, $valor);
                 break;
             case 'todo':
-                $data = Inventory::getActivosBySoaAndResp($tipo_reporte, $cod_soa, false);
+                $data = Inventory::getActivosBySoa($tipo_reporte, $cod_soa);
                 break;
         }
-
         $page = ($request->get('page')) ? $request->get('page') : null;
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
@@ -82,8 +82,7 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
-
-    //reportes usando Jasper
+    //reportes usando Jasper (REPORTES GENERAL Y DETALLADO)
     public function getReport(Request $request)
     {
         $tip_repo = $request->get('reporte');
@@ -94,50 +93,49 @@ class InventoryController extends Controller
             switch ($tipo_filtro) {
                 case 'cargo':
                     $controls = array('p_car_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'car_general_1';//funciona
+                    $reportName = 'car_general_1'; //funciona
                     break;
                 case 'subUnidad':
                     $controls = array('p_sub_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'sub_ofc_general_1';//funciona
+                    $reportName = 'sub_ofc_general_1'; //funciona
                     break;
                     $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'resp_general_1';//funciona
+                    $reportName = 'resp_general_1'; //funciona
                     break;
                 case 'responsable':
                     break;
                 case 'todo':
                     $controls = array('p_unidad' => $ofc_cod);
-                    $reportName = 'todo_general';//funciona
+                    $reportName = 'todo_general'; //funciona
                     break;
             }
             $report = JSRClient::GetReportWithParameters($reportName, $controls);
             return $report;
         } else { //detallado
             \Log::info('llegamos aca');
-            \Log::info('tipo filtro: '.$tipo_filtro);
+            \Log::info('tipo filtro: ' . $tipo_filtro);
             switch ($tipo_filtro) {
                 case 'cargo':
                     $controls = array('p_car_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'car_detallado_1';//funciona
+                    $reportName = 'car_detallado_1'; //funciona
                     break;
                 case 'subUnidad':
                     $controls = array('p_sub_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'sub_ofc_detallado_1';//funciona
+                    $reportName = 'sub_ofc_detallado_1'; //funciona
                     break;
                 case 'responsable':
                     $controls = array('p_resp_unidad' => implode(',', $valor), 'p_unidad' => $ofc_cod);
-                    $reportName = 'resp_detallado_1';//funciona
+                    $reportName = 'resp_detallado_1'; //funciona
                     break;
                 case 'todo':
                     $controls = array('p_unidad' => $ofc_cod);
-                    $reportName = 'todo_detallado_1';//funciona
+                    $reportName = 'todo_detallado_1'; //funciona
                     break;
             }
             $report = JSRClient::GetReportWithParameters($reportName, $controls);
             return $report;
         }
     }
-
     //OBTENER LOS INVENTARIOS CREADOS (NUEVOS) BUSCADOR
     public function getInventories(Request $request, $gestion)
     {
@@ -154,6 +152,7 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
+    //USADO EN ACTIVOS,EDIT ACTIVOS Y EDIT-INVENTORY
     public function getUnidad(Request $request)
     {
         $keyWord = ($request->get('keyWord') ? $request->get('keyWord') : '');
@@ -328,7 +327,7 @@ class InventoryController extends Controller
         return json_encode($data);
     }
     //reutilizar para traer los activos que no estan aun verificados
-    public static function getActivesForDocInv(Request $request, $doc_cod)
+    public function getActivesForDocInv(Request $request, $doc_cod)
     {
         //dd($request);
         $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
@@ -340,7 +339,7 @@ class InventoryController extends Controller
         $data = Inventory::SearchActiveForDocInv($doc_cod, $ofc_id, $sub_ofc_ids, $keyWord, $page, $perPage);
         return json_encode($data);
     }
-    
+
     public function getEstados()
     {
         $data = Inventory::getEstados();
@@ -361,19 +360,18 @@ class InventoryController extends Controller
         $id_des = $request->id_des;
         $est_act = $request->est_act;
         $obs_est = $request->obs_est;
-        //$validacion = $request->validacion;
-        $validacion = ($request->validacion) ? $request->validacion :'false';
-        //dd($id,$nro_doc_inv,$cod_ges,$obs_est,$validacion,$validacion);
-        $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges,$cod_act,$id_act, $id_des, $est_act, $obs_est, $validacion, $id);
+        $validacion = ($request->post('validacion')) ? $request->post('validacion') : 'false';
+        $guardado = $request->guardado;
+        $data = Inventory::saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $guardado, $id);
         return json_encode($data);
     }
-    public function changeStateInventory( Request $request)
+    public function changeStateInventory(Request $request)
     {
-       //dd($request);
-        $estado=$request->estado;
-        $observaciones=$request->observaciones;
-        $id=$request->nro_cod;
-       //dd($estado,$observaciones,$id);
+        //dd($request);
+        $estado = $request->estado;
+        $observaciones = $request->observaciones;
+        $id = $request->nro_cod;
+        //dd($estado,$observaciones,$id);
         $data = Inventory::updateState($estado, $observaciones, $id);
         return json_encode($data);
     }
@@ -383,26 +381,26 @@ class InventoryController extends Controller
         return json_encode($data);
     }
     //funcion cargar imagenes de activos para nuevo inventario
-    public function index(){
-        return Storage::files('upload');
-    }
-    public function uploadImage( Request $request){
-        //dd($request);
+    public function uploadImage(Request $request)
+    {
         $dataSource = $request->get('datasource');
         $arrayData = json_decode($dataSource, true);
         $ofc_cod = $arrayData['ofc_cod'];
-        $id = $arrayData['id'];    
-
-        if ($request->hasFile('file')) {
+        $id = $arrayData['id'];
+        $sub_ofc_cod = $arrayData['sub_ofc_cod'];
+        if ($request->hasFile('file')) 
+        {
             $file = $request->file('file');
             $file_name = $file->getClientOriginalName();
-            $path = 'upload/'.strval($id).'/'.strval($ofc_cod);
+            $path = 'upload/' . strval($ofc_cod) . '/' . strval($sub_ofc_cod). '/' . strval($id);
             $file->storeAs($path, $file_name);
-        } else {
-            return response()->json(['error'=>'File not exist!']);
+        } 
+        else 
+        {
+            return response()->json(['error' => 'File not exist!']);
         }
-        return response()->json(['success'=>'Cargo exitoso.','path' => '/'.$path.'/'.$file_name]);
-    } 
+        return response()->json(['success' => 'Cargo exitoso.', 'path' => '/' . $path . '/' . $file_name]);
+    }
     public function saveImages(Request $request)
     {
         //dd($request);
@@ -415,5 +413,9 @@ class InventoryController extends Controller
         $data = Inventory::saveImage($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post);
         return json_encode($data);
     }
-
+    public static function getImagesById($cod_act)
+    {
+        $data = Inventory::getImagesByIdAct($cod_act);
+        return json_encode($data);
+    }
 }
