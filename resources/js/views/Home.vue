@@ -83,7 +83,7 @@
                       Curso de Pagos Electrónicos para Entidades Territoriales Autónomas y Universidades
                     </li>
                     <li>
-                      sigep
+                      sistema de gestion gubernamental SIGEP
                     </li>
                   </ul>
                 </p>
@@ -93,30 +93,37 @@
                 <p>
                   <ul>
                     <li>
-                      pagina principal
+                      <a href="http://academico.uatf.edu.bo/">
+                      paginal principal
+                      </a>
                     </li>
                     <li>
+                      <a href="https://mail.uatf.edu.bo/">
                       correo institucional
+                      </a>
                     </li>
                   </ul>
                 </p>
               </el-col>
               <el-col :span="8">
                 <h5>otros enlaces de interes</h5>
-                  <!--
-                <p>
-                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
-                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                  Donec sed odio dui.
-                </p>
-                <el-row>
-                  <el-button>Default</el-button>
-                  <el-button size="medium">Medium</el-button>
-                  <el-button size="small">Small</el-button>
-                  <el-button size="mini">Mini</el-button>
-                </el-row>
-                  -->
+                  <ul>
+                    <li>
+                      <a href="https://www.economiayfinanzas.gob.bo">
+                      ministerio de economía y finanzas bolivia
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://adsib.gob.bo/portal_frontend/">
+                      adsib bolivia
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.contraloria.gob.bo/portal/">
+                      Contraloría General del Estado - Bolivia
+                      </a>
+                    </li>
+                  </ul>
               </el-col>
             </el-row>
             <el-divider></el-divider>
@@ -236,12 +243,26 @@ textarea {
 }
 
 ul {
+  list-style-type: none;
+}
+li {
+  padding: 5px 0;
+  box-sizing: border-box;
+  display: flex;
+}
+a {
+  color:cadetblue;
+  outline: none;
+  text-decoration: none;
+  padding: 5px 5px 0;
+}
+/*
+ul {
   counter-reset: index;
   padding: 0;
   max-width: 1000px;
 }
 
-/* List element */
 li {
   counter-increment: index;
   display: flex;
@@ -251,7 +272,6 @@ li {
   box-sizing: border-box;
 }
 
-/* Element counter */
 li::before {
   content: counters(index, ".", decimal-leading-zero);
   font-size: 1.5rem;
@@ -267,8 +287,8 @@ li::before {
   -webkit-text-fill-color: transparent;
 }
 
-/* Element separation */
 li + li {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
+*/
 </style>
