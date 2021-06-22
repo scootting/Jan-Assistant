@@ -46,11 +46,11 @@ class Inventory extends Model
     {
         $query = "select * from inv.sub_oficinas 
         where inv.sub_oficinas.id in (select sub_ofc_cod
-        from inv.union_activos ".($cod_soa? ("where ofc_cod = '" . $cod_soa . "'"):"")." 
+        from inv.union_activos " . ($cod_soa ? ("where ofc_cod = '" . $cod_soa . "'") : "") . " 
         group by sub_ofc_cod)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-    } 
+    }
     //Obtener los responsables para filtrar los activos para realizar los listados o generar los reportes 
     public static function getResponsablesForActive($cod_soa)
     {
@@ -62,27 +62,16 @@ class Inventory extends Model
         return $data;
     }
     //Obtener activos cuando el filtro este en TODO (esta funcion se está reutilizando)
-    public static function getActivosBySoaAndResp($tipo,$cod_soa, $ci_resp)
+    public static function getActivosBySoa($tipo, $cod_soa)
     {
-        
-        // $db = DB::table('inv.activos')->where('inv.activos.ofc_cod', $cod_soa);
-        //  if ($ci_resp) {
-        //  $db->where('inv.activos.sub_ofc_cod', $ci_resp);
-        //  }
-        // return $db->get();
         if ($tipo == 'general') {
-
-            //$query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')"; 
-            $query = "select * from act.ff_activos_general('". $cod_soa ."')";
+            $query = "select * from act.ff_activos_general('" . $cod_soa . "')";
         } else {
-            //$query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_detallado('". $cod_soa ."')";
+            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-    } 
-
-
+    }
     // parte de Inventarios 2 (renombrado como INVENTARIO)
     //obtener inventarios creados
     public static function getInventories($gestion, $descripcion)
@@ -122,7 +111,7 @@ class Inventory extends Model
             $query = $query . " and of.id = " . $idUnidad . " ";
         if ($cod_ofc)
             $query = $query . " and of.cod_ofc = " . $cod_ofc . " ";
-       $query = $query . "
+        $query = $query . "
        group by sof.id, sof.descripcion";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -148,7 +137,7 @@ class Inventory extends Model
         ";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-                                                        }
+    }
 
     //obtener los responsables que realizaran el nuevo inventario
     public static function getResponsables($unidad, $cargos)
@@ -199,12 +188,6 @@ class Inventory extends Model
         $newId = ((int)$idmax) + 1;
         $cad = '0000' . $newId;
         return substr($cad, strlen($cad) - 4);
-    }
-    public static function getDatosByCodSoa($cod_soa)
-    {
-        $query = "select * from inv.ff_getdatosbycodsoa('". $cod_soa ."')";
-        $data = collect(DB::select(DB::raw($query)));
-        return $data;
     }
     //guardar datos del nuevo inventario
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion)
@@ -281,9 +264,9 @@ class Inventory extends Model
                 and sof.id = ua.sub_ofc_cod
                 and c.id = ua.car_cod
                 and p.nro_dip = ua.ci_resp";
-                // group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.ofc_cod,
-                //     ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
-                //     p.nombres,p.paterno,p.materno)";
+        // group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.ofc_cod,
+        //     ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
+        //     p.nombres,p.paterno,p.materno)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -323,7 +306,7 @@ class Inventory extends Model
         $query = "select inv.cargos.id , inv.cargos.descripcion
         from inv.cargos
         where 
-        inv.cargos.id='" . $id ."'";
+        inv.cargos.id='" . $id . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -339,27 +322,26 @@ class Inventory extends Model
     //Guardar cambios del Activo
     public static function saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
-        
+
         $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     //Buscar activos por el los datos del documento del inventario
-    public static function SearchActiveForDocInvRegistered($no_cod , $keyWord)
+    public static function SearchActiveForDocInvRegistered($no_cod, $keyWord)
     {
         $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
         $query = DB::table('act.vv_act_detallado')
             ->select('act.vv_act_detallado.*')
             ->whereIn('act.vv_act_detallado.id', $actIDsInDocDetail);
-        if ($keyWord){
-            $query ->where ('act.vv_act_detallado.des' ,'like','%'.$keyWord.'%');
+        if ($keyWord) {
+            $query->where('act.vv_act_detallado.act_des', 'like', '%' . $keyWord . '%');
         };
         return $query->orderBy('act.vv_act_detallado.id', 'asc');
-        
     }
     //buscar los activos de unidad y sub unidad seleccionados pero que NO estan en
     //el documento de nuevo Inventario para verificarlos en el documento del inventario
-    public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord , $registereds)
+    public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord, $registereds)
     {
         $db = DB::table('act.vv_act_detallado as ua')->select('ua.*')
             ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')
@@ -371,20 +353,20 @@ class Inventory extends Model
         if ($sub_ofc_cods) {
             $db->whereIn('ua.sub_ofc_cod', $sub_ofc_cods);
         }
-        if ($keyWord){
-            $db->where('ua.des' ,'like', '%'.$keyWord.'%' );
+        if ($keyWord) {
+            $db->where('ua.act_des', 'like', '%' . $keyWord . '%');
         }
         return $db->orderBy('ua.id', 'asc');
     }
-    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods,$keyWord, $page = 1, $perPage = 10)
+    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods, $keyWord, $page = 1, $perPage = 10)
     {
-        $conteo = null; 
+        $conteo = null;
 
-        $l1 = static::SearchActiveForDocInvRegistered($no_cod , $keyWord);
+        $l1 = static::SearchActiveForDocInvRegistered($no_cod, $keyWord);
 
-        $arrayIds = $l1->pluck('id'); 
-        
-        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord , $arrayIds);
+        $arrayIds = $l1->pluck('id');
+
+        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord, $arrayIds);
 
         $lastPage = (int)ceil(($l1->count() + $l2->count()) / $perPage);
         $total = $l1->count() + $l2->count();
@@ -454,14 +436,14 @@ class Inventory extends Model
         return $data;
     }
     //Guardar datos de los activos en Documento Detalle
-    public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des , $est_act, $obs_est, $validacion, $id)
+    public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $guardado, $id)
     {
         //$fec_cre = Date('d-m-Y');
-        $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $validacion . "','" . $est_act . "','" . $obs_est . "','" . $id . "')";
+        $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $validacion . "','" . $est_act . "','" . $obs_est . "','" . $guardado . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function updateState($estado,$observacion,$nro_cod)
+    public static function updateState($estado, $observacion, $nro_cod)
     {
         $fecha_fin = Date('d-m-Y');
         $query = "select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','" . $nro_cod . "')";
@@ -482,19 +464,19 @@ class Inventory extends Model
     //prueba de elegir por responsable activos de un inventario 
     public static function selectByCiResponsable($tipo, $cod_soa, $ci_resp)
     {
-         $arrString = "{";
-         foreach ($ci_resp as $k => $ci_resp)
-             $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
-         $arrString = $arrString . '}';
+        $arrString = "{";
+        foreach ($ci_resp as $k => $ci_resp)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $ci_resp;
+        $arrString = $arrString . '}';
         if ($tipo == 'general') {
 
             //$query = "select * from inv.ff_getactivosgeneralbyci('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
-            WHERE t.ci_resp in ('". $ci_resp ."')";
+            $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
+            WHERE t.ci_resp in ('" . $ci_resp . "')";
         } else {
             //$query = "select * from inv.ff_getactivosdetallelbyci('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
-            WHERE t.ci_resp in ('". $ci_resp ."')";
+            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
+            WHERE t.ci_resp in ('" . $ci_resp . "')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -502,19 +484,19 @@ class Inventory extends Model
     //prueba de seleccionar inventario por cargo
     public static function selectByCargo($tipo, $cod_soa, $cargo)
     {
-         $arrString = "{";
-         foreach ($cargo as $k => $cargo)
-             $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
-         $arrString = $arrString . '}';
+        $arrString = "{";
+        foreach ($cargo as $k => $cargo)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
+        $arrString = $arrString . '}';
         if ($tipo == 'general') {
 
             //$query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')"; 
-            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
-            WHERE t.car_cod in ('". $cargo ."')";
+            $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
+            WHERE t.car_cod in ('" . $cargo . "')";
         } else {
             //$query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
-            WHERE t.car_cod in ('". $cargo ."')";
+            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
+            WHERE t.car_cod in ('" . $cargo . "')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -524,31 +506,36 @@ class Inventory extends Model
     {
         $arrString = "";
         foreach ($subUnidad as $k => $subUnidad)
-        $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $subUnidad;
         $arrString = $arrString . "";
         if ($tipo == 'general') {
 
             //$query = "select * from inv.ff_getactivosgeneralbysubunidad('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_general('". $cod_soa ."') as t
-            WHERE t.sub_ofc_cod in ('". $subUnidad ."')";
+            $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
+            WHERE t.sub_ofc_cod in ('" . $subUnidad . "')";
         } else {
             //$query = "select * from inv.ff_getactivosdetallebysubunidad('" . $cod_soa . "', '" . $arrString . "')";
-            $query = "select * from act.ff_activos_detallado('". $cod_soa ."') as t
-            WHERE t.sub_ofc_cod in ('". $subUnidad ."')";
+            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
+            WHERE t.sub_ofc_cod in ('" . $subUnidad . "')";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function saveImage ($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post)
-
+    public static function saveImage($cod_act, $img_fro, $img_izq, $img_der, $img_sup, $img_post)
     {
         $query = "Select * from act.f_guardar_imagen('" . $cod_act . "','" . $img_fro . "','" . $img_izq . "','" . $img_der . "','" . $img_sup . "','" . $img_post . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function getListActivesbyNroDoc($cod_soa,$sub_ofc_cod,$nro_doc_inv)
+    public static function getImagesByIdAct($cod_act)
     {
-        $query = "select * from inv.ff_getlistactivosnotdetail('".$cod_soa."','". $sub_ofc_cod ."','".$nro_doc_inv."')";
+        $query = "Select * from act.act_img where cod_act = '". $cod_act ."'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getListActivesbyNroDoc($cod_soa, $sub_ofc_cod, $nro_doc_inv)
+    {
+        $query = "select * from inv.ff_getlistactivosnotdetail('" . $cod_soa . "','" . $sub_ofc_cod . "','" . $nro_doc_inv . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
