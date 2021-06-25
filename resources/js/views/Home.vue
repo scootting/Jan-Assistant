@@ -30,10 +30,7 @@
                   ></el-button>
                   <h4>facilito</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    modulo de pruebas
                   </p>
                 </el-card>
               </el-col>
@@ -47,10 +44,7 @@
                   ></el-button>
                   <h4>tramites</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    modulo de pruebas
                   </p>
                 </el-card>
               </el-col>
@@ -62,12 +56,9 @@
                     circle
                     @click.native="initToDocuments"
                   ></el-button>
-                  <h4>certificado de no deudas</h4>
+                  <h4>certificados</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    modulo de pruebas
                   </p>
                 </el-card>
               </el-col>
@@ -76,10 +67,7 @@
                   <el-button type="text" icon="el-icon-thumb" circle @click.native="LoginToClients"></el-button>
                   <h4>clientes</h4>
                   <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-                    massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
+                    modulo de pruebas
                   </p>
                 </el-card>
               </el-col>
@@ -88,37 +76,54 @@
           <el-footer>
             <el-row :gutter="20">
               <el-col :span="8">
-                <h5>Heading 1</h5>
+                <h5>ministerio de economia y finanzas</h5>
                 <p>
-                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
-                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                  Donec sed odio dui.
+                  <ul>
+                    <li>
+                      Curso de Pagos Electrónicos para Entidades Territoriales Autónomas y Universidades
+                    </li>
+                    <li>
+                      sistema de gestion gubernamental SIGEP
+                    </li>
+                  </ul>
                 </p>
               </el-col>
               <el-col :span="8">
-                <h5>Heading 2</h5>
+                <h5>universidad autonoma tomas frias</h5>
                 <p>
-                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
-                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                  Donec sed odio dui.
+                  <ul>
+                    <li>
+                      <a href="http://academico.uatf.edu.bo/">
+                      paginal principal
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://mail.uatf.edu.bo/">
+                      correo institucional
+                      </a>
+                    </li>
+                  </ul>
                 </p>
               </el-col>
               <el-col :span="8">
-                <h5>Heading 3</h5>
-                <p>
-                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus
-                  ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                  justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                  Donec sed odio dui.
-                </p>
-                <el-row>
-                  <el-button>Default</el-button>
-                  <el-button size="medium">Medium</el-button>
-                  <el-button size="small">Small</el-button>
-                  <el-button size="mini">Mini</el-button>
-                </el-row>
+                <h5>otros enlaces de interes</h5>
+                  <ul>
+                    <li>
+                      <a href="https://www.economiayfinanzas.gob.bo">
+                      ministerio de economía y finanzas bolivia
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://adsib.gob.bo/portal_frontend/">
+                      adsib bolivia
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.contraloria.gob.bo/portal/">
+                      Contraloría General del Estado - Bolivia
+                      </a>
+                    </li>
+                  </ul>
               </el-col>
             </el-row>
             <el-divider></el-divider>
@@ -148,13 +153,23 @@ export default {
       this.$router.push({ name: "login" });
     },
     initAddTaxExemption() {
-          //link.href = window.URL.createObjectURL(blob);
-          //link.download = "test.pdf";
-          //link.click();
+      //link.href = window.URL.createObjectURL(blob);
+      //link.download = "test.pdf";
+      //link.click();
       this.$router.push({ name: "addTaxExemption" });
     },
     initToFormalities() {
       this.$router.push({ name: "formalities" });
+
+      //PDF file is stored under project/public/download/info.pdf
+
+      /*
+    $file= public_path(). "/download/info.pdf";
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+    return Response::download($file, 'filename.pdf', $headers);
+      */
     },
     initToDocuments() {
       this.$router.push({ name: "addnotdocument" });
@@ -226,4 +241,54 @@ textarea {
 .el-card p {
   font-size: 15px;
 }
+
+ul {
+  list-style-type: none;
+}
+li {
+  padding: 5px 0;
+  box-sizing: border-box;
+  display: flex;
+}
+a {
+  color:cadetblue;
+  outline: none;
+  text-decoration: none;
+  padding: 5px 5px 0;
+}
+/*
+ul {
+  counter-reset: index;
+  padding: 0;
+  max-width: 1000px;
+}
+
+li {
+  counter-increment: index;
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+li::before {
+  content: counters(index, ".", decimal-leading-zero);
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+  min-width: 50px;
+  padding-right: 12px;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+*/
 </style>
