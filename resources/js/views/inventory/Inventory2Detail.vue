@@ -64,7 +64,7 @@
           <el-table-column label="Identificador" width="130">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
-                <el-tag size="small">{{ scope.row.id }}-{{ scope.row.per_tab }}</el-tag>
+                <el-tag size="small">{{ scope.row.id }}</el-tag>
               </div>
             </template>
           </el-table-column>
@@ -73,11 +73,15 @@
             label="DESCRIPCION DE ACTIVO"
             width="400"
           ></el-table-column>
-          <el-table-column
-            prop="per_tab"
-            label="esquema"
-            width="90"
-          ></el-table-column>
+          <el-table-column label="VALIDACION" width="180">
+            <template slot-scope="scope">
+              <el-checkbox
+                :disabled="data[scope.$index].detalle_doc_act.guardado == true"
+                v-model="data[scope.$index].detalle_doc_act.validacion"
+                label="Verificado"
+              ></el-checkbox>
+            </template>
+          </el-table-column>
           <el-table-column label="ESTADO" width="150">
             <el-select
               :disabled="data[scope.$index].detalle_doc_act.guardado == true"
@@ -102,16 +106,8 @@
               slot-scope="scope"
               v-model="data[scope.$index].detalle_doc_act.obs_est"
               style="width: 200px"
+              @click="OpenObsAct(scope.$index)"
             />
-          </el-table-column>
-          <el-table-column label="VALIDACION" width="180">
-            <template slot-scope="scope">
-              <el-checkbox
-                :disabled="data[scope.$index].detalle_doc_act.guardado == true"
-                v-model="data[scope.$index].detalle_doc_act.validacion"
-                label="Verificado"
-              ></el-checkbox>
-            </template>
           </el-table-column>
           <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
@@ -129,7 +125,7 @@
                 type="primary"
                 size="mini"
                 @click="cargarImagen(scope.$index, scope.row)"
-                >Imagen</el-button
+                >IMAGEN</el-button
               ></template
             >
           </el-table-column>
@@ -190,6 +186,26 @@
         >
       </span>
     </el-dialog>
+    <el-dialog
+      title="OBSERVACIONES"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="INGRESE OBSERVACIÓN"
+        v-model="activeObs"
+      >
+      </el-input>
+      <br />
+      <br />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="sendObs()">guardar</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -203,9 +219,12 @@ export default {
         estado: "VERIFICADO",
         observaciones: "",
       },
+      activeObs: "",
+      id_activo: null,
       estados: [],
       verificado: false,
       showObservacionInventory: false,
+      dialogVisible: false,
       addObservacion: "SIN OBSERVACIONES",
       guardado: false,
       doc_inv_no_cod: null,
@@ -213,12 +232,11 @@ export default {
       loading: false,
       user: this.$store.state.user,
       messages: {},
-      data: [
-        
-      ],
+      data: [],
       pagination: {
         page: 1,
       },
+      index: null,
     };
   },
   mounted() {
@@ -226,7 +244,26 @@ export default {
     this.getDocInventory();
     this.getEstados();
   },
+  watch: {
+    modal() {
+      if (this.modal) {
+        // modal mostrada
+        Vue.nextTick().then(() => this.$refs.input.focus());
+      }
+    },
+  },
   methods: {
+    OpenObsAct(index) {
+      this.index = index;
+      this.dialogVisible = true;
+      this.activeObs = "";
+    },
+    sendObs() {
+      if (this.index != null)
+        this.data[this.index].detalle_doc_act.obs_est = this.activeObs;
+      this.dialogVisible = false;
+      this.index = null;
+    },
     getDocInventory() {
       axios
         .get("/api/inventory2/doc_inv/" + this.doc_inv_no_cod)
@@ -253,12 +290,19 @@ export default {
           console.log(err);
         });
     },
+    handleClose(done) {
+      this.$confirm("esta seguro que desea cerrar la ventada de observacion?")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
     getActivesSearch() {
       axios
         .get("/api/inventory2/search/" + this.doc_inv.no_cod, {
           params: {
             page: this.pagination.page,
-            idOffice: this.doc_inv.oficina.id,
+            idOffice: this.doc_inv.oficina.cod_soa,
             idSubOffices: this.doc_inv.sub_ofc_cod,
             keyWord: this.writtenTextParameter.toUpperCase(),
           },
@@ -302,6 +346,7 @@ export default {
           .post("/api/inventory2/saveActive", {
             ...this.data[index].detalle_doc_act,
             guardado: true,
+            id_detalle_doc: this.data[index].id_detalle_doc,
             cod_ges: this.user.gestion,
             cod_act: this.data[index].cod_ant,
           })
@@ -354,7 +399,7 @@ export default {
         });
     },
     returnPage2() {
-      if (this.pagination.conteo == 0) {
+      if (this.pagination.total == 0) {
         this.verificado = true;
         this.$router.push({
           name: "inventory2",

@@ -98,10 +98,11 @@ export default {
     this.getInventories();
   },
   methods: {
+    //la gestion es estatica aun. 
     getInventories() {
       this.loading = true;
       axios
-        .get("/api/inventory2/" + 2020, {
+        .get("/api/inventory2/" + 2021, {
           params: {
             page: this.pagination.page,
             descripcion: this.writtenTextParameter.toUpperCase(),

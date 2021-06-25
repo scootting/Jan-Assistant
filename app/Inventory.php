@@ -111,8 +111,7 @@ class Inventory extends Model
             $query = $query . " and of.id = " . $idUnidad . " ";
         if ($cod_ofc)
             $query = $query . " and of.cod_ofc = " . $cod_ofc . " ";
-        $query = $query . "
-       group by sof.id, sof.descripcion";
+        $query = $query . "group by sof.id, sof.descripcion";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -172,7 +171,14 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    //obtener los cargos para crear nuevo inventario
+    //PARA AGARRAR CARGOS Y SUB UNIDADES E INSERTAR A LA TABLA DOC INV
+    public static function getDatosByCodSoa($cod_soa)
+    {
+        $query = "select * from inv.ff_getdatosbycodsoa('" . $cod_soa . "')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    //obtener los encargados para crear nuevo inventario NAN NAN NAN
     public static function getEncargados($nro_dip)
     {
         $query = "select public.personas.nro_dip,public.personas.nombres,
@@ -186,13 +192,14 @@ class Inventory extends Model
     {
         $idmax = DB::table('inv.doc_inv')->max('no_cod');
         $newId = ((int)$idmax) + 1;
-        $cad = '0000' . $newId;
+        $cad = '000000' . $newId;
         return substr($cad, strlen($cad) - 4);
     }
     //guardar datos del nuevo inventario
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion)
     {
         $no_doc = self::getNewCodInv();
+        //$n = static::saveActivesToNewInventory($no_doc);
         $date = Date('d-m-Y');
         $query = " insert into 
                 inv.doc_inv
@@ -317,18 +324,36 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
-
-
     //Guardar cambios del Activo
     public static function saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id)
     {
-
         $query = "select * from inv.f_guardar_activo('" . $des . "', '" . $des_det . "','" . $vida_util . "','" . $car_cod . "','" . $estado . "','" . $ofc_cod . "','" . $sub_ofc_cod . "','" . $ci_resp . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    //Insertar activos cuando se registra un nuevo inventario
+    public static function saveActivesToNewInventory($no_doc, $ofc_cod, $sub_ofc_cod, $gestion)
+    {
+        $arrString = "(";
+        foreach ($sub_ofc_cod as $k => $su)
+            $arrString = $arrString . ($k > 0 ? ',' : '') . $su;
+        $arrString = $arrString . ")";
+        $query = "insert into inv.detalle_doc_act (cod_ges,id_act,id_des,est_act,nro_doc_inv) 
+        (select '" . $gestion . "',vd.id,vd.per_tab,
+         (select e.id 
+         from inv.estado e, act.vv_act_detallado ac 
+         where ac.act_estado like e.desc 
+         and ac.ofc_cod like '" . $ofc_cod . "' group by e.id )est_act,
+        (select no_cod from inv.doc_inv   where ofc_cod = '" . $ofc_cod . "' and no_cod = '" . $no_doc . "') nro_cod_inv
+        from act.vv_act_detallado vd 
+        where vd.ofc_cod = '" . $ofc_cod . "' 
+        )";
+        //$query = "select * from inv.insert_by_no_doc ( '".$no_doc."','".$ofc_cod."','".$sub_ofc_cod."','". $gestion ."' )";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
     //Buscar activos por el los datos del documento del inventario
-    public static function SearchActiveForDocInvRegistered($no_cod, $keyWord)
+    public static function SearchActiveForDocInvRegistered($no_cod,$ofc_cod ,$keyWord)
     {
         $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
         $query = DB::table('act.vv_act_detallado')
@@ -337,62 +362,23 @@ class Inventory extends Model
         if ($keyWord) {
             $query->where('act.vv_act_detallado.act_des', 'like', '%' . $keyWord . '%');
         };
+        if ($ofc_cod) {
+            $query->where('act.vv_act_detallado.ofc_cod', 'like', '%' . $ofc_cod . '%');
+        };
         return $query->orderBy('act.vv_act_detallado.id', 'asc');
     }
-    //buscar los activos de unidad y sub unidad seleccionados pero que NO estan en
-    //el documento de nuevo Inventario para verificarlos en el documento del inventario
-    public static function SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord, $registereds)
+    
+    public static function SearchActiveForDocInv($no_cod,$ofc_cod,$keyWord, $page = 1, $perPage = 10)
     {
-        $db = DB::table('act.vv_act_detallado as ua')->select('ua.*')
-            ->join('inv.oficinas as of', 'ua.ofc_cod', '=', 'of.cod_soa')
-            ->join('inv.sub_oficinas as sof', 'ua.sub_ofc_cod', '=', 'sof.id');
-        $db->whereNotIn('ua.id', $registereds);
-        if ($ofc_cod) {
-            $db->where('of.id', $ofc_cod);
-        }
-        if ($sub_ofc_cods) {
-            $db->whereIn('ua.sub_ofc_cod', $sub_ofc_cods);
-        }
-        if ($keyWord) {
-            $db->where('ua.act_des', 'like', '%' . $keyWord . '%');
-        }
-        return $db->orderBy('ua.id', 'asc');
-    }
-    public static function SearchActiveForDocInv($no_cod, $ofc_cod, $sub_ofc_cods, $keyWord, $page = 1, $perPage = 10)
-    {
-        $conteo = null;
-
-        $l1 = static::SearchActiveForDocInvRegistered($no_cod, $keyWord);
-
-        $arrayIds = $l1->pluck('id');
-
-        $l2 = static::SearchActiveNotRegisteredInDocInv($ofc_cod, $sub_ofc_cods, $keyWord, $arrayIds);
-
-        $lastPage = (int)ceil(($l1->count() + $l2->count()) / $perPage);
-        $total = $l1->count() + $l2->count();
-        $conteo = $l2->count();
+        $l1 = static::SearchActiveForDocInvRegistered($no_cod, $ofc_cod, $keyWord);
+        $lastPage = (int)ceil($l1->count() / $perPage);
+        $total = $l1->count() ;
         $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
         $data = [];
-        if ($p1->count() == 0) {
-            if ($l1->count() > 0) {
-                $auxP1 = $l1->paginate($perPage, ['*'], 'page', $p1->lastPage());
-                $l2page = $page - $p1->lastPage();
-                $skip = $perPage - $auxP1->count() + ($l2page - 1) * $perPage;
-                $data = $l2->skip($skip)->take($perPage)->get();
-            } else {
-                $data = $l2->paginate($perPage, ['*'], 'page', $page)->items();
-            }
-        } else {
-            $data = $p1->items();
-            foreach ($data as $act) {
-                $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id);
-            }
-            if ($p1->count() < $perPage) {
-                $lack = $perPage - $p1->count();
-                $data = array_merge($data, $l2->take($lack)->get()->toArray());
-            }
+        $data = $p1->items();
+        foreach ($data as $act) {
+            $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id);
         }
-
         $resp = [
             'current_page' => (int) $page,
             'data' => $data,
@@ -401,10 +387,11 @@ class Inventory extends Model
             'last_page' => $lastPage,
             'per_page' => $perPage,
             'total' => $total,
-            'conteo' => $conteo,
         ];
         return $resp;
     }
+
+   
     //Guardar cambios del documento del Inventario boton de edit - > EditInventory2 
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
@@ -529,7 +516,7 @@ class Inventory extends Model
     }
     public static function getImagesByIdAct($cod_act)
     {
-        $query = "Select * from act.act_img where cod_act = '". $cod_act ."'";
+        $query = "Select * from act.act_img where cod_act = '" . $cod_act . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

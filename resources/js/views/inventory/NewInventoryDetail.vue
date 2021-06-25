@@ -4,8 +4,7 @@
       <div slot="header" class="clearfix">
         <span>Iniciar inventario de : {{ oficina.descripcion }}</span>
       </div>
-      <br />
-      <br />
+      <br /> <br />
       <el-form label-width="160px" :inline="true" size="normal"> </el-form>
       <div class="grid-content bg-purple">
         <el-row :gutter="20">
@@ -27,63 +26,70 @@
                 </el-select>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" size="small" @click="getResponsables()"
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="getResponsables()"
                   >Cargar Responsables</el-button
                 >
               </el-form-item>
               <el-form-item>
                 <el-select
-                v-model="NewInvent.responsables"
-                filterable
-                remote
-                multiple
-                reserve-keyword
-                placeholder="Responsables"
-                :remote-method="getResponsables"
-                maxlength="30"
-                style="width: 250px"
-                :loading="responsablesLoading"
-                disabled
-              >
-                <el-option
-                  v-for="(item, index) in responsables"
-                  :key="index"
-                  :label="item.nombres + item.paterno"
-                  :value="item.nro_dip"
+                  v-model="NewInvent.responsables"
+                  filterable
+                  remote
+                  multiple
+                  reserve-keyword
+                  placeholder="Responsables"
+                  :remote-method="getResponsables"
+                  maxlength="30"
+                  style="width: 250px"
+                  :loading="responsablesLoading"
+                  disabled
                 >
-                </el-option>
-              </el-select>
+                  <el-option
+                    v-for="(item, index) in responsables"
+                    :key="index"
+                    :label="item.nombres + item.paterno"
+                    :value="item.nro_dip"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-form>
             <el-form label-width="180px" :inline="true" size="small">
               <el-form-item v-if="filtro.tipo != 'todo'" label="Seleccionar:">
                 <template v-if="filtro.tipo == 'subUnidad'">
-                    <el-select 
-                        v-model="NewInvent.subUnidades"
-                        placeholder="Seleccione las Subunidades"
-                        multiple
-                        @change="reloadC()"
+                  <el-select
+                    v-model="NewInvent.subUnidades"
+                    placeholder="Seleccione las Subunidades"
+                    multiple
+                    @change="reloadC()"
+                  >
+                    <el-option
+                      v-for="so in noRepeatSO"
+                      :key="so.id"
+                      :label="so.desc"
+                      :value="so.id"
                     >
-                        <el-option v-for="so in noRepeatSO"
-                            :key="so.id"
-                            :label="so.desc"
-                            :value="so.id">
-                        </el-option>
-                    </el-select>
+                    </el-option>
+                  </el-select>
                 </template>
                 <template v-else>
-                    <el-select 
-                        v-model="NewInvent.cargos"
-                        placeholder="Seleccione los cargos" 
-                        multiple
-                        @change="reloadSO()"
+                  <el-select
+                    v-model="NewInvent.cargos"
+                    placeholder="Seleccione los cargos"
+                    multiple
+                    @change="reloadSO()"
+                  >
+                    <el-option
+                      v-for="c in noRepeatC"
+                      :key="c.id"
+                      :label="c.desc"
+                      :value="c.id"
                     >
-                        <el-option v-for="c in noRepeatC"
-                            :key="c.id"
-                            :label="c.desc"
-                            :value="c.id">
-                        </el-option>
-                    </el-select>
+                    </el-option>
+                  </el-select>
                 </template>
               </el-form-item>
             </el-form>
@@ -108,7 +114,7 @@
               v-model="NewInvent.encargados"
               multiple
               placeholder="Seleccione encargados a realizar inventario"
-               style="width: 250px"
+              style="width: 250px"
               maxlength="30"
             >
               <el-option
@@ -122,7 +128,7 @@
             <el-button
               type="primary"
               size="mini"
-              @click="showDialogEncargado = true"
+              @click="showDialogEncargado=true"
               >Buscar</el-button
             >
           </el-form-item>
@@ -194,10 +200,11 @@ export default {
         responsables: [],
         encargados: [],
         cargos: [],
-        nombres:"",
+        nombres: "",
       },
+      No_Doc: null,
       subUnidades: [],
-      unidades:[],
+      unidades: [],
       cargos: [],
       responsables: [],
       encargados: [],
@@ -235,11 +242,11 @@ export default {
   created() {
     let cod_soa = this.$route.params.soa;
     axios
-      .get("/api/inventory/show/"+cod_soa)
+      .get("/api/inventory/show/" + cod_soa)
       .then((data) => {
         this.oficina = data.data;
         this.selectAll();
-        this.NewInvent.unidad=this.oficina.cod_soa;
+        this.NewInvent.unidad = this.oficina.cod_soa;
         this.NewInvent.responsables = this.responsables.nro_dip;
       })
       .catch((err) => {});
@@ -270,42 +277,53 @@ export default {
       return [];
     },
     getNombre() {
-      return this.responsables.nombres + " " + this.responsables.paterno + " " + this.responsables.materno;
+      return (
+        this.responsables.nombres +
+        " " +
+        this.responsables.paterno +
+        " " +
+        this.responsables.materno
+      );
     },
   },
   methods: {
-    reloadSO(){
-        this.NewInvent.subUnidades = [];
-        if(this.NewInvent.cargos.length > 0){
-            this.oficina.so_cargos.forEach(el => {
-                if(this.NewInvent.cargos.includes(el.id_c)&&!this.NewInvent.subUnidades.includes(el.id_s)){
-                    this.NewInvent.subUnidades.push(el.id_s);
-                }
-            });
-        }
+    reloadSO() {
+      this.NewInvent.subUnidades = [];
+      if (this.NewInvent.cargos.length > 0) {
+        this.oficina.so_cargos.forEach((el) => {
+          if (
+            this.NewInvent.cargos.includes(el.id_c) &&
+            !this.NewInvent.subUnidades.includes(el.id_s)
+          ) {
+            this.NewInvent.subUnidades.push(el.id_s);
+          }
+        });
+      }
     },
-    reloadC(){
+    reloadC() {
+      this.NewInvent.cargos = [];
+      if (this.NewInvent.subUnidades.length > 0) {
+        this.oficina.so_cargos.forEach((el) => {
+          if (
+            this.NewInvent.subUnidades.includes(el.id_s) &&
+            !this.NewInvent.cargos.includes(el.id_c)
+          ) {
+            this.NewInvent.cargos.push(el.id_c);
+          }
+        });
+      }
+    },
+    selectAll() {
+      this.NewInvent.subUnidades = this.noRepeatSO.map((so) => so.id);
+      this.NewInvent.cargos = this.noRepeatC.map((c) => c.id);
+    },
+    onChangeSeleccionarPor() {
+      if (this.filtro.tipo === "todo") {
+        this.selectAll();
+      } else {
         this.NewInvent.cargos = [];
-        if(this.NewInvent.subUnidades.length > 0){
-            this.oficina.so_cargos.forEach(el => {
-                if(this.NewInvent.subUnidades.includes(el.id_s)&&!this.NewInvent.cargos.includes(el.id_c)){
-                    this.NewInvent.cargos.push(el.id_c);
-                }
-            });
-        }
-    },
-    selectAll(){
-        this.NewInvent.subUnidades = this.noRepeatSO.map(so => so.id);
-        this.NewInvent.cargos = this.noRepeatC.map(c => c.id);
-    },
-    onChangeSeleccionarPor(){
-        if(this.filtro.tipo === 'todo'){
-            this.selectAll();
-        }
-        else{
-            this.NewInvent.cargos = [];
-            this.NewInvent.subUnidades = [];
-        }
+        this.NewInvent.subUnidades = [];
+      }
     },
     getResponsables() {
       this.cargosLoading = true;
@@ -403,14 +421,31 @@ export default {
           this.$message({
             message: "Inventario creado exitosamente",
             type: "success",
-            duration: 5000,
+            duration: 3000,
             showClose: true,
           });
           this.No_Doc = data.data.no_doc;
           this.guardado = true;
+          this.saveDataDetail();
           this.$router.push({
-        name: "inventory2",
-      });
+              name: "inventory2",
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    saveDataDetail() {
+      axios
+        .post("/api/inventory2/saveDataDetail", {
+          
+            no_doc: this.No_Doc,
+            ofc_cod: this.NewInvent.unidad,
+            sub_ofc_cod: this.NewInvent.subUnidades,
+          
+        })
+        .then((data) => {
+          console.log("datos guardados en la base de datos detalle doc act");
         })
         .catch((err) => {
           console.log(err);

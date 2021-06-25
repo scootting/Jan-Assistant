@@ -62,6 +62,7 @@ Route::group([
     Route::get('inventory2/responsables2', 'InventoryController@getResponsablesByUnidad');
     Route::get('inventory2/encargados', 'InventoryController@getEncargados');
     Route::post('inventory2/save', 'InventoryController@saveNewInventory');
+    Route::post('inventory2/saveDataDetail','InventoryController@saveDatasDetail');
     Route::get('inventory2/{gestion}', 'InventoryController@getInventories');
     Route::get('inventory2/edit/{id}', 'InventoryController@getInventory');
     Route::post('inventory2/saveChange', 'InventoryController@saveChangeDocInventory');

@@ -130,7 +130,7 @@ const router = new VueRouter({
                 { path: 'inventory2', name: 'inventory2', component: Inventory2 },
                 { path: 'inventory2/:id', name: 'editinventory2', component: EditInventory2 },
                 { path: 'newinventory', name: 'newinventory', component: NewInventory },
-                { path: 'newinventory/:cod_soa', name: 'newinventorydetail',component: NewInventoryDetail },
+                { path: 'newinventory/:soa', name: 'newinventorydetail',component: NewInventoryDetail },
                 { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
                 { path: 'imgDetail/:id', name: 'imgdetail', component: ImgDetail },
                 { path: 'editnewinventory/:id', name: 'editnewinventorydetail',component: EditNewInventoryDetail },

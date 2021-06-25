@@ -24,13 +24,14 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
+    
     public function getOfficeByCodSoa($cod_soa)
     {
-        $tipo_reporte = 'todo';
         $data = Inventory::getOfficeByCodSoa($cod_soa);
-        $data->lista = Inventory::getActivosBySoa($tipo_reporte, $cod_soa);
+        $data->so_cargos = Inventory::getDatosByCodSoa($cod_soa);
         return json_encode($data);
     }
+    
     public function getSubOfficesByCodSoa($cod_soa)
     {
         $cod_soa = $cod_soa == 'null' ? null : $cod_soa;
@@ -227,11 +228,22 @@ class InventoryController extends Controller
         $car_cod_resp = $request->cargos;
         $ci_res = $request->responsables;
         $estado = 'ELABORADO';
-        $gestion = '2020'; //$request->gestion;
+        $gestion = '2021'; // $request->gestion;
         $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion);
         return json_encode($data);
     }
-    //
+    
+    public function saveDatasDetail(Request $request)
+    {
+       // dd($request);
+        $no_doc = $request->no_doc;
+        $ofc_cod = $request->ofc_cod;
+        $sub_ofc_cod = $request->sub_ofc_cod;
+        //dd($no_doc,$ofc_cod,$sub_ofc_cod);
+        $gestion = '2021';
+        $data = Inventory::saveActivesToNewInventory($no_doc,$ofc_cod,$sub_ofc_cod,$gestion);
+        return json_encode($data);
+    }
     public function SearchActivo(Request $request)
     {
         //dd($request);
@@ -326,18 +338,20 @@ class InventoryController extends Controller
         }
         return json_encode($data);
     }
-    //reutilizar para traer los activos que no estan aun verificados
+    //traer la lista de activos dentro del detalle
     public function getActivesForDocInv(Request $request, $doc_cod)
     {
-        //dd($request);
-        $ofc_id = ($request->get('idOffice')) ? $request->get('idOffice') : null;
-        $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
-        $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
-        //dd($keyWord,$ofc_id,$sub_ofc_ids);
-        $page = ($request->get('page')) ? $request->get('page') : 1;
-        $perPage = 10;
-        $data = Inventory::SearchActiveForDocInv($doc_cod, $ofc_id, $sub_ofc_ids, $keyWord, $page, $perPage);
-        return json_encode($data);
+        
+            //dd($request);
+            $ofc_cod = ($request->get('idOffice')) ? $request->get('idOffice') : null;
+            $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
+            $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
+            //dd($keyWord,$ofc_id,$sub_ofc_ids);
+            $page = ($request->get('page')) ? $request->get('page') : 1;
+            $perPage = 10;
+            $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_cod ,$keyWord, $page, $perPage);
+            return json_encode($data);
+        
     }
 
     public function getEstados()
@@ -347,12 +361,13 @@ class InventoryController extends Controller
     }
     public function saveActiveInDetailDoc(Request $request)
     {
-        //dd($request);
-        if ($request->has('id')) {
-            $id = $request->id;
-        } else {
-            $id = -1;
-        }
+       // dd($request);
+       if ($request->has('id')) {
+        $id = $request->id;
+    } else {
+        $id = -1;
+    }
+        //$id = $request->id_detalle_doc;
         $nro_doc_inv = $request->doc_cod;
         $cod_ges = $request->cod_ges;
         $cod_act = $request->cod_act;
