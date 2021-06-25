@@ -121,7 +121,7 @@ export default {
         usr_cre: "",
       },
       rules: {
-        personal: [
+        nro_doc: [
           {
             required: true,
             message: "El campo no puede estar vacio",
@@ -134,6 +134,36 @@ export default {
             trigger: "blur",
           },
         ],
+        nro_dvr: [
+          {
+            required: true,
+            message: "El campo no puede estar vacio",
+            trigger: "blur",
+          },
+          {
+            min: 2,
+            max: 100,
+            message: "el tamaño no puede ser menos de 2 o mas de 100",
+            trigger: "blur",
+          },
+        ],
+        fec_memo: [
+          {
+            required: true,
+            message: "El campo no puede estar vacio",
+            trigger: "blur",
+          },
+          { type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
+        ],
+        fec_prov: [
+          {
+            required: true,
+            message: "El campo no puede estar vacio",
+            trigger: "blur",
+          },
+          { type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
+        ],
+
         nombres: [
           {
             required: true,
@@ -159,14 +189,6 @@ export default {
             message: "el tamaño no puede ser menos de 2 o mas de 100",
             trigger: "blur",
           },
-        ],
-        nacimiento: [
-          {
-            required: true,
-            message: "El campo no puede estar vacio",
-            trigger: "blur",
-          },
-          //{ type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
         ],
       },
     };
@@ -199,13 +221,6 @@ export default {
     },
 
     resetPerson() {
-      /*
-            (this.person.nro_dip = ""),
-                (this.person.nombres = ""),
-                (this.person.paterno = ""),
-                (this.person.materno = ""),
-                (this.person.fec_nacimiento = ""),
-                (this.person.id_sexo = "M");*/
     },
   },
 };
