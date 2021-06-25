@@ -71,6 +71,9 @@
               <el-form-item size="small" label="descripcion del diplomado">
                 <el-input size="small" v-model="certificate.des_dip"></el-input>
               </el-form-item>
+              <el-form-item size="small" label="descripcion del diplomado">
+                <el-input size="small" v-model="certificate.des_dip"></el-input>
+              </el-form-item>
               <el-form-item size="small" label="importe total (en bs.)">
                 <el-input size="small" v-model="certificate.imp_dip"></el-input>
               </el-form-item>
