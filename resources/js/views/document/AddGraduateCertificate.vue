@@ -69,10 +69,11 @@
                 </el-col>
               </el-form-item>
               <el-form-item size="small" label="descripcion del diplomado">
-                <el-input size="small" v-model="certificate.des_dip"></el-input>
-              </el-form-item>
-              <el-form-item size="small" label="descripcion del diplomado">
-                <el-input size="small" v-model="certificate.des_dip"></el-input>
+                <el-input
+                  size="small"
+                  v-model="certificate.des_dip"
+                  ref="des_dip"
+                ></el-input>
               </el-form-item>
               <el-form-item size="small" label="importe total (en bs.)">
                 <el-input size="small" v-model="certificate.imp_dip"></el-input>
@@ -87,11 +88,15 @@
                 <el-button
                   size="small"
                   type="primary"
-                  @click.prevent="savePerson"
+                  @click.prevent="saveGraduateCertificate"
                   plain
                   >Guardar</el-button
                 >
-                <el-button size="small" type="danger" @click="noPerson" plain
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="noGraduateCertificate"
+                  plain
                   >Cancelar</el-button
                 >
               </el-form-item>
@@ -123,6 +128,7 @@ export default {
         fec_cre: "",
         usr_cre: "",
       },
+      selectedPerson: [],
       rules: {
         nro_doc: [
           {
@@ -156,7 +162,12 @@ export default {
             message: "El campo no puede estar vacio",
             trigger: "blur",
           },
-          { type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
+          {
+            type: "date",
+            required: true,
+            message: "el campo debe ser una fecha",
+            trigger: "blur",
+          },
         ],
         fec_prov: [
           {
@@ -164,7 +175,12 @@ export default {
             message: "El campo no puede estar vacio",
             trigger: "blur",
           },
-          { type: 'date', required: true, message: "el campo debe ser una fecha", trigger: 'blur' }
+          {
+            type: "date",
+            required: true,
+            message: "el campo debe ser una fecha",
+            trigger: "blur",
+          },
         ],
 
         nombres: [
@@ -201,10 +217,10 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    savePerson() {
+    saveGraduateCertificate() {
       var app = this;
       var newPerson = app.person;
-      //console.log("REGISTRAR");
+      /*
       axios
         .post("/api/person", {
           persona: newPerson,
@@ -216,14 +232,27 @@ export default {
         .catch(function (response) {
           console.log(response);
           alert("no se puede crear el registro de la persona");
-        });
+        });*/
     },
 
-    noPerson() {
+    noGraduateCertificate() {
       this.$router.push("/api");
     },
 
-    resetPerson() {
+    initSearchPerson() {
+      let app = this;
+      let id = this.certificate.ci_per;
+      axios
+        .get("/api/person/" + id)
+        .then(function (response) {
+          console.log(response.data);
+          app.selectedPerson = response.data[0];
+          app.certificate.des_per = app.selectedPerson.des_per;
+          app.$nextTick(() => app.$refs.des_dip.focus());
+        })
+        .catch(function () {
+          alert("No se puede hallar el registro de la persona indicada");
+        });
     },
   },
 };
