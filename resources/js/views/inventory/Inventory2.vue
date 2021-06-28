@@ -57,6 +57,7 @@
                 >Ver lista </el-button
               >
               <el-button
+                :disabled="data[scope.$index].verificado == false"
                 @click="printListActive(scope.row.id)"
                 type="primary"
                 plain
