@@ -386,8 +386,9 @@ class InventoryController extends Controller
         $estado = $request->estado;
         $observaciones = $request->observaciones;
         $id = $request->nro_cod;
+        $verificado = $request->verificado;
         //dd($estado,$observaciones,$id);
-        $data = Inventory::updateState($estado, $observaciones, $id);
+        $data = Inventory::updateState($estado, $observaciones,$verificado ,$id);
         return json_encode($data);
     }
     public function getAllCargos()

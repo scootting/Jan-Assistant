@@ -77,7 +77,7 @@ class Inventory extends Model
     public static function getInventories($gestion, $descripcion)
     {
         $query = "select inv.doc_inv.id, inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,
-        inv.oficinas.descripcion,inv.doc_inv.estado
+        inv.oficinas.descripcion,inv.doc_inv.estado,inv.doc_inv.verificado
         from inv.doc_inv , inv.oficinas where 
         inv.doc_inv.gestion = " . $gestion . "
         and inv.doc_inv.ofc_cod = inv.oficinas.cod_soa 
@@ -193,7 +193,7 @@ class Inventory extends Model
         $idmax = DB::table('inv.doc_inv')->max('no_cod');
         $newId = ((int)$idmax) + 1;
         $cad = '000000' . $newId;
-        return substr($cad, strlen($cad) - 4);
+        return substr($cad, strlen($cad) - 6);
     }
     //guardar datos del nuevo inventario
     public static function saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion)
@@ -318,9 +318,9 @@ class Inventory extends Model
         return $data;
     }
     //obtener el detalle del documento por el ID del activo
-    public static function searchDocDetailByActiveId($id)
+    public static function searchDocDetailByActiveId($id,$no_doc)
     {
-        $query = " select * from inv.detalle_doc_act where id_act = " . $id . " ";
+        $query = " select * from inv.detalle_doc_act where id_act = " . $id . " and nro_doc_inv = '". $no_doc ."'";
         $data = collect(DB::select(DB::raw($query)));
         return $data[0];
     }
@@ -367,19 +367,28 @@ class Inventory extends Model
         };
         return $query->orderBy('act.vv_act_detallado.id', 'asc');
     }
-    
+    public static function controlTrue($no_cod)
+    {
+        $query = "select count(d.guardado)guardado from 
+        inv.detalle_doc_act d where 
+        d.guardado = true and d.nro_doc_inv like '%". $no_cod ."%'";
+        $data = DB::select($query);
+        return $data;
+    }
     public static function SearchActiveForDocInv($no_cod,$ofc_cod,$keyWord, $page = 1, $perPage = 10)
     {
         $l1 = static::SearchActiveForDocInvRegistered($no_cod, $ofc_cod, $keyWord);
+        $true = static::controlTrue($no_cod);
         $lastPage = (int)ceil($l1->count() / $perPage);
         $total = $l1->count() ;
         $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
         $data = [];
         $data = $p1->items();
         foreach ($data as $act) {
-            $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id);
+            $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id,$no_cod);
         }
         $resp = [
+            'true' => $true,
             'current_page' => (int) $page,
             'data' => $data,
             'from' => ($page - 1) * $perPage + 1,
@@ -430,10 +439,10 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    public static function updateState($estado, $observacion, $nro_cod)
+    public static function updateState($estado, $observacion,$verificado ,$nro_cod)
     {
         $fecha_fin = Date('d-m-Y');
-        $query = "select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','" . $nro_cod . "')";
+        $query = "select * from inv.f_guardar_update_doc_inv('" . $estado . "','" . $observacion . "','" . $fecha_fin . "','". $verificado ."','" . $nro_cod . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

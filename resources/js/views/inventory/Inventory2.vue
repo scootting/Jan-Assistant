@@ -41,6 +41,7 @@
           <el-table-column align="right-center" width="300" label="Operaciones">
             <template slot-scope="scope">
               <el-button
+                :disabled="data[scope.$index].verificado == true"
                 @click="editInventory(scope.$index, scope.row)"
                 type="primary"
                 plain
@@ -48,11 +49,11 @@
                 >Editar</el-button
               > 
               <el-button
+                :disabled="data[scope.$index].verificado == true"
                 @click="listActive(scope.row.id)"
                 type="primary"
                 plain
                 size="mini"
-                :disabled="verificado"
                 >Ver lista </el-button
               >
               <el-button
@@ -60,7 +61,6 @@
                 type="primary"
                 plain
                 size="mini"
-                :disabled="!verificado"
                 >Imprimir </el-button
               >
             </template>

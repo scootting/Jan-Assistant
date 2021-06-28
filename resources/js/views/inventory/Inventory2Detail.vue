@@ -244,19 +244,11 @@ export default {
     this.getDocInventory();
     this.getEstados();
   },
-  watch: {
-    modal() {
-      if (this.modal) {
-        // modal mostrada
-        Vue.nextTick().then(() => this.$refs.input.focus());
-      }
-    },
-  },
   methods: {
     OpenObsAct(index) {
       this.index = index;
       this.dialogVisible = true;
-      this.activeObs = "";
+      this.activeObs = this.data[this.index].detalle_doc_act.obs_est;
     },
     sendObs() {
       if (this.index != null)
@@ -385,6 +377,7 @@ export default {
         .post("/api/inventory2/verificar", {
           estado: this.inventario.estado,
           observaciones: this.inventario.observaciones,
+          verificado:true,
           nro_cod: this.doc_inv.id,
         })
         .then((data) => {
@@ -399,7 +392,7 @@ export default {
         });
     },
     returnPage2() {
-      if (this.pagination.total == 0) {
+      if (this.pagination.total == this.pagination.true[0].guardado) {
         this.verificado = true;
         this.$router.push({
           name: "inventory2",
