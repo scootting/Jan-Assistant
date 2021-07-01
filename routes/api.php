@@ -106,7 +106,7 @@ Route::group([
 
     // *** - Obtener las transacciones por persona por su el carnet de identidad - ***
     Route::post('getTransactionsByPerson', 'TreasureController@getTransactionsByPerson');
-
+    Route::post('getAllTransactionsByYear', 'TreasureController@getAllTransactionsByYear');
 
 
     // *** -  - ***
