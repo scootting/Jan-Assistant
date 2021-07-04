@@ -374,11 +374,20 @@ class Inventory extends Model
         // if ($ofc_cod) {
         //     $query->where('act.vv_act_detallado.ofc_cod', 'like', '%' . $ofc_cod . '%');
         // };
-        $query = " select * from inv.detalle_doc_act inner join act.vv_act_detallado 
-        ON inv.detalle_doc_act.id_act = act.vv_act_detallado.id
-        and inv.detalle_doc_act.nro_doc_inv = '".$no_cod."'
-        and act.vv_act_detallado.act_des like '%".$keyWord."%'
-        order by act.vv_act_detallado.id asc "; 
+
+        // $query = " select * from inv.detalle_doc_act inner join act.vv_act_detallado 
+        // ON inv.detalle_doc_act.id_act = act.vv_act_detallado.id
+        // and inv.detalle_doc_act.nro_doc_inv = 
+        // and act.vv_act_detallado.act_des like '%".$keyWord."%'
+        // order by act.vv_act_detallado.id asc "; 
+
+        $query = "select v.id, d.id_detalle,d.nro_doc_inv,d.cod_ges,d.cod_act,d.cod_nue,
+        d.id_act,d.id_des,d.validacion,d.est_act,d.obs_est,v.act_des,d.guardado,v.per_tab
+        from inv.detalle_doc_act d inner join act.vv_act_detallado v
+                ON d.id_act = v.id
+                and d.nro_doc_inv = '".$no_cod."'
+                and v.act_des like '%".$keyWord."%'
+                order by v.id asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
