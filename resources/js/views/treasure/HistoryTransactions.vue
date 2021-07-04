@@ -8,39 +8,67 @@
           size="small"
           type="primary"
           icon="el-icon-plus"
-          @click="initAddPerson"
-        >imprimir historial</el-button>
+          @click="initSearchTransactions"
+          >nueva persona</el-button
+        >
       </div>
-      <div style="margin-top: 15px;">
+      <div style="margin-top: 15px">
         <el-input
-          placeholder="INSERTAR EL CARNET DE IDENTIDAD"
+          placeholder="INSERTE UNA DESCRIPCION"
           v-model="writtenTextParameter"
           class="input-with-select"
         >
-          <el-button slot="append" icon="el-icon-search" @click="initSearchPerson"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="initSearchTransactions"
+          ></el-button>
         </el-input>
       </div>
       <br />
       <div>
-        <el-table v-loading="loading" :data="dataTransactions" style="width: 100%">
-          <el-table-column prop="personal" label="CARNET"></el-table-column>
-          <el-table-column prop="paterno" label="PATERNO"></el-table-column>
-          <el-table-column prop="materno" label="MATERNO"></el-table-column>
-          <el-table-column prop="nombres" label="NOMBRES" width="280"></el-table-column>
+        <el-table v-loading="loading" :data="transactions" style="width: 100%">
+          <el-table-column
+            prop="id_tran"
+            label="id"
+            width="100"
+          ></el-table-column>
+          <el-table-column
+            prop="cod_val"
+            label="valorado"
+            width="100"
+          ></el-table-column>
+          <el-table-column
+            prop="des_val"
+            label="descripcion"
+            width="550"
+          ></el-table-column>
+          <el-table-column
+            prop="ci_per"
+            label="CARNET"
+            width="100"
+          ></el-table-column>
+          <el-table-column
+            prop="des_per"
+            label="apellidos y nombres"
+            width="300"
+          ></el-table-column>
           <el-table-column align="right" width="220">
             <template slot-scope="scope">
               <el-button
-                @click="initEditPerson(scope.$index, scope.row)"
+                @click="initEditTransaction(scope.$index, scope.row)"
                 type="primary"
                 size="mini"
                 plain
-              >Editar</el-button>
+                >Editar</el-button
+              >
               <el-button
-                @click="initShowPerson(scope.$index, scope.row)"
+                @click="initCancelTransaction(scope.$index, scope.row)"
                 type="danger"
                 plain
                 size="mini"
-              >Mostrar</el-button>
+                >Anular</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -58,23 +86,85 @@
 
 <script>
 export default {
-  name: "Personas",
+  name: "Transacciones",
   data() {
     return {
       messages: {},
-      dataTransactions: [],
+      transactions: [],
+      year: "2021",
+      pagination: {
+        page: 1,
+      },
       writtenTextParameter: "",
       loading: true,
     };
   },
   mounted() {
     let app = this;
+    axios
+      .post("/api/getAllTransactionsByYear", {
+        description: app.writtenTextParameter,
+        year: app.year,
+      })
+      .then((response) => {
+        app.loading = false;
+        app.transactions = response.data.data;
+        console.log(response.data);
+        app.pagination = response.data;
+      })
+      .catch((error) => {
+        this.error = error;
+        this.$notify.error({
+          title: "Error",
+          message: this.error.message,
+        });
+      });
   },
-
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
+
+    getDataPageSelected(page) {
+      let app = this;
+      app.loading = true;
+      axios
+        .post("/api/getAllTransactionsByYear", {
+          description: app.writtenTextParameter,
+          year: app.year,
+          page: page,
+        })
+        .then((response) => {
+          app.loading = false;
+          app.transactions = Object.values(response.data.data);
+          app.pagination = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    initSearchTransactions() {
+      let app = this;
+      app.loading = true;
+      axios
+        .post("/api/getAllTransactionsByYear", {
+          description: app.writtenTextParameter,
+          year: app.year,
+        })
+        .then((response) => {
+          app.loading = false;
+          app.transactions = response.data.data;
+          app.pagination = response.data;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.$notify.error({
+            title: "Error",
+            message: this.error.message,
+          });
+        });
+    },
+    /*
     initAddPerson() {
       this.$router.push({
         name: "addperson",
@@ -90,28 +180,9 @@ export default {
         },
       });
     },
-    initSearchPerson() {
-      let app = this;
-      app.loading = true;
-      axios
-        .post("/api/getTransactionsByPerson", {
-          id: app.writtenTextParameter,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.dataTransactions = response.data.data;
-          console.log(response.data);
-        })
-        .catch((error) => {
-          this.error = error;
-          this.$notify.error({
-            title: "Error",
-            message: this.error.message,
-          });
-        });
-    },
-    initShowPerson(index, row) {
-      let personal = row.nro_dip;
+    */
+    initCancelTransaction(index, row) {
+      let personal = row.id_tran;
       //router.push({ name: 'editperson', params: { userId: personal }})
     },
   },

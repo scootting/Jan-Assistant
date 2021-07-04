@@ -202,4 +202,24 @@ class TreasureController extends Controller
         return json_encode($data);
     }
 
+    public function getAllTransactionsByYear(Request $request){
+        \Log::info($request);         
+
+        $year = $request->get('year');// '' cadena vacia
+        $description = $request->get('year');// '' cadena vacia
+        $data = Treasure::GetAllTransactionsByYear($year);
+        $page = ($request->get('page')? $request->get('page'): 1);
+        $perPage = 10;
+
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/getAllTransactionsByYear')]
+        );
+        return json_encode($paginate);
+         
+    }
+
 }
