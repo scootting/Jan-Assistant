@@ -73,15 +73,16 @@ class Inventory extends Model
         return $data;
     }
     // parte de Inventarios 2 (renombrado como INVENTARIO)
-    //obtener inventarios creados
+    //obtener inventarios creados y listarlos para EDITAR, VER LISTA O IMPRIMIR 
     public static function getInventories($gestion, $descripcion)
     {
-        $query = "select inv.doc_inv.id, inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,
+        $query = "select inv.doc_inv.id, inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,inv.doc_inv.sub_ofc_cod,
         inv.oficinas.descripcion,inv.doc_inv.estado,inv.doc_inv.verificado
         from inv.doc_inv , inv.oficinas where 
         inv.doc_inv.gestion = " . $gestion . "
         and inv.doc_inv.ofc_cod = inv.oficinas.cod_soa 
         and inv.oficinas.descripcion like '%" . $descripcion . "%'
+        order by inv.doc_inv.no_cod desc
         ";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -331,6 +332,14 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function saveNewActive($cod_soa, $des, $des_det, $par_cod,$cod_con,$car_cod, $estado, $sub_ofc_cod, $ci_resp,$nro_doc,$idc,$imp_act,$des_act,$gestion)
+    {
+        $query = "select * 
+        from inv.multi_guardar_activo('" . $cod_soa . "', '" . $des . "','" . $des_det . "','" . $par_cod . "','" . $cod_con . "','" . $car_cod . "','" . $estado . "','" . $sub_ofc_cod . "','" . $ci_resp . "','".$nro_doc."','".$idc."','".$imp_act."','".$des_act."','".$gestion."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
     //Insertar activos cuando se registra un nuevo inventario
     public static function saveActivesToNewInventory($no_doc, $ofc_cod, $sub_ofc_cod, $gestion)
     {
@@ -353,19 +362,25 @@ class Inventory extends Model
         return $data;
     }
     //Buscar activos por el los datos del documento del inventario
-    public static function SearchActiveForDocInvRegistered($no_cod,$ofc_cod ,$keyWord)
+    public static function SearchActiveForDocInvRegistered($no_cod ,$keyWord)
     {
-        $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
-        $query = DB::table('act.vv_act_detallado')
-            ->select('act.vv_act_detallado.*')
-            ->whereIn('act.vv_act_detallado.id', $actIDsInDocDetail);
-        if ($keyWord) {
-            $query->where('act.vv_act_detallado.act_des', 'like', '%' . $keyWord . '%');
-        };
-        if ($ofc_cod) {
-            $query->where('act.vv_act_detallado.ofc_cod', 'like', '%' . $ofc_cod . '%');
-        };
-        return $query->orderBy('act.vv_act_detallado.id', 'asc');
+        // $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
+        // $query = DB::table('act.vv_act_detallado')
+        //     ->select('act.vv_act_detallado.act_des','act.vv_act_detallado.id')
+        //     ->whereIn('act.vv_act_detallado.id', $actIDsInDocDetail);
+        // if ($keyWord) {
+        //     $query->where('act.vv_act_detallado.act_des', 'like', '%' . $keyWord . '%');
+        // };
+        // if ($ofc_cod) {
+        //     $query->where('act.vv_act_detallado.ofc_cod', 'like', '%' . $ofc_cod . '%');
+        // };
+        $query = " select * from inv.detalle_doc_act inner join act.vv_act_detallado 
+        ON inv.detalle_doc_act.id_act = act.vv_act_detallado.id
+        and inv.detalle_doc_act.nro_doc_inv = '".$no_cod."'
+        and act.vv_act_detallado.act_des like '%".$keyWord."%'
+        order by act.vv_act_detallado.id asc "; 
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
     }
     public static function controlTrue($no_cod)
     {
@@ -375,32 +390,30 @@ class Inventory extends Model
         $data = DB::select($query);
         return $data;
     }
-    public static function SearchActiveForDocInv($no_cod,$ofc_cod,$keyWord, $page = 1, $perPage = 10)
-    {
-        $l1 = static::SearchActiveForDocInvRegistered($no_cod, $ofc_cod, $keyWord);
-        $true = static::controlTrue($no_cod);
-        $lastPage = (int)ceil($l1->count() / $perPage);
-        $total = $l1->count() ;
-        $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
-        $data = [];
-        $data = $p1->items();
-        foreach ($data as $act) {
-            $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id,$no_cod);
-        }
-        $resp = [
-            'true' => $true,
-            'current_page' => (int) $page,
-            'data' => $data,
-            'from' => ($page - 1) * $perPage + 1,
-            'to' => $perPage * $page,
-            'last_page' => $lastPage,
-            'per_page' => $perPage,
-            'total' => $total,
-        ];
-        return $resp;
-    }
-
-   
+    // public static function SearchActiveForDocInv($no_cod,$ofc_cod,$keyWord, $page = 1, $perPage = 10)
+    // {
+    //     $l1 = static::SearchActiveForDocInvRegistered($no_cod, $ofc_cod, $keyWord);
+    //     $true = static::controlTrue($no_cod);
+    //     //$lastPage = (int)ceil($l1->count() / $perPage);
+    //     //$total = $l1->count() ;
+    //     $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
+    //     $data = [];
+    //     $data = $p1->items();
+    //     foreach ($data as $act) {
+    //         $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id,$no_cod);
+    //     }
+    //     $resp = [
+    //         'true' => $true,
+    //         'current_page' => (int) $page,
+    //         'data' => $data,
+    //         'from' => ($page - 1) * $perPage + 1,
+    //         'to' => $perPage * $page,
+    //         //'last_page' => $lastPage,
+    //         'per_page' => $perPage,
+    //         //'total' => $total,
+    //     ];
+    //     return $resp;
+    // }
     //Guardar cambios del documento del Inventario boton de edit - > EditInventory2 
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
@@ -421,6 +434,18 @@ class Inventory extends Model
     public static function getEstados()
     {
         $query = "select * from inv.estado";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getPartidas()
+    {
+        $query = "select * from act.partida where gestion = 2021";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getContable()
+    {
+        $query = "select * from act.act_con";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -535,4 +560,31 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function getListNroDoc($descripcion)
+    {
+        $query = "select nro_doc,des,des_det from inv.activos 
+        where des like '%". $descripcion ."%'
+        GROUP BY nro_doc,des,des_det  order by nro_doc DESC";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getActivesbyDocument($document){
+        $query = "select nro_doc as codigo,act_des from act.vv_act_detallado a where a.nro_doc like '".$document."%'";
+        $data = collect(DB::select(DB::raw($query)));    
+        return $data;
+    } 
+
+public static function getLastNroDoc()
+{
+    $query="
+    select distinct 
+    split_part(nro_doc, '/', 1)::integer + 1 as numero
+    from inv.activos
+    where split_part(nro_doc, '/', 2) = '98' and nro_doc is not null and split_part(nro_doc, '/', 1) <> '' and split_part(nro_doc, '/', 2) <> '' and nro_doc not ilike '%A%'
+    order by numero desc
+    fetch first 1 row only";
+    $data = collect(DB::select(DB::raw($query)));    
+        return $data;
+}
+    
 }

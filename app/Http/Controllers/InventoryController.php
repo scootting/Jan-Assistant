@@ -6,6 +6,7 @@ use App\Inventory;
 use App\Libraries\JSRClient;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use JasperPHP\JasperPHP as JasperPHP;
 
 class InventoryController extends Controller
 {
@@ -295,6 +296,27 @@ class InventoryController extends Controller
         $data = Inventory::saveChangeActive($cod_soa, $des, $des_det, $vida_util, $car_cod, $estado, $ofc_cod, $sub_ofc_cod, $ci_resp, $id);
         return json_encode($data);
     }
+    public function saveNewActive(Request $request)
+    {
+        //dd($request);
+        $cod_soa = $request->cod_soa;
+        $des = $request->des;
+        $des_det = $request->des_det;
+        $par_cod = $request->partida;
+        $cod_con = $request->contable;
+        $car_cod = $request->car_cod;
+        $estado = $request->estado;
+        $sub_ofc_cod = $request->sub_ofc_cod;
+        $ci_resp = $request->ci_resp;
+        $nro_doc = $request->nro_doc;
+        $idc = $request->cantidad;
+        $imp_act = '2';
+        $des_act = '1';
+        $gestion = '2021';
+        //dd($cod_soa, $des, $des_det, $par_cod,$cod_con,$car_cod, $estado, $sub_ofc_cod, $ci_resp,$nro_doc,$idc,$imp_act,$des_act,$gestion);
+        $data = Inventory::saveNewActive($cod_soa, $des, $des_det, $par_cod,$cod_con,$car_cod, $estado, $sub_ofc_cod, $ci_resp,$nro_doc,$idc,$imp_act,$des_act,$gestion);
+        return json_encode($data);
+    }
     public function saveChangeDocInventory(Request $request)
     {
         //dd($request);
@@ -343,32 +365,60 @@ class InventoryController extends Controller
     {
         
             //dd($request);
-            $ofc_cod = ($request->get('idOffice')) ? $request->get('idOffice') : null;
-            $sub_ofc_ids = ($request->get('idSubOffices')) ? $request->get('idSubOffices') : null;
+            //$ofc_cod = ($request->get('idOffice')) ? $request->get('idOffice') : null;
             $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
             //dd($keyWord,$ofc_id,$sub_ofc_ids);
-            $page = ($request->get('page')) ? $request->get('page') : 1;
+            $data = Inventory::SearchActiveForDocInvRegistered($doc_cod,$keyWord);
+            $page = ($request->get('page') ? $request->get('page') : 1);
             $perPage = 10;
-            $data = Inventory::SearchActiveForDocInv($doc_cod,$ofc_cod ,$keyWord, $page, $perPage);
-            return json_encode($data);
-        
+            $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/documentqr')]
+        );
+        return json_encode($paginate);        
     }
 
+    public function controlTrue(Request $request)
+    {
+        $no_cod = ($request->get('no_cod')) ? $request->get('no_cod') : '';
+        //dd($no_cod);
+        $data = Inventory::controlTrue($no_cod);
+        return json_encode($data);
+    }
     public function getEstados()
     {
         $data = Inventory::getEstados();
         return json_encode($data);
     }
+    public function getPartidas()
+    {
+        $data = Inventory::getPartidas();
+        return json_encode($data);
+    }
+    public function getContable()
+    {
+        $data = Inventory::getContable();
+        return json_encode($data);
+    }
+    public function getlastNroDoc()
+    {
+        $data = Inventory::getLastNroDoc();
+        return json_encode($data);
+    }
     public function saveActiveInDetailDoc(Request $request)
     {
-       // dd($request);
-       if ($request->has('id')) {
-        $id = $request->id;
+       //dd($request);
+       if ($request->has('id_detalle')) {
+        $id = $request->id_detalle;
     } else {
         $id = -1;
     }
         //$id = $request->id_detalle_doc;
-        $nro_doc_inv = $request->doc_cod;
+        $nro_doc_inv = $request->nro_doc_inv;
+
         $cod_ges = $request->cod_ges;
         $cod_act = $request->cod_act;
         $id_act = $request->id_act;
@@ -433,5 +483,124 @@ class InventoryController extends Controller
     {
         $data = Inventory::getImagesByIdAct($cod_act);
         return json_encode($data);
+    }
+    public function getListNroDoc(Request $request)
+    {
+        $descripcion = ($request->get('descripcion') ? $request->get('descripcion') : '');
+        $data = Inventory::getListNroDoc($descripcion);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/documentqr')]
+        );
+        return json_encode($paginate);
+    }
+    public function getActivesbyDocument(Request $request)
+    {
+        $document = $request->get('id');
+        $data = Inventory::getActivesbyDocument($document);
+        return json_encode($data);
+    }
+    public function getReportSelectedActive(Request $request)
+    {
+        //dd($request);
+        $lista = $request->lista;
+        $lista2 = implode(",", $lista);
+        // dd($lista2);
+        //$l = '9999/98.2';
+
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/ticketActiveQR.jrxml';
+        $jasper->compile($input)->execute();
+        $input = public_path() . '/reports/ticketActiveQR.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('p_lista' => $lista2),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+        $pathToFile = public_path() . '/reports/ticketActiveQR.pdf';
+        $filename = 'ticketActiveQR.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+    }
+    public function informeGeneral(Request $request)
+    {
+        //dd($request);
+        $no_doc = $request->no_doc;
+        //dd($no_doc);
+        $lista2 = "";
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/inventarioGeneral.jrxml';
+        $jasper->compile($input)->execute();
+        $input = public_path() . '/reports/inventarioGeneral.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('no_doc' => $no_doc),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+        $pathToFile = public_path() . '/reports/inventarioGeneral.pdf';
+        $filename = 'inventarioGeneral.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+    }
+    public function inventarioTrue(Request $request)
+    {
+        //dd($request);
+        $no_doc = $request->get('no_doc');
+        $ofc_cod = $request->get('ofc_cod');
+        $sub = $request->get('sub_ofc_cod');
+       //$sub_ofc_cod = implode(",", $sub);
+       $l = '000051';
+       $l2 = '12345678';
+       $l3 = '1';
+       //dd($no_doc,$sub,$ofc_cod);
+        $lista2 = '1';
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/inventarioDetalleTrue.jrxml';
+        $jasper->compile($input)->execute();
+        $input = public_path() . '/reports/inventarioDetalleTrue.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('p_no_doc' => $no_doc,'p_unidad' => $ofc_cod,'p_subUnidad' => $sub),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+        $pathToFile = public_path() . '/reports/inventarioDetalleTrue.pdf';
+        $filename = 'inventarioDetalleTrue.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
     }
 }

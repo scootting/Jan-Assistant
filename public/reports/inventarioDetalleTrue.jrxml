@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventarioDetalleTrue" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e34a0ce-ac76-4bcd-9ced-b78da7330b87">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="260"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="732"/>
+	<parameter name="p_unidad" class="java.lang.String"/>
+	<parameter name="p_no_doc" class="java.lang.String"/>
+	<parameter name="p_subUnidad" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select d.obs_est,d.validacion,a.act_des,a.act_des_det,a.nro_doc,a.par_cod
+,a.ofc_cod,a.sub_ofc_cod,a.act_imp , a.act_can ,a.act_uni_med,
+(SELECT o.descripcion 
+          FROM inv.oficinas o
+         WHERE o.cod_soa =  $P{p_unidad}  limit 1) AS ofc_des,
+(SELECT s.descripcion 
+          FROM inv.sub_oficinas s
+         WHERE s.id = sub_ofc_cod) AS sub_ofc_des, 
+(SELECT p.par_des 
+FROM act.partida p 
+WHERE p.par_cod = a.par_cod and p.gestion = 2021) as par_des,
+(SELECT e.desc from inv.estado e
+	where e.id = d.est_act
+ )as estado
+from inv.detalle_doc_act as d
+INNER JOIN act.vv_act_detallado as a
+ON d.id_act = a.id
+AND d.nro_doc_inv like  $P{p_no_doc} 
+AND a.ofc_cod like   $P{p_unidad} 
+AND d.validacion = true
+AND CAST(a.sub_ofc_cod AS text) IN (SELECT unnest(string_to_array( '1' , ',')) AS sub_ofc_cod)
+order by a.sub_ofc_cod, a.par_cod]]>
+	</queryString>
+	<field name="obs_est" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obs_est"/>
+		<property name="com.jaspersoft.studio.field.label" value="obs_est"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="validacion" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="validacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="validacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalle_doc_act"/>
+	</field>
+	<field name="act_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="act_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="act_des_det" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="act_des_det"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_des_det"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="nro_doc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="par_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="sub_ofc_cod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="act_imp" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="act_imp"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_imp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="act_can" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="act_can"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_can"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="act_uni_med" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="act_uni_med"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_uni_med"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
+	</field>
+	<field name="sub_ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sub_ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_ofc_des"/>
+	</field>
+	<field name="par_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_des"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+	</field>
+	<group name="Group1Unidad">
+		<groupHeader>
+			<band height="56">
+				<staticText>
+					<reportElement x="5" y="6" width="546" height="20" uuid="43f6d41a-545d-45d4-9b91-70330206dcde"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Arial Narrow" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DETALLE DE ACTIVOS FIJOS POR CATEGORIA PROGRAMATICA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="2" y="26" width="551" height="30" uuid="aba41d3d-0827-4f55-906b-a3cb37024d6a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Narrow" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ofc_des}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement x="520" y="35" width="32" height="10" uuid="427bc550-279c-40f5-8879-2bcd7e0e06cd">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font fontName="Arial Narrow" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="480" y="35" width="40" height="10" uuid="fd586706-beb1-40e8-a814-59c59c51ba35">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial Narrow" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group1SubOficinas">
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="210" y="28" width="220" height="20" uuid="97ef4942-909f-4fa3-bf79-7ddf93f56963">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6484c72-95de-4562-a463-1cce2d4b4686"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIPCIÓN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="28" width="60" height="20" uuid="0090df8f-046d-4bc9-8a68-e9c58d053349">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0622fdf-f604-4175-888f-965a35fd91b0"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANTIDAD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="28" width="65" height="20" uuid="a01a34d1-3f21-4c3a-b997-60bb2ab3d503">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58274d45-6d78-4464-87cb-c0fcae550521"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CÓDIGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="150" y="28" width="50" height="20" uuid="467319a6-0ff3-4066-89fb-243f98353acc">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3886cd85-2cd8-45f8-9ca4-251ccd817246"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIDAD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="27" width="54" height="20" uuid="c51ff852-b246-4f26-ad7b-b18464c86b89">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="334016b6-8200-4212-bbd7-e5f12b096fb6"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[IMPORTE]]></text>
+				</staticText>
+				<line>
+					<reportElement x="2" y="48" width="551" height="1" uuid="86ec5738-c959-466a-a024-d30f0f0d1b91"/>
+					<graphicElement>
+						<pen lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="484" y="28" width="67" height="20" uuid="ffe6b31c-09d5-4687-aa33-2e600b9b43d0">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="334016b6-8200-4212-bbd7-e5f12b096fb6"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESTADO]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="5" y="7" width="546" height="20" uuid="3a8b15a7-e249-4aa2-9ef8-3169dccd6050"/>
+					<textElement textAlignment="Center">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sub_ofc_des}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="6" width="548" height="20" uuid="ddfcc219-cccc-44c2-be2f-a14581ba66c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD AUTÓNOMA "TÓMAS FRÍAS"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="22" width="548" height="20" forecolor="#000000" uuid="29312c01-fcf9-4b4b-a215-458c5d64dbb7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN ADMINISTRATIVA Y FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="27" width="86" height="10" uuid="563278c8-59d3-4bdc-930f-a1f75d7f3504"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE INFORMACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="34" width="108" height="10" uuid="514dd166-17a6-4d65-91b8-d51f294ce394"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADMINISTRATIVA Y FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="7" width="48" height="35" uuid="9075aeab-42f3-471d-b120-2b0f6cbe79d5"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="20" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[SIAF]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="47" width="551" height="1" uuid="44b18366-5e32-4367-900e-a59973a23924">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<image>
+				<reportElement x="-10" y="0" width="50" height="50" uuid="a0905adb-3d9d-453e-bd0b-83a58f631b3a"/>
+				<imageExpression><![CDATA["F:/UATF.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="486" y="2" width="67" height="20" uuid="e2de2417-953a-49fe-bf9e-64bf7a8187a8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0954104-fa3a-458a-945d-5fd540d0ab72"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="2" width="220" height="20" uuid="36bec080-1ad8-42cf-b587-65b4a34adda2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4543ad64-5313-4a60-af33-0923b21cd6a6"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{act_des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="0" width="60" height="22" uuid="90452ad5-3d85-4d02-9438-5e684c9e9fcc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8b79322-9df5-4a9d-bd84-3a7ab369ea36"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_doc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="2" width="60" height="20" uuid="9b69ce74-9759-4701-8e81-8037e851b4ed">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29d49577-07f8-46b2-bd83-ab4841735f1c"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{act_can}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="2" width="50" height="20" uuid="797034ba-3c55-4cec-acda-6ceeab3d1763">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9e1cc053-9829-4a4c-bbb5-fa36678bfb72"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{act_uni_med}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="2" width="54" height="20" uuid="ac2fb5cb-9c99-4219-8b8c-a18496434801">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e01bc523-26c1-49ff-91f8-a502ac0095a1"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{act_imp}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<textField>
+				<reportElement x="210" y="0" width="220" height="30" isRemoveLineWhenBlank="true" uuid="38f316c1-5ac2-40b7-90e0-2898e7343c1c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d20be3a-0163-4390-83bb-b11d982f780d"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{act_des_det}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<textField>
+				<reportElement x="250" y="0" width="180" height="20" uuid="888aef06-1bb1-41c6-940e-b52c4bbd9181">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="67630144-eb36-418e-ab75-026cfa6bed9e"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_est}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="20" uuid="c0e9ba81-d50a-4cb2-a87d-aeaf17ca74e2"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="7"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

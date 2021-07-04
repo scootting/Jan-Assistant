@@ -40,7 +40,10 @@ import Inventory2Detail from './views/inventory/Inventory2Detail'
 import Formalities from './views/Formalities'
 import AddTaxExemption from './views/clients/AddTaxExemption'
 import Active from './views/inventory/Active'
+import CreateActive from './views/inventory/CreateActive'
 import EditActive from './views/inventory/EditActive'
+import DocumentQR from './views/inventory/DocumentQR'
+import SelectActiveByDocument from './views/inventory/SelectActiveByDocument'
 import QrPrint from './views/inventory/QrPrint'
 import NewActive from './views/inventory/NewActive'
 import ImgDetail from './views/inventory/ImgDetail'
@@ -135,8 +138,11 @@ const router = new VueRouter({
                 { path: 'imgDetail/:id', name: 'imgdetail', component: ImgDetail },
                 { path: 'editnewinventory/:id', name: 'editnewinventorydetail',component: EditNewInventoryDetail },
                 { path: 'active', name: 'active', component: Active },
+                { path: 'createactive', name: 'createactive', component: CreateActive },
                 { path: 'active/:id', name: 'editactive', component: EditActive },
-                { path: 'newactive', name: 'newactive' , component: NewActive },
+                { path: 'newactive/:soa', name: 'newactive' , component: NewActive },
+                { path: 'documentqr', name: 'documentqr' , component: DocumentQR },
+                { path: 'documentqr/:id', name: 'selectactivebydocument' , component: SelectActiveByDocument },
 
                 { path: 'addgraduatecertificate', name: 'addgraduatecertificate' , component: AddGraduateCertificate },
 

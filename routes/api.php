@@ -80,11 +80,19 @@ Route::group([
     //rutas de re asignacion de activos
     Route::get('reasignacion/', 'InventoryController@SearchActivo');
     Route::get('activo/estados', 'InventoryController@getEstados');
+    Route::get('activo/partidas', 'InventoryController@getPartidas');
+    Route::get('activo/contable', 'InventoryController@getContable');
+    Route::get('activo/nro','InventoryController@getlastNroDoc');
+    Route::get('activo/controlTrue','InventoryController@controlTrue');
     Route::get('activo/cargos', 'InventoryController@getAllCargos');
     Route::get('reasignacion/edit/{id}', 'InventoryController@getActive');
     Route::post('reasignacion/save', 'InventoryController@saveChangeActive');
-
-
+    Route::post('newactive/save', 'InventoryController@saveNewActive');
+    Route::get('listNroDoc', 'InventoryController@getListNroDoc');
+    Route::post('selectActivebyDocument', 'InventoryController@getActivesbyDocument');
+    Route::get('reportSelectedActive/', 'InventoryController@getReportSelectedActive');
+    Route::get('inventoryReportGral/', 'InventoryController@informeGeneral');
+    Route::get('inventoryReportTrue/', 'InventoryController@inventarioTrue');
 
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
     // *** - Buscar por su carnet de identidad - ***

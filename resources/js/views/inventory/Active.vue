@@ -3,14 +3,6 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Activos Fijos</span>
-        <el-button
-          style="text-align: right; float: right"
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          @click="createActive"
-          >Añadir nuevo activo</el-button
-        >
       </div>
       <div style="margin-top: 15px">
         <el-input

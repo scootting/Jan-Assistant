@@ -38,7 +38,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="right-center" width="300" label="Operaciones">
+          <el-table-column align="right-center" width="550" label="Operaciones">
             <template slot-scope="scope">
               <el-button
                 :disabled="data[scope.$index].verificado == true"
@@ -58,11 +58,19 @@
               >
               <el-button
                 :disabled="data[scope.$index].verificado == false"
-                @click="printListActive(scope.row.id)"
+                @click="generateReportGral(scope.row)"
                 type="primary"
                 plain
                 size="mini"
-                >Imprimir </el-button
+                >Imprimir General</el-button
+              >
+              <el-button
+                :disabled="data[scope.$index].verificado == false"
+                @click="generateReportTrue(scope.row)"
+                type="primary"
+                plain
+                size="mini"
+                >Imprimir Detallado</el-button
               >
             </template>
           </el-table-column>
@@ -89,6 +97,7 @@ export default {
       verificado:false,
       messages: {},
       data: [],
+      showReportes:false,
       pagination: {
         page: 1,
       },
@@ -139,9 +148,52 @@ export default {
         }
       });
     },
-    printListActive(no_cod){
-      alert("Button to Print New Invent");
+    generateReportGral(no_cod) {
+        axios({
+          url: "/api/inventoryReportGral/",
+          params:{
+            no_doc:no_cod.no_cod,
+          },
+          method: "GET",
+          responseType: "arraybuffer",
+        }).then((response) => {
+          console.log(response.data);
+          console.log("1");
+          let blob = new Blob([response.data], {
+            type: "application/pdf",
+          });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          console.log(blob);
+          let url = window.URL.createObjectURL(blob);
+          window.open(url);
+        });
     },
+    generateReportTrue(no_cod) {
+      
+        axios({
+          url: "/api/inventoryReportTrue/",
+          params:{
+            no_doc:no_cod.no_cod,
+            ofc_cod:no_cod.ofc_cod,
+            sub_ofc_cod:no_cod.sub_ofc_cod,
+          },
+          method: "GET",
+          responseType: "arraybuffer",
+        }).then((response) => {
+          console.log(response.data);
+          console.log("1");
+          let blob = new Blob([response.data], {
+            type: "application/pdf",
+          });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          console.log(blob);
+          let url = window.URL.createObjectURL(blob);
+          window.open(url);
+        });
+    },
+    
     test() {
       alert("bienvenido al modulo");
     },

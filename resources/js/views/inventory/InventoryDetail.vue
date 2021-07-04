@@ -179,7 +179,6 @@ export default {
     };
   },
   mounted() {
-    
     let cod_soa = this.$route.params.soa;
     axios
       .get("/api/inventory/show/" + cod_soa)

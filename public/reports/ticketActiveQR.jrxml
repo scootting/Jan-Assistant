@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketActiveQR" printOrder="Horizontal" pageWidth="169" pageHeight="61" columnWidth="164" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="6ddc65fd-5e23-4870-8c57-94d2b50ef247">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficial_Daf"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="mm"/>
+	<parameter name="p_lista" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT aa.nro_doc,
+ 		aa.ofc_cod,
+        (SELECT o.descripcion 
+           FROM inv.oficinas o
+          WHERE o.cod_soa = aa.ofc_cod limit 1) as ofc_des,
+        aa.act_des,
+        aa.par_cod,
+        aa.act_estado
+   FROM act.vv_act_detallado aa 
+ WHERE aa.nro_doc IN (SELECT unnest(string_to_array( $P{p_lista}, ',')))]]>
+	</queryString>
+	<field name="nro_doc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.label" value="nro_doc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="ofc_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="ofc_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ofc_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="ofc_des"/>
+	</field>
+	<field name="act_des" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="act_des"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="par_cod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="par_cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<field name="act_estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="act_estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="act_estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vv_act_detallado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<componentElement>
+				<reportElement x="114" y="0" width="52" height="51" uuid="d9a01b71-320d-4aab-a0b0-738d1e018452"/>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA[$F{nro_doc}+"|"+$F{ofc_des}+"|"+"|"+$F{par_cod}+"|"+$F{act_des}+"|"+$F{act_estado}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<staticText>
+				<reportElement x="2" y="1" width="116" height="12" uuid="b5667444-5555-45d8-b88f-a158fed299f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD AUTONOMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="8" width="116" height="17" uuid="fc2ec42c-0323-4b47-86bd-dd1d384ab9fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA["TOMAS FRIAS"]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="30" width="116" height="17" uuid="b2d9ecf2-c3bb-43ab-b7a5-edd530a5e4f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UATF - " + $F{nro_doc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
