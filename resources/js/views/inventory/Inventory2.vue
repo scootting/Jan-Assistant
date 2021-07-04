@@ -30,7 +30,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="ofc_cod" label="Cod_soa"> </el-table-column>
-          <el-table-column prop="descripcion" label="Unidad"></el-table-column>
+          <el-table-column prop="descripcion" width="250" label="Unidad"></el-table-column>
           <el-table-column label="Estado">
             <template slot-scope="scope">
               <div slot="reference" class="name-wrapper">
@@ -38,7 +38,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="right-center" width="550" label="Operaciones">
+          <el-table-column align="right-center" width="250" label="Operaciones">
             <template slot-scope="scope">
               <el-button
                 :disabled="data[scope.$index].verificado == true"
@@ -56,13 +56,17 @@
                 size="mini"
                 >Ver lista </el-button
               >
+            </template>
+          </el-table-column>
+          <el-table-column align="right-center" width="250" label="Informe">
+            <template slot-scope="scope">
               <el-button
                 :disabled="data[scope.$index].verificado == false"
                 @click="generateReportGral(scope.row)"
                 type="primary"
                 plain
                 size="mini"
-                >Imprimir General</el-button
+                >General</el-button
               >
               <el-button
                 :disabled="data[scope.$index].verificado == false"
@@ -70,7 +74,7 @@
                 type="primary"
                 plain
                 size="mini"
-                >Imprimir Detallado</el-button
+                >Detallado</el-button
               >
             </template>
           </el-table-column>
