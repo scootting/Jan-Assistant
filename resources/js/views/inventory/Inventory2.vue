@@ -29,7 +29,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="ofc_cod" label="Cod_soa"> </el-table-column>
+          <el-table-column prop="ofc_cod" label="Codigo SOA"> </el-table-column>
           <el-table-column prop="descripcion" width="250" label="Unidad"></el-table-column>
           <el-table-column label="Estado">
             <template slot-scope="scope">
