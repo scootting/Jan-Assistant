@@ -58,7 +58,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column align="right-center" width="250" label="Informe">
+          <el-table-column align="right-center" width="450" label="Informe">
             <template slot-scope="scope">
               <el-button
                 :disabled="data[scope.$index].verificado == false"
@@ -74,7 +74,15 @@
                 type="primary"
                 plain
                 size="mini"
-                >Detallado</el-button
+                >VERIFICADOS</el-button
+              >
+              <el-button
+                :disabled="data[scope.$index].verificado == false"
+                @click="generateReportFalse(scope.row)"
+                type="primary"
+                plain
+                size="mini"
+                >NO VERIFICADOS</el-button
               >
             </template>
           </el-table-column>
@@ -177,6 +185,30 @@ export default {
       
         axios({
           url: "/api/inventoryReportTrue/",
+          params:{
+            no_doc:no_cod.no_cod,
+            ofc_cod:no_cod.ofc_cod,
+            sub_ofc_cod:no_cod.sub_ofc_cod,
+          },
+          method: "GET",
+          responseType: "arraybuffer",
+        }).then((response) => {
+          console.log(response.data);
+          console.log("1");
+          let blob = new Blob([response.data], {
+            type: "application/pdf",
+          });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          console.log(blob);
+          let url = window.URL.createObjectURL(blob);
+          window.open(url);
+        });
+    },
+    generateReportFalse(no_cod) {
+      
+        axios({
+          url: "/api/inventoryReportFalse/",
           params:{
             no_doc:no_cod.no_cod,
             ofc_cod:no_cod.ofc_cod,

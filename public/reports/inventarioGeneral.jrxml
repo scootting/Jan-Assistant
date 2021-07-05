@@ -16,7 +16,7 @@ where a.nro_doc_inv like  $P{no_doc}  and a.validacion = true )as validacionTrue
 (select count(a.validacion) from inv.detalle_doc_act a
 where a.nro_doc_inv like   $P{no_doc} and a.validacion = false )as validacionfalse  
 from inv.doc_inv i
-where i.no_cod like $P{no_doc} ]]>
+where i.no_cod like $P{no_doc}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -195,18 +195,11 @@ where i.no_cod like $P{no_doc} ]]>
 				<textFieldExpression><![CDATA["MIENTRAS QUE  LA CANTIDAD DE ACTIVOS FALTANTES ES DE:  "+ $F{validacionfalse} +"."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="140" width="350" height="28" uuid="ed9a7723-f890-42c0-ba3c-38c30f80f187"/>
-				<textElement textAlignment="Justified">
-					<font fontName="Arial Narrow" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA["POR PARTE DE LOS RESPONSABLES CON CI: "+ $F{car_cod_resp} +"."]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="40" y="110" width="350" height="20" uuid="7b59af8e-a44d-4fb6-937b-d2d3c9468d41"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial Narrow" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["CON CODIGO SOA : "+ $F{ofc_cod} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CON CODIGO SOA : "+ $F{ofc_cod}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -116,17 +116,18 @@
                 plain
                 type="primary"
                 size="mini"
-                @click="saveActiveInDetail(scope.$index)"
-                >VERIFICAR</el-button
+                @click="cargarImagen(scope.$index, scope.row)"
+                >IMAGEN</el-button
               >
               <el-button
                 :disabled="data[scope.$index].guardado == true"
                 plain
                 type="primary"
                 size="mini"
-                @click="cargarImagen(scope.$index, scope.row)"
-                >IMAGEN</el-button
-              ></template
+                @click="saveActiveInDetail(scope.$index)"
+                >VERIFICAR</el-button
+              >
+              </template
             >
           </el-table-column>
         </el-table>

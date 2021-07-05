@@ -147,7 +147,7 @@ class Inventory extends Model
             $arrString = $arrString . ($k > 0 ? ',' : '') . $cargo;
         $arrString = $arrString . ')';
         $query = "select public.personas.nro_dip,public.personas.nombres,
-        public.personas.paterno,public.personas.materno, inv.cargos.descripcion 
+        public.personas.paterno,public.personas.materno 
         from inv.activos,public.personas,inv.cargos
         where inv.activos.ofc_cod like '%" . $unidad . "%'and
         public.personas.nro_dip = inv.activos.ci_resp
@@ -155,7 +155,7 @@ class Inventory extends Model
         " . (count($cargos) > 0 ? "and inv.cargos.id in "
             . $arrString : "") . "
         group by public.personas.nro_dip,public.personas.nombres,
-        public.personas.paterno,public.personas.materno, inv.cargos.descripcion";
+        public.personas.paterno,public.personas.materno";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -272,9 +272,6 @@ class Inventory extends Model
                 and sof.id = ua.sub_ofc_cod
                 and c.id = ua.car_cod
                 and p.nro_dip = ua.ci_resp";
-        // group by (ua.des,ua.des_det,ua.vida_util,ua.estado,ua.car_cod,ua.sub_ofc_cod,ua.ofc_cod,
-        //     ua.ci_resp,ua.id, of.descripcion,sof.descripcion,c.descripcion,
-        //     p.nombres,p.paterno,p.materno)";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -339,7 +336,6 @@ class Inventory extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
     //Insertar activos cuando se registra un nuevo inventario
     public static function saveActivesToNewInventory($no_doc, $ofc_cod, $sub_ofc_cod, $gestion)
     {
@@ -347,12 +343,8 @@ class Inventory extends Model
         foreach ($sub_ofc_cod as $k => $su)
             $arrString = $arrString . ($k > 0 ? ',' : '') . $su;
         $arrString = $arrString . ")";
-        $query = "insert into inv.detalle_doc_act (cod_ges,id_act,id_des,est_act,nro_doc_inv) 
+        $query = "insert into inv.detalle_doc_act (cod_ges,id_act,id_des,nro_doc_inv) 
         (select '" . $gestion . "',vd.id,vd.per_tab,
-         (select e.id 
-         from inv.estado e, act.vv_act_detallado ac 
-         where ac.act_estado like e.desc 
-         and ac.ofc_cod like '" . $ofc_cod . "' group by e.id )est_act,
         (select no_cod from inv.doc_inv   where ofc_cod = '" . $ofc_cod . "' and no_cod = '" . $no_doc . "') nro_cod_inv
         from act.vv_act_detallado vd 
         where vd.ofc_cod = '" . $ofc_cod . "' 
@@ -364,23 +356,6 @@ class Inventory extends Model
     //Buscar activos por el los datos del documento del inventario
     public static function SearchActiveForDocInvRegistered($no_cod ,$keyWord)
     {
-        // $actIDsInDocDetail = DB::table('inv.detalle_doc_act')->where('inv.detalle_doc_act.nro_doc_inv', $no_cod)->pluck('inv.detalle_doc_act.id_act');
-        // $query = DB::table('act.vv_act_detallado')
-        //     ->select('act.vv_act_detallado.act_des','act.vv_act_detallado.id')
-        //     ->whereIn('act.vv_act_detallado.id', $actIDsInDocDetail);
-        // if ($keyWord) {
-        //     $query->where('act.vv_act_detallado.act_des', 'like', '%' . $keyWord . '%');
-        // };
-        // if ($ofc_cod) {
-        //     $query->where('act.vv_act_detallado.ofc_cod', 'like', '%' . $ofc_cod . '%');
-        // };
-
-        // $query = " select * from inv.detalle_doc_act inner join act.vv_act_detallado 
-        // ON inv.detalle_doc_act.id_act = act.vv_act_detallado.id
-        // and inv.detalle_doc_act.nro_doc_inv = 
-        // and act.vv_act_detallado.act_des like '%".$keyWord."%'
-        // order by act.vv_act_detallado.id asc "; 
-
         $query = "select v.id, d.id_detalle,d.nro_doc_inv,d.cod_ges,d.cod_act,d.cod_nue,
         d.id_act,d.id_des,d.validacion,d.est_act,d.obs_est,v.act_des,d.guardado,v.per_tab
         from inv.detalle_doc_act d inner join act.vv_act_detallado v
@@ -399,35 +374,9 @@ class Inventory extends Model
         $data = DB::select($query);
         return $data;
     }
-    // public static function SearchActiveForDocInv($no_cod,$ofc_cod,$keyWord, $page = 1, $perPage = 10)
-    // {
-    //     $l1 = static::SearchActiveForDocInvRegistered($no_cod, $ofc_cod, $keyWord);
-    //     $true = static::controlTrue($no_cod);
-    //     //$lastPage = (int)ceil($l1->count() / $perPage);
-    //     //$total = $l1->count() ;
-    //     $p1 = $l1->paginate($perPage, ['*'], 'page', $page);
-    //     $data = [];
-    //     $data = $p1->items();
-    //     foreach ($data as $act) {
-    //         $act->detalle_doc_act = self::searchDocDetailByActiveId($act->id,$no_cod);
-    //     }
-    //     $resp = [
-    //         'true' => $true,
-    //         'current_page' => (int) $page,
-    //         'data' => $data,
-    //         'from' => ($page - 1) * $perPage + 1,
-    //         'to' => $perPage * $page,
-    //         //'last_page' => $lastPage,
-    //         'per_page' => $perPage,
-    //         //'total' => $total,
-    //     ];
-    //     return $resp;
-    // }
     //Guardar cambios del documento del Inventario boton de edit - > EditInventory2 
     public static function saveChangeDocInventory($id, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res)
     {
-        /*$query = "select * from inv.f_guardar_cambios_doc( '1','{131033544}', '{3}', '0000001',
-         '{1,3}', '{1,3}','{0}')";*/
         $query = " select * from inv.f_guardar_cambios_doc(
             '" . $id . "',
             '" . str_replace(']', '}', str_replace('[', '{', json_encode($res_enc))) . "',
@@ -468,7 +417,6 @@ class Inventory extends Model
     //Guardar datos de los activos en Documento Detalle
     public static function saveActiveInDetailDoc($nro_doc_inv, $cod_ges, $cod_act, $id_act, $id_des, $est_act, $obs_est, $validacion, $guardado, $id)
     {
-        //$fec_cre = Date('d-m-Y');
         $query = "Select * from inv.insertarActivoDocDetail('" . $nro_doc_inv . "','" . $cod_ges . "','" . $cod_act . "','" . $id_act . "','" . $id_des . "','" . $validacion . "','" . $est_act . "','" . $obs_est . "','" . $guardado . "','" . $id . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
