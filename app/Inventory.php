@@ -62,18 +62,20 @@ class Inventory extends Model
         return $data;
     }
     //Obtener activos cuando el filtro este en TODO (esta funcion se está reutilizando)
-    public static function getActivosBySoa($tipo, $cod_soa)
+    public static function getActivosBySoa($tipo, $cod_soa,$cod)
     {
         if ($tipo == 'general') {
-            $query = "select * from act.ff_activos_general('" . $cod_soa . "')";
+            $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
+            where t.nro_doc like  '%" . $cod . "%'";
         } else {
-            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "')";
+            $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
+            where t.nro_doc like  '%" . $cod . "%' ";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    // parte de Inventarios 2 (renombrado como INVENTARIO)
-    //obtener inventarios creados y listarlos para EDITAR, VER LISTA O IMPRIMIR 
+    //parte de Inventarios 2 (renombrado como INVENTARIO)
+    //obtener inventarios creados y listarlos para EDITAR, VER LISTA O IMPRIMIR
     public static function getInventories($gestion, $descripcion)
     {
         $query = "select inv.doc_inv.id, inv.doc_inv.no_cod, inv.doc_inv.ofc_cod,inv.doc_inv.sub_ofc_cod,
@@ -82,8 +84,7 @@ class Inventory extends Model
         inv.doc_inv.gestion = " . $gestion . "
         and inv.doc_inv.ofc_cod = inv.oficinas.cod_soa 
         and inv.oficinas.descripcion like '%" . $descripcion . "%'
-        order by inv.doc_inv.no_cod desc
-        ";
+        order by inv.doc_inv.no_cod desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -440,7 +441,7 @@ class Inventory extends Model
         return $data;
     }
     //prueba de elegir por responsable activos de un inventario 
-    public static function selectByCiResponsable($tipo, $cod_soa, $ci_resp)
+    public static function selectByCiResponsable($tipo, $cod_soa, $ci_resp,$cod)
     {
         $arrString = "{";
         foreach ($ci_resp as $k => $ci_resp)
@@ -450,17 +451,17 @@ class Inventory extends Model
 
             //$query = "select * from inv.ff_getactivosgeneralbyci('" . $cod_soa . "', '" . $arrString . "')";
             $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
-            WHERE t.ci_resp in ('" . $ci_resp . "')";
+            WHERE t.ci_resp in ('" . $ci_resp . "') and t.nro_doc like '%". $cod ."%' ";
         } else {
             //$query = "select * from inv.ff_getactivosdetallelbyci('" . $cod_soa . "', '" . $arrString . "')";
             $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
-            WHERE t.ci_resp in ('" . $ci_resp . "')";
+            WHERE t.ci_resp in ('" . $ci_resp . "')  and t.nro_doc like '%". $cod ."%'";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     //prueba de seleccionar inventario por cargo
-    public static function selectByCargo($tipo, $cod_soa, $cargo)
+    public static function selectByCargo($tipo, $cod_soa, $cargo,$cod)
     {
         $arrString = "{";
         foreach ($cargo as $k => $cargo)
@@ -470,17 +471,17 @@ class Inventory extends Model
 
             //$query = "select * from inv.ff_getactivosgeneralbycargo('" . $cod_soa . "', '" . $arrString . "')"; 
             $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
-            WHERE t.car_cod in ('" . $cargo . "')";
+            WHERE t.car_cod in ('" . $cargo . "') and t.nro_doc like '%". $cod ."%'";
         } else {
             //$query = "select * from inv.ff_getactivosdetallelbycargo('" . $cod_soa . "', '" . $arrString . "')";
             $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
-            WHERE t.car_cod in ('" . $cargo . "')";
+            WHERE t.car_cod in ('" . $cargo . "') and t.nro_doc like '%". $cod ."%'";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
     //
-    public static function selectBysubUnidad($tipo, $cod_soa, $subUnidad)
+    public static function selectBysubUnidad($tipo, $cod_soa, $subUnidad,$cod)
     {
         $arrString = "";
         foreach ($subUnidad as $k => $subUnidad)
@@ -490,11 +491,11 @@ class Inventory extends Model
 
             //$query = "select * from inv.ff_getactivosgeneralbysubunidad('" . $cod_soa . "', '" . $arrString . "')";
             $query = "select * from act.ff_activos_general('" . $cod_soa . "') as t
-            WHERE t.sub_ofc_cod in ('" . $subUnidad . "')";
+            WHERE t.sub_ofc_cod in ('" . $subUnidad . "') and t.nro_doc like '%". $cod ."%'";
         } else {
             //$query = "select * from inv.ff_getactivosdetallebysubunidad('" . $cod_soa . "', '" . $arrString . "')";
             $query = "select * from act.ff_activos_detallado('" . $cod_soa . "') as t
-            WHERE t.sub_ofc_cod in ('" . $subUnidad . "')";
+            WHERE t.sub_ofc_cod in ('" . $subUnidad . "') and t.nro_doc like '%". $cod ."%'";
         }
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -531,17 +532,16 @@ class Inventory extends Model
         return $data;
     } 
 
-public static function getLastNroDoc()
-{
-    $query="
-    select distinct 
-    split_part(nro_doc, '/', 1)::integer + 1 as numero
-    from inv.activos
-    where split_part(nro_doc, '/', 2) = '98' and nro_doc is not null and split_part(nro_doc, '/', 1) <> '' and split_part(nro_doc, '/', 2) <> '' and nro_doc not ilike '%A%'
-    order by numero desc
-    fetch first 1 row only";
-    $data = collect(DB::select(DB::raw($query)));    
+    public static function getLastNroDoc()
+    {
+        $query="
+        select distinct 
+        split_part(nro_doc, '/', 1)::integer + 1 as numero
+        from inv.activos
+        where split_part(nro_doc, '/', 2) = '98' and nro_doc is not null and split_part(nro_doc, '/', 1) <> '' and split_part(nro_doc, '/', 2) <> '' and nro_doc not ilike '%A%'
+        order by numero desc
+        fetch first 1 row only";
+        $data = collect(DB::select(DB::raw($query)));    
         return $data;
-}
-    
+    }
 }

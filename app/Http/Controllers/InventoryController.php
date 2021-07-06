@@ -52,23 +52,23 @@ class InventoryController extends Controller
     //obtener activos para la lista en la página de Inventarios (ACTIVOS POR UNIDAD).
     public function getActivosByFilter(Request $request, $cod_soa)
     {
-        //dd($request);
         $tipo_reporte = ($request->get('reporte'));
         $tipo_filtro = ($request->get('filtroTipo'));
         $valor = ($request->get('filtroValor'));
+        $cod = ($request->get('descripcion') ? $request->get('descripcion') : '');
         $data = [];
         switch ($tipo_filtro) {
             case 'cargo':
-                $data = Inventory::selectByCargo($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectByCargo($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'subUnidad':
-                $data = Inventory::selectBysubUnidad($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectBysubUnidad($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'responsable':
-                $data = Inventory::selectByCiResponsable($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectByCiResponsable($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'todo':
-                $data = Inventory::getActivosBySoa($tipo_reporte, $cod_soa);
+                $data = Inventory::getActivosBySoa($tipo_reporte, $cod_soa,$cod);
                 break;
         }
         $page = ($request->get('page')) ? $request->get('page') : null;
@@ -233,11 +233,9 @@ class InventoryController extends Controller
     }
     public function saveDatasDetail(Request $request)
     {
-       // dd($request);
         $no_doc = $request->no_doc;
         $ofc_cod = $request->ofc_cod;
         $sub_ofc_cod = $request->sub_ofc_cod;
-        //dd($no_doc,$ofc_cod,$sub_ofc_cod);
         $gestion = '2021';
         $data = Inventory::saveActivesToNewInventory($no_doc,$ofc_cod,$sub_ofc_cod,$gestion);
         return json_encode($data);
@@ -456,7 +454,6 @@ class InventoryController extends Controller
     }
     public function saveImages(Request $request)
     {
-        //dd($request);
         $cod_act = $request->cod_act;
         $img_fro = $request->img_fro;
         $img_der = $request->img_der;

@@ -72,6 +72,22 @@
           </el-col>
         </el-row>
       </div>
+      <div
+        style="margin-top: 15px">
+        <el-input
+          placeholder="INSERTE NUMERO DE DOCUMENTO"
+          v-model="writtenTextParameter"
+          class="input-with-select"
+          @keyup.enter.native="cargarActivos"
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="cargarActivos"
+          ></el-button>
+        </el-input>
+      </div>
+      <br />
       <!--Inicio de generar la tabla-->
       <div>
         <el-table v-loading="loading" :data="activos" style="width: 100%">
@@ -149,10 +165,9 @@ export default {
       pagination: {
         page: 1,
       },
+      writtenTextParameter: "",
       respSelectCI: -1,
-      //encargados: [],
       generar: 1,
-      //filtro elegido para obtener los activos
       filtro: {
         tipo: "todo",
         values: [],
@@ -206,6 +221,7 @@ export default {
         reporte: this.reporte.tipo,
         filtroTipo: this.filtro.tipo,
         filtroValor: this.filtro.values,
+        descripcion: this.writtenTextParameter.toUpperCase(),
       };
       axios
         .get("/api/inventory/activosByFilter/" + this.oficina.cod_soa, {
