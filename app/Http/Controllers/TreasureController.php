@@ -206,6 +206,7 @@ class TreasureController extends Controller
     //  * {year: gestion}    
     public function getAllTransactionsByYear(Request $request){
         \Log::info($request);         
+        
         $year = $request->get('year');// '' cadena vacia
         $description = strtoupper($request->get('description'));// '' cadena vacia
         $data = Treasure::GetAllTransactionsByYear($description, $year);
@@ -224,14 +225,20 @@ class TreasureController extends Controller
     }
 
     public function cancelTransactionById(Request $request){
-        //\Log::info("estos es lo que necesitamos "+$request->get('transaccion'));
-        $id = $request->get('id');
-        $dia = $request->get('dia');
+
+        $transaccion = $request->get('transaccion');
+        $id = $transaccion['id_tran'];
+        $day = $transaccion['id_dia'];
         $year = $request->get('gestion');
         $user = $request->get('usuario');// '' cadena vacia
         $type = $request->get('tipo');
-        \Log::info($request);
-        //$data = Treasure::CancelTransactionById($id, $dia, $year, $user, $type);
+        \Log::info($transaccion);
+        \Log::info($id);
+        \Log::info($day);
+        \Log::info($year);
+        \Log::info($user);
+        \Log::info($type);
+        $data = Treasure::CancelTransactionById($id, $day, $year, $user, $type);
         return null;
         return json_encode($data);
     }
