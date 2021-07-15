@@ -114,16 +114,16 @@ class Treasure extends Model
 
     //  * Encontrar todas las transacciones de una gestion.
     //  * {id: numero de carnet de identidad}      
-    public static function GetAllTransactionsByYear($year){
-        //SELECT *, (SELECT v.des_val from val.valores v WHERE v.cod_val = d.cod_val) AS des_val
-        //FROM val.tra_dia d WHERE d.gestion = '2021' AND d.tip_tra in ('0', '1', '9') order by d.fec_tra DESC        
-        $query = "SELECT *, (SELECT v.des_val from val.valores v WHERE v.cod_val = d.cod_val) AS des_val ".
-                 "FROM val.tra_dia d WHERE d.gestion = '" .$year. "' AND d.tip_tra in ('0', '1', '9') order by d.id_tran DESC";
-        \Log::info($query);         
-        $data = collect(DB::select(DB::raw($query))); 
+    public static function GetAllTransactionsByYear($description, $year){
+        //select * from val.ff_buscar_transacciones('66006048', '2021');
+        $query = "select * from val.ff_buscar_transacciones('".$description."','".$year."')";
+        $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    
-
-
+    public static function CancelTransactionById($id, $day, $year, $user, $type){
+        //select * from val.ff_anular_transaccion('1234567890','1020', '2021', 'rcallizaya')
+        $query = "select * from val.ff_anular_transaccion('".$id."', '".$day."', '".$year."', '".$user."','".$type."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 }

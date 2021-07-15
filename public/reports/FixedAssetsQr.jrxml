@@ -10,7 +10,7 @@
 	<property name="ireport.jasperserver.reportUnit" value="/reports/interactive/FixedAssetsQr"/>
 	<parameter name="p_lista" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[ SELECT aa.codigo,
+		<![CDATA[SELECT aa.codigo,
  		aa.ofc_cod,
         (SELECT o.descripcion 
            FROM inv.oficinas o
@@ -70,7 +70,7 @@
 			<componentElement>
 				<reportElement x="114" y="0" width="52" height="51" uuid="b40586a3-eaf6-4199-81c2-334d6a030df6"/>
 				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<jr:codeExpression><![CDATA[$F{codigo}+"|"+$F{ofc_des}+"|"+$F{act_fec_adq}+"|"+$F{act_par_cod}+"|"+$F{act_des}]]></jr:codeExpression>
+					<jr:codeExpression><![CDATA[$F{codigo}+"|"+$F{ofc_des}+"|"+$F{act_fec_adq}+"|"+$F{act_par_cod}]]></jr:codeExpression>
 				</jr:QRCode>
 			</componentElement>
 			<staticText>
@@ -80,13 +80,6 @@
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD AUTONOMA]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="114" y="47" width="51" height="9" uuid="035d1754-6210-4081-9a96-0bb902d8f7c1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="5"/>
-				</textElement>
-				<textFieldExpression><![CDATA[DATEFORMAT($F{act_fec_adq},"dd.MM.YYYY")]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="2" y="8" width="116" height="17" uuid="4eaef440-df05-4d00-88ea-cde9c441e659"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -100,6 +93,13 @@
 					<font fontName="Arial Narrow" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["UATF - " + $F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="47" width="51" height="9" uuid="035d1754-6210-4081-9a96-0bb902d8f7c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DATEFORMAT($F{act_fec_adq},"dd.MM.YYYY")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

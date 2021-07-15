@@ -114,8 +114,10 @@ Route::group([
 
     // *** - Obtener las transacciones por persona por su el carnet de identidad - ***
     Route::post('getTransactionsByPerson', 'TreasureController@getTransactionsByPerson');
+    // *** - Obtener las transacciones por gestion - ***
     Route::post('getAllTransactionsByYear', 'TreasureController@getAllTransactionsByYear');
-
+    // *** - Anula la transaccion - ***
+    Route::post('cancelTransactionById', 'TreasureController@cancelTransactionById');
 
     // *** -  - ***
     Route::post('documentFixedAssets', 'FixedAssetController@getDocumentFixedAssetByYear');

@@ -3,14 +3,6 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>historial de transacciones</span>
-        <el-button
-          style="text-align: right; float: right"
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          @click="initSearchTransactions"
-          >nueva persona</el-button
-        >
       </div>
       <div style="margin-top: 15px">
         <el-input
@@ -60,14 +52,14 @@
                 type="primary"
                 size="mini"
                 plain
-                >Editar</el-button
+                >Anular con papeleta</el-button
               >
               <el-button
                 @click="initCancelTransaction(scope.$index, scope.row)"
                 type="danger"
                 plain
                 size="mini"
-                >Anular</el-button
+                >Anular sin papeleta</el-button
               >
             </template>
           </el-table-column>
@@ -89,9 +81,9 @@ export default {
   name: "Transacciones",
   data() {
     return {
-      messages: {},
       transactions: [],
-      year: "2021",
+      user: this.$store.state.user,
+      year: '2021',
       pagination: {
         page: 1,
       },
@@ -101,6 +93,7 @@ export default {
   },
   mounted() {
     let app = this;
+    console.log(app.user);
     axios
       .post("/api/getAllTransactionsByYear", {
         description: app.writtenTextParameter,
@@ -164,23 +157,27 @@ export default {
           });
         });
     },
-    /*
-    initAddPerson() {
-      this.$router.push({
-        name: "addperson",
-      });
+    initEditTransaction(index, row) {
+      let id = row.id_tran;
+      console.log(row);
+      axios
+        .post("/api/cancelTransactionById", {
+          transaccion: row,
+          id: row.id_tran,
+          dia: row.id_dia,
+          gestion: row.gestion,
+          tipo: 0,
+        })
+        .then((response) => {
+        })
+        .catch((error) => {
+          this.error = error;
+          this.$notify.error({
+            title: "Error",
+            message: this.error.message,
+          });
+        });
     },
-    initEditPerson(index, row) {
-      console.log(index, row);
-      let personal = row.personal;
-      this.$router.push({
-        name: "editperson",
-        params: {
-          id: personal.trim(),
-        },
-      });
-    },
-    */
     initCancelTransaction(index, row) {
       let personal = row.id_tran;
       //router.push({ name: 'editperson', params: { userId: personal }})
