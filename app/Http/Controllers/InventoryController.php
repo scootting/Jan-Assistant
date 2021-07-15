@@ -25,14 +25,12 @@ class InventoryController extends Controller
         );
         return json_encode($paginate);
     }
-    
     public function getOfficeByCodSoa($cod_soa)
     {
         $data = Inventory::getOfficeByCodSoa($cod_soa);
         $data->so_cargos = Inventory::getDatosByCodSoa($cod_soa);
         return json_encode($data);
     }
-    
     public function getSubOfficesByCodSoa($cod_soa)
     {
         $cod_soa = $cod_soa == 'null' ? null : $cod_soa;
@@ -54,23 +52,23 @@ class InventoryController extends Controller
     //obtener activos para la lista en la página de Inventarios (ACTIVOS POR UNIDAD).
     public function getActivosByFilter(Request $request, $cod_soa)
     {
-        //dd($request);
         $tipo_reporte = ($request->get('reporte'));
         $tipo_filtro = ($request->get('filtroTipo'));
         $valor = ($request->get('filtroValor'));
+        $cod = ($request->get('descripcion') ? $request->get('descripcion') : '');
         $data = [];
         switch ($tipo_filtro) {
             case 'cargo':
-                $data = Inventory::selectByCargo($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectByCargo($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'subUnidad':
-                $data = Inventory::selectBysubUnidad($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectBysubUnidad($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'responsable':
-                $data = Inventory::selectByCiResponsable($tipo_reporte, $cod_soa, $valor);
+                $data = Inventory::selectByCiResponsable($tipo_reporte, $cod_soa, $valor,$cod);
                 break;
             case 'todo':
-                $data = Inventory::getActivosBySoa($tipo_reporte, $cod_soa);
+                $data = Inventory::getActivosBySoa($tipo_reporte, $cod_soa,$cod);
                 break;
         }
         $page = ($request->get('page')) ? $request->get('page') : null;
@@ -233,14 +231,11 @@ class InventoryController extends Controller
         $data = Inventory::saveNewInventory($no_doc, $res_enc, $car_cod, $ofc_cod, $sub_ofc_cod, $car_cod_resp, $ci_res, $estado, $gestion);
         return json_encode($data);
     }
-    
     public function saveDatasDetail(Request $request)
     {
-       // dd($request);
         $no_doc = $request->no_doc;
         $ofc_cod = $request->ofc_cod;
         $sub_ofc_cod = $request->sub_ofc_cod;
-        //dd($no_doc,$ofc_cod,$sub_ofc_cod);
         $gestion = '2021';
         $data = Inventory::saveActivesToNewInventory($no_doc,$ofc_cod,$sub_ofc_cod,$gestion);
         return json_encode($data);
@@ -363,11 +358,7 @@ class InventoryController extends Controller
     //traer la lista de activos dentro del detalle
     public function getActivesForDocInv(Request $request, $doc_cod)
     {
-        
-            //dd($request);
-            //$ofc_cod = ($request->get('idOffice')) ? $request->get('idOffice') : null;
             $keyWord = ($request->get('keyWord')) ? $request->get('keyWord') : '';
-            //dd($keyWord,$ofc_id,$sub_ofc_ids);
             $data = Inventory::SearchActiveForDocInvRegistered($doc_cod,$keyWord);
             $page = ($request->get('page') ? $request->get('page') : 1);
             $perPage = 10;
@@ -384,7 +375,6 @@ class InventoryController extends Controller
     public function controlTrue(Request $request)
     {
         $no_cod = ($request->get('no_cod')) ? $request->get('no_cod') : '';
-        //dd($no_cod);
         $data = Inventory::controlTrue($no_cod);
         return json_encode($data);
     }
@@ -410,15 +400,12 @@ class InventoryController extends Controller
     }
     public function saveActiveInDetailDoc(Request $request)
     {
-       //dd($request);
        if ($request->has('id_detalle')) {
         $id = $request->id_detalle;
     } else {
         $id = -1;
     }
-        //$id = $request->id_detalle_doc;
         $nro_doc_inv = $request->nro_doc_inv;
-
         $cod_ges = $request->cod_ges;
         $cod_act = $request->cod_act;
         $id_act = $request->id_act;
@@ -432,12 +419,10 @@ class InventoryController extends Controller
     }
     public function changeStateInventory(Request $request)
     {
-        //dd($request);
         $estado = $request->estado;
         $observaciones = $request->observaciones;
         $id = $request->nro_cod;
         $verificado = $request->verificado;
-        //dd($estado,$observaciones,$id);
         $data = Inventory::updateState($estado, $observaciones,$verificado ,$id);
         return json_encode($data);
     }
@@ -469,7 +454,6 @@ class InventoryController extends Controller
     }
     public function saveImages(Request $request)
     {
-        //dd($request);
         $cod_act = $request->cod_act;
         $img_fro = $request->img_fro;
         $img_der = $request->img_der;
@@ -507,12 +491,8 @@ class InventoryController extends Controller
     }
     public function getReportSelectedActive(Request $request)
     {
-        //dd($request);
         $lista = $request->lista;
         $lista2 = implode(",", $lista);
-        // dd($lista2);
-        //$l = '9999/98.2';
-
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/ticketActiveQR.jrxml';
         $jasper->compile($input)->execute();
@@ -539,10 +519,7 @@ class InventoryController extends Controller
     }
     public function informeGeneral(Request $request)
     {
-        //dd($request);
         $no_doc = $request->no_doc;
-        //dd($no_doc);
-        $lista2 = "";
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/inventarioGeneral.jrxml';
         $jasper->compile($input)->execute();
@@ -569,16 +546,9 @@ class InventoryController extends Controller
     }
     public function inventarioTrue(Request $request)
     {
-        //dd($request);
         $no_doc = $request->get('no_doc');
         $ofc_cod = $request->get('ofc_cod');
         $sub = $request->get('sub_ofc_cod');
-       //$sub_ofc_cod = implode(",", $sub);
-       $l = '000051';
-       $l2 = '12345678';
-       $l3 = '1';
-       //dd($no_doc,$sub,$ofc_cod);
-        $lista2 = '1';
         $jasper = new JasperPHP;
         $input = public_path() . '/reports/inventarioDetalleTrue.jrxml';
         $jasper->compile($input)->execute();
@@ -600,6 +570,35 @@ class InventoryController extends Controller
         )->execute();
         $pathToFile = public_path() . '/reports/inventarioDetalleTrue.pdf';
         $filename = 'inventarioDetalleTrue.pdf';
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->download($pathToFile, $filename, $headers);
+    }
+    public function inventarioFalse(Request $request)
+    {
+        $no_doc = $request->get('no_doc');
+        $ofc_cod = $request->get('ofc_cod');
+        $sub = $request->get('sub_ofc_cod');
+        $jasper = new JasperPHP;
+        $input = public_path() . '/reports/inventarioDetalleFalse.jrxml';
+        $jasper->compile($input)->execute();
+        $input = public_path() . '/reports/inventarioDetalleFalse.jasper'; //ReportValuesQr
+        $output = public_path() . '/reports';
+        $jasper->process(
+            $input,
+            false, //$output,
+            array('pdf', 'rtf'), // Formatos de salida del reporte
+            array('p_no_doc' => $no_doc,'p_unidad' => $ofc_cod,'p_sub_ofc_cod' => $sub),//array('php_version' => phpversion()),// Parámetros del reporte
+            array(
+                'driver' => 'postgres',
+                'username' => 'postgres',
+                'password' => '123456',
+                'host' => '192.168.25.54',
+                'database' => 'daf',
+                'port' => '5432',
+            )  
+        )->execute();
+        $pathToFile = public_path() . '/reports/inventarioDetalleFalse.pdf';
+        $filename = 'inventarioDetalleFalse.pdf';
         $headers = ['Content-Type' => 'application/pdf'];
         return response()->download($pathToFile, $filename, $headers);
     }

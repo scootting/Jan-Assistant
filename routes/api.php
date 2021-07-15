@@ -93,6 +93,7 @@ Route::group([
     Route::get('reportSelectedActive/', 'InventoryController@getReportSelectedActive');
     Route::get('inventoryReportGral/', 'InventoryController@informeGeneral');
     Route::get('inventoryReportTrue/', 'InventoryController@inventarioTrue');
+    Route::get('inventoryReportFalse/', 'InventoryController@inventarioFalse');
 
     // *** - Tesoreria - Rutas para la venta de alumnos nuevos - ***
     // *** - Buscar por su carnet de identidad - ***
