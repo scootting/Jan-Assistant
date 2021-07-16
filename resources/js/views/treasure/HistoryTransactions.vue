@@ -170,6 +170,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
+          alert("Se ha anulado la transaccion seleccionada");
         })
         .catch((error) => {
           this.error = error;
@@ -190,6 +191,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
+          alert("Se ha anulado la transaccion seleccionada");
         })
         .catch((error) => {
           this.error = error;
