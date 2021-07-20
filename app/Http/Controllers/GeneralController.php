@@ -54,7 +54,8 @@ class GeneralController extends Controller
     }
 
     public function getPersonsByDescription(Request $request){
-        $descripcion = $request->get('descripcion'); // '' cadena vacia
+
+        $descripcion = strtoupper($request->get('descripcion'));// '' cadena vacia
         $data = General::GetPersonsByDescription($descripcion);
         
         $page = ($request->get('page')? $request->get('page'): 1);
@@ -106,7 +107,7 @@ class GeneralController extends Controller
     //  * {parametro: tipo de busqueda por atributo, descripcion: descripcion de la busqueda}    
     public function getUsersByDescription(Request $request){
         
-        $descripcion = $request->get('descripcion');
+        $descripcion = strtoupper($request->get('descripcion'));
         $data = General::GetUsersByDescription($descripcion);        
         $page = ($request->get('page')? $request->get('page'): 1);
         $perPage = 10;
