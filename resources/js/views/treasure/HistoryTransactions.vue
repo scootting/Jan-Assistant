@@ -19,33 +19,44 @@
       </div>
       <br />
       <div>
-        <el-table v-loading="loading" :data="transactions" style="width: 100%">
+        <el-table v-loading="loading" :data="transactions" style="width: 100%" border>
+          <el-table-column
+            prop="fec_tra"
+            label="fecha"
+            :min-width="8"
+          ></el-table-column>
           <el-table-column
             prop="id_tran"
             label="id"
-            width="80"
+            :min-width="6"
           ></el-table-column>
           <el-table-column
             prop="cod_val"
-            label="codigo"
-            width="80"
+            label="cod"
+            :min-width="4"
           ></el-table-column>
           <el-table-column
             prop="des_val"
             label="descripcion"
-            width="500"
+            :min-width="30"
+          ></el-table-column>
+          <el-table-column
+            prop="imp_val"
+            label="bs."
+            :min-width="6"
           ></el-table-column>
           <el-table-column
             prop="ci_per"
             label="CARNET"
+            :min-width="8"
             width="100"
           ></el-table-column>
           <el-table-column
             prop="des_per"
             label="apellidos y nombres"
-            width="300"
+            :min-width="22"
           ></el-table-column>
-          <el-table-column align="right" width="300" label="anulacion">
+          <el-table-column align="right" :min-width="20" label="anulacion">
             <template slot-scope="scope">
               <el-button
                 :disabled="transactions[scope.$index].tip_tra == 9"

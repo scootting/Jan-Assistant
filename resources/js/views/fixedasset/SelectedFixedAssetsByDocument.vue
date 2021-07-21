@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>activos fijos</span>
+        <span>activos fijos para el documento: {{ nro_doc }}</span>
         <el-button
           style="text-align: right; float: right"
           size="small"
@@ -14,12 +14,11 @@
       </div>
       <br />
       <div>
-        {{ nro_doc }}
         <el-table
           v-loading="loading"
           :data="dataFixedAssets"
           style="width: 100%"
-          height="450"
+          border
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection"> </el-table-column>

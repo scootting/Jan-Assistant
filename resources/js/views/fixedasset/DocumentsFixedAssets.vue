@@ -17,8 +17,9 @@
           v-loading="loading"
           :data="fixedAssetsDocument"
           style="width: 100%"
+          border
         >
-          <el-table-column prop="nro_doc" label="numero" width="100">
+          <el-table-column prop="nro_doc" label="numero" :min-width="20">
             <template slot-scope="scope">
               <el-tag size="medium" type="danger">{{
                 scope.row.nro_doc
@@ -28,16 +29,16 @@
           <el-table-column
             prop="fecha"
             label="fecha"
-            width="100"
+            :min-width="20"
           ></el-table-column>
           <el-table-column
             prop="responsable"
             label="responsable"
-            width="650"
+            :min-width="40"
           ></el-table-column>
           <!--
           -->
-          <el-table-column align="right" width="320">
+          <el-table-column align="right" :min-width="20">
             <template slot-scope="scope">
               <el-button
                 @click="initSelectedFixedAssetsByDocument(scope.$index, scope.row)"
