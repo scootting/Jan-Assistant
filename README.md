@@ -111,7 +111,7 @@ Vue is a progressive framework for building user interfaces.
 2.6.0
 - Most changes but the principal to report server is:
   Changes function to document "ReportService.php" located in application\vendor\jaspersoft\rest-client\src\Jaspersoft\Service\
-  ***************
+```php
   public function runReport($uri, $format = 'pdf', $pages = null, $attachmentsPrefix = null, $inputControls = null, $interactive = true, 
                             $onePagePerSheet = false $freshData = true, $saveDataSnapshot = false, $transformerKey = null){
 	$url = $this->restUrl2 . '/reports' . $uri . '.' . $format;
@@ -126,7 +126,7 @@ Vue is a progressive framework for building user interfaces.
 	$binary = $this->service->prepAndSend($url, array(200), 'GET', null, true);
 	return $binary;
   }
-  ***************
+  ```
 
 ## Contributing
 
