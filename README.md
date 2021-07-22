@@ -108,6 +108,26 @@ Vue is a progressive framework for building user interfaces.
 - Use to component el-dialog for the asset form into View EdirDeliveryDocument.
 
 
+2.6.0
+- Most changes but the principal to report server is:
+  Changes function to document "ReportService.php" located in application\vendor\jaspersoft\rest-client\src\Jaspersoft\Service\
+  ***************
+  public function runReport($uri, $format = 'pdf', $pages = null, $attachmentsPrefix = null, $inputControls = null, $interactive = true, 
+                            $onePagePerSheet = false $freshData = true, $saveDataSnapshot = false, $transformerKey = null){
+	$url = $this->restUrl2 . '/reports' . $uri . '.' . $format;
+    if (empty($inputControls)){
+        $url .= '?' . Util::query_suffix(compact("pages", "attachmentsPrefix", "interactive", "onePagePerSheet", "freshData", "saveDataSnapshot", "transformerKey"));
+    }
+    else{
+        $url .= '?' . Util::query_suffix(array_merge(compact("pages", "attachmentsPrefix", "interactive", "onePagePerSheet", "freshData", "saveDataSnapshot", "transformerKey"), $inputControls));
+        $url = str_replace("%2F", "/", $url); //sustituir por /
+        $url = str_replace("%2C", ",", $url); //sustituir por ,
+    }
+	$binary = $this->service->prepAndSend($url, array(200), 'GET', null, true);
+	return $binary;
+  }
+  ***************
+
 ## Contributing
 
 Thank you for considering contributing to the Application Web! The contribution guide can be found in the [Janus Documentacion](https://google.com.bo).
