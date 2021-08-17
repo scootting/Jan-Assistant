@@ -21,9 +21,6 @@
         </el-input>
       </div>
       <br />
-      <!--
-        <el-tag type="success">{{ texto }}</el-tag>        
-      -->
       <el-row :gutter="20">
         <el-col :span="11"
           ><div class="grid-content bg-purple">
@@ -85,7 +82,6 @@ export default {
   data() {
     return {
       writtenTextParameter: "",
-      activation: 1,
       user: this.$store.state.user,
       day: "",
       saleOfDay: [],
@@ -126,15 +122,12 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
+    //Guardar la informacion necesaria para los alumnos nuevos
     saveTransaction() {
       var app = this;
       var newDayTransactions = app.saleOfDay;
       var newPostulations = app.postulations;
       var newValuesPostulations = app.valuesPostulations;
-      if (app.activation != 2) {
-        alert("no puede realizar esta accion");
-        return;
-      }
       axios
         .post("/api/storeTransactionsByStudents", {
           dayTransactions: newDayTransactions,
@@ -152,20 +145,17 @@ export default {
             }
           );
           //alert("se ha creado el registro de los valores del estudiante");
-          app.activation = 3;
         })
         .catch(function (response) {
           console.log(response);
           alert("no se puede crear el registro de los valores del estudiante");
         });
     },
+
+    //funcion para rescatar la informacion, modalidad de ingreso y valores del estudiante que se va a registrar
     initGetDataOfStudent() {
       let app = this;
       //alert(app.user.gestion);
-      if (app.activation != 1) {
-        alert("no puede realizar esta accion");
-        return;
-      }
       axios
         .post("/api/getDataOfStudentById", {
           id: app.writtenTextParameter,
@@ -182,8 +172,6 @@ export default {
             })
             .then((response) => {
               app.valuesPostulations = response.data;
-              app.activation = 2;
-              //app.texto = JSON.stringify(app.postulations);
               /*de acuerdo a la postulacion se debe imprimir los valores*/
             })
             .catch((error) => {
@@ -205,10 +193,6 @@ export default {
     printTransactions() {
       var app = this;
       app.ci_per = app.postulations.nro_dip;
-      if (this.activation != 3) {
-        alert("no puede realizar esta accion");
-        return;
-      }
       axios({
         url:
           "/api/reports/" +
@@ -229,15 +213,9 @@ export default {
         link.href = window.URL.createObjectURL(blob);
         let url = window.URL.createObjectURL(blob);
         window.open(url);
-        this.activation = 4;
       });
     },
     resetTransaction() {
-      if (this.activation != 4) {
-        alert("no puede realizar esta accion");
-        return;
-      }
-
       (this.writtenTextParameter = ""),
         (this.valuesPostulations = []),
         (this.postulations = {
@@ -248,7 +226,6 @@ export default {
           modalidad: "",
           id_modalidad: "",
         });
-      this.activation = 1;
     },
   },
 };

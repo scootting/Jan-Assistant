@@ -13,7 +13,7 @@ class Treasure extends Model
     //  * {year: gestion}      
     public static function getDataOfStudentById($id, $year){
         //select * from cluster.f_nuevos_datacenter('10547123', '2019', '2')
-        $query = "select * from cluster.f_nuevos_datacenter('".$id."','".$year."','1') where r_aceptado = 'ACEPTADO'";
+        $query = "select * from cluster.f_nuevos_datacenter_2('".$id."','".$year."','1') where r_aceptado = 'ACEPTADO'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }    
