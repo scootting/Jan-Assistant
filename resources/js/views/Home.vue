@@ -3,15 +3,9 @@
     <el-container>
       <el-header>
         <span>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</span>
-        <!--
-        <el-button type="primary" icon="el-icon-eleme"  @click="initLogin" plain>acceso al sistema</el-button>
-        -->
         <el-button @click="initLogin">LOGIN</el-button>
       </el-header>
       <el-container>
-        <!--
-        <el-aside width="200px">Barra lateral</el-aside>
-        -->
         <el-container>
           <el-main>
             <el-row :gutter="20">

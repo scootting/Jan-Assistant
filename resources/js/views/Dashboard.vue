@@ -1,7 +1,10 @@
 <template>
   <div>
     <el-container>
-      <el-aside width="260px" style="background-color: #010e1f; min-height: 100vh">
+      <el-aside
+        width="260px"
+        style="background-color: #010e1f; min-height: 100vh"
+      >
         <!--                  
                 *** - menu dinamico usando ElementUI - ***
         -->
@@ -9,44 +12,34 @@
           <p>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</p>
         </div>
         <el-menu
-          default-active="2"
+          default-active="1"
           class="el-menu-vertical-demo"
           background-color="#010e1f"
           text-color="#faebd7"
-          active-text-color="#faebd7"
+          active-text-color="#ffd04b"
           style="border-right: 0 !important"
         >
-          <template v-for="(option, index) in options">
-            <el-submenu :index="String(index)" :key="index">
-              <template slot="title">
-                <i :class="option.icon"></i>
-                <span slot="title">
-                  {{ option.title.trim() }}
-                </span>
-              </template>
-              <el-menu-item-group
-                v-for="(group, g_index) in option.groups"
-                :key="g_index"
-                :title="group.title.trim()"
-              >
-                <el-menu-item v-for="(item, i_index) in group.items" :key="i_index">
-                  <!-- :index='String(g_index)'-->
-                  <router-link :to="{ name: item.view.trim() }" tag="span">
-                    {{ item.title.trim() }}
-                  </router-link>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </template>
+          <el-menu-item index="1">
+            <i class="el-icon-document"></i>
+            <router-link :to="{ name: 'welcome2' }" tag="span">
+              inicio
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <router-link :to="{ name: 'addnotdocument2' }" tag="span">
+              certificado de no deudas
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="3" disabled>
+            <i class="el-icon-setting"></i>
+            <span>solvencia universitaria</span>
+          </el-menu-item>
         </el-menu>
-        <!--                  
-                *** - finalizacion del menu dinamico usando ElementUI - ***
-        -->
       </el-aside>
 
       <el-container>
         <el-header style="text-align: right; background-color: #f4f3ef">
-          <!---->
           <el-dropdown size="medium">
             <span class="el-dropdown-link">
               Configuracion
@@ -58,10 +51,14 @@
                 @click.native="centerDialogVisible = true"
                 >gestion</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-setting" @click.native="NoDeveloped"
+              <el-dropdown-item
+                icon="el-icon-setting"
+                @click.native="NoDeveloped"
                 >perfiles</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-message" @click.native="NoDeveloped"
+              <el-dropdown-item
+                icon="el-icon-message"
+                @click.native="NoDeveloped"
                 >mensajes</el-dropdown-item
               >
             </el-dropdown-menu>
@@ -72,10 +69,14 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-user" @click.native="initToShowUser"
+              <el-dropdown-item
+                icon="el-icon-user"
+                @click.native="initToShowUser"
                 >mi perfil</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-chat-dot-square" @click.native="NoDeveloped"
+              <el-dropdown-item
+                icon="el-icon-chat-dot-square"
+                @click.native="NoDeveloped"
                 >mis mensajes</el-dropdown-item
               >
               <el-dropdown-item icon="el-icon-right" @click.native="logoutUser"
@@ -89,12 +90,6 @@
             <el-col :span="22">
               <div id="level">
                 <p></p>
-                <!--
-                            <el-breadcrumb separator-class="el-icon-arrow-right">
-                                <el-breadcrumb-item>Api</el-breadcrumb-item>
-                                <el-breadcrumb-item>Welcome</el-breadcrumb-item>
-                            </el-breadcrumb>
-                            -->
                 <div id="right-button">
                   <el-button
                     icon="el-icon-back"
@@ -111,9 +106,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <!--                  
-      *** - dialogo usando ElementUI - ***
-    -->
+    <!--
     <el-dialog title="gestion" :visible.sync="centerDialogVisible" width="30%" center>
       <el-form>
         <el-form-item label="seleccione la gestion">
@@ -136,6 +129,7 @@
         <el-button type="primary" @click="changeYear" size="small">Confirmar</el-button>
       </span>
     </el-dialog>
+    -->
   </div>
 </template>
 
@@ -144,12 +138,12 @@ export default {
   name: "app",
   data() {
     return {
-      centerDialogVisible: false,
+      //centerDialogVisible: false,
       error: "",
-      user: this.$store.state.user,
-      years: {},
-      options: {},
-      yearSelected: 1999, // this.user.gestion,
+      client: this.$store.state.user,
+      //years: {},
+      //options: {},
+      yearSelected: 2021,
     };
   },
   created() {},

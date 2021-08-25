@@ -43,23 +43,6 @@ export default {
     test() {
       alert("bienvenido al modulo");
     },
-    loadReportAssets() {
-      /*
-      axios({
-        url: "/descargando",
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        console.log(response);
-        console.log("3");
-        //let newBlob =
-        //var headers = response.headers();
-        let blob = new Blob([response.data], { type: "application/pdf" });
-        console.log(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });*/
-    },
   },
 };
 </script>

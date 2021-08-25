@@ -10,54 +10,14 @@ import Dashboard from './views/Dashboard'
 import Assets from './views/FixedAssets'
 import AddNotDocument from './views/clients/AddNotDocument'
 
-//usuario
-import Users from './views/application/Users'
-import AddUser from './views/application/AddUser'
-import EditUser from './views/application/EditUser'
-import ShowUser from './views/application/ShowUser'
-import EditUserProfiles from './views/application/EditUserProfiles'
-
 //certificado de diplomados
 import AddGraduateCertificate from './views/document/AddGraduateCertificate'
 
-//persona
-import Persons from './views/application/Persons'
-import AddPerson from './views/application/AddPerson'
-import EditPerson from './views/application/EditPerson'
 import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
 
 //bienes e inventarios
-import Inventory from './views/inventory/Inventory'
-import Inventory2 from './views/inventory/Inventory2'
-import EditInventory2 from './views/inventory/EditInventory2'
-import InventoryDetail from './views/inventory/InventoryDetail'
-import NewInventory from './views/inventory/NewInventory'
-import NewInventoryDetail from './views/inventory/NewInventoryDetail' 
-import EditNewInventoryDetail from './views/inventory/EditNewInventoryDetail'
-import Inventory2Detail from './views/inventory/Inventory2Detail'
-import Formalities from './views/Formalities'
-import AddTaxExemption from './views/clients/AddTaxExemption'
-import Active from './views/inventory/Active'
-import CreateActive from './views/inventory/CreateActive'
-import EditActive from './views/inventory/EditActive'
-import DocumentQR from './views/inventory/DocumentQR'
-import SelectActiveByDocument from './views/inventory/SelectActiveByDocument'
-import QrPrint from './views/inventory/QrPrint'
-import NewActive from './views/inventory/NewActive'
-import ImgDetail from './views/inventory/ImgDetail'
-//activos fijos
-import DocumentsFixedAssets from './views/fixedasset/DocumentsFixedAssets'
-import SelectedFixedAssetsByDocument from './views/fixedasset/SelectedFixedAssetsByDocument'
-
-//tesoreria
-import Solvency from './views/treasure/Solvency'
-import SaleStudents from './views/treasure/SaleStudents'    //lista de dias de alumnos nuevos
-import Students from './views/treasure/Students'            //alumnos nuevos
-import AppendDebtors from './views/treasure/AppendDebtors'  //lista de dias de deudores
-import Debtors from './views/treasure/Debtors'              //deudores
-import HistoryTransactions from './views/treasure/HistoryTransactions'              //historial de transacciones
 
 //clientes 
 import LoginClient from './views/clients/Login'
@@ -75,9 +35,6 @@ const router = new VueRouter({
             component: Home,
             children: [
                 { path: '', name: 'layout', component: Layout },
-                { path: '/formalities', name: 'formalities', component: Formalities },
-                { path: '/taxExemption', name: 'addTaxExemption', component: AddTaxExemption },
-                { path: '/addNotDocument', name: 'addnotdocument', component: AddNotDocument },
             ],
         },
         {
@@ -125,24 +82,6 @@ const router = new VueRouter({
                 { path: 'persons', name: 'persons', component: Persons },
                 { path: 'person/add', name: 'addperson', component: AddPerson },
                 { path: 'person/:id', name: 'editperson', component: EditPerson },
-                //{ path: 'person/show/:id', name: 'editperson', component: EditPerson },
-                //{ path: 'welcome', name: 'welcome', component: Welcome },
-                
-                { path: 'inventory', name: 'inventory', component: Inventory },
-                { path: 'inventory/:soa', name: 'inventorydetail', component: InventoryDetail },
-                { path: 'inventory2', name: 'inventory2', component: Inventory2 },
-                { path: 'inventory2/:id', name: 'editinventory2', component: EditInventory2 },
-                { path: 'newinventory', name: 'newinventory', component: NewInventory },
-                { path: 'newinventory/:soa', name: 'newinventorydetail',component: NewInventoryDetail },
-                { path: 'inventory2detail/:no_cod', name: 'inventory2detail', component: Inventory2Detail },
-                { path: 'imgDetail/:id', name: 'imgdetail', component: ImgDetail },
-                { path: 'editnewinventory/:id', name: 'editnewinventorydetail',component: EditNewInventoryDetail },
-                { path: 'active', name: 'active', component: Active },
-                { path: 'createactive', name: 'createactive', component: CreateActive },
-                { path: 'active/:id', name: 'editactive', component: EditActive },
-                { path: 'newactive/:soa', name: 'newactive' , component: NewActive },
-                { path: 'documentqr', name: 'documentqr' , component: DocumentQR },
-                { path: 'documentqr/:id', name: 'selectactivebydocument' , component: SelectActiveByDocument },
 
                 { path: 'addgraduatecertificate', name: 'addgraduatecertificate' , component: AddGraduateCertificate },
 
@@ -159,11 +98,6 @@ const router = new VueRouter({
             meta: {
                 requiresAuth: true,
             }
-        },
-        {
-            path: '/QrPrint/:id',
-            name: 'qrprint',
-            component: QrPrint,
         },
         {
             path: '/404',
