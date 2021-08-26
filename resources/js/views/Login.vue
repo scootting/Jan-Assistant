@@ -1,11 +1,17 @@
 <template>
   <div>
     <el-main>
-      <el-row :gutter="20">
-        <el-col :span="6" :offset="9">
+      <el-row :gutter="20" style="padding-top: 200px">
+        <el-col :span="4" :offset="7">
           <div class="header">
-            <h2>LOGO HERE</h2>
+            <el-image :src="url_image" style="width: 90%; height: 90%">
+              <div slot="placeholder" class="image-slot">
+                Loading<span class="dot">...</span>
+              </div>
+            </el-image>
           </div>
+        </el-col>
+        <el-col :span="6">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>login</span>
@@ -32,7 +38,7 @@
                 <el-form-item prop="password">
                   <el-input
                     v-model="model.password"
-                    placeholder="Contaseña"
+                    placeholder="Contraseña"
                     type="password"
                   >
                     <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -58,16 +64,12 @@
       </el-row>
       <!-- *** Formulario de Ayuda al Usuario *** -->
       <el-drawer title="Ayuda" :visible.sync="drawer" :with-header="false">
-        <span>Hola te puedo ayudar?</span> <br /><br />
-        <span
-          >Se encuentra en la pantalla de ingreso por favor ingrese su nombre de
-          usuario que puede ser la inicial de su primer nombre y primer apellido
-          y contraseña asignado por el encargado de sistemas </span
-        ><br />
-        <h4>EJ: Jesus Pérez -> JPEREZ</h4>
-        <br />
-        <h4>contraseña -> 123456</h4>
-      </el-drawer>
+       <span
+          >Contacto con la unidad de sistemas de la direccion administrativa y
+          financiera</span
+        >
+        <span>74246032</span>
+       </el-drawer>
     </el-main>
   </div>
 </template>
@@ -82,6 +84,7 @@ export default {
         password: null,
       },
       drawer: false,
+      url_image: '/images/EUATF.png', //url('../images/EUATF.png'),//
       loading: false,
       error: null,
       rules: {
@@ -114,6 +117,7 @@ export default {
   },
   methods: {
     login() {
+      console.log(this.url_image),
       this.$store
         .dispatch("retrieveToken", {
           username: this.model.username,
