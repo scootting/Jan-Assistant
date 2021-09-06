@@ -5,9 +5,6 @@
         width="260px"
         style="background-color: #010e1f; min-height: 100vh"
       >
-        <!--                  
-                *** - menu dinamico usando ElementUI - ***
-        -->
         <div class="logo">
           <p>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</p>
         </div>
@@ -21,13 +18,13 @@
         >
           <el-menu-item index="1">
             <i class="el-icon-document"></i>
-            <router-link :to="{ name: 'welcome2' }" tag="span">
+            <router-link :to="{ name: 'welcome' }" tag="span">
               inicio
             </router-link>
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'addnotdocument2' }" tag="span">
+            <router-link :to="{ name: 'welcome' }" tag="span">
               certificado de no deudas
             </router-link>
           </el-menu-item>
@@ -42,36 +39,13 @@
         <el-header style="text-align: right; background-color: #f4f3ef">
           <el-dropdown size="medium">
             <span class="el-dropdown-link">
-              Configuracion
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown" style="margin-left: 10px">
-              <el-dropdown-item
-                icon="el-icon-date"
-                @click.native="centerDialogVisible = true"
-                >gestion</el-dropdown-item
-              >
-              <el-dropdown-item
-                icon="el-icon-setting"
-                @click.native="NoDeveloped"
-                >perfiles</el-dropdown-item
-              >
-              <el-dropdown-item
-                icon="el-icon-message"
-                @click.native="NoDeveloped"
-                >mensajes</el-dropdown-item
-              >
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown size="medium">
-            <span class="el-dropdown-link">
-              {{ user.descripcion }}
+              {{ client.descripcion }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 icon="el-icon-user"
-                @click.native="initToShowUser"
+                @click.native="initToShowClient"
                 >mi perfil</el-dropdown-item
               >
               <el-dropdown-item
@@ -79,7 +53,7 @@
                 @click.native="NoDeveloped"
                 >mis mensajes</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-right" @click.native="logoutUser"
+              <el-dropdown-item icon="el-icon-right" @click.native="logoutClient"
                 >cerrar sesion</el-dropdown-item
               >
             </el-dropdown-menu>
@@ -106,30 +80,6 @@
         </el-main>
       </el-container>
     </el-container>
-    <!--
-    <el-dialog title="gestion" :visible.sync="centerDialogVisible" width="30%" center>
-      <el-form>
-        <el-form-item label="seleccione la gestion">
-          <el-select
-            v-model="yearSelected"
-            placeholder="por favor seleccione una gestion"
-            value-key="gestion"
-          >
-            <el-option
-              v-for="item in years"
-              :label="item.gestion"
-              :value="item.ff_gestiones_usuario"
-              :key="item.ff_gestiones_usuario"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false" size="small">Cancelar</el-button>
-        <el-button type="primary" @click="changeYear" size="small">Confirmar</el-button>
-      </span>
-    </el-dialog>
-    -->
   </div>
 </template>
 
@@ -138,79 +88,26 @@ export default {
   name: "app",
   data() {
     return {
-      //centerDialogVisible: false,
       error: "",
       client: this.$store.state.user,
-      //years: {},
-      //options: {},
       yearSelected: 2021,
     };
   },
   created() {},
   mounted() {
     let app = this;
-    app.yearSelected = app.user.gestion;
-    axios
-      .post("/api/profiles", {
-        usuario: app.user.usuario,
-        gestion: app.user.gestion,
-      })
-      .then((response) => {
-        app.options = response.data;
-        axios
-          .post("/api/years", {
-            usuario: app.user.usuario,
-          })
-          .then((response) => {
-            app.years = response.data;
-          })
-          .catch((error) => {
-            this.error = error;
-            this.$notify.error({
-              title: "Error",
-              message: this.error.message,
-            });
-          });
-      })
-      .catch((error) => {
-        this.error = error;
-        this.$notify.error({
-          title: "Error",
-          message: this.error.message,
-        });
-      });
+    console.log(app.client);
   },
+  
   computed: {},
   methods: {
-    logoutUser() {
+    logoutClient() {
       this.$router.push({
         name: "logout",
       });
     },
-    changeYear() {
-      let app = this;
-      console.log(app.yearSelected);
-      axios
-        .post("/api/profiles", {
-          usuario: app.user.usuario,
-          gestion: app.yearSelected,
-        })
-        .then((response) => {
-          app.options = response.data;
-          app.user.gestion = app.yearSelected;
-          app.$store.commit("updateUser", app.user);
-          this.$router.push({
-            name: "welcome",
-          });
-        })
-        .catch((error) => {
-          this.error = error;
-          this.$notify.error({
-            title: "Error",
-            message: this.error.message,
-          });
-        });
-      app.centerDialogVisible = false;
+    initToShowClient(){
+      console.log("iniciar la informacion del cliente")
     },
     NoDeveloped() {
       this.$notify.warning({
@@ -221,11 +118,6 @@ export default {
     initToWelcomePage() {
       this.$router.push({
         name: "welcome",
-      });
-    },
-    initToShowUser() {
-      this.$router.push({
-        name: "showuser",
       });
     },
   },
