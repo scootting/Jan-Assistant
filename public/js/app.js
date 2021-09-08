@@ -3636,132 +3636,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
     return {
-      //centerDialogVisible: false,
       error: "",
       client: this.$store.state.user,
-      //years: {},
-      //options: {},
       yearSelected: 2021
     };
   },
   created: function created() {},
   mounted: function mounted() {
-    var _this = this;
-
     var app = this;
-    app.yearSelected = app.user.gestion;
-    axios.post("/api/profiles", {
-      usuario: app.user.usuario,
-      gestion: app.user.gestion
-    }).then(function (response) {
-      app.options = response.data;
-      axios.post("/api/years", {
-        usuario: app.user.usuario
-      }).then(function (response) {
-        app.years = response.data;
-      })["catch"](function (error) {
-        _this.error = error;
-
-        _this.$notify.error({
-          title: "Error",
-          message: _this.error.message
-        });
-      });
-    })["catch"](function (error) {
-      _this.error = error;
-
-      _this.$notify.error({
-        title: "Error",
-        message: _this.error.message
-      });
-    });
+    console.log(app.client);
   },
   computed: {},
   methods: {
-    logoutUser: function logoutUser() {
+    logoutClient: function logoutClient() {
       this.$router.push({
         name: "logout"
       });
     },
-    changeYear: function changeYear() {
-      var _this2 = this;
-
-      var app = this;
-      console.log(app.yearSelected);
-      axios.post("/api/profiles", {
-        usuario: app.user.usuario,
-        gestion: app.yearSelected
-      }).then(function (response) {
-        app.options = response.data;
-        app.user.gestion = app.yearSelected;
-        app.$store.commit("updateUser", app.user);
-
-        _this2.$router.push({
-          name: "welcome"
-        });
-      })["catch"](function (error) {
-        _this2.error = error;
-
-        _this2.$notify.error({
-          title: "Error",
-          message: _this2.error.message
-        });
-      });
-      app.centerDialogVisible = false;
+    initToShowClient: function initToShowClient() {
+      console.log("iniciar la informacion del cliente");
     },
     NoDeveloped: function NoDeveloped() {
       this.$notify.warning({
@@ -3772,11 +3669,6 @@ __webpack_require__.r(__webpack_exports__);
     initToWelcomePage: function initToWelcomePage() {
       this.$router.push({
         name: "welcome"
-      });
-    },
-    initToShowUser: function initToShowUser() {
-      this.$router.push({
-        name: "showuser"
       });
     }
   }
@@ -4300,13 +4192,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4340,22 +4225,6 @@ __webpack_require__.r(__webpack_exports__);
       this.isVisible = isVisible;
     },
     reporte: function reporte() {
-      /*
-      axios({
-          url: "/api/reportSelectedFixedAssets2/",
-          params: {
-          },
-          method: "GET",
-          responseType: "pdf",
-        }).then((response) => {
-          let blob = new Blob([response.data], {
-            type: "application/pdf",
-          });
-          let link = document.createElement("a");
-          link.href = window.URL.createObjectURL(blob);
-          let url = window.URL.createObjectURL(blob);
-          window.open(url);
-        });*/
       axios.get("/api/reportSelectedFixedAssets2/", {
         responseType: "arraybuffer"
       }).then(function (response) {
@@ -83669,7 +83538,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "router-link",
-                        { attrs: { to: { name: "welcome2" }, tag: "span" } },
+                        { attrs: { to: { name: "welcome" }, tag: "span" } },
                         [_vm._v("\n            inicio\n          ")]
                       )
                     ],
@@ -83684,12 +83553,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "router-link",
-                        {
-                          attrs: {
-                            to: { name: "addnotdocument2" },
-                            tag: "span"
-                          }
-                        },
+                        { attrs: { to: { name: "welcome" }, tag: "span" } },
                         [
                           _vm._v(
                             "\n            certificado de no deudas\n          "
@@ -83729,73 +83593,9 @@ var render = function() {
                     { attrs: { size: "medium" } },
                     [
                       _c("span", { staticClass: "el-dropdown-link" }, [
-                        _vm._v("\n            Configuracion\n            "),
-                        _c("i", {
-                          staticClass: "el-icon-arrow-down el-icon--right"
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-menu",
-                        {
-                          staticStyle: { "margin-left": "10px" },
-                          attrs: { slot: "dropdown" },
-                          slot: "dropdown"
-                        },
-                        [
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-date" },
-                              nativeOn: {
-                                click: function($event) {
-                                  _vm.centerDialogVisible = true
-                                }
-                              }
-                            },
-                            [_vm._v("gestion")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-setting" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.NoDeveloped($event)
-                                }
-                              }
-                            },
-                            [_vm._v("perfiles")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-message" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.NoDeveloped($event)
-                                }
-                              }
-                            },
-                            [_vm._v("mensajes")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-dropdown",
-                    { attrs: { size: "medium" } },
-                    [
-                      _c("span", { staticClass: "el-dropdown-link" }, [
                         _vm._v(
                           "\n            " +
-                            _vm._s(_vm.user.descripcion) +
+                            _vm._s(_vm.client.descripcion) +
                             "\n            "
                         ),
                         _c("i", {
@@ -83813,7 +83613,7 @@ var render = function() {
                               attrs: { icon: "el-icon-user" },
                               nativeOn: {
                                 click: function($event) {
-                                  return _vm.initToShowUser($event)
+                                  return _vm.initToShowClient($event)
                                 }
                               }
                             },
@@ -83839,7 +83639,7 @@ var render = function() {
                               attrs: { icon: "el-icon-right" },
                               nativeOn: {
                                 click: function($event) {
-                                  return _vm.logoutUser($event)
+                                  return _vm.logoutClient($event)
                                 }
                               }
                             },
@@ -84751,8 +84551,6 @@ var render = function() {
             ],
             1
           ),
-          _vm._v(" "),
-          _c("h1", [_vm._v("bienvenido/a")]),
           _vm._v(" "),
           _c("h5", [
             _vm._v("esta pagina a sido intencionalmente puesta en blanco")
@@ -101614,9 +101412,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // /dashboard  /api/assets /api/profiles
     name: 'dashboard',
     component: _views_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"],
-    children: [// UserHome will be rendered inside User's <router-view>
-      // when /user/:id is matched0
-    ],
+    children: [{
+      path: '',
+      name: 'welcome',
+      component: _views_Welcome__WEBPACK_IMPORTED_MODULE_8__["default"]
+    }],
     meta: {
       requiresAuth: true
     }

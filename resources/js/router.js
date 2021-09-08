@@ -69,8 +69,7 @@ const router = new VueRouter({
             name: 'dashboard',
             component: Dashboard,
             children: [
-                // UserHome will be rendered inside User's <router-view>
-                // when /user/:id is matched0
+                { path: '', name: 'welcome', component: Welcome },
             ],
             meta: {
                 requiresAuth: true,
