@@ -24,7 +24,7 @@
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'welcome' }" tag="span">
+            <router-link :to="{ name: 'nocertificate' }" tag="span">
               certificado de no deudas
             </router-link>
           </el-menu-item>
