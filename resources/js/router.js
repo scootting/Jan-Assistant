@@ -7,8 +7,7 @@ import NotFound from './views/NotFound'
 import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
-import Assets from './views/FixedAssets'
-import AddNotDocument from './views/clients/AddNotDocument'
+import NoCertificate from './views/clients/AddNotDocument'
 
 //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
@@ -17,27 +16,11 @@ import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
 
-//bienes e inventarios
-
-//clientes 
-//import LoginClient from './views/clients/Login'
-//import DashboardClient from './views/clients/Dashboard'
-//import { component } from 'vue/types/umd'
-
 // Routes
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'is-active',
     routes: [
-        /*
-        {
-            path: '/',
-            name: 'login',
-            component: Home,
-            children: [
-                { path: '', name: 'layout', component: Layout },
-            ],
-        },*/
         {
             path: '/', //path: '/login',
             name: 'login',
@@ -70,6 +53,7 @@ const router = new VueRouter({
             component: Dashboard,
             children: [
                 { path: '', name: 'welcome', component: Welcome },
+                { path: '/nocertificate', name: 'nocertificate', component: NoCertificate },
             ],
             meta: {
                 requiresAuth: true,
