@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
 use App\Libraries\DynamicMenu;
 
+use function GuzzleHttp\Promise\queue;
+
 class General extends Model
 {
     // *** - funcion para la busqueda de usuarios - ***
@@ -99,6 +101,24 @@ class General extends Model
         $query = "select * from public.ff_mostrar_usuario('".$identityCard."')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
-    }        
+    }      
+    
+    // funcion para buscar a la persona por su carnet
+
+    public static function getPersonByCI ($nro_dip)
+    {
+        $query="select nro_dip,paterno,materno,nombres from public.personas where nro_dip like '%". $nro_dip ."%'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    //funcion para guardar a una persona nueva
+    public static function saveNewPerson ($nro_dip,$nombres,$paterno,$materno,$nacimiento,$sexo,$telefono,$direccion,$correo)
+    {
+        $query = "select * from public.guardar_nueva_persona('".$nro_dip."','".$nombres."','".$paterno."','".$materno."',
+        '".$nacimiento."','".$sexo."','".$telefono."','".$direccion."','".$correo."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 }

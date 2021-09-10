@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('persona','GeneralController@getPersonByCI');
 Route::post('login', 'GeneralController@searchUser');
-
 Route::group([
     'middleware' => 'jwt.auth',
 ], function () {
@@ -28,6 +28,7 @@ Route::group([
     // *** - rutas para crear, editar, mostrar, buscar a las personas - ***
     // *** - Buscar - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');
+    
     // *** - Aniadir - ***
     Route::get('person/add', 'GeneralController@addPerson');
     // *** - Almacenar - ***

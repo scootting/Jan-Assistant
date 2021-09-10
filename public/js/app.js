@@ -3982,6 +3982,110 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4059,15 +4163,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "login",
+  name: "loginn",
   data: function data() {
-    return {
+    return _defineProperty({
       model: {
         username: null,
         password: null
       },
       drawer: false,
-      url_image: '/images/EUATF.png',
+      saber: false,
+      url_image: "/images/EUATF.png",
       //url('../images/EUATF.png'),//
       loading: false,
       error: null,
@@ -4090,8 +4195,87 @@ __webpack_require__.r(__webpack_exports__);
           message: "La contraseña de tener por lo menos 5 caracteres",
           trigger: "blur"
         }]
+      },
+      nro_dip: null,
+      messages: {},
+      person: {
+        personal: "",
+        nombres: "",
+        paterno: "",
+        materno: "",
+        nacimiento: "",
+        sexo: "M",
+        telefono: "",
+        direccion: "",
+        correo: ""
       }
-    };
+    }, "rules", {
+      personal: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede ser menos de 2 o mas de 100",
+        trigger: "blur"
+      }],
+      nombres: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede ser menos de 2 o mas de 100",
+        trigger: "blur"
+      }],
+      materno: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede ser menos de 2 o mas de 100",
+        trigger: "blur"
+      }],
+      nacimiento: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }],
+      telefono: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede mas de 8",
+        trigger: "blur"
+      }],
+      direccion: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede ser menos de 5 o mas de 100",
+        trigger: "blur"
+      }],
+      correo: [{
+        required: true,
+        message: "El campo no puede estar vacio",
+        trigger: "blur"
+      }, {
+        min: 2,
+        max: 100,
+        message: "el tamaño no puede ser menos de 2 o mas de 100",
+        trigger: "blur"
+      }]
+    });
   },
   methods: {
     login: function login() {
@@ -4112,6 +4296,44 @@ __webpack_require__.r(__webpack_exports__);
           message: _this.error.message
         });
       });
+    },
+    search: function search(nro_dip) {
+      var _this2 = this;
+
+      console.log("esto es una prueba", this.nro_dip);
+      axios.get("persona", {
+        params: {
+          nro_dip: nro_dip
+        }
+      }).then(function (data) {
+        if (nro_dip != null) {
+          _this2.$notify({
+            title: "Se encuentra registrado",
+            message: "Usted esta registrado en el sistema",
+            type: "success"
+          });
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    savePerson: function savePerson() {
+      var _this3 = this;
+
+      axios.post("newPerson", this.person).then(function (data) {
+        _this3.$notify.success({
+          title: "La persona fue registrada exitosamente!",
+          message: "Se realizó el registro de la persona correspondiente",
+          duration: 3000
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    cancelForm: function cancelForm() {
+      this.loading = false;
+      this.saber = false;
+      clearTimeout(this.timer);
     }
   }
 });
@@ -84397,11 +84619,30 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "footer" }, [
-                    _c("div", { staticClass: "version" }, [
-                      _vm._v("Version 1.08.01")
-                    ])
-                  ])
+                  _c(
+                    "div",
+                    { staticClass: "footer" },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          staticStyle: { float: "right", padding: "3px 0" },
+                          attrs: { type: "text" },
+                          nativeOn: {
+                            click: function($event) {
+                              _vm.saber = true
+                            }
+                          }
+                        },
+                        [_vm._v("Verifique que está registrado")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "version" }, [
+                        _vm._v("Version 1.08.01")
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -84431,6 +84672,392 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", [_vm._v("74246032")])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-drawer",
+            {
+              attrs: {
+                title: "Formulario",
+                visible: _vm.saber,
+                "with-header": false
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.saber = $event
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "demo-drawer__content" },
+                [
+                  _c(
+                    "el-row",
+                    [
+                      _c(
+                        "el-col",
+                        { attrs: { span: 20 } },
+                        [
+                          _c(
+                            "el-form",
+                            {
+                              attrs: { "label-width": "150px" },
+                              nativeOn: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.search($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "el-form-item",
+                                { attrs: { label: "CI:", prop: "personal" } },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.nro_dip,
+                                      callback: function($$v) {
+                                        _vm.nro_dip = $$v
+                                      },
+                                      expression: "nro_dip"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-col",
+                        [
+                          _c(
+                            "el-button",
+                            {
+                              staticClass: "login-button",
+                              attrs: {
+                                icon: "el-icon-search",
+                                type: "primary",
+                                loading: _vm.loading,
+                                "native-type": "submit"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.search(_vm.nro_dip)
+                                }
+                              }
+                            },
+                            [_vm._v("buscar")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("el-divider", { attrs: { "content-position": "left" } }, [
+                    _vm._v("INGRESE SUS DATOS")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-row",
+                    [
+                      _c(
+                        "el-col",
+                        { attrs: { span: 20 } },
+                        [
+                          _c(
+                            "el-form",
+                            {
+                              ref: "form",
+                              attrs: {
+                                model: _vm.person,
+                                rules: _vm.rules,
+                                "label-width": "260px"
+                              }
+                            },
+                            [
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "numero de identificacion",
+                                    prop: "personal"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.personal,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "personal", $$v)
+                                      },
+                                      expression: "person.personal"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "nombres",
+                                    prop: "nombres"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.nombres,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "nombres", $$v)
+                                      },
+                                      expression: "person.nombres"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "apellido paterno"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.paterno,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "paterno", $$v)
+                                      },
+                                      expression: "person.paterno"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "apellido materno",
+                                    prop: "materno"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.materno,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "materno", $$v)
+                                      },
+                                      expression: "person.materno"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "fecha de nacimiento",
+                                    prop: "nacimiento"
+                                  }
+                                },
+                                [
+                                  _c("el-date-picker", {
+                                    staticStyle: { width: "100%" },
+                                    attrs: {
+                                      size: "small",
+                                      type: "date",
+                                      placeholder: "seleccione una fecha"
+                                    },
+                                    model: {
+                                      value: _vm.person.nacimiento,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "nacimiento", $$v)
+                                      },
+                                      expression: "person.nacimiento"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                { attrs: { size: "small", label: "genero" } },
+                                [
+                                  _c(
+                                    "el-radio-group",
+                                    {
+                                      attrs: { size: "small" },
+                                      model: {
+                                        value: _vm.person.sexo,
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.person, "sexo", $$v)
+                                        },
+                                        expression: "person.sexo"
+                                      }
+                                    },
+                                    [
+                                      _c("el-radio-button", {
+                                        attrs: { label: "M" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("el-radio-button", {
+                                        attrs: { label: "F" }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "teléfono",
+                                    prop: "telefono"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.telefono,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "telefono", $$v)
+                                      },
+                                      expression: "person.telefono"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "dirección",
+                                    prop: "dirección"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.direccion,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "direccion", $$v)
+                                      },
+                                      expression: "person.direccion"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                {
+                                  attrs: {
+                                    size: "small",
+                                    label: "e-mail",
+                                    prop: "correo"
+                                  }
+                                },
+                                [
+                                  _c("el-input", {
+                                    attrs: { size: "small" },
+                                    model: {
+                                      value: _vm.person.correo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.person, "correo", $$v)
+                                      },
+                                      expression: "person.correo"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-form-item",
+                                [
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        size: "small",
+                                        type: "primary",
+                                        plain: ""
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.savePerson($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Guardar")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: { size: "small", type: "primary" },
+                                      on: { click: _vm.cancelForm }
+                                    },
+                                    [_vm._v("Cancel")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ]
           )
         ],
