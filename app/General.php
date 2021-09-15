@@ -105,9 +105,9 @@ class General extends Model
     
     // funcion para buscar a la persona por su carnet
 
-    public static function getPersonByCI ($nro_dip)
+    public static function getPersonByCI($nro_dip)
     {
-        $query="select nro_dip,paterno,materno,nombres from public.personas where nro_dip like '%". $nro_dip ."%'";
+        $query="select nro_dip,paterno,materno,nombres,fec_nacimiento,id_sexo,direccion,telefono,correo from public.personas where nro_dip like '%". $nro_dip ."%'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

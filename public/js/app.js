@@ -4117,6 +4117,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "loginn",
   data: function data() {
@@ -4152,6 +4153,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }]
       },
       nro_dip: null,
+      existe: false,
       messages: {},
       person: {
         personal: "",
@@ -4256,21 +4258,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       console.log("esto es una prueba", this.nro_dip);
-      axios.get("persona", {
-        params: {
-          nro_dip: nro_dip
-        }
-      }).then(function (data) {
-        if (nro_dip != null) {
+
+      if (nro_dip != null) {
+        axios.get("persona", {
+          params: {
+            nro_dip: nro_dip
+          }
+        }).then(function (data) {
+          if (nro_dip != null) {
+            // this.$notify({
+            //   title: "Se encuentra registrado",
+            //   message: "Usted esta registrado en el sistema",
+            //   type: "success",
+            // });
+            _this2.person.nombres = data.data[0].nombres;
+            _this2.person.materno = data.data[0].materno;
+            _this2.person.paterno = data.data[0].paterno;
+            _this2.person.personal = data.data[0].nro_dip;
+            _this2.person.nacimiento = data.data[0].fec_nacimiento;
+            _this2.person.sexo = data.data[0].id_sexo;
+            _this2.person.direccion = data.data[0].direccion;
+            _this2.person.correo = data.data[0].correo;
+            _this2.person.telefono = data.data[0].telefono;
+            _this2.existe = true;
+          }
+        })["catch"](function (err) {
           _this2.$notify({
-            title: "Se encuentra registrado",
-            message: "Usted esta registrado en el sistema",
-            type: "success"
+            title: "Usted no se encuentra registrado",
+            message: "Por favor ingrese sus datos",
+            type: "warning"
           });
-        }
-      })["catch"](function (err) {
-        console.log(err);
-      });
+        });
+      } else {
+        this.$notify({
+          title: "ingrese un CI",
+          message: "Por favor ingrese su CI para verificar su existencia",
+          type: "warning"
+        });
+      }
     },
     savePerson: function savePerson() {
       var _this3 = this;
@@ -84679,7 +84704,8 @@ var render = function() {
                               attrs: {
                                 model: _vm.person,
                                 rules: _vm.rules,
-                                "label-width": "260px"
+                                "label-width": "260px",
+                                disabled: _vm.existe == true
                               }
                             },
                             [

@@ -106,13 +106,14 @@
                 :model="person"
                 :rules="rules"
                 label-width="260px"
+                :disabled="existe==true"
               >
                 <el-form-item
                   size="small"
                   label="numero de identificacion"
                   prop="personal"
                 >
-                  <el-input size="small" v-model="person.personal"></el-input>
+                  <el-input size="small" v-model="person.personal" ></el-input>
                 </el-form-item>
                 <el-form-item size="small" label="nombres" prop="nombres">
                   <el-input size="small" v-model="person.nombres"></el-input>
@@ -217,6 +218,7 @@ export default {
         ],
       },
       nro_dip: null,
+      existe: false,
       messages: {},
       person: {
         personal: "",
@@ -339,21 +341,41 @@ export default {
     },
     search(nro_dip) {
       console.log("esto es una prueba", this.nro_dip);
+      if(nro_dip != null){
       axios
         .get("persona", { params: { nro_dip: nro_dip } })
         .then((data) => {
           if (nro_dip != null) {
-            this.$notify({
-              title: "Se encuentra registrado",
-              message: "Usted esta registrado en el sistema",
-              type: "success",
-            });
-          }
-          
+            // this.$notify({
+            //   title: "Se encuentra registrado",
+            //   message: "Usted esta registrado en el sistema",
+            //   type: "success",
+            // });
+            this.person.nombres = data.data[0].nombres;
+            this.person.materno = data.data[0].materno;
+            this.person.paterno = data.data[0].paterno;
+            this.person.personal = data.data[0].nro_dip;
+            this.person.nacimiento = data.data[0].fec_nacimiento;
+            this.person.sexo = data.data[0].id_sexo;
+            this.person.direccion = data.data[0].direccion;
+            this.person.correo = data.data[0].correo;
+            this.person.telefono = data.data[0].telefono;
+            this.existe = true;}
         })
         .catch((err) => {
-          console.log(err);
+          this.$notify({
+              title: "Usted no se encuentra registrado",
+              message: "Por favor ingrese sus datos",
+              type: "warning",
+            });
         });
+        }else{
+          this.$notify({
+              title: "ingrese un CI",
+              message: "Por favor ingrese su CI para verificar su existencia",
+              type: "warning",
+            });
+        }
     },
     savePerson() {
       axios
