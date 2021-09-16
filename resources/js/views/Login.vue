@@ -360,7 +360,8 @@ export default {
             this.person.direccion = data.data[0].direccion;
             this.person.correo = data.data[0].correo;
             this.person.telefono = data.data[0].telefono;
-            this.existe = true;}
+            this.existe = true;
+            }
         })
         .catch((err) => {
           this.$notify({
@@ -368,6 +369,16 @@ export default {
               message: "Por favor ingrese sus datos",
               type: "warning",
             });
+          this.existe = false;
+          this.person.nombres = null;
+            this.person.materno = null;
+            this.person.paterno = null;
+            this.person.personal = null;
+            this.person.nacimiento = null;
+            this.person.sexo = null;
+            this.person.direccion = null;
+            this.person.correo = null;
+            this.person.telefono = null;
         });
         }else{
           this.$notify({

@@ -4288,6 +4288,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             message: "Por favor ingrese sus datos",
             type: "warning"
           });
+
+          _this2.existe = false;
+          _this2.person.nombres = null;
+          _this2.person.materno = null;
+          _this2.person.paterno = null;
+          _this2.person.personal = null;
+          _this2.person.nacimiento = null;
+          _this2.person.sexo = null;
+          _this2.person.direccion = null;
+          _this2.person.correo = null;
+          _this2.person.telefono = null;
         });
       } else {
         this.$notify({
