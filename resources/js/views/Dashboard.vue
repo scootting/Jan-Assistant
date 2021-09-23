@@ -38,6 +38,18 @@
               certificado de no deudas borrador
             </router-link>
           </el-menu-item>
+           <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <router-link :to="{ name: 'nuevaConvocatoria' }" tag="span">
+              Nueva Convocatoria 
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <router-link :to="{ name: 'validarSolicitud' }" tag="span">
+              Validar Solicitudes
+            </router-link>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 

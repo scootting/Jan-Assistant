@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card>
       <div slot="header" class="clearfix">
-        <span>certificado de no tener cuentas pendientes </span>
+        <span>Modulo de validacion de requerimientos </span>
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
@@ -11,22 +11,16 @@
         >
       </div>
       <div>
-        <form>
+        <el-form>
           <el-row>
             <el-col>
-              <el-select v-model="value" clearable placeholder="elegir tramite">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-
-              <el-button type="primary" plain>Seleccionar</el-button>
+              <el-input
+                placeholder="INSERTE UNA DESCRIPCION"
+                class="input-with-select"
+              >
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
             </el-col>
-            <br /><br /><br />
             <el-col>
               <el-table :data="tableData" style="width: 100%">
                 <el-table-column
@@ -47,20 +41,27 @@
                   width="450"
                 >
                 </el-table-column>
-                <el-table-column prop="zip" label="estado" width="120">
+                <el-table-column
+                  prop="zip"
+                  label="estado"
+                  width="250"
+                >
                 </el-table-column>
-                <el-table-column fixed="right" label="Operaciones" width="250">
-                  <template>
-                    <el-button @click="handleClick" type="text" size="small"
-                      >Imprimir</el-button
+                <el-table-column prop="zip" label="Operacion" width="120">
+                  <el-select v-model="value" placeholder="operacion">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
                     >
-                    <el-button type="text" size="small">Anular</el-button>
-                  </template>
+                    </el-option>
+                  </el-select>
                 </el-table-column>
               </el-table>
-            </el-col>
-          </el-row>
-        </form>
+            </el-col></el-row
+          >
+        </el-form>
       </div>
     </el-card>
   </div>
@@ -68,32 +69,19 @@
 
 <script>
 export default {
-  name: "Borrador de certificado de cuentas pendientes",
+  name: "Validacion de solicitud",
   data() {
     return {
       options: [
         {
-          value: "Option1",
-          label: "0014-Option1",
+          value: "Aprobado",
+          label: "Aprobado",
         },
         {
-          value: "Option2",
-          label: "0015-Option2",
-        },
-        {
-          value: "Option3",
-          label: "0016-Option3",
-        },
-        {
-          value: "Option4",
-          label: "0017-Option4",
-        },
-        {
-          value: "Option5",
-          label: "0018-Option5",
+          value: "Observado",
+          label: "Observado",
         },
       ],
-      value: "",
       tableData: [
         {
           date: "0014-1368295",
@@ -124,7 +112,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .el-row {
   margin-bottom: 20px;

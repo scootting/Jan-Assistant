@@ -9,6 +9,8 @@ import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
 import NoCertificate from './views/clients/AddNotDocument'
 import borrador from './views/borrador'
+import NuevaConvocatoria from './views/NewCall'
+import ValidarSolicitud from './views/ValidateRequest'
 
 //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
@@ -56,6 +58,8 @@ const router = new VueRouter({
                 { path: '', name: 'welcome', component: Welcome },
                 { path: '/nocertificate', name: 'nocertificate', component: NoCertificate },
                 { path: '/borrador', name: 'borrador', component: borrador },
+                { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
+                { path: '/validarsolicitud', name: 'validarSolicitud', component: ValidarSolicitud },
             ],
             meta: {
                 requiresAuth: true,
