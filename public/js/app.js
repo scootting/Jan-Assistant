@@ -103045,21 +103045,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     //path: '/login',
     name: 'login',
     component: _views_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
-  /*
-  {
-      path: '/client', name: 'loginclient', component: LoginClient
-  },*/
-
-  /*
-  {
-      path: '/client/:id', name: 'dashboardclient', component: DashboardClient,
-      children: [
-          { path: '', name: 'welcome2', component: Welcome },
-          { path: 'nodebt', name: 'addnotdocument2', component: AddNotDocument },
-      ],
-    },*/
-  {
+  }, {
     path: '/logout',
     name: 'logout',
     component: _views_Logout__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -104402,8 +104388,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\59178\Documents\ProyectoBienes2\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\59178\Documents\ProyectoBienes2\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

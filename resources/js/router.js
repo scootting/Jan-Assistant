@@ -29,19 +29,6 @@ const router = new VueRouter({
             name: 'login',
             component: Login,
         },
-        /*
-        {
-            path: '/client', name: 'loginclient', component: LoginClient
-        },*/
-        /*
-        {
-            path: '/client/:id', name: 'dashboardclient', component: DashboardClient,
-            children: [
-                { path: '', name: 'welcome2', component: Welcome },
-                { path: 'nodebt', name: 'addnotdocument2', component: AddNotDocument },
-            ],
-
-        },*/
         {
             path: '/logout',
             name: 'logout',
