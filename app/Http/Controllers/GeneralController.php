@@ -146,17 +146,44 @@ class GeneralController extends Controller
     }
     public function saveNewPerson(Request $request)
     {
-         //dd($request);
-         $nro_dip = $request->personal;
-         $nombres = $request->nombres;
-         $paterno = $request->paterno;
-         $materno = $request->materno;
-         $nacimiento = $request->nacimiento;
-         $sexo = $request->sexo;
-         $telefono = $request->telefono;
-         $direccion = $request->direccion;
-         $correo = $request->correo;
-         $data = General::saveNewPerson($nro_dip, $nombres, $paterno, $materno,$nacimiento,$sexo, $telefono, $direccion, $correo);
-         return json_encode($data);
+        //dd($request);
+        $nro_dip = $request->personal;
+        $nombres = $request->nombres;
+        $paterno = $request->paterno;
+        $materno = $request->materno;
+        $nacimiento = $request->nacimiento;
+        $sexo = $request->sexo;
+        $telefono = $request->telefono;
+        $direccion = $request->direccion;
+        $correo = $request->correo;
+        $data = General::saveNewPerson($nro_dip, $nombres, $paterno, $materno, $nacimiento, $sexo, $telefono, $direccion, $correo);
+        return json_encode($data);
+    }
+
+    // obtener todas las opciones de convocatorias disponibles
+
+    public function getDesDoc()
+    {
+        //dd($request);
+        $data = General::getDesDoc();
+        return json_encode($data);
+    }
+
+    // obtener detalle de estado de la documentacion
+    public function getTransaccionOrdenada(Request $request)
+    {
+        //dd($request);
+        $tag = $request->tag; // '00-6600648';
+        $gestion = '2021';
+        $data = General::getTransaccionOrdenada($tag, $gestion);
+        return json_encode($data);
+    }
+    // obtener detalle de estado de la documentacion
+    public function getSolDoc(Request $request)
+    {
+        //dd($request);
+        $ci_per = '6600648';
+        $data = General::getSolDoc($ci_per);
+        return json_encode($data);
     }
 }

@@ -4775,48 +4775,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Borrador de certificado de cuentas pendientes",
+  name: "Borrador",
   data: function data() {
     return {
-      options: [{
-        value: "Option1",
-        label: "0014-Option1"
-      }, {
-        value: "Option2",
-        label: "0015-Option2"
-      }, {
-        value: "Option3",
-        label: "0016-Option3"
-      }, {
-        value: "Option4",
-        label: "0017-Option4"
-      }, {
-        value: "Option5",
-        label: "0018-Option5"
-      }],
+      dialogVisible: false,
+      ci: this.$store.state.user.nodip,
+      ci1: "6600648",
+      options: [],
       value: "",
-      tableData: [{
-        date: "0014-1368295",
-        name: "tramite 1",
-        zip: "Verificado"
-      }, {
-        date: "0015-1368295",
-        name: "tramite 2",
-        zip: "observado"
-      }, {
-        date: "0016-1368295",
-        name: "tramite 3",
-        zip: "observado"
-      }]
+      tableData: [],
+      detail: []
     };
+  },
+  mounted: function mounted() {
+    console.log("mensaje para ver si se ejecuta la recuperacion de las convocatorias ");
+    this.getOpcionesConvocatoria();
+    this.getConvocatoriasSeleccionadas();
   },
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
     },
+    handleClose: function handleClose(done) {
+      this.$confirm("Are you sure to close this dialog?").then(function (_) {
+        done();
+      })["catch"](function (_) {});
+    },
     handleClick: function handleClick() {
       console.log("click");
+    },
+    detalle: function detalle(index, row) {
+      var _this = this;
+
+      this.dialogVisible = true;
+      axios.get("/api/detalleDoc", {
+        params: {
+          tag: row.tag_doc
+        }
+      }).then(function (data) {
+        _this.detail = data.data;
+        console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getOpcionesConvocatoria: function getOpcionesConvocatoria() {
+      var _this2 = this;
+
+      axios.get("/api/convocatoria/").then(function (data) {
+        _this2.options = data.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getConvocatoriasSeleccionadas: function getConvocatoriasSeleccionadas() {
+      var _this3 = this;
+
+      console.log("esto es una prueba", this.ci);
+      axios.get("/api/tipoDoc", {
+        params: {
+          ci: this.ci
+        }
+      }).then(function (data) {
+        _this3.tableData = data.data;
+        console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -84260,7 +84310,7 @@ var render = function() {
                         { attrs: { to: { name: "borrador" }, tag: "span" } },
                         [
                           _vm._v(
-                            "\n            certificado de no deudas borrador\n          "
+                            "\n            certificacion no deudas\n          "
                           )
                         ]
                       )
@@ -86060,171 +86110,270 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [
-            _c("span", [_vm._v("certificado de no tener cuentas pendientes ")]),
-            _vm._v(" "),
-            _c(
-              "el-button",
-              {
-                staticStyle: { float: "right", padding: "3px 0" },
-                attrs: { type: "text" },
-                on: { click: _vm.test }
-              },
-              [_vm._v("ayuda")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", [
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
           _c(
-            "form",
+            "div",
+            {
+              staticClass: "clearfix",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
             [
+              _c("span", [
+                _vm._v("certificado de no tener cuentas pendientes ")
+              ]),
+              _vm._v(" "),
               _c(
-                "el-row",
-                [
-                  _c(
-                    "el-col",
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: {
-                            clearable: "",
-                            placeholder: "elegir tramite"
+                "el-button",
+                {
+                  staticStyle: { float: "right", padding: "3px 0" },
+                  attrs: { type: "text" },
+                  on: { click: _vm.test }
+                },
+                [_vm._v("ayuda")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "form",
+              [
+                _c(
+                  "el-row",
+                  [
+                    _c(
+                      "el-col",
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            attrs: {
+                              clearable: "",
+                              placeholder: "elegir tramite"
+                            },
+                            model: {
+                              value: _vm.value,
+                              callback: function($$v) {
+                                _vm.value = $$v
+                              },
+                              expression: "value"
+                            }
                           },
-                          model: {
-                            value: _vm.value,
-                            callback: function($$v) {
-                              _vm.value = $$v
-                            },
-                            expression: "value"
-                          }
-                        },
-                        _vm._l(_vm.options, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
-                        }),
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-button",
-                        { attrs: { type: "primary", plain: "" } },
-                        [_vm._v("Seleccionar")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("br"),
-                  _c("br"),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "el-col",
-                    [
-                      _c(
-                        "el-table",
-                        {
-                          staticStyle: { width: "100%" },
-                          attrs: { data: _vm.tableData }
-                        },
-                        [
-                          _c("el-table-column", {
-                            attrs: {
-                              fixed: "",
-                              prop: "date",
-                              label: "Codigo doc",
-                              width: "300"
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "default",
-                                fn: function(scope) {
-                                  return [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "name-wrapper",
-                                        attrs: { slot: "reference" },
-                                        slot: "reference"
-                                      },
-                                      [
-                                        _c(
-                                          "el-tag",
-                                          { attrs: { size: "medium" } },
-                                          [_vm._v(_vm._s(scope.row.date))]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ]
+                          _vm._l(_vm.options, function(item) {
+                            return _c("el-option", {
+                              key: item.cod_con,
+                              attrs: { label: item.glosa, value: item.cod_con }
+                            })
+                          }),
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          { attrs: { type: "primary", plain: "" } },
+                          [_vm._v("Seleccionar")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("br"),
+                    _c("br"),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "el-col",
+                      [
+                        _c(
+                          "el-table",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: { data: _vm.tableData }
+                          },
+                          [
+                            _c("el-table-column", {
+                              attrs: {
+                                fixed: "",
+                                prop: "tag_doc",
+                                label: "Codigo doc",
+                                width: "300"
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "name-wrapper",
+                                          attrs: { slot: "reference" },
+                                          slot: "reference"
+                                        },
+                                        [
+                                          _c(
+                                            "el-tag",
+                                            { attrs: { size: "medium" } },
+                                            [_vm._v(_vm._s(scope.row.tag_doc))]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  }
                                 }
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
+                              attrs: {
+                                prop: "tip_doc",
+                                label: "Nombre de documento",
+                                width: "450"
                               }
-                            ])
-                          }),
-                          _vm._v(" "),
-                          _c("el-table-column", {
-                            attrs: {
-                              prop: "name",
-                              label: "Nombre de documento",
-                              width: "450"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("el-table-column", {
-                            attrs: {
-                              prop: "zip",
-                              label: "estado",
-                              width: "120"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "el-table-column",
-                            {
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
+                              attrs: {
+                                prop: "zip",
+                                label: "estado",
+                                width: "120"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
                               attrs: {
                                 fixed: "right",
                                 label: "Operaciones",
                                 width: "250"
-                              }
-                            },
-                            [
-                              [
-                                _c(
-                                  "el-button",
-                                  {
-                                    attrs: { type: "text", size: "small" },
-                                    on: { click: _vm.handleClick }
-                                  },
-                                  [_vm._v("Imprimir")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "el-button",
-                                  { attrs: { type: "text", size: "small" } },
-                                  [_vm._v("Anular")]
-                                )
-                              ]
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-button",
+                                        {
+                                          attrs: {
+                                            type: "text",
+                                            size: "small"
+                                          },
+                                          on: { click: _vm.handleClick }
+                                        },
+                                        [_vm._v("Imprimir")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "el-button",
+                                        {
+                                          attrs: {
+                                            type: "text",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.detalle(
+                                                scope.$index,
+                                                scope.row
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("seguimiento")]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                title: "Tips",
+                visible: _vm.dialogVisible,
+                width: "50%",
+                "before-close": _vm.handleClose
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.dialogVisible = $event
+                }
+              }
+            },
+            [
+              _c("span", [_vm._v("Detalle de seguimiento de documentacion")]),
+              _vm._v(" "),
+              _c(
+                "el-table",
+                { staticStyle: { width: "100%" }, attrs: { data: _vm.detail } },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "des_tra",
+                      label: "observacion",
+                      width: "250"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "est_doc", label: "estado" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.dialogVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialogVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("Confirm")]
                   )
                 ],
                 1
@@ -86232,8 +86381,9 @@ var render = function() {
             ],
             1
           )
-        ])
-      ])
+        ],
+        1
+      )
     ],
     1
   )
@@ -104388,8 +104538,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\59178\Documents\ProyectoBienes2\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\59178\Documents\ProyectoBienes2\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\59178\OneDrive\Documentos\ProyectoUsuarios\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\59178\OneDrive\Documentos\ProyectoUsuarios\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

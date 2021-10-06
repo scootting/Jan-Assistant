@@ -35,6 +35,15 @@ Route::group([
     Route::post('person', 'GeneralController@storePerson');
     Route::get('person/{id}', 'GeneralController@getPersonById');
 
+    // *** opciones de postulacio ***
+    Route::get('convocatoria', 'GeneralController@getDesDoc');
+
+    // *** ver detalle de documento de persona***
+    Route::get('detalleDoc', 'GeneralController@getTransaccionOrdenada');
+    
+    // *** ver documentos por personas ***
+    Route::get('tipoDoc', 'GeneralController@getSolDoc');
+
 
     // *** - rutas para crear, editar, mostrar, buscar a los usuarios del sistema - ***
     Route::post('users', 'GeneralController@getUsersByDescription');

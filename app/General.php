@@ -120,5 +120,24 @@ class General extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function getDesDoc()
+    {
+        $query = " select * from bdoc.des_doc "; 
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    public static function getTransaccionOrdenada($tag,$gestion)
+    {
+        $query = " select * from bdoc.ff_transaccion_ordenada('".$tag."','".$gestion."')"; 
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+    public static function getSolDoc($ci_per)
+    {
+        $query = " select * from bdoc.sol_doc where ci_per like '%".$ci_per."%' "; 
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 }
