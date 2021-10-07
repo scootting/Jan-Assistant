@@ -23,8 +23,9 @@
                 >
                 </el-option>
               </el-select>
-
-              <el-button type="primary" plain>Seleccionar</el-button>
+              <el-button type="primary" plain @click="seleccionar"
+                >Seleccionar</el-button
+              >
             </el-col>
             <br /><br /><br />
             <el-col>
@@ -33,7 +34,7 @@
                   fixed
                   prop="tag_doc"
                   label="Codigo doc"
-                  width="300"
+                  width="150"
                 >
                   <template slot-scope="scope">
                     <div slot="reference" class="name-wrapper">
@@ -42,12 +43,12 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  prop="tip_doc"
+                  prop="des_doc"
                   label="Nombre de documento"
                   width="450"
                 >
                 </el-table-column>
-                <el-table-column prop="zip" label="estado" width="120">
+                <el-table-column prop="est_sol" label="estado" width="120">
                 </el-table-column>
                 <el-table-column fixed="right" label="Operaciones" width="250">
                   <template slot-scope="scope">
@@ -80,10 +81,10 @@
           <el-table-column prop="est_doc" label="estado"> </el-table-column>
         </el-table>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false"
+          <el-button @click="dialogVisible = false">Cerrar</el-button>
+          <!-- <el-button type="primary" @click="dialogVisible = false"
             >Confirm</el-button
-          >
+          > -->
         </span>
       </el-dialog>
     </el-card>
@@ -97,11 +98,12 @@ export default {
     return {
       dialogVisible: false,
       ci: this.$store.state.user.nodip,
+      persona : this.$store.state.user.usuario,
       ci1: "6600648",
       options: [],
       value: "",
       tableData: [],
-      detail:[],
+      detail: [],
     };
   },
   mounted() {
@@ -109,7 +111,6 @@ export default {
       "mensaje para ver si se ejecuta la recuperacion de las convocatorias "
     );
     this.getOpcionesConvocatoria();
-
     this.getConvocatoriasSeleccionadas();
   },
   methods: {
@@ -126,7 +127,7 @@ export default {
     handleClick() {
       console.log("click");
     },
-    detalle(index,row) {
+    detalle(index, row) {
       this.dialogVisible = true;
       axios
         .get("/api/detalleDoc", {
@@ -134,7 +135,6 @@ export default {
         })
         .then((data) => {
           this.detail = data.data;
-          console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -156,9 +156,24 @@ export default {
         .get("/api/tipoDoc", {
           params: { ci: this.ci },
         })
+        .then((response) => {
+          this.tableData = Object.values(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    seleccionar() {
+      axios
+        .post("/api/seleccionar/", 
+           { ci: this.ci, value: this.value, per: this.persona},
+        )
         .then((data) => {
-          this.tableData = data.data;
-          console.log(data);
+          this.$notify.success({
+            title: "Se selecciono convocatoria exitosamente!",
+            duration: 3000,
+          });
+          this.getConvocatoriasSeleccionadas();
         })
         .catch((err) => {
           console.log(err);

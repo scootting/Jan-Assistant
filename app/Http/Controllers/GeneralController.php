@@ -159,31 +159,40 @@ class GeneralController extends Controller
         $data = General::saveNewPerson($nro_dip, $nombres, $paterno, $materno, $nacimiento, $sexo, $telefono, $direccion, $correo);
         return json_encode($data);
     }
-
     // obtener todas las opciones de convocatorias disponibles
-
     public function getDesDoc()
     {
         //dd($request);
         $data = General::getDesDoc();
         return json_encode($data);
     }
-
-    // obtener detalle de estado de la documentacion
+    // obtener detalle de estado de la documentacion 
     public function getTransaccionOrdenada(Request $request)
     {
         //dd($request);
-        $tag = $request->tag; // '00-6600648';
+        $tag = $request->tag; // '0001-6600648';
         $gestion = '2021';
         $data = General::getTransaccionOrdenada($tag, $gestion);
         return json_encode($data);
     }
-    // obtener detalle de estado de la documentacion
+    // obtener los documentos de la persona
     public function getSolDoc(Request $request)
     {
-        //dd($request);
-        $ci_per = '6600648';
+       // dd($request);
+        $ci_per = $request->get('ci'); //'6600648';
+        //dd($ci_per);
         $data = General::getSolDoc($ci_per);
         return json_encode($data);
+    }
+    public function postSeleccionarConvocatoria(Request $request)
+    {
+        //dd($request);
+        $cod = $request->value;
+        $ci = $request->ci;
+        $per = $request->per;
+        //dd($cod,$ci,$per);
+        $data = General::postSeleccionarConvocatoria($cod,$ci,$per);
+        return json_encode($data);
+
     }
 }

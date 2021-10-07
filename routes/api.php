@@ -44,6 +44,8 @@ Route::group([
     // *** ver documentos por personas ***
     Route::get('tipoDoc', 'GeneralController@getSolDoc');
 
+    Route::post('seleccionar','GeneralController@postSeleccionarConvocatoria');
+
 
     // *** - rutas para crear, editar, mostrar, buscar a los usuarios del sistema - ***
     Route::post('users', 'GeneralController@getUsersByDescription');

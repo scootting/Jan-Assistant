@@ -4799,12 +4799,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Borrador",
   data: function data() {
     return {
       dialogVisible: false,
       ci: this.$store.state.user.nodip,
+      persona: this.$store.state.user.usuario,
       ci1: "6600648",
       options: [],
       value: "",
@@ -4839,7 +4841,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (data) {
         _this.detail = data.data;
-        console.log(data);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -4861,9 +4862,26 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           ci: this.ci
         }
+      }).then(function (response) {
+        _this3.tableData = Object.values(response.data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    seleccionar: function seleccionar() {
+      var _this4 = this;
+
+      axios.post("/api/seleccionar/", {
+        ci: this.ci,
+        value: this.value,
+        per: this.persona
       }).then(function (data) {
-        _this3.tableData = data.data;
-        console.log(data);
+        _this4.$notify.success({
+          title: "Se selecciono convocatoria exitosamente!",
+          duration: 3000
+        });
+
+        _this4.getConvocatoriasSeleccionadas();
       })["catch"](function (err) {
         console.log(err);
       });
@@ -86175,7 +86193,10 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "el-button",
-                          { attrs: { type: "primary", plain: "" } },
+                          {
+                            attrs: { type: "primary", plain: "" },
+                            on: { click: _vm.seleccionar }
+                          },
                           [_vm._v("Seleccionar")]
                         )
                       ],
@@ -86201,7 +86222,7 @@ var render = function() {
                                 fixed: "",
                                 prop: "tag_doc",
                                 label: "Codigo doc",
-                                width: "300"
+                                width: "150"
                               },
                               scopedSlots: _vm._u([
                                 {
@@ -86232,7 +86253,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("el-table-column", {
                               attrs: {
-                                prop: "tip_doc",
+                                prop: "des_doc",
                                 label: "Nombre de documento",
                                 width: "450"
                               }
@@ -86240,7 +86261,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("el-table-column", {
                               attrs: {
-                                prop: "zip",
+                                prop: "est_sol",
                                 label: "estado",
                                 width: "120"
                               }
@@ -86360,20 +86381,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialogVisible = false
-                        }
-                      }
-                    },
-                    [_vm._v("Confirm")]
+                    [_vm._v("Cerrar")]
                   )
                 ],
                 1

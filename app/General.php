@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
 use App\Libraries\DynamicMenu;
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 use function GuzzleHttp\Promise\queue;
 
@@ -135,9 +136,17 @@ class General extends Model
     }
     public static function getSolDoc($ci_per)
     {
-        $query = " select * from bdoc.sol_doc where ci_per like '%".$ci_per."%' "; 
+        $query = " select s.tag_doc,s.est_sol , 
+        (select dc.glosa from bdoc.des_doc dc where dc.cod_con = s.id_doc ) as des_doc 
+         from bdoc.sol_doc s where s.ci_per like '%".$ci_per."%' "; 
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
+    public static function postSeleccionarConvocatoria($cod,$ci,$per)
+    {   
+        $query = "select * from bdoc.ff_insertar_convocatoria('".$cod."','".$ci."','".$per."')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 }
