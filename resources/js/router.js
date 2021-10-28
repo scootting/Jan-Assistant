@@ -11,6 +11,7 @@ import NoCertificate from './views/clients/AddNotDocument'
 import borrador from './views/borrador'
 import NuevaConvocatoria from './views/NewCall'
 import ValidarSolicitud from './views/ValidateRequest'
+import CursosPostgrado from './views/ClassPost'
 
 //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
@@ -47,6 +48,7 @@ const router = new VueRouter({
                 { path: '/borrador', name: 'borrador', component: borrador },
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
                 { path: '/validarsolicitud', name: 'validarSolicitud', component: ValidarSolicitud },
+                { path: '/cursospostgrado', name: 'cursosPostgrado', component: CursosPostgrado },
             ],
             meta: {
                 requiresAuth: true,

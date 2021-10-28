@@ -46,6 +46,9 @@ Route::group([
 
     Route::post('seleccionar','GeneralController@postSeleccionarConvocatoria');
 
+    // *** mostrat todos los cursos postgrado que existe***
+    Route::get('curso', 'GeneralController@getValMat');
+
 
     // *** - rutas para crear, editar, mostrar, buscar a los usuarios del sistema - ***
     Route::post('users', 'GeneralController@getUsersByDescription');

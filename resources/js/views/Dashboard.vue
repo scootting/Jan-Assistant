@@ -50,6 +50,12 @@
               Validar Solicitudes
             </router-link>
           </el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <router-link :to="{ name: 'cursosPostgrado' }" tag="span">
+              Cursos Postgrado
+            </router-link>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 

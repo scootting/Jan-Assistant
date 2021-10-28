@@ -37,7 +37,6 @@ class GeneralController extends Controller
     {
         $usuario = $request->get('usuario');
         $personal = $usuario['personal'];
-        // \Log::info($personal);
         $data = General::RegisterUser($personal);
         return $data;
     }
@@ -138,9 +137,7 @@ class GeneralController extends Controller
     }
     public function getPersonByCI(Request $request)
     {
-        //dd($request);
         $nro_dip = ($request->get('nro_dip') ? $request->get('nro_dip') : '');
-        //dd($nro_dip);
         $data = General::getPersonByCI($nro_dip);
         return json_encode($data);
     }
@@ -162,14 +159,12 @@ class GeneralController extends Controller
     // obtener todas las opciones de convocatorias disponibles
     public function getDesDoc()
     {
-        //dd($request);
         $data = General::getDesDoc();
         return json_encode($data);
     }
     // obtener detalle de estado de la documentacion 
     public function getTransaccionOrdenada(Request $request)
     {
-        //dd($request);
         $tag = $request->tag; // '0001-6600648';
         $gestion = '2021';
         $data = General::getTransaccionOrdenada($tag, $gestion);
@@ -178,9 +173,7 @@ class GeneralController extends Controller
     // obtener los documentos de la persona
     public function getSolDoc(Request $request)
     {
-       // dd($request);
-        $ci_per = $request->get('ci'); //'6600648';
-        //dd($ci_per);
+        $ci_per = $request->get('ci');
         $data = General::getSolDoc($ci_per);
         return json_encode($data);
     }
@@ -190,9 +183,22 @@ class GeneralController extends Controller
         $cod = $request->value;
         $ci = $request->ci;
         $per = $request->per;
-        //dd($cod,$ci,$per);
         $data = General::postSeleccionarConvocatoria($cod,$ci,$per);
         return json_encode($data);
-
+    }
+    public function getValMat(Request $request)
+    {
+        $keyWord = ($request->get('keyWord') ? $request->get('keyWord') : '');
+        $data = General::valorMaterial($keyWord);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/curso')]
+        );
+        return json_encode($paginate);
     }
 }

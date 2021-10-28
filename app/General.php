@@ -149,4 +149,11 @@ class General extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function valorMaterial($keyWord)
+    {   
+        $query = "select * from bdoc.val_mat where bdoc.val_mat.des_dip like '%" . $keyWord . "%'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
 }
