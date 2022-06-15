@@ -103569,6 +103569,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
     //path: '/login',
+    name: 'home',
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }, {
+    path: '/login',
+    //path: '/login',
     name: 'login',
     component: _views_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
@@ -104987,8 +104992,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\59178\OneDrive\Documentos\ProyectoUsuarios\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\59178\OneDrive\Documentos\ProyectoUsuarios\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
