@@ -7,7 +7,11 @@ import NotFound from './views/NotFound'
 import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
-import NoCertificate from './views/clients/AddNotDocument'
+import Information from './views/clients/Information'
+import Password from './views/clients/Password'
+
+
+
 import borrador from './views/borrador'
 import NuevaConvocatoria from './views/NewCall'
 import ValidarSolicitud from './views/ValidateRequest'
@@ -49,7 +53,9 @@ const router = new VueRouter({
             component: Dashboard,
             children: [
                 { path: '', name: 'welcome', component: Welcome },
-                { path: '/nocertificate', name: 'nocertificate', component: NoCertificate },
+                { path: '/information', name: 'information', component: Information },
+                { path: '/password', name: 'password', component: Password },
+
                 { path: '/borrador', name: 'borrador', component: borrador },
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
                 { path: '/validarsolicitud', name: 'validarSolicitud', component: ValidarSolicitud },

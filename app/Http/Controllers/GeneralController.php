@@ -13,11 +13,11 @@ class GeneralController extends Controller
 {
     //
     //
-    //  * Buscar a un usuario de el recurso.
-    //  * {username: nombre de usuario, password: clave del usuario}    
-    public function searchUser(Request $request)
+    //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento
+    //  * {username: carnet de identidad del usuario, password: fecha de nacimiento del usuario o personalizado}    
+    public function loginClient(Request $request)
     {
-        $data = General::SearchUser($request->get('username'), $request->get('password'));
+        $data = General::LoginClient($request->get('username'), $request->get('password'));
         $token = JWTFAuth::ValidateDataCredential($data);
         $response = array(
             'access_token' => $token,
@@ -25,6 +25,55 @@ class GeneralController extends Controller
         );
         return json_encode($response);
     }
+
+    //  *  A2. Actualizar la informacion personal del cliente
+    //  * {cliente: array con la informacion personalizada del cliente}    
+    //  *  A4. Registrar la informacion personal del cliente
+    //  * {cliente: array con la informacion personalizada del cliente}    
+    public function storePersonInformation(Request $request)
+    {
+        $persona = $request->get('persona');
+        $id = strtoupper($persona['nodip']);
+        $nombres = strtoupper($persona['nombres']);
+        $paterno = strtoupper($persona['paterno']);
+        $materno = strtoupper($persona['materno']);
+
+        $sexo = strtoupper($persona['sexo']);
+        $sexo = ($sexo=='MASCULINO' ? 'M' : 'F');
+
+        $nacimiento = $persona['nacimiento'];
+        $direccion = strtoupper($persona['direccion']);
+        $telefono = $persona['telefono'];
+        $correo = $persona['correo'];
+
+        $marcador = $request->get('marker');
+        switch ($marcador) {
+            case 'registrar':
+                $data = General::RegisterPersonInformation($id, $nombres, $paterno, $materno, $sexo, $nacimiento, $direccion, $telefono, $correo);
+                break;
+            case 'editar':
+                $data = General::UpdatePersonInformation($id, $nombres, $paterno, $materno, $sexo, $nacimiento, $direccion, $telefono, $correo);
+                break;
+            default:
+                break;
+        }
+        return json_encode($data);
+    }
+
+    //  *  A3. cambiar la contraseña personal del cliente
+    //  * {pass_ant: password anterior, pass_act: password nuevo, pass_con: password confirmado}
+    public function updatePersonPassword(Request $request)
+    {
+        $id = strtoupper($request->get('id'));
+        $pass_actual = $request->get('actual');
+        $pass_nuevo = $request->get('nuevo');
+        $pass_confirma = $request->get('confirma');
+        $data = General::UpdatePersonPassword($id, $pass_actual, $pass_nuevo, $pass_confirma);
+        return json_encode($data);
+    }
+
+
+
 
     //  * Quitar el registro de un usuario en el recurso.    
     public function logoutUser(Request $request)

@@ -15,65 +15,39 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span>login</span>
-              <el-button
-                style="float: right; padding: 3px 0"
-                type="text"
-                @click.native="drawer = true"
-                >ayuda</el-button
-              >
+              <el-button style="float: right; padding: 3px 0" type="text" @click.native="drawer = true">ayuda
+              </el-button>
             </div>
             <div>
-              <el-form
-                ref="form"
-                class="login-form"
-                :model="model"
-                :rules="rules"
-                @submit.native.prevent="login"
-              >
+              <el-form ref="form" class="login-form" :model="model" :rules="rules" @submit.native.prevent="login">
                 <el-form-item prop="username">
                   <el-input v-model="model.username" placeholder="Usuario">
                     <i slot="prefix" class="el-input__icon el-icon-user"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input
-                    v-model="model.password"
-                    placeholder="Contraseña"
-                    type="password"
-                  >
+                  <el-input v-model="model.password" placeholder="Contraseña" type="password">
                     <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    :loading="loading"
-                    class="login-button"
-                    type="primary"
-                    native-type="submit"
-                    block
-                    >acceder</el-button
-                  >
+                  <el-button :loading="loading" class="login-button" type="primary" native-type="submit" block>acceder
+                  </el-button>
                 </el-form-item>
               </el-form>
             </div>
           </el-card>
           <div class="footer">
-            <el-button
-              style="float: right; padding: 3px 0"
-              type="text"
-              @click.native="saber = true"
-              >Verifique que está registrado</el-button
-            >
-            <div class="version">Version 1.08.01</div>
+            <el-button style="float: right; padding: 3px 0" type="text" @click.native="saber = true">Verifique que está
+              registrado</el-button>
+            <div class="version">Version 1.00.01</div>
           </div>
         </el-col>
       </el-row>
       <!-- *** Formulario de Ayuda al Usuario *** -->
       <el-drawer title="Ayuda" :visible.sync="drawer" :with-header="false">
-        <span
-          >Contacto con la unidad de sistemas de la direccion administrativa y
-          financiera</span
-        >
+        <span>Contacto con la unidad de sistemas de la direccion administrativa y
+          financiera</span>
         <span>74246032</span>
       </el-drawer>
       <el-drawer title="Formulario" :visible.sync="saber" :with-header="false">
@@ -86,34 +60,17 @@
                 </el-form-item>
               </el-form>
             </el-col>
-            <el-col
-              ><el-button
-                icon="el-icon-search"
-                type="primary"
-                :loading="loading"
-                class="login-button"
-                native-type="submit"
-                @click="search(nro_dip)"
-                >buscar</el-button
-              ></el-col
-            >
+            <el-col>
+              <el-button icon="el-icon-search" type="primary" :loading="loading" class="login-button"
+                native-type="submit" @click="search(nro_dip)">buscar</el-button>
+            </el-col>
           </el-row>
           <el-divider content-position="left">INGRESE SUS DATOS</el-divider>
           <el-row>
             <el-col :span="20">
-              <el-form
-                ref="form"
-                :model="person"
-                :rules="rules"
-                label-width="260px"
-                :disabled="existe==true"
-              >
-                <el-form-item
-                  size="small"
-                  label="numero de identificacion"
-                  prop="personal"
-                >
-                  <el-input size="small" v-model="person.personal" ></el-input>
+              <el-form ref="form" :model="person" :rules="rules" label-width="260px" :disabled="existe==true">
+                <el-form-item size="small" label="numero de identificacion" prop="personal">
+                  <el-input size="small" v-model="person.personal"></el-input>
                 </el-form-item>
                 <el-form-item size="small" label="nombres" prop="nombres">
                   <el-input size="small" v-model="person.nombres"></el-input>
@@ -121,25 +78,12 @@
                 <el-form-item size="small" label="apellido paterno">
                   <el-input size="small" v-model="person.paterno"></el-input>
                 </el-form-item>
-                <el-form-item
-                  size="small"
-                  label="apellido materno"
-                  prop="materno"
-                >
+                <el-form-item size="small" label="apellido materno" prop="materno">
                   <el-input size="small" v-model="person.materno"></el-input>
                 </el-form-item>
-                <el-form-item
-                  size="small"
-                  label="fecha de nacimiento"
-                  prop="nacimiento"
-                >
-                  <el-date-picker
-                    size="small"
-                    type="date"
-                    placeholder="seleccione una fecha"
-                    v-model="person.nacimiento"
-                    style="width: 100%"
-                  ></el-date-picker>
+                <el-form-item size="small" label="fecha de nacimiento" prop="nacimiento">
+                  <el-date-picker size="small" type="date" placeholder="seleccione una fecha"
+                    v-model="person.nacimiento" style="width: 100%"></el-date-picker>
                 </el-form-item>
                 <el-form-item size="small" label="genero">
                   <el-radio-group v-model="person.sexo" size="small">
@@ -157,16 +101,8 @@
                   <el-input size="small" v-model="person.correo"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    size="small"
-                    type="primary"
-                    @click.prevent="savePerson"
-                    plain
-                    >Guardar</el-button
-                  >
-                  <el-button size="small" type="primary" @click="cancelForm"
-                    >Cancel</el-button
-                  >
+                  <el-button size="small" type="primary" @click.prevent="savePerson" plain>Guardar</el-button>
+                  <el-button size="small" type="primary" @click="cancelForm">Cancel</el-button>
                 </el-form-item>
               </el-form>
             </el-col>
@@ -322,55 +258,54 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.url_image),
-        this.$store
-          .dispatch("retrieveToken", {
-            username: this.model.username,
-            password: this.model.password,
-          })
-          .then((response) => {
-            this.$router.push({ name: "welcome" });
-          })
-          .catch((error) => {
-            this.error = error.response.data;
-            this.$notify.error({
-              title: "Error",
-              message: this.error.message,
-            });
+      this.$store
+        .dispatch("retrieveToken", {
+          username: this.model.username,
+          password: this.model.password,
+        })
+        .then((response) => {
+          this.$router.push({ name: "welcome" });
+        })
+        .catch((error) => {
+          this.error = error.response.data;
+          this.$notify.error({
+            title: "Error",
+            message: this.error.message,
           });
+        });
     },
     search(nro_dip) {
       console.log("esto es una prueba", this.nro_dip);
-      if(nro_dip != null){
-      axios
-        .get("persona", { params: { nro_dip: nro_dip } })
-        .then((data) => {
-          if (nro_dip != null) {
-            // this.$notify({
-            //   title: "Se encuentra registrado",
-            //   message: "Usted esta registrado en el sistema",
-            //   type: "success",
-            // });
-            this.person.nombres = data.data[0].nombres;
-            this.person.materno = data.data[0].materno;
-            this.person.paterno = data.data[0].paterno;
-            this.person.personal = data.data[0].nro_dip;
-            this.person.nacimiento = data.data[0].fec_nacimiento;
-            this.person.sexo = data.data[0].id_sexo;
-            this.person.direccion = data.data[0].direccion;
-            this.person.correo = data.data[0].correo;
-            this.person.telefono = data.data[0].telefono;
-            this.existe = true;
+      if (nro_dip != null) {
+        axios
+          .get("persona", { params: { nro_dip: nro_dip } })
+          .then((data) => {
+            if (nro_dip != null) {
+              // this.$notify({
+              //   title: "Se encuentra registrado",
+              //   message: "Usted esta registrado en el sistema",
+              //   type: "success",
+              // });
+              this.person.nombres = data.data[0].nombres;
+              this.person.materno = data.data[0].materno;
+              this.person.paterno = data.data[0].paterno;
+              this.person.personal = data.data[0].nro_dip;
+              this.person.nacimiento = data.data[0].fec_nacimiento;
+              this.person.sexo = data.data[0].id_sexo;
+              this.person.direccion = data.data[0].direccion;
+              this.person.correo = data.data[0].correo;
+              this.person.telefono = data.data[0].telefono;
+              this.existe = true;
             }
-        })
-        .catch((err) => {
-          this.$notify({
+          })
+          .catch((err) => {
+            this.$notify({
               title: "Usted no se encuentra registrado",
               message: "Por favor ingrese sus datos",
               type: "warning",
             });
-          this.existe = false;
-          this.person.nombres = null;
+            this.existe = false;
+            this.person.nombres = null;
             this.person.materno = null;
             this.person.paterno = null;
             this.person.personal = null;
@@ -379,14 +314,14 @@ export default {
             this.person.direccion = null;
             this.person.correo = null;
             this.person.telefono = null;
+          });
+      } else {
+        this.$notify({
+          title: "ingrese un CI",
+          message: "Por favor ingrese su CI para verificar su existencia",
+          type: "warning",
         });
-        }else{
-          this.$notify({
-              title: "ingrese un CI",
-              message: "Por favor ingrese su CI para verificar su existencia",
-              type: "warning",
-            });
-        }
+      }
     },
     savePerson() {
       axios
@@ -415,19 +350,23 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .clearfix:before,
 .clearfix:after {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }
+
 /*estilo aprobado para su uso*/
 .login-button {
   width: 100%;
   margin-top: 20px;
 }
+
 .header,
 .footer {
   padding: 20px 20px;
@@ -436,6 +375,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 .footer .version {
   font-family: "Open Sans";
   padding: 0 10px;

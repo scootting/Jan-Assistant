@@ -6,32 +6,23 @@
 <script>
 </script>
 <style>
-/*
-@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');
-*/
-@import url("https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700");
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
 
 html,
 body {
-  /*
-  font-family: "Roboto Slab", serif;
-  font-family: 'Chelsea Market', cursive;
-  */
-  font-family: "Ubuntu", sans-serif;
-  background: #f0ab00;
-  background: #d8ebb5;
-  background: #faf5e4;
-  background: #f4f3ef;
+  font-family: 'Oswald', sans-serif;
+  background: #d7d9ce;
   margin: 0;
   padding: 0;
   background-size: contain;
 }
 #app {
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Oswald', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
-  color: #000;
+  color: #040404;
   text-transform: uppercase;
 }
 button,

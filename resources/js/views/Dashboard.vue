@@ -1,21 +1,12 @@
 <template>
   <div>
     <el-container>
-      <el-aside
-        width="260px"
-        style="background-color: #010e1f; min-height: 100vh"
-      >
+      <el-aside width="260px" style="background-color: #08596a; min-height: 100vh">
         <div class="logo">
           <p>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</p>
         </div>
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          background-color="#010e1f"
-          text-color="#faebd7"
-          active-text-color="#ffd04b"
-          style="border-right: 0 !important"
-        >
+        <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#08596a" text-color="#faebd7"
+          active-text-color="#faebd7" style="border-right: 0 !important">
           <el-menu-item index="1">
             <i class="el-icon-document"></i>
             <router-link :to="{ name: 'welcome' }" tag="span">
@@ -24,8 +15,8 @@
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'nocertificate' }" tag="span">
-              certificado de no deudas
+            <router-link :to="{ name: 'information' }" tag="span">
+              informacion personal
             </router-link>
           </el-menu-item>
           <el-menu-item index="3" disabled>
@@ -38,10 +29,10 @@
               certificacion no deudas
             </router-link>
           </el-menu-item>
-           <el-menu-item index="2">
+          <el-menu-item index="2">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'nuevaConvocatoria' }" tag="span">
-              Nueva Convocatoria 
+              Nueva Convocatoria
             </router-link>
           </el-menu-item>
           <el-menu-item index="2">
@@ -60,26 +51,17 @@
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; background-color: #f4f3ef">
+        <el-header style="text-align: right; background-color: #d7d9ce">
           <el-dropdown size="medium">
             <span class="el-dropdown-link">
               {{ client.descripcion }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                icon="el-icon-user"
-                @click.native="initToShowClient"
-                >mi perfil</el-dropdown-item
-              >
-              <el-dropdown-item
-                icon="el-icon-chat-dot-square"
-                @click.native="NoDeveloped"
-                >mis mensajes</el-dropdown-item
-              >
-              <el-dropdown-item icon="el-icon-right" @click.native="logoutClient"
-                >cerrar sesion</el-dropdown-item
-              >
+              <el-dropdown-item icon="el-icon-user" @click.native="initToShowClient">mi perfil</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-chat-dot-square" @click.native="NoDeveloped">mis mensajes
+              </el-dropdown-item>
+              <el-dropdown-item icon="el-icon-right" @click.native="logoutClient">cerrar sesion</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>
@@ -89,12 +71,7 @@
               <div id="level">
                 <p></p>
                 <div id="right-button">
-                  <el-button
-                    icon="el-icon-back"
-                    circle
-                    @click.native="initToWelcomePage"
-                    warning
-                  ></el-button>
+                  <el-button icon="el-icon-back" circle @click.native="initToWelcomePage" warning></el-button>
                 </div>
               </div>
               <br />
@@ -114,23 +91,23 @@ export default {
     return {
       error: "",
       client: this.$store.state.user,
-      yearSelected: 2021,
+      yearSelected: 1999,
     };
   },
-  created() {},
   mounted() {
     let app = this;
+    app.yearSelected = app.client.gestion;
     console.log(app.client);
   },
-  
-  computed: {},
+
   methods: {
     logoutClient() {
       this.$router.push({
         name: "logout",
       });
     },
-    initToShowClient(){
+
+    initToShowClient() {
       console.log("iniciar la informacion del cliente")
     },
     NoDeveloped() {

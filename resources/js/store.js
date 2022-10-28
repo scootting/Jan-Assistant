@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     state: {
         token: localStorage.getItem("access_token") || null,
         user: {} || null,
-        
+
     },
     plugins: [createPersistedState()],
     getters: {
@@ -17,19 +17,21 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
-        retrieveToken(state, { user, token }) { 
+        retrieveToken(state, { user, token }) {
             state.token = token;
-            state.user = user[0]; 
+            state.user = user[0];
         },
         destroyToken(state) {
             state.token = null;
             state.user = {};
         },
-        updateUser(state, user){
+        updateUser(state, user) {
             state.user = user;
         }
     },
     actions: {
+        //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento
+        //  * {username: carnet de identidad del usuario, password: fecha de nacimiento del usuario o personalizado}    
         retrieveToken({ commit }, credentials) {
             return new Promise((resolve, reject) => {
                 axios
