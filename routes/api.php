@@ -38,6 +38,9 @@ Route::group([
     Route::post('logout', 'GeneralController@logoutUser');
 
 
+//  *  T1. Obtener los valores para la venta en linea
+//  * {gestion: gestion de los valores disponibles}
+    Route::post('getValuesOffered', 'TreasureController@getValuesOffered');
 
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');

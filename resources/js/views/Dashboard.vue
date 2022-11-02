@@ -24,9 +24,9 @@
             <span>solvencia universitaria</span>
           </el-menu-item>
           <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'borrador' }" tag="span">
-              certificacion no deudas
+            <i class="el-icon-star-off"></i>
+            <router-link :to="{ name: 'salestudents' }" tag="span">
+              venta de valores en linea
             </router-link>
           </el-menu-item>
           <el-menu-item index="2">

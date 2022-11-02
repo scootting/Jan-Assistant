@@ -2,167 +2,111 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>estudiantes nuevos</span>
-        <el-button
-          style="text-align: right; float: right"
-          size="small"
-          type="primary"
-          icon="el-icon-plus"
-          @click="initAddDay"
-          >nuevo dia</el-button
-        >
+        <span>informacion personal</span>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
       </div>
-      <!--
-      <div style="margin-top: 15px">
-        <el-input
-          placeholder="INSERTE UNA DESCRIPCION"
-          v-model="writtenTextParameter"
-          class="input-with-select"
-        >
-          <el-button slot="append" icon="el-icon-search" @click="test"></el-button>
-        </el-input>
-      </div>
-      <br />
-      -->
-      <div>
-        <el-table v-loading="loading" :data="days" style="width: 100%">
-          <el-table-column prop="id_dia" label="dia" width="100">
-            <template slot-scope="scope">
-              <el-tag size="medium" type="danger">{{ scope.row.id_dia }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="fec_tra" label="fecha" width="100"></el-table-column>
-          <el-table-column prop="glosa" label="glosa" width="650"></el-table-column>
-          <!--
-          <el-table-column prop="importe" label="importe" width="100"></el-table-column>
-          -->
-          <el-table-column align="right" width="320">
-            <template slot-scope="scope">
-              <el-button
-                @click="initDetailStudents(scope.$index, scope.row)"
-                type="primary"
-                size="mini"
-                plain
-                >detalle del dia</el-button
-              >
-              <el-button
-                @click="initSaleStudents(scope.$index, scope.row)"
-                type="danger"
-                plain
-                size="mini"
-                >realizar venta</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          :page-size="pagination.per_page"
-          layout="prev, pager, next"
-          :current-page="pagination.current_page"
-          :total="pagination.total"
-          @current-change="getDataPageSelected"
-        ></el-pagination>
-      </div>
+      <el-row :gutter="20">
+        <p>
+          <el-alert
+            title="El cambio de la direccion, telefono, correo implica que sus nuevas solicitudes tendrán esta nueva informacion."
+            type="success">
+          </el-alert>
+        </p>
+        <el-col :span="12">
+          <div class="grid-content bg-purple">
+            <p>valores ofertados</p>
+            <el-table v-loading="loading" :data="offered" style="width: 100%">
+              <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
+              <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
+              <el-table-column align="right" width="100">
+                <template slot-scope="scope">
+                  <el-button @click="initAddValues(scope.$index, scope.row)" type="primary" size="mini" plain>Agregar
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="grid-content bg-purple">
+            <p>valores adquiridos</p>
+          </div>
+        </el-col>
+      </el-row>
     </el-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Dias",
+  name: "",
   data() {
     return {
-      user: this.$store.state.user,
-      messages: {},
-      days: [],
-      pagination: {
-        page: 1,
-      },
-      writtenTextParameter: "",
+      client: this.$store.state.user,
       loading: true,
+      offered: [],
+      acquired: [],
+
     };
   },
   mounted() {
-    let app = this;
-    axios
-      .post("/api/getSaleOfDaysByDescription", {
-        description: app.writtenTextParameter,
-        user: app.user.usuario,
-        year: app.user.gestion,
-      })
-      .then((response) => {
-        app.loading = false;
-        app.days = response.data.data;
-        app.pagination = response.data;
-      })
-      .catch((error) => {
-        this.error = error;
-        this.$notify.error({
-          title: "Error",
-          message: this.error.message,
-        });
-      });
+    this.getValuesOffered();
   },
   methods: {
-    test() {
-      alert("bienvenido al modulo");
+    test(){
+      alert("llamar al 74246032 para asistencia tecnica");
     },
-    getDataPageSelected(page) {
-      let app = this;
-      app.loading = true;
-      axios
-        .post("/api/getSaleOfDaysByDescription", {
-          description: app.writtenTextParameter,
-          user: app.user,
-          year: app.year,
-          page: page,
-        })
-        .then((response) => {
-          app.loading = false;
-          app.days = Object.values(response.data.data);
-          app.pagination = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
+    async getValuesOffered() {
+      var app = this;
+      try {
+        let response = await axios.post("/api/getValuesOffered/", {
+          year: app.client.gestion,
         });
-    },
-    initAddDay() {
-      alert("el modulo esta aun en contruccion");
-    },
-
-    initDetailStudents(index, row) {
-      let id = row.id_dia;
-      axios({
-        url: "/api/reportDetailStudents/" + id,
-        method: "GET",
-        responseType: "blob",
-      }).then((response) => {
-        let blob = new Blob([response.data], {
-          type: "application/pdf",
+        app.loading = false;
+        app.offered = response.data;
+      } catch (error) {
+        this.error = error.response.data;
+        app.$alert(this.error.message, "Gestor de errores", {
+          dangerouslyUseHTMLString: true,
         });
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        let url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
-      alert("llegamos");
+      }
     },
-    initSaleStudents(index, row) {
-      let id = row.id_dia;
-      //alert(id);
-      this.$router.push({
-        name: "students",
-        params: {
-          id: id,
-        },
-      });
+    initAddValues(index, row) {
     },
   },
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-input .el-select {
-  width: 180px;
+.el-row {
+  margin-bottom: 20px;
+}
+
+.el-col {
+  border-radius: 4px;
+}
+
+.bg-purple-dark {
+  background: #99a9bf;
+}
+
+.bg-purple {
+  background: #d3dce6;
+}
+
+.bg-purple-light {
+  background: #e5e9f2;
+}
+
+.grid-content {
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 36px;
+}
+
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

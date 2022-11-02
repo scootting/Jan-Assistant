@@ -24,6 +24,8 @@ import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
 
+import SaleStudents from './views/treasure/SaleStudents'
+
 // Routes
 const router = new VueRouter({
     mode: 'history',
@@ -48,13 +50,15 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/api', // /dashboard  /api/assets /api/profiles
+            path: '/api', 
             name: 'dashboard',
             component: Dashboard,
             children: [
                 { path: '', name: 'welcome', component: Welcome },
                 { path: '/information', name: 'information', component: Information },
                 { path: '/password', name: 'password', component: Password },
+
+                { path: '/salestudents', name: 'salestudents', component: SaleStudents },
 
                 { path: '/borrador', name: 'borrador', component: borrador },
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },

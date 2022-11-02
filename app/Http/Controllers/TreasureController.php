@@ -14,10 +14,9 @@ class TreasureController extends Controller
     //  * Encontrar a un estudiante nuevo a traves de su carnet de identidad y el año de ingreso.
     //  * {id: numero de carnet de identidad}    
     //  * {year: año de ingreso}    
-    public function getDataOfStudentById(Request $request){          
-        $id = $request->get('id');
+    public function getValuesOffered(Request $request){          
         $year = $request->get('year');
-        $data = Treasure::getDataOfStudentById($id, $year);
+        $data = Treasure::getValuesOffered($year);
         return json_encode($data);
     }    
     
