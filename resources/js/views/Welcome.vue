@@ -3,51 +3,30 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>bienvenido</span>
-        <el-button style="float: right; padding: 3px 0" type="text"
-          >ayuda</el-button
-        >
+        <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
       <el-button type="primary" @click="reporte">Reporte</el-button>
-      <!-- 
-      -->
     </el-card>
   </div>
 </template>
 
 <script>
-import persona from "./components/Personed";
 import example from "./components/example.vue";
-import valorado from "./components/Valued";
 
 export default {
   name: "Bienvenido",
   components: {
-    persona,
     example,
-    valorado,
   },
   data() {
     return {
-      isValued: false,
-      isVisible: false,
-      messages: {},
-      data: {},
     };
   },
-  mounted() {},
+  mounted() { },
   methods: {
     test() {
       alert("bienvenido al modulo");
-    },
-    openModalPerson() {
-      this.isVisible = true;
-    },
-    openModalValued() {
-      this.isValued = true;
-    },
-    update(isVisible) {
-      this.isVisible = isVisible;
     },
     reporte() {
       axios
@@ -57,9 +36,6 @@ export default {
         .then((response) => {
           let blob = new Blob([response.data], { type: "application/pdf" });
           let link = document.createElement("a");
-          //link.href = window.URL.createObjectURL(blob);
-          //link.download = "test.pdf";
-          //link.click();
           let url = window.URL.createObjectURL(blob);
           window.open(url);
         });
@@ -69,4 +45,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+
+</style>

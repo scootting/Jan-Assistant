@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>informacion personal</span>
+        <span>venta de valores en linea</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
       </div>
       <el-row :gutter="20">
@@ -30,9 +30,21 @@
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <p>valores adquiridos</p>
+            <el-table :data="acquired" style="width: 100%" show-summary>
+              <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
+              <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
+              <el-table-column align="right" width="100">
+                <template slot-scope="scope">
+                  <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
         </el-col>
       </el-row>
+      <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitud</el-button>
+      <el-row> </el-row>
     </el-card>
   </div>
 </template>
@@ -53,9 +65,10 @@ export default {
     this.getValuesOffered();
   },
   methods: {
-    test(){
+    test() {
       alert("llamar al 74246032 para asistencia tecnica");
     },
+    //  *  T1. Obtener los valores para la venta en linea
     async getValuesOffered() {
       var app = this;
       try {
@@ -71,8 +84,37 @@ export default {
         });
       }
     },
-    initAddValues(index, row) {
+
+    //  *  T2. Guardar los valores para la venta en linea
+    async setValuesAcquired() {
+      var app = this;
+      try {
+        let response = await axios.post("/api/setValuesAcquired/", {
+          client: app.client,
+          acquired: app.acquired,
+          marker: "SALE",
+        });
+        console.log(response);
+      } catch (error) {
+        this.error = error.response.data;
+        app.$alert(this.error.message, "Gestor de errores", {
+          dangerouslyUseHTMLString: true,
+        });
+      }
     },
+    // * FUNLOCAL. agregar valores que se van a comprar
+    initAddValues(index, row) {
+      console.log(this.offered);
+      console.log("la fila: " + row);
+      this.acquired.push(row);
+      console.log(this.acquired);
+    },
+    // * FUNLOCAL. Quitar valores que se iban a comprar
+    initRemoveValues(index, row) {
+      this.acquired.splice(index, 1);
+      console.log(this.acquired);
+    },
+
   },
 };
 </script>

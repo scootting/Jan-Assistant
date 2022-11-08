@@ -17,14 +17,6 @@
         Agradecemos sus sugerencias, y les pedimos que las compartan con
         nosotros para seguir mejorando. Agradecemos su apoyo constante.
       </p>
-      <!--
-      <el-button size="mini" plain @click="loadReportAssets()"
-        >Default</el-button
-      >
-      <el-button type="primary" size="mini" plain>Primary</el-button>
-      <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
-      <el-button type="primary" icon="el-icon-share" size="mini"></el-button>
-      -->
     </el-card>
   </div>
 </template>

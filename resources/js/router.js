@@ -12,10 +12,7 @@ import Password from './views/clients/Password'
 
 
 
-import borrador from './views/borrador'
 import NuevaConvocatoria from './views/NewCall'
-import ValidarSolicitud from './views/ValidateRequest'
-import CursosPostgrado from './views/ClassPost'
 
 //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
@@ -57,7 +54,7 @@ const router = new VueRouter({
                 { path: '', name: 'welcome', component: Welcome },
                 { path: '/information', name: 'information', component: Information },
                 { path: '/password', name: 'password', component: Password },
-
+                // Tesoro: Crear solicitud de venta de valores en linea
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
 
                 { path: '/borrador', name: 'borrador', component: borrador },

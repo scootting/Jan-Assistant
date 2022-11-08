@@ -17,13 +17,24 @@ class Treasure extends Model
         return $data;
     }
 
-    //  * Encontrar los valores de un tramite a traves de su descripcion.
-    //  * {description: descripcion del tramite}
-    //  * {year: gestion}
-    public static function getValuesProcedure($description, $year)
+    //  *  T2. Guardar los valores para la venta en linea
+    //  * {cliente: informacion del cliente}
+    //  * {valores: valores seleccionados}
+    public static function setValuesAcquired($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)
     {
-        //select * from trap.ff_valores_tramite('EXCELENCIA', '2020')
-        $query = "select * from trap.ff_valores_tramite('" . $description . "','" . $year . "')";
+        //insert into val.tra_dia( ... ) values ( ... ) RETURNING id_tran
+        $query = "INSERT INTO val.tra_dia(id_dia, cod_val, can_val, pre_uni, fec_tra, usr_cre," .
+            "nro_com, ci_per, des_per, tip_tra, gestion) VALUES " .
+            "('" . $id_dia . "','" . $cod_val . "','" . $can_val . "','" . $pre_uni . "','" . $fec_tra . "','" . $usr_cre . "','" .
+            $nro_com . "','" . $ci_per . "','" . $des_per . "','10','" . $gestion . "') RETURNING id_tran";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+
+    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion){
+        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "')";
+        \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -63,17 +74,6 @@ class Treasure extends Model
         //               values (now(), 'Venta: De La Universidad Autónoma "Tomás Frías" En BOLIVIANOS', 'C', 'B', 0, 2021,'-1', 'rcallizaya');
         $query = "insert into val.diario(fec_tra, glosa, estado, tip_mon, importe, id_lugar, gestion, tip_tra, nro_com_min, usr_cre)" .
             "values (now(), 'Venta: De La Universidad Autónoma \"Tomás Frías\" En BOLIVIANOS', 'C', 'B', 0, 'U', '" . $year . "', 0, '-1', '" . $user . "')";
-        $data = collect(DB::select(DB::raw($query)));
-        return $data;
-    }
-
-    public static function addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)
-    {
-        //insert into val.tra_dia( ... ) values ( ... ) RETURNING id_tran
-        $query = "INSERT INTO val.tra_dia(id_dia, cod_val, can_val, pre_uni, fec_tra, usr_cre," .
-            "nro_com, ci_per, des_per, tip_tra, gestion) VALUES " .
-            "('" . $id_dia . "','" . $cod_val . "','" . $can_val . "','" . $pre_uni . "','" . $fec_tra . "','" . $usr_cre . "','" .
-            $nro_com . "','" . $ci_per . "','" . $des_per . "','10','" . $gestion . "') RETURNING id_tran";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

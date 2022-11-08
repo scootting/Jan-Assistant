@@ -147,23 +147,11 @@ export default {
       this.$router.push({ name: "login" });
     },
     initAddTaxExemption() {
-      //link.href = window.URL.createObjectURL(blob);
-      //link.download = "test.pdf";
-      //link.click();
       this.$router.push({ name: "addTaxExemption" });
     },
     initToFormalities() {
       this.$router.push({ name: "formalities" });
 
-      //PDF file is stored under project/public/download/info.pdf
-
-      /*
-    $file= public_path(). "/download/info.pdf";
-    $headers = array(
-              'Content-Type: application/pdf',
-            );
-    return Response::download($file, 'filename.pdf', $headers);
-      */
     },
     initToDocuments() {
       this.$router.push({ name: "addnotdocument" });
@@ -250,39 +238,4 @@ a {
   text-decoration: none;
   padding: 5px 5px 0;
 }
-/*
-ul {
-  counter-reset: index;
-  padding: 0;
-  max-width: 1000px;
-}
-
-li {
-  counter-increment: index;
-  display: flex;
-  align-items: center;
-  padding: 5px 0;
-  min-height: 60px;
-  box-sizing: border-box;
-}
-
-li::before {
-  content: counters(index, ".", decimal-leading-zero);
-  font-size: 1.5rem;
-  text-align: right;
-  font-weight: bold;
-  min-width: 50px;
-  padding-right: 12px;
-  font-variant-numeric: tabular-nums;
-  align-self: flex-start;
-  background-image: linear-gradient(to bottom, aquamarine, orangered);
-  background-attachment: fixed;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-li + li {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-*/
 </style>
