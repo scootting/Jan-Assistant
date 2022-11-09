@@ -21,7 +21,10 @@ import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
 
+//Tesoro: Modulo para seleccionar los valores en linea
 import SaleStudents from './views/treasure/SaleStudents'
+//Documento: Modulo para gestionar las solicitudes
+import Requests from './views/document/Requests'
 
 // Routes
 const router = new VueRouter({
@@ -47,20 +50,17 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/api', 
+            path: '/api',
             name: 'dashboard',
             component: Dashboard,
             children: [
                 { path: '', name: 'welcome', component: Welcome },
                 { path: '/information', name: 'information', component: Information },
                 { path: '/password', name: 'password', component: Password },
-                // Tesoro: Crear solicitud de venta de valores en linea
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
-
-                { path: '/borrador', name: 'borrador', component: borrador },
+                { path: '/requests', name: 'requests', component: Requests },
+ 
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
-                { path: '/validarsolicitud', name: 'validarSolicitud', component: ValidarSolicitud },
-                { path: '/cursospostgrado', name: 'cursosPostgrado', component: CursosPostgrado },
             ],
             meta: {
                 requiresAuth: true,

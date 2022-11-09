@@ -19,32 +19,26 @@
               informacion personal
             </router-link>
           </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-setting"></i>
-            <span>solvencia universitaria</span>
+          <el-menu-item index="3">
+            <i class="el-icon-reading"></i>
+            <router-link :to="{ name: 'requests' }" tag="span">
+              solicitudes
+            </router-link>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="4">
             <i class="el-icon-star-off"></i>
             <router-link :to="{ name: 'salestudents' }" tag="span">
               venta de valores en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'nuevaConvocatoria' }" tag="span">
-              Nueva Convocatoria
-            </router-link>
+          <el-menu-item index="5" disabled>
+            <i class="el-icon-setting"></i>
+            <span>solvencia universitaria</span>
           </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'validarSolicitud' }" tag="span">
-              Validar Solicitudes
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="6" disabled>
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'cursosPostgrado' }" tag="span">
-              Cursos Postgrado
+              Certificado de no deudas
             </router-link>
           </el-menu-item>
         </el-menu>

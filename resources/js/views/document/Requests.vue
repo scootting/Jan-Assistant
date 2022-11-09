@@ -3,8 +3,6 @@
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>solicitudes</span>
-                <el-button style="text-align: right; float: right" size="small" type="primary" icon="el-icon-plus"
-                    @click="test">ayuda</el-button>
             </div>
             <div style="margin-top: 15px;">
                 <el-input placeholder="INSERTE UNA DESCRIPCION" v-model="writtenTextParameter"
@@ -14,16 +12,17 @@
             </div>
             <br />
             <div>
-                <el-table v-loading="loading" :data="people" style="width: 100%">
+                <el-table v-loading="loading" :data="requests" style="width: 100%">
                     <el-table-column prop="personal" label="CARNET"></el-table-column>
                     <el-table-column prop="paterno" label="PATERNO"></el-table-column>
                     <el-table-column prop="materno" label="MATERNO"></el-table-column>
                     <el-table-column prop="nombres" label="NOMBRES" width="280"></el-table-column>
                     <el-table-column align="right" width="220">
                         <template slot-scope="scope">
-                            <el-button @click="initEditPerson(scope.$index, scope.row)" type="primary" size="mini"
-                                plain>Editar</el-button>
-                            <el-button @click="initShowPerson(scope.$index, scope.row)" type="danger" plain size="mini">
+                            <el-button @click="initEditBoucher(scope.$index, scope.row)" type="primary" size="mini"
+                                plain>Depositar</el-button>
+                            <el-button @click="initShowRequest(scope.$index, scope.row)" type="danger" plain
+                                size="mini">
                                 Mostrar</el-button>
                         </template>
                     </el-table-column>
@@ -51,6 +50,7 @@ export default {
     },
     mounted() {
         let app = this;
+        this.getRequest(app.pagination.page);
         axios
             .post("/api/persons", {
                 descripcion: app.writtenTextParameter,
@@ -72,23 +72,10 @@ export default {
         test() {
             alert("en proceso de desarrollo");
         },
-        getDataPageSelected(page) {
-            let app = this;
-            app.loading = true;
-            axios
-                .post("/api/persons", {
-                    descripcion: app.writtenTextParameter,
-                    page: page,
-                })
-                .then((response) => {
-                    app.loading = false;
-                    app.people = Object.values(response.data.data);
-                    app.pagination = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        getRequest(page) {
         },
+
+        /*
         initAddPerson() {
             this.$router.push({
                 name: "addperson",
@@ -104,30 +91,10 @@ export default {
                 },
             });
         },
-        initSearchPerson() {
-            let app = this;
-            app.loading = true;
-            axios
-                .post("/api/persons", {
-                    descripcion: app.writtenTextParameter,
-                })
-                .then((response) => {
-                    app.loading = false;
-                    app.people = response.data.data;
-                    app.pagination = response.data;
-                })
-                .catch((error) => {
-                    this.error = error;
-                    this.$notify.error({
-                        title: "Error",
-                        message: this.error.message,
-                    });
-                });
-        },
         initShowPerson(index, row) {
             let personal = row.nro_dip;
             //router.push({ name: 'editperson', params: { userId: personal }})
-        },
+        },*/
     },
 };
 </script>
