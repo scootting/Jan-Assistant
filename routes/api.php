@@ -45,6 +45,11 @@ Route::group([
     //  * {cliente: informacion del cliente}
     //  * {valores: valores seleccionados}
     Route::post('setValuesAcquired', 'TreasureController@setValuesAcquired');
+ 
+    //  *  D1. Obtener la lista de las solicitadas en linea por persona
+    //  * {gestion: gestion activa}
+    Route::post('request', 'DocumentController@getRequests');
+
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***

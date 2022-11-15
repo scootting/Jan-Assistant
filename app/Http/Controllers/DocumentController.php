@@ -4,10 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Document;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DocumentController extends Controller
 {
-    //
+
+
+    //  *  D1. Obtener la lista de las solicitadas en linea por persona
+    //  * {gestion: gestion activa}
+    public function getRequests(Request $request){      
+        $persona = $request->get('client');
+        \Log::info($persona);
+        $id = strtoupper($persona['nodip']);
+        $gestion = $request->get('year');
+        $data = Document::GetRequests($id, $gestion);
+        $page = ($request->get('page') ? $request->get('page') : 1);
+        $perPage = 10;
+
+        $paginate = new LengthAwarePaginator(
+            $data->forPage($page, $perPage),
+            $data->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/request')]
+        );
+        return json_encode($paginate);        
+        return json_encode($data);
+    } 
+
     //  * Obtener las descripciones de el recurso utilizado.
     //  * {abr: }    
     public function getDescriptionByAbr($abr){        

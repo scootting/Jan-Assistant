@@ -25,6 +25,8 @@ import Layout from './views/Layout'
 import SaleStudents from './views/treasure/SaleStudents'
 //Documento: Modulo para gestionar las solicitudes
 import Requests from './views/document/Requests'
+//Documento: Modulo para gestionar los depositos por solicitud
+import BoucherOfRequest from './views/document/BoucherOfRequest'
 
 // Routes
 const router = new VueRouter({
@@ -59,6 +61,7 @@ const router = new VueRouter({
                 { path: '/password', name: 'password', component: Password },
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
                 { path: '/requests', name: 'requests', component: Requests },
+                { path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
  
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
             ],

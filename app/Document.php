@@ -9,11 +9,17 @@ use Illuminate\Support\Collection as Collection;
 
 class Document extends Model
 {
-    //
+    //  *  D1. Obtener la lista de las solicitadas en linea por persona
+    //  * {gestion: gestion activa}
+    public static function GetRequests($id, $year){      
+        $query = "select * from linea.solicitudes s where s.ci_per ='".$id."' and s.gestion = '".$year."'";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    } 
 
     // *** - funcion para la busqueda de las personas por carnet de identidad - ***
-    // *** - parametros [carnet de identidad] - ***
-
+    // *** - parametros [carnet de identidad] - ***    
     public static function getDescriptionByAbr($abr){
         $query = "SELECT * FROM bdoc.des_doc dd WHERE dd.id_abr ='".$abr."' AND dd.estado = 'TRUE'";
         $data = collect(DB::select(DB::raw($query)));
@@ -33,7 +39,7 @@ class Document extends Model
     public static function CheckGraduateCertficate($nro_doc, $ci_auth, $gestion){
 
         $query = "UPDATE bdoc.cer_dia SET ci_auth = '".$ci_auth."',est_doc = 'Verificado'".
-                 "WHERE nro_doc='848' AND gestion ='2021'"
+                 "WHERE nro_doc='848' AND gestion ='2021'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;         
     }
