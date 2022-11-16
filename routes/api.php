@@ -50,6 +50,10 @@ Route::group([
     //  * {gestion: gestion activa}
     Route::post('request', 'DocumentController@getRequests');
 
+    //  *  D2. Guardar los boucher generados por cada solicitud
+    //  * {boucher: imagen del boucher }
+    //  * {request: informacion del boucher }
+    Route::post('storeBoucherOfRequest', 'DocumentController@storeBoucherOfRequest');
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***

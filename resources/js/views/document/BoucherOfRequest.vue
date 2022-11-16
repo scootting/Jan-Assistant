@@ -20,14 +20,16 @@
                 <el-input v-model="request.boucher"></el-input>
               </el-form-item>
               <el-form-item size="small" label="fecha del deposito" prop="fecha">
-                <el-date-picker size="small" type="date" v-model="request.fecha" style="width: 100%">
+                <el-date-picker size="small" type="date" v-model="request.fecha" style="width: 100%" format="dd-MM-yyyy" value-format="dd-MM-yyyy">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="monto">
                 <el-input-number size="medium" v-model="request.monto" :precision="2" :step="0.1"></el-input-number>
               </el-form-item>
               <el-form-item>
-                <el-upload class="upload-demo" ref="upload"  action="/api/storeBoucherOfRequest" :auto-upload="false" :file-list="request.img"><!--:multiple="false" :limit="1"-->
+                <el-upload ref="upload" action="/api/storeBoucherOfRequest" :auto-upload="false" :file-list="document"
+                  :multiple="true" :data="request" accept=".pdf, .png, .jpeg" :headers="requestHeaders">
+                  <!---->
                   <el-button slot="trigger" size="small" type="primary">Selecciona un archivo</el-button>
                   <div slot="tip" class="el-upload__tip">Solo archivos jpg/png/pdf con un tamaño menor de 500kb</div>
                 </el-upload>
@@ -48,12 +50,16 @@ export default {
   data() {
     return {
       client: this.$store.state.user,
+      requestHeaders: {
+        'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
+        Authorization: 'Bearer ' + this.$store.state.token,
+      },
       request: {
         boucher: "",
         fecha: "",
-        img: [],
         monto: 0.00,
       },
+      document: [],
     };
   },
   mounted() {
@@ -65,9 +71,8 @@ export default {
     async storeBoucherOfRequest() {
       var app = this;
       this.$refs.upload.submit();
-      console.log(app.request);
-      console.log(app.request.img[0]);
       /*
+      console.log(app.request.img[0]);
       try {
         let response = await axios.post("/api/storeBoucherOfRequest", {
           persona: app.client,

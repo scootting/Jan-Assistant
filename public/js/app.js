@@ -5552,17 +5552,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
+      requestHeaders: {
+        'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
+        Authorization: 'Bearer ' + this.$store.state.token
+      },
       request: {
         boucher: "",
         fecha: "",
-        img: [],
         monto: 0.00
-      }
+      },
+      document: []
     };
   },
   mounted: function mounted() {},
@@ -5582,10 +5588,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app = _this;
 
                 _this.$refs.upload.submit();
-
-                console.log(app.request);
-                console.log(app.request.img[0]);
                 /*
+                console.log(app.request.img[0]);
                 try {
                   let response = await axios.post("/api/storeBoucherOfRequest", {
                     persona: app.client,
@@ -5605,7 +5609,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }*/
 
-              case 4:
+
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -87322,7 +87327,12 @@ var render = function() {
                           [
                             _c("el-date-picker", {
                               staticStyle: { width: "100%" },
-                              attrs: { size: "small", type: "date" },
+                              attrs: {
+                                size: "small",
+                                type: "date",
+                                format: "dd-MM-yyyy",
+                                "value-format": "dd-MM-yyyy"
+                              },
                               model: {
                                 value: _vm.request.fecha,
                                 callback: function($$v) {
@@ -87364,11 +87374,14 @@ var render = function() {
                               "el-upload",
                               {
                                 ref: "upload",
-                                staticClass: "upload-demo",
                                 attrs: {
                                   action: "/api/storeBoucherOfRequest",
                                   "auto-upload": false,
-                                  "file-list": _vm.request.img
+                                  "file-list": _vm.document,
+                                  multiple: true,
+                                  data: _vm.request,
+                                  accept: ".pdf, .png, .jpeg",
+                                  headers: _vm.requestHeaders
                                 }
                               },
                               [
