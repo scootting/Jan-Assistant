@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Document;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Storage;
-
 
 class DocumentController extends Controller
 {
@@ -16,13 +14,11 @@ class DocumentController extends Controller
     public function getRequests(Request $request)
     {
         $persona = $request->get('client');
-        \Log::info($persona);
         $id = strtoupper($persona['nodip']);
         $gestion = $request->get('year');
         $data = Document::GetRequests($id, $gestion);
         $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 10;
-
         $paginate = new LengthAwarePaginator(
             $data->forPage($page, $perPage),
             $data->count(),
@@ -31,30 +27,50 @@ class DocumentController extends Controller
             ['path' => url('api/request')]
         );
         return json_encode($paginate);
-        return json_encode($data);
     }
 
     //  *  D2. Guardar los boucher generados por cada solicitud
+    //  * {boucher: imagen del boucher }
+    //  * {request: informacion del boucher }
     public function storeBoucherOfRequest(Request $request)
     {
         \Log::info($request);
+        $solicitud = $request->get('tag');
         $boucher = $request->get('boucher');
         $fecha = $request->get('fecha');
+        $monto = $request->get('monto');
+        $ruta = "";
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $file_name = $file->getClientOriginalName();
-            $path = 'uploads/' . strval($boucher) . '.' . strval($fecha);
-            \Log::info($file_name);
-            \Log::info($path);
+            $path = "treasure/" . strval($fecha) . '.' . strval($boucher);
+            $ruta = $path . "/". $file_name;
             $file->storeAs($path, $file_name);
-            //Storage::disk('local')->put($file_name, $file);
-            $file->store('uploads');
-
+            $file->store('treasure');
         } else {
             return response()->json(['error' => 'File not exist!']);
         }
+        $data = Document::StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta);
         return response()->json(['success' => 'Uploaded Successfully.']);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //  * Obtener las descripciones de el recurso utilizado.
     //  * {abr: }

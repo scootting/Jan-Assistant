@@ -5554,16 +5554,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
+      id: this.$route.params.id,
       requestHeaders: {
         'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
         Authorization: 'Bearer ' + this.$store.state.token
       },
       request: {
+        tag: this.$route.params.id,
         boucher: "",
         fecha: "",
         monto: 0.00
@@ -5617,6 +5621,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    handleSuccessBoucher: function handleSuccessBoucher(response, file, fileList) {
+      this.$message({
+        message: 'Gracias, acaba de subir el archivo ' + file.name + '.',
+        type: 'success'
+      });
+      console.log(response, file, fileList);
+      this.fileList = fileList;
     }
   }
 });
@@ -87247,7 +87259,7 @@ var render = function() {
               slot: "header"
             },
             [
-              _c("span", [_vm._v("Solicitud: ")]),
+              _c("span", [_vm._v("Solicitud:" + _vm._s(_vm.id) + " ")]),
               _vm._v(" "),
               _c(
                 "el-button",
@@ -87331,7 +87343,7 @@ var render = function() {
                                 size: "small",
                                 type: "date",
                                 format: "dd-MM-yyyy",
-                                "value-format": "dd-MM-yyyy"
+                                "value-format": "MM-dd-yyyy"
                               },
                               model: {
                                 value: _vm.request.fecha,
@@ -87353,7 +87365,7 @@ var render = function() {
                               attrs: {
                                 size: "medium",
                                 precision: 2,
-                                step: 0.1
+                                step: 0.5
                               },
                               model: {
                                 value: _vm.request.monto,
@@ -87378,10 +87390,13 @@ var render = function() {
                                   action: "/api/storeBoucherOfRequest",
                                   "auto-upload": false,
                                   "file-list": _vm.document,
-                                  multiple: true,
+                                  multiple: false,
+                                  limit: 1,
                                   data: _vm.request,
                                   accept: ".pdf, .png, .jpeg",
-                                  headers: _vm.requestHeaders
+                                  headers: _vm.requestHeaders,
+                                  "on-success": _vm.handleSuccessBoucher,
+                                  "on-remove": _vm.test
                                 }
                               },
                               [
@@ -87438,7 +87453,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("enviar deposito")]
+            [_vm._v("Agregar Deposito")]
           ),
           _vm._v(" "),
           _c("el-row")
