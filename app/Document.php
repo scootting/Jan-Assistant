@@ -29,6 +29,17 @@ class Document extends Model
         return $data;
     }
 
+    //  *  **. crear una nueva solicitud indicando el tipo, la gestion, y quien lo esta realizando
+    //  * {gestion: gestion de la solicitud }
+    //  * {marker: tipo de solicitud }
+    //  * {nodip: carnet de identidad de la persona }
+    //  * {descripcion: detalle de la persona }
+    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion){
+        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "')";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 
 

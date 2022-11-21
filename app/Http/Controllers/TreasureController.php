@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Treasure;
+use App\Document;
 use Illuminate\Http\Request;
 
 class TreasureController extends Controller
@@ -27,9 +28,9 @@ class TreasureController extends Controller
         $no_dip = $client['nodip'];
         $gestion = $client['gestion'];
 
-        $id = Treasure::setRequestByYear($gestion, $marker, $no_dip, $descripcion);
+        $id = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion);
         $id = $id[0]->{'ff_nueva_solicitud'};
-        
+        \Log::info("este es el id de la nueva solicitud". $id);
         //$nro_com = str_pad($idx, 6, "0", STR_PAD_LEFT);
         $tip_tra = '10';
         /*

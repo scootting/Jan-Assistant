@@ -87765,7 +87765,11 @@ var render = function() {
                       "el-table",
                       {
                         staticStyle: { width: "100%" },
-                        attrs: { data: _vm.acquired, "show-summary": "" }
+                        attrs: {
+                          data: _vm.acquired,
+                          "show-summary": "",
+                          "sum-text": "importe total a cancelar"
+                        }
                       },
                       [
                         _c("el-table-column", {

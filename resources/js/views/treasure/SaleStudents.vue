@@ -30,7 +30,7 @@
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <p>valores adquiridos</p>
-            <el-table :data="acquired" style="width: 100%" show-summary>
+            <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar"	>
               <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
               <el-table-column align="right" width="100">
