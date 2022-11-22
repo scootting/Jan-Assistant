@@ -44,7 +44,7 @@ class DocumentController extends Controller
             $file = $request->file('file');
             $file_name = $file->getClientOriginalName();
             $path = "treasure/" . strval($fecha) . '.' . strval($boucher);
-            $ruta = $path . "/". $file_name;
+            $ruta = $path . "/" . $file_name;
             $file->storeAs($path, $file_name);
             $file->store('treasure');
         } else {
@@ -59,7 +59,8 @@ class DocumentController extends Controller
     {
         $id_sol = $request->get('id');
         $data = Document::GetDataRequestById($id_sol);
-        return $data;
+        $boucher = Document::getBoucherRequestById($id_sol);
+        return json_encode(['data' => $data, 'boucher' => $boucher]);
     }
 
 
@@ -124,5 +125,4 @@ class DocumentController extends Controller
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
 }

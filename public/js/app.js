@@ -5581,6 +5581,70 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -5588,16 +5652,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       client: this.$store.state.user,
       id: this.$route.params.id,
       dataRequest: [],
+      boucherRequest: [],
       onlyRequest: [],
       requestHeaders: {
-        'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
-        Authorization: 'Bearer ' + this.$store.state.token
+        "X-CSRF-TOKEN": window.axios.defaults.headers.common["X-CSRF-TOKEN"],
+        Authorization: "Bearer " + this.$store.state.token
       },
       request: {
         tag: this.$route.params.id,
         boucher: "",
         fecha: "",
-        monto: 0.00
+        monto: 0.0
       },
       document: []
     };
@@ -5630,26 +5695,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 response = _context.sent;
                 app.loading = false;
-                app.dataRequest = response.data;
+                console.log(response);
+                app.dataRequest = response.data.data;
+                app.boucherRequest = response.data.boucher;
                 app.onlyRequest = app.dataRequest[0];
-                console.log(app.onlyRequest);
-                _context.next = 15;
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](1);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 11]]);
+        }, _callee, null, [[1, 12]]);
       }))();
     },
     //  *  D2. Guardar los boucher generados por cada solicitud
@@ -5678,9 +5744,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     handleSuccessBoucher: function handleSuccessBoucher(response, file, fileList) {
       this.$message({
-        message: 'Gracias, acaba de subir el archivo ' + file.name + '.',
-        type: 'success'
+        message: "Gracias, acaba de subir el archivo " + file.name + ".",
+        type: "success"
       });
+      this.getDataRequestById();
       console.log(response, file, fileList);
       this.fileList = fileList;
     }
@@ -87459,6 +87526,47 @@ var render = function() {
                     )
                   ],
                   1
+                ),
+                _vm._v(" "),
+                _c("p"),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "grid-content bg-purple" },
+                  [
+                    _c("p", [_vm._v("depositos registrados")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-table",
+                      {
+                        directives: [
+                          {
+                            name: "loading",
+                            rawName: "v-loading",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ],
+                        staticStyle: { width: "100%" },
+                        attrs: { data: _vm.boucherRequest }
+                      },
+                      [
+                        _c("el-table-column", {
+                          attrs: { prop: "boucher", label: "id" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: { prop: "fecha", label: "fecha" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: { prop: "imp_bou", label: "importe" }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
                 )
               ]),
               _vm._v(" "),
@@ -87467,7 +87575,7 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
-                    _c("p", [_vm._v("deposito")]),
+                    _c("p", [_vm._v("registrar deposito")]),
                     _vm._v(" "),
                     _c(
                       "el-form",
@@ -87570,6 +87678,8 @@ var render = function() {
                                 }
                               },
                               [
+                                _c("p"),
+                                _vm._v(" "),
                                 _c(
                                   "el-button",
                                   {
@@ -87580,7 +87690,7 @@ var render = function() {
                                     },
                                     slot: "trigger"
                                   },
-                                  [_vm._v("Selecciona un archivo")]
+                                  [_vm._v("Selecciona copia del deposito")]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -87592,12 +87702,25 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "Solo archivos jpg/png/pdf con un tamaño menor de 500kb"
+                                      "\n                  Solo archivos jpg/png/pdf con un tamaño menor de 500kb\n                "
                                     )
                                   ]
                                 )
                               ],
                               1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { type: "success", size: "small" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.storeBoucherOfRequest()
+                                  }
+                                }
+                              },
+                              [_vm._v("Agregar Deposito")]
                             )
                           ],
                           1
@@ -87611,19 +87734,6 @@ var render = function() {
               ])
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            {
-              attrs: { type: "primary", size: "small" },
-              on: {
-                click: function($event) {
-                  return _vm.storeBoucherOfRequest()
-                }
-              }
-            },
-            [_vm._v("Agregar Deposito")]
           ),
           _vm._v(" "),
           _c("el-row")
@@ -105788,8 +105898,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Repository\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Repository\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\dev\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\dev\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

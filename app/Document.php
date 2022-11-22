@@ -12,7 +12,6 @@ class Document extends Model
     public static function GetRequests($id, $year)
     {
         $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion = '" . $year . "' order by fec_cre desc";
-        \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -22,7 +21,7 @@ class Document extends Model
     //  * {request: informacion del boucher }
     public static function StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta)
     {
-        $query = "insert into linea.deposito_solicitud(solicitud, boucher, fecha, monto, ruta) " .
+        $query = "insert into linea.deposito_solicitud(id_sol, boucher, fecha, imp_bou, ruta) " .
             "values('" . $solicitud . "','" . $boucher . "','" . $fecha . "','" . $monto . "','" . $ruta . "')";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
@@ -50,7 +49,16 @@ class Document extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    //  *  D3. Obtener los boucher de cada solicitud
+    //  * {id: id de la solicitud }
+    public static function getBoucherRequestById($id){
+        $query = "select * from linea.deposito_solicitud d 
+                  where d.id_sol = '" . $id . "'";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
 
+    }
 
 
 
