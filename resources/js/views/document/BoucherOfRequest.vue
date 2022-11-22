@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Solicitud:{{id}} </span>
+        <span>[]</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
       </div>
       <el-row :gutter="20">
@@ -14,14 +14,39 @@
         </p>
         <el-col :span="12">
           <div class="grid-content bg-purple">
-            <p>datos personales</p>
+            <p>datos de la solicitud</p>
+            <!--
+            -->
+
+            <el-form ref="form" :model="this.onlyRequest" label-width="200px" size="mini">
+              <el-form-item label="tag">
+                <el-input v-model="onlyRequest.idc" disabled></el-input>
+              </el-form-item>
+              <el-form-item label="fecha">
+                <el-input v-model="onlyRequest.fecha" disabled></el-input>
+              </el-form-item>
+              <el-form-item label="detalle">
+                <el-input v-model="onlyRequest.des_per" disabled></el-input>
+              </el-form-item>
+              <el-form-item label="importe">
+                <el-input v-model="onlyRequest.importe" disabled></el-input>
+              </el-form-item>
+              <el-form-item label="estado">
+                <el-input v-model="onlyRequest.estado" disabled></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="grid-content bg-purple">
+            <p>deposito</p>
             <el-form ref="form" :model="this.request" label-width="200px" size="mini">
               <el-form-item label="numero de deposito ">
                 <el-input v-model="request.boucher"></el-input>
               </el-form-item>
               <el-form-item size="small" label="fecha del deposito" prop="fecha">
                 <el-date-picker size="small" type="date" v-model="request.fecha" style="width: 100%" format="dd-MM-yyyy"
-                  value-format="MM-dd-yyyy">
+                  value-format="yyyy-MM-dd">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="monto">
@@ -53,12 +78,14 @@ export default {
     return {
       client: this.$store.state.user,
       id: this.$route.params.id,
+      dataRequest: [],
+      onlyRequest:[],
       requestHeaders: {
         'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
         Authorization: 'Bearer ' + this.$store.state.token,
       },
       request: {
-        tag:this.$route.params.id,
+        tag: this.$route.params.id,
         boucher: "",
         fecha: "",
         monto: 0.00,
@@ -67,35 +94,39 @@ export default {
     };
   },
   mounted() {
+    this.getDataRequestById();
   },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
 
-    async storeBoucherOfRequest() {
+    //  *  D3. Obtener la informacion por cada solicitud
+    //  * {id: id de la solicitud }
+    async getDataRequestById() {
       var app = this;
-      this.$refs.upload.submit();
-      /*
-      console.log(app.request.img[0]);
       try {
-        let response = await axios.post("/api/storeBoucherOfRequest", {
-          persona: app.client,
-          marker: "editar",
+        let response = await axios.post("/api/getDataRequestById/", {
+          id: app.id,
         });
-        app.$alert("se ha actualizado la informacion correctamente!!! ...", "Gestor de mensajes", {
-          dangerouslyUseHTMLString: true,
-        });
-        app.$store.commit("updateUser", app.client);
-        this.$router.push({
-          name: "welcome",
-        });
+        app.loading = false;
+        app.dataRequest = response.data;
+        app.onlyRequest = app.dataRequest[0];
+        console.log(app.onlyRequest);
       } catch (error) {
         this.error = error.response.data;
         app.$alert(this.error.message, "Gestor de errores", {
           dangerouslyUseHTMLString: true,
         });
-      }*/
+      }
+    },
+
+    //  *  D2. Guardar los boucher generados por cada solicitud
+    //  * {boucher: imagen del boucher }
+    //  * {request: informacion del boucher }
+    async storeBoucherOfRequest() {
+      var app = this;
+      this.$refs.upload.submit();
     },
     handleSuccessBoucher(response, file, fileList) {
       this.$message({

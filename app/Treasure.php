@@ -20,24 +20,20 @@ class Treasure extends Model
     //  *  T2. Guardar los valores para la venta en linea
     //  * {cliente: informacion del cliente}
     //  * {valores: valores seleccionados}
-    public static function setValuesAcquired($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, $nro_com, $ci_per, $des_per, $tip_tra, $gestion)
+    public static function SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni)
     {
-        //insert into val.tra_dia( ... ) values ( ... ) RETURNING id_tran
-        $query = "INSERT INTO val.tra_dia(id_dia, cod_val, can_val, pre_uni, fec_tra, usr_cre," .
-            "nro_com, ci_per, des_per, tip_tra, gestion) VALUES " .
-            "('" . $id_dia . "','" . $cod_val . "','" . $can_val . "','" . $pre_uni . "','" . $fec_tra . "','" . $usr_cre . "','" .
-            $nro_com . "','" . $ci_per . "','" . $des_per . "','10','" . $gestion . "') RETURNING id_tran";
+        //insert into linea.valores_solicitud( ... ) values ( ... )
+        $query = "INSERT INTO linea.valores_solicitud(id_sol, cod_val, des_val, can_val, imp_val) VALUES " .
+            "('" . $id_sol . "','" . $cod_val . "','" . $des_val . "','" . $can_val . "','" . $pre_uni . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
 
-    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion){
-        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "')";
-        \Log::info($query);
-        $data = collect(DB::select(DB::raw($query)));
-        return $data;
-    }
+
+
+
+
 
     //  * Encontrar los valores de un tramite a traves de su descripcion.
     //  * {description: descripcion de la busqueda}

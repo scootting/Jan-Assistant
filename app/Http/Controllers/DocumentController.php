@@ -54,13 +54,13 @@ class DocumentController extends Controller
         return response()->json(['success' => 'Uploaded Successfully.']);
     }
 
-    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion){
-        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "')";
-        \Log::info($query);
-        $data = collect(DB::select(DB::raw($query)));
+
+    public static function getDataRequestById(Request $request)
+    {
+        $id_sol = $request->get('id');
+        $data = Document::GetDataRequestById($id_sol);
         return $data;
     }
-
 
 
 

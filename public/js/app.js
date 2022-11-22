@@ -5556,12 +5556,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
       id: this.$route.params.id,
+      dataRequest: [],
+      onlyRequest: [],
       requestHeaders: {
         'X-CSRF-TOKEN': window.axios.defaults.headers.common["X-CSRF-TOKEN"],
         Authorization: 'Bearer ' + this.$store.state.token
@@ -5575,51 +5602,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       document: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.getDataRequestById();
+  },
   methods: {
     test: function test() {
       alert("bienvenido al modulo");
     },
-    storeBoucherOfRequest: function storeBoucherOfRequest() {
+    //  *  D3. Obtener la informacion por cada solicitud
+    //  * {id: id de la solicitud }
+    getDataRequestById: function getDataRequestById() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var app;
+        var app, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 app = _this;
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.post("/api/getDataRequestById/", {
+                  id: app.id
+                });
 
-                _this.$refs.upload.submit();
-                /*
-                console.log(app.request.img[0]);
-                try {
-                  let response = await axios.post("/api/storeBoucherOfRequest", {
-                    persona: app.client,
-                    marker: "editar",
-                  });
-                  app.$alert("se ha actualizado la informacion correctamente!!! ...", "Gestor de mensajes", {
-                    dangerouslyUseHTMLString: true,
-                  });
-                  app.$store.commit("updateUser", app.client);
-                  this.$router.push({
-                    name: "welcome",
-                  });
-                } catch (error) {
-                  this.error = error.response.data;
-                  app.$alert(this.error.message, "Gestor de errores", {
-                    dangerouslyUseHTMLString: true,
-                  });
-                }*/
+              case 4:
+                response = _context.sent;
+                app.loading = false;
+                app.dataRequest = response.data;
+                app.onlyRequest = app.dataRequest[0];
+                console.log(app.onlyRequest);
+                _context.next = 15;
+                break;
 
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](1);
+                _this.error = _context.t0.response.data;
+                app.$alert(_this.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
 
-              case 2:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 11]]);
+      }))();
+    },
+    //  *  D2. Guardar los boucher generados por cada solicitud
+    //  * {boucher: imagen del boucher }
+    //  * {request: informacion del boucher }
+    storeBoucherOfRequest: function storeBoucherOfRequest() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var app;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                app = _this2;
+
+                _this2.$refs.upload.submit();
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     handleSuccessBoucher: function handleSuccessBoucher(response, file, fileList) {
@@ -5905,34 +5959,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 app = _this2;
-                _context2.prev = 1;
-                _context2.next = 4;
+                console.log(app.acquired);
+                _context2.prev = 2;
+                _context2.next = 5;
                 return axios.post("/api/setValuesAcquired/", {
                   client: app.client,
                   acquired: app.acquired,
                   marker: "SALE"
                 });
 
-              case 4:
+              case 5:
                 response = _context2.sent;
                 console.log(response);
-                _context2.next = 12;
+                _context2.next = 13;
                 break;
 
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](2);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 12:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 8]]);
+        }, _callee2, null, [[2, 9]]);
       }))();
     },
     // * FUNLOCAL. agregar valores que se van a comprar
@@ -87259,7 +87314,7 @@ var render = function() {
               slot: "header"
             },
             [
-              _c("span", [_vm._v("Solicitud:" + _vm._s(_vm.id) + " ")]),
+              _c("span", [_vm._v("[]")]),
               _vm._v(" "),
               _c(
                 "el-button",
@@ -87297,7 +87352,122 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
-                    _c("p", [_vm._v("datos personales")]),
+                    _c("p", [_vm._v("datos de la solicitud")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-form",
+                      {
+                        ref: "form",
+                        attrs: {
+                          model: this.onlyRequest,
+                          "label-width": "200px",
+                          size: "mini"
+                        }
+                      },
+                      [
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "tag" } },
+                          [
+                            _c("el-input", {
+                              attrs: { disabled: "" },
+                              model: {
+                                value: _vm.onlyRequest.idc,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.onlyRequest, "idc", $$v)
+                                },
+                                expression: "onlyRequest.idc"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "fecha" } },
+                          [
+                            _c("el-input", {
+                              attrs: { disabled: "" },
+                              model: {
+                                value: _vm.onlyRequest.fecha,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.onlyRequest, "fecha", $$v)
+                                },
+                                expression: "onlyRequest.fecha"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "detalle" } },
+                          [
+                            _c("el-input", {
+                              attrs: { disabled: "" },
+                              model: {
+                                value: _vm.onlyRequest.des_per,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.onlyRequest, "des_per", $$v)
+                                },
+                                expression: "onlyRequest.des_per"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "importe" } },
+                          [
+                            _c("el-input", {
+                              attrs: { disabled: "" },
+                              model: {
+                                value: _vm.onlyRequest.importe,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.onlyRequest, "importe", $$v)
+                                },
+                                expression: "onlyRequest.importe"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "estado" } },
+                          [
+                            _c("el-input", {
+                              attrs: { disabled: "" },
+                              model: {
+                                value: _vm.onlyRequest.estado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.onlyRequest, "estado", $$v)
+                                },
+                                expression: "onlyRequest.estado"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("el-col", { attrs: { span: 12 } }, [
+                _c(
+                  "div",
+                  { staticClass: "grid-content bg-purple" },
+                  [
+                    _c("p", [_vm._v("deposito")]),
                     _vm._v(" "),
                     _c(
                       "el-form",
@@ -87343,7 +87513,7 @@ var render = function() {
                                 size: "small",
                                 type: "date",
                                 format: "dd-MM-yyyy",
-                                "value-format": "MM-dd-yyyy"
+                                "value-format": "yyyy-MM-dd"
                               },
                               model: {
                                 value: _vm.request.fecha,

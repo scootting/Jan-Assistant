@@ -17,6 +17,9 @@ class TreasureController extends Controller
         return json_encode($data);
     }
 
+    //  *  T2. Guardar los valores para la venta en linea
+    //  * {cliente: informacion del cliente}
+    //  * {valores: valores seleccionados}
     public function setValuesAcquired(Request $request)
     {
         $id_tran = 0;
@@ -29,26 +32,18 @@ class TreasureController extends Controller
         $gestion = $client['gestion'];
 
         $id = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion);
-        $id = $id[0]->{'ff_nueva_solicitud'};
+        $id_sol = $id[0]->{'ff_nueva_solicitud'};
+
         \Log::info("este es el id de la nueva solicitud". $id);
-        //$nro_com = str_pad($idx, 6, "0", STR_PAD_LEFT);
         $tip_tra = '10';
-        /*
-        foreach ($dataValuesPostulations as $item) {
+        foreach ($acquired as $item) {
             # code...
             $cod_val = $item['cod_val'];
-            $can_val = $item['can_val'];
-            $pre_uni = $item['pre_uni_val'];
-            $imp_val = $item['imp_val'];
-            //$imp_val = $can_val * $pre_uni;
-            if ($imp_val == 1) {
-                $marker = Treasure::addTransactionsByStudents($id_dia, $cod_val, $can_val, $pre_uni, $fec_tra, $usr_cre, '-1', $ci_per, $des_per, $tip_tra, $gestion);
-                $id_tran = $marker[0]->{'id_tran'};
-            }
-            $data = Treasure::addProcedureByStudents($id_dia, $id_tran, $nro_com, $cod_val, $ci_per, $des_per, $idx, $gestion, $imp_val);
-            $id_tran = 0;
+            $des_val = $item['des_val'];
+            $can_val = 1;
+            $pre_uni = $item['pre_uni'];
+            $data = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
         }
-        */
-        return $id;
+        return json_encode($id);
     }
 }

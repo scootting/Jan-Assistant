@@ -11,7 +11,7 @@ class Document extends Model
     //  * {gestion: gestion activa}
     public static function GetRequests($id, $year)
     {
-        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion = '" . $year . "'";
+        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion = '" . $year . "' order by fec_cre desc";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -41,7 +41,15 @@ class Document extends Model
         return $data;
     }
 
-
+    //  *  D3. Obtener la informacion por cada solicitud
+    //  * {id: id de la solicitud }
+    public static function getDataRequestById($id)
+    {
+        $query = "select * from linea.solicitudes a inner join linea.valores_solicitud b
+                  on a.id = b.id_sol where a.id = '" . $id . "'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 
 

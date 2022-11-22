@@ -55,6 +55,10 @@ Route::group([
     //  * {request: informacion del boucher }
     Route::post('storeBoucherOfRequest', 'DocumentController@storeBoucherOfRequest');
 
+    //  *  D3. Obtener la informacion por cada solicitud
+    //  * {id: id de la solicitud }
+    Route::post('getDataRequestById', 'DocumentController@getDataRequestById');
+
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');

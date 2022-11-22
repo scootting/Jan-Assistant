@@ -88,6 +88,7 @@ export default {
     //  *  T2. Guardar los valores para la venta en linea
     async setValuesAcquired() {
       var app = this;
+      console.log(app.acquired);
       try {
         let response = await axios.post("/api/setValuesAcquired/", {
           client: app.client,
