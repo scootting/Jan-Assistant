@@ -5596,64 +5596,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
       id: this.$route.params.id,
+      loading: true,
       dataRequest: [],
       boucherRequest: [],
-      onlyRequest: [],
+      onlyRequest: {},
       requestHeaders: {
         "X-CSRF-TOKEN": window.axios.defaults.headers.common["X-CSRF-TOKEN"],
         Authorization: "Bearer " + this.$store.state.token
@@ -5743,13 +5695,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     handleSuccessBoucher: function handleSuccessBoucher(response, file, fileList) {
-      this.$message({
-        message: "Gracias, acaba de subir el archivo " + file.name + ".",
-        type: "success"
+      this.$alert('Gracias, acaba de subir el comprobante de pago ' + file.name + ' satifactoriamente.', 'confirmacion', {
+        confirmButtonText: 'bueno'
       });
+      this.request = [];
+      this.document = [];
       this.getDataRequestById();
       console.log(response, file, fileList);
       this.fileList = fileList;
+    },
+    storeStatusOfRequest: function storeStatusOfRequest() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   }
 });
@@ -5773,6 +5739,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5855,25 +5826,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app.loading = false;
                 app.requests = Object.values(response.data.data);
                 app.pagination = response.data;
-                _context.next = 14;
+                console.log(response.data.data);
+                _context.next = 15;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](1);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 10]]);
+        }, _callee, null, [[1, 11]]);
       }))();
     },
+    //  *  Route. Iniciar el registro de comprobantesde pago para la venta en linea de valores
     initSaleBoucher: function initSaleBoucher(idx, row) {
       console.log(idx, row);
       var id = row.id;
@@ -5882,6 +5855,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         params: {
           id: id
         }
+      });
+    },
+    //  *  Route. Iniciar una nueva solicitud para la venta en linea de valores
+    initAddRequestInLine: function initAddRequestInLine() {
+      this.$router.push({
+        name: "salestudents"
       });
     },
     initEditRequest: function initEditRequest(idx, row) {}
@@ -5901,6 +5880,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! process */ "./node_modules/process/browser.js");
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5958,6 +5939,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -5965,7 +5952,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       client: this.$store.state.user,
       loading: true,
       offered: [],
-      acquired: []
+      acquired: [],
+      total: 0.00
     };
   },
   mounted: function mounted() {
@@ -5996,23 +5984,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 app.loading = false;
                 app.offered = response.data;
-                _context.next = 13;
+                console.log(response.data);
+                _context.next = 14;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](1);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 9]]);
+        }, _callee, null, [[1, 10]]);
       }))();
     },
     //  *  T2. Guardar los valores para la venta en linea
@@ -6020,7 +6009,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var app, response;
+        var app, response, id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -6028,46 +6017,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app = _this2;
                 console.log(app.acquired);
                 _context2.prev = 2;
-                _context2.next = 5;
+
+                if (!(app.acquired.length <= 0)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _this2.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
+                  confirmButtonText: 'BUENO'
+                });
+
+                _context2.next = 14;
+                break;
+
+              case 7:
+                _context2.next = 9;
                 return axios.post("/api/setValuesAcquired/", {
                   client: app.client,
+                  total: app.total,
                   acquired: app.acquired,
                   marker: "SALE"
                 });
 
-              case 5:
+              case 9:
                 response = _context2.sent;
-                console.log(response);
-                _context2.next = 13;
+
+                _this2.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
+                  confirmButtonText: 'BUENO'
+                });
+
+                console.log(response.data[0].ff_nueva_solicitud);
+                id = response.data[0].ff_nueva_solicitud;
+
+                _this2.$router.push({
+                  name: "boucherofrequest",
+                  params: {
+                    id: id
+                  }
+                });
+
+              case 14:
+                _context2.next = 20;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 16:
+                _context2.prev = 16;
                 _context2.t0 = _context2["catch"](2);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 13:
+              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 9]]);
+        }, _callee2, null, [[2, 16]]);
       }))();
     },
     // * FUNLOCAL. agregar valores que se van a comprar
     initAddValues: function initAddValues(index, row) {
-      console.log(this.offered);
-      console.log("la fila: " + row);
+      this.total += parseFloat(row.pre_uni);
       this.acquired.push(row);
-      console.log(this.acquired);
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues: function initRemoveValues(index, row) {
       this.acquired.splice(index, 1);
-      console.log(this.acquired);
+      this.total -= parseFloat(row.pre_uni);
     }
   }
 });
@@ -8061,7 +8078,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-c2719c3a] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-c2719c3a] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-c2719c3a] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-c2719c3a] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-c2719c3a] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-c2719c3a] {\r\n  border-radius: 4px;\r\n  padding: 15px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-c2719c3a] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-row[data-v-c2719c3a] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-c2719c3a] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-c2719c3a] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-c2719c3a] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-c2719c3a] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-c2719c3a] {\r\n  border-radius: 4px;\r\n  padding: 15px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-c2719c3a] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\n.el-input__inner[data-v-c2719c3a]{\r\n  color:#000 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -85248,12 +85265,16 @@ var render = function() {
                     "el-menu-item",
                     { attrs: { index: "3" } },
                     [
-                      _c("i", { staticClass: "el-icon-reading" }),
+                      _c("i", { staticClass: "el-icon-shopping-bag-1" }),
                       _vm._v(" "),
                       _c(
                         "router-link",
                         { attrs: { to: { name: "requests" }, tag: "span" } },
-                        [_vm._v("\n            solicitudes\n          ")]
+                        [
+                          _vm._v(
+                            "\n            venta de valores en linea\n          "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -85272,7 +85293,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n            venta de valores en linea\n          "
+                            "\n            venta de matriculas en linea\n          "
                           )
                         ]
                       )
@@ -87380,20 +87401,7 @@ var render = function() {
               attrs: { slot: "header" },
               slot: "header"
             },
-            [
-              _c("span", [_vm._v("[]")]),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  staticStyle: { float: "right", padding: "3px 0" },
-                  attrs: { type: "text" },
-                  on: { click: _vm.test }
-                },
-                [_vm._v("ayuda")]
-              )
-            ],
-            1
+            [_c("span", [_vm._v("registro del comprobante de pago")])]
           ),
           _vm._v(" "),
           _c(
@@ -87405,9 +87413,11 @@ var render = function() {
                 [
                   _c("el-alert", {
                     attrs: {
-                      title:
-                        "El cambio de la direccion, telefono, correo implica que sus nuevas solicitudes tendrán esta nueva informacion.",
-                      type: "success"
+                      title: "importante",
+                      type: "error",
+                      description:
+                        "las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
+                      "show-icon": ""
                     }
                   })
                 ],
@@ -87434,7 +87444,7 @@ var render = function() {
                       [
                         _c(
                           "el-form-item",
-                          { attrs: { label: "tag" } },
+                          { attrs: { label: "numero de solicitud" } },
                           [
                             _c("el-input", {
                               attrs: { disabled: "" },
@@ -87452,7 +87462,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "el-form-item",
-                          { attrs: { label: "fecha" } },
+                          { attrs: { label: "fecha en la que se realizo" } },
                           [
                             _c("el-input", {
                               attrs: { disabled: "" },
@@ -87470,7 +87480,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "el-form-item",
-                          { attrs: { label: "detalle" } },
+                          { attrs: { label: "descripcion" } },
                           [
                             _c("el-input", {
                               attrs: { disabled: "" },
@@ -87488,7 +87498,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "el-form-item",
-                          { attrs: { label: "importe" } },
+                          { attrs: { label: "importe a cancelar" } },
                           [
                             _c("el-input", {
                               attrs: { disabled: "" },
@@ -87552,11 +87562,11 @@ var render = function() {
                       },
                       [
                         _c("el-table-column", {
-                          attrs: { prop: "boucher", label: "id" }
+                          attrs: { prop: "fecha", label: "fecha" }
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
-                          attrs: { prop: "fecha", label: "fecha" }
+                          attrs: { prop: "boucher", label: "numero" }
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
@@ -87570,173 +87580,204 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [_vm._v("registrar deposito")]),
-                    _vm._v(" "),
-                    _c(
-                      "el-form",
-                      {
-                        ref: "form",
-                        attrs: {
-                          model: this.request,
-                          "label-width": "200px",
-                          size: "mini"
-                        }
-                      },
-                      [
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "numero de deposito " } },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.request.boucher,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.request, "boucher", $$v)
-                                },
-                                expression: "request.boucher"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              size: "small",
-                              label: "fecha del deposito",
-                              prop: "fecha"
-                            }
-                          },
-                          [
-                            _c("el-date-picker", {
-                              staticStyle: { width: "100%" },
+              _c(
+                "el-col",
+                { attrs: { span: 12 } },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "grid-content bg-purple" },
+                    [
+                      _c("p", [_vm._v("registrar deposito")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-form",
+                        {
+                          ref: "form",
+                          attrs: {
+                            model: this.request,
+                            "label-width": "200px",
+                            size: "mini"
+                          }
+                        },
+                        [
+                          _c(
+                            "el-form-item",
+                            { attrs: { label: "numero de deposito " } },
+                            [
+                              _c("el-input", {
+                                model: {
+                                  value: _vm.request.boucher,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.request, "boucher", $$v)
+                                  },
+                                  expression: "request.boucher"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            {
                               attrs: {
                                 size: "small",
-                                type: "date",
-                                format: "dd-MM-yyyy",
-                                "value-format": "yyyy-MM-dd"
-                              },
-                              model: {
-                                value: _vm.request.fecha,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.request, "fecha", $$v)
-                                },
-                                expression: "request.fecha"
+                                label: "fecha del deposito",
+                                prop: "fecha"
                               }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "monto" } },
-                          [
-                            _c("el-input-number", {
-                              attrs: {
-                                size: "medium",
-                                precision: 2,
-                                step: 0.5
-                              },
-                              model: {
-                                value: _vm.request.monto,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.request, "monto", $$v)
-                                },
-                                expression: "request.monto"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          [
-                            _c(
-                              "el-upload",
-                              {
-                                ref: "upload",
+                            },
+                            [
+                              _c("el-date-picker", {
+                                staticStyle: { width: "100%" },
                                 attrs: {
-                                  action: "/api/storeBoucherOfRequest",
-                                  "auto-upload": false,
-                                  "file-list": _vm.document,
-                                  multiple: false,
-                                  limit: 1,
-                                  data: _vm.request,
-                                  accept: ".pdf, .png, .jpeg",
-                                  headers: _vm.requestHeaders,
-                                  "on-success": _vm.handleSuccessBoucher,
-                                  "on-remove": _vm.test
+                                  size: "small",
+                                  type: "date",
+                                  format: "dd-MM-yyyy",
+                                  "value-format": "yyyy-MM-dd"
+                                },
+                                model: {
+                                  value: _vm.request.fecha,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.request, "fecha", $$v)
+                                  },
+                                  expression: "request.fecha"
                                 }
-                              },
-                              [
-                                _c("p"),
-                                _vm._v(" "),
-                                _c(
-                                  "el-button",
-                                  {
-                                    attrs: {
-                                      slot: "trigger",
-                                      size: "small",
-                                      type: "primary"
-                                    },
-                                    slot: "trigger"
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            { attrs: { label: "monto" } },
+                            [
+                              _c("el-input-number", {
+                                attrs: {
+                                  size: "medium",
+                                  precision: 2,
+                                  step: 0.5
+                                },
+                                model: {
+                                  value: _vm.request.monto,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.request, "monto", $$v)
                                   },
-                                  [_vm._v("Selecciona copia del deposito")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "el-upload__tip",
-                                    attrs: { slot: "tip" },
-                                    slot: "tip"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                  Solo archivos jpg/png/pdf con un tamaño menor de 500kb\n                "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { type: "success", size: "small" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.storeBoucherOfRequest()
+                                  expression: "request.monto"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-form-item",
+                            [
+                              _c(
+                                "el-upload",
+                                {
+                                  ref: "upload",
+                                  attrs: {
+                                    action: "/api/storeBoucherOfRequest",
+                                    "auto-upload": false,
+                                    "file-list": _vm.document,
+                                    multiple: false,
+                                    limit: 1,
+                                    data: _vm.request,
+                                    accept: ".pdf, .png, .jpeg",
+                                    headers: _vm.requestHeaders,
+                                    "on-success": _vm.handleSuccessBoucher,
+                                    "on-remove": _vm.test
                                   }
-                                }
-                              },
-                              [_vm._v("Agregar Deposito")]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ])
+                                },
+                                [
+                                  _c("p"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        slot: "trigger",
+                                        size: "small",
+                                        type: "primary"
+                                      },
+                                      slot: "trigger"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "subir respaldo de comprobante de pago\n                "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "el-upload__tip",
+                                      attrs: { slot: "tip" },
+                                      slot: "tip"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  Solo archivos jpg/png/pdf con un tamaño menor de 500kb\n                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-button",
+                                {
+                                  attrs: { type: "success", size: "small" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.storeBoucherOfRequest()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "guardar registro de comprobante\n                de pago\n              "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticStyle: { float: "right" },
+                      attrs: { type: "danger", size: "small" },
+                      on: {
+                        click: function($event) {
+                          return _vm.storeStatusOfRequest()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "terminar registro de\n          comprobante de pago\n        "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("el-row")
+          )
         ],
         1
       )
@@ -87769,119 +87810,195 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [_c("span", [_vm._v("solicitudes")])]
-        ),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c(
-          "div",
-          [
-            _c(
-              "el-table",
-              {
-                directives: [
-                  {
-                    name: "loading",
-                    rawName: "v-loading",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticStyle: { width: "100%" },
-                attrs: { data: _vm.requests }
-              },
-              [
-                _c("el-table-column", {
-                  attrs: { prop: "tipo", label: "tipo" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", { attrs: { prop: "idc", label: "id" } }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "ci_per", label: "ci" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "des_per", label: "descripcion", width: "280" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { align: "right", width: "220" },
-                  scopedSlots: _vm._u([
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "clearfix",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c("span", [
+                _vm._v("lista de solicitudes para la venta de valores en linea")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticStyle: { "text-align": "right", float: "right" },
+                  attrs: {
+                    size: "small",
+                    type: "default",
+                    icon: "el-icon-plus"
+                  },
+                  on: { click: _vm.initAddRequestInLine }
+                },
+                [
+                  _vm._v(
+                    "\n                nueva solicitud para la venta de valores en linea"
+                  )
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-alert", {
+            attrs: {
+              title: "estados de la solicitud",
+              type: "success",
+              description:
+                "solicitado: cuando se tiene los valores seleccionados, en proceso de verificacion: cuando se envio el comprobante de pago, parcialmente pagado: cuando se cancelo solo una parte del pago total,verificado: concluido con exito el proceso de la solicitud",
+              "show-icon": ""
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
                     {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _c(
-                            "el-button",
-                            {
-                              attrs: {
-                                type: "primary",
-                                size: "mini",
-                                plain: ""
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.initSaleBoucher(
-                                    scope.$index,
-                                    scope.row
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Depositar")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-button",
-                            {
-                              attrs: {
-                                type: "danger",
-                                plain: "",
-                                size: "mini"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.initEditRequest(
-                                    scope.$index,
-                                    scope.row
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("\n                            Editar")]
-                          )
-                        ]
-                      }
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
                     }
-                  ])
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("el-pagination", {
-              attrs: {
-                "page-size": _vm.pagination.per_page,
-                layout: "prev, pager, next",
-                "current-page": _vm.pagination.current_page,
-                total: _vm.pagination.total
-              },
-              on: { "current-change": _vm.getRequests }
-            })
-          ],
-          1
-        )
-      ])
+                  ],
+                  staticStyle: { width: "100%" },
+                  attrs: { data: _vm.requests }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "fecha", label: "fecha", width: "150" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "numero", width: "150" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "name-wrapper",
+                                attrs: { slot: "reference" },
+                                slot: "reference"
+                              },
+                              [
+                                _c("el-tag", { attrs: { size: "medium" } }, [
+                                  _vm._v(_vm._s(scope.row.idc))
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "importe",
+                      label: "importe",
+                      width: "150",
+                      align: "right"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "estado", label: "estado", width: "150" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { align: "right", width: "620" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: {
+                                  type: "primary",
+                                  size: "mini",
+                                  plain: ""
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.initSaleBoucher(
+                                      scope.$index,
+                                      scope.row
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "registrar deposito del comprobante de pago"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: {
+                                  type: "warning",
+                                  plain: "",
+                                  size: "mini"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.initEditRequest(
+                                      scope.$index,
+                                      scope.row
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            imprimir informacion para realizar el deposito"
+                                )
+                              ]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("el-pagination", {
+                attrs: {
+                  "page-size": _vm.pagination.per_page,
+                  layout: "prev, pager, next",
+                  "current-page": _vm.pagination.current_page,
+                  total: _vm.pagination.total
+                },
+                on: { "current-change": _vm.getRequests }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -87947,9 +88064,11 @@ var render = function() {
                 [
                   _c("el-alert", {
                     attrs: {
-                      title:
-                        "El cambio de la direccion, telefono, correo implica que sus nuevas solicitudes tendrán esta nueva informacion.",
-                      type: "success"
+                      title: "importante",
+                      type: "error",
+                      description:
+                        "las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
+                      "show-icon": ""
                     }
                   })
                 ],
@@ -87961,7 +88080,7 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
-                    _c("p", [_vm._v("valores ofertados")]),
+                    _c("p", [_vm._v("valores en linea que puede adquirir")]),
                     _vm._v(" "),
                     _c(
                       "el-table",
@@ -88039,7 +88158,9 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
-                    _c("p", [_vm._v("valores adquiridos")]),
+                    _c("p", [
+                      _vm._v("valores en linea solicitados para su compra")
+                    ]),
                     _vm._v(" "),
                     _c(
                       "el-table",
@@ -88105,23 +88226,47 @@ var render = function() {
                     )
                   ],
                   1
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticStyle: { "text-align": "right", float: "right" } },
+                  [
+                    _c(
+                      "el-tag",
+                      { attrs: { type: "success", effect: "dark" } },
+                      [
+                        _vm._v(
+                          "EL IMPORTE TOTAL QUE DEBE CANCELAR ES: " +
+                            _vm._s(_vm.total)
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary", size: "small" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setValuesAcquired()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "guardar la solicitud de valores en linea\n          "
+                        )
+                      ]
+                    )
+                  ],
+                  1
                 )
               ])
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            {
-              attrs: { type: "primary", size: "small" },
-              on: {
-                click: function($event) {
-                  return _vm.setValuesAcquired()
-                }
-              }
-            },
-            [_vm._v("guardar la solicitud")]
           ),
           _vm._v(" "),
           _c("el-row")
@@ -105898,8 +106043,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\dev\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\dev\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Repository\Jan-Assistant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Repository\Jan-Assistant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

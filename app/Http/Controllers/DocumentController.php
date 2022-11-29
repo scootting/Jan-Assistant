@@ -55,7 +55,7 @@ class DocumentController extends Controller
     }
 
 
-    public static function getDataRequestById(Request $request)
+    public function getDataRequestById(Request $request)
     {
         $id_sol = $request->get('id');
         $data = Document::GetDataRequestById($id_sol);

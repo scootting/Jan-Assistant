@@ -33,8 +33,8 @@ class Document extends Model
     //  * {marker: tipo de solicitud }
     //  * {nodip: carnet de identidad de la persona }
     //  * {descripcion: detalle de la persona }
-    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion){
-        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "')";
+    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total){
+        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "')";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;

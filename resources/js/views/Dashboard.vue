@@ -20,15 +20,15 @@
             </router-link>
           </el-menu-item>
           <el-menu-item index="3">
-            <i class="el-icon-reading"></i>
+            <i class="el-icon-shopping-bag-1"></i>
             <router-link :to="{ name: 'requests' }" tag="span">
-              solicitudes
+              venta de valores en linea
             </router-link>
           </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-star-off"></i>
             <router-link :to="{ name: 'salestudents' }" tag="span">
-              venta de valores en linea
+              venta de matriculas en linea
             </router-link>
           </el-menu-item>
           <el-menu-item index="5" disabled>

@@ -2,44 +2,30 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>[]</span>
-        <el-button
-          style="float: right; padding: 3px 0"
-          type="text"
-          @click="test"
-          >ayuda</el-button
-        >
+        <span>registro del comprobante de pago</span>
       </div>
       <el-row :gutter="20">
         <p>
-          <el-alert
-            title="El cambio de la direccion, telefono, correo implica que sus nuevas solicitudes tendrán esta nueva informacion."
-            type="success"
-          >
+          <el-alert title="importante" type="error"
+            description="las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
+            show-icon>
           </el-alert>
         </p>
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <p>datos de la solicitud</p>
-            <!--
-            -->
 
-            <el-form
-              ref="form"
-              :model="this.onlyRequest"
-              label-width="200px"
-              size="mini"
-            >
-              <el-form-item label="tag">
+            <el-form ref="form" :model="this.onlyRequest" label-width="200px" size="mini">
+              <el-form-item label="numero de solicitud">
                 <el-input v-model="onlyRequest.idc" disabled></el-input>
               </el-form-item>
-              <el-form-item label="fecha">
+              <el-form-item label="fecha en la que se realizo">
                 <el-input v-model="onlyRequest.fecha" disabled></el-input>
               </el-form-item>
-              <el-form-item label="detalle">
+              <el-form-item label="descripcion">
                 <el-input v-model="onlyRequest.des_per" disabled></el-input>
               </el-form-item>
-              <el-form-item label="importe">
+              <el-form-item label="importe a cancelar">
                 <el-input v-model="onlyRequest.importe" disabled></el-input>
               </el-form-item>
               <el-form-item label="estado">
@@ -50,13 +36,9 @@
           <p></p>
           <div class="grid-content bg-purple">
             <p>depositos registrados</p>
-            <el-table
-              v-loading="loading"
-              :data="boucherRequest"
-              style="width: 100%"
-            >
-              <el-table-column prop="boucher" label="id"></el-table-column>
+            <el-table v-loading="loading" :data="boucherRequest" style="width: 100%">
               <el-table-column prop="fecha" label="fecha"></el-table-column>
+              <el-table-column prop="boucher" label="numero"></el-table-column>
               <el-table-column prop="imp_bou" label="importe"></el-table-column>
             </el-table>
           </div>
@@ -64,73 +46,42 @@
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <p>registrar deposito</p>
-            <el-form
-              ref="form"
-              :model="this.request"
-              label-width="200px"
-              size="mini"
-            >
+            <el-form ref="form" :model="this.request" label-width="200px" size="mini">
               <el-form-item label="numero de deposito ">
                 <el-input v-model="request.boucher"></el-input>
               </el-form-item>
-              <el-form-item
-                size="small"
-                label="fecha del deposito"
-                prop="fecha"
-              >
-                <el-date-picker
-                  size="small"
-                  type="date"
-                  v-model="request.fecha"
-                  style="width: 100%"
-                  format="dd-MM-yyyy"
-                  value-format="yyyy-MM-dd"
-                >
+              <el-form-item size="small" label="fecha del deposito" prop="fecha">
+                <el-date-picker size="small" type="date" v-model="request.fecha" style="width: 100%" format="dd-MM-yyyy"
+                  value-format="yyyy-MM-dd">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="monto">
-                <el-input-number
-                  size="medium"
-                  v-model="request.monto"
-                  :precision="2"
-                  :step="0.5"
-                ></el-input-number>
+                <el-input-number size="medium" v-model="request.monto" :precision="2" :step="0.5"></el-input-number>
               </el-form-item>
               <el-form-item>
-                <el-upload
-                  ref="upload"
-                  action="/api/storeBoucherOfRequest"
-                  :auto-upload="false"
-                  :file-list="document"
-                  :multiple="false"
-                  :limit="1"
-                  :data="request"
-                  accept=".pdf, .png, .jpeg"
-                  :headers="requestHeaders"
-                  :on-success="handleSuccessBoucher"
-                  :on-remove="test"
-                >
+                <el-upload ref="upload" action="/api/storeBoucherOfRequest" :auto-upload="false" :file-list="document"
+                  :multiple="false" :limit="1" :data="request" accept=".pdf, .png, .jpeg" :headers="requestHeaders"
+                  :on-success="handleSuccessBoucher" :on-remove="test">
                   <!---->
                   <p></p>
-                  <el-button slot="trigger" size="small" type="primary"
-                    >Selecciona copia del deposito</el-button
-                  >
+                  <el-button slot="trigger" size="small" type="primary">subir respaldo de comprobante de pago
+                  </el-button>
                   <div slot="tip" class="el-upload__tip">
                     Solo archivos jpg/png/pdf con un tamaño menor de 500kb
                   </div>
                 </el-upload>
-                <el-button
-                  type="success"
-                  size="small"
-                  @click="storeBoucherOfRequest()"
-                  >Agregar Deposito</el-button
-                >
+                <el-button type="success" size="small" @click="storeBoucherOfRequest()">guardar registro de comprobante
+                  de pago
+                </el-button>
               </el-form-item>
             </el-form>
           </div>
+          <br>
+          <el-button type="danger" size="small" style="float: right;" @click="storeStatusOfRequest()">terminar registro de
+            comprobante de pago
+          </el-button>
         </el-col>
       </el-row>
-      <el-row> </el-row>
     </el-card>
   </div>
 </template>
@@ -142,9 +93,10 @@ export default {
     return {
       client: this.$store.state.user,
       id: this.$route.params.id,
+      loading: true,
       dataRequest: [],
       boucherRequest: [],
-      onlyRequest: [],
+      onlyRequest: {},
       requestHeaders: {
         "X-CSRF-TOKEN": window.axios.defaults.headers.common["X-CSRF-TOKEN"],
         Authorization: "Bearer " + this.$store.state.token,
@@ -195,14 +147,19 @@ export default {
       this.$refs.upload.submit();
     },
     handleSuccessBoucher(response, file, fileList) {
-      this.$message({
-        message: "Gracias, acaba de subir el archivo " + file.name + ".",
-        type: "success",
+      this.$alert('Gracias, acaba de subir el comprobante de pago ' + file.name + ' satifactoriamente.', 'confirmacion', {
+        confirmButtonText: 'bueno',
       });
+      this.request = [];
+      this.document = [];
       this.getDataRequestById();
       console.log(response, file, fileList);
       this.fileList = fileList;
     },
+
+    async storeStatusOfRequest(){
+
+    }
   },
 };
 </script>
@@ -238,5 +195,9 @@ export default {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+
+.el-input__inner{
+  color:#000 !important;
 }
 </style>

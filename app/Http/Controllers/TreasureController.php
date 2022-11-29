@@ -25,13 +25,14 @@ class TreasureController extends Controller
         $id_tran = 0;
         $client = $request->get('client');
         $acquired = $request->get('acquired');
+        $total = $request->get('total');
         $marker = $request->get('marker');
 
         $descripcion = $client['descripcion'];
         $no_dip = $client['nodip'];
         $gestion = $client['gestion'];
 
-        $id = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion);
+        $id = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total);
         $id_sol = $id[0]->{'ff_nueva_solicitud'};
 
         \Log::info("este es el id de la nueva solicitud". $id);

@@ -7,14 +7,14 @@
       </div>
       <el-row :gutter="20">
         <p>
-          <el-alert
-            title="El cambio de la direccion, telefono, correo implica que sus nuevas solicitudes tendrán esta nueva informacion."
-            type="success">
+          <el-alert title="importante" type="error"
+            description="las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
+            show-icon>
           </el-alert>
         </p>
         <el-col :span="12">
           <div class="grid-content bg-purple">
-            <p>valores ofertados</p>
+            <p>valores en linea que puede adquirir</p>
             <el-table v-loading="loading" :data="offered" style="width: 100%">
               <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
@@ -29,8 +29,8 @@
         </el-col>
         <el-col :span="12">
           <div class="grid-content bg-purple">
-            <p>valores adquiridos</p>
-            <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar"	>
+            <p>valores en linea solicitados para su compra</p>
+            <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar">
               <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
               <el-table-column align="right" width="100">
@@ -41,15 +41,22 @@
               </el-table-column>
             </el-table>
           </div>
+          <br>
+          <div style="text-align: right; float: right">
+            <el-tag type="success" effect="dark">EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</el-tag>
+            <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitud de valores en linea
+            </el-button>
+          </div>
         </el-col>
       </el-row>
-      <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitud</el-button>
       <el-row> </el-row>
     </el-card>
   </div>
 </template>
 
 <script>
+import { allowedNodeEnvironmentFlags } from 'process';
+
 export default {
   name: "",
   data() {
@@ -58,7 +65,7 @@ export default {
       loading: true,
       offered: [],
       acquired: [],
-
+      total: 0.00,
     };
   },
   mounted() {
@@ -77,6 +84,7 @@ export default {
         });
         app.loading = false;
         app.offered = response.data;
+        console.log(response.data);
       } catch (error) {
         this.error = error.response.data;
         app.$alert(this.error.message, "Gestor de errores", {
@@ -90,12 +98,29 @@ export default {
       var app = this;
       console.log(app.acquired);
       try {
-        let response = await axios.post("/api/setValuesAcquired/", {
-          client: app.client,
-          acquired: app.acquired,
-          marker: "SALE",
-        });
-        console.log(response);
+        if (app.acquired.length <= 0) {
+          this.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
+            confirmButtonText: 'BUENO',
+          });
+        } else {
+          let response = await axios.post("/api/setValuesAcquired/", {
+            client: app.client,
+            total: app.total,
+            acquired: app.acquired,
+            marker: "SALE",
+          });
+          this.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
+            confirmButtonText: 'BUENO',
+          });
+          console.log(response.data[0].ff_nueva_solicitud);
+          let id = response.data[0].ff_nueva_solicitud;
+          this.$router.push({
+            name: "boucherofrequest",
+            params: {
+              id: id,
+            },
+          });
+        }
       } catch (error) {
         this.error = error.response.data;
         app.$alert(this.error.message, "Gestor de errores", {
@@ -105,15 +130,13 @@ export default {
     },
     // * FUNLOCAL. agregar valores que se van a comprar
     initAddValues(index, row) {
-      console.log(this.offered);
-      console.log("la fila: " + row);
+      this.total += parseFloat(row.pre_uni);
       this.acquired.push(row);
-      console.log(this.acquired);
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues(index, row) {
       this.acquired.splice(index, 1);
-      console.log(this.acquired);
+      this.total -= parseFloat(row.pre_uni);
     },
 
   },
