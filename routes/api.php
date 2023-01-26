@@ -59,6 +59,17 @@ Route::group([
     //  * {id: id de la solicitud }
     Route::post('getDataRequestById', 'DocumentController@getDataRequestById');
 
+    //  |--------------------------------------------------------------------------
+    //  | Rutas API para el Sistema de Memoriales Universitarios
+    //  |--------------------------------------------------------------------------    
+    //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+    Route::post('getRequestsMemorial', 'DocumentController@getRequestsMemorial');
+    //  * M1. Lista las solicitudes de elaboracion de memorial universitario              
+    Route::post('storeRequestMemorial', 'DocumentController@storeRequestMemorial');
+    //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+    Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
+
+
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');

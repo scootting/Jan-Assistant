@@ -27,6 +27,18 @@ import SaleStudents from './views/treasure/SaleStudents'
 import Requests from './views/document/Requests'
 //Documento: Modulo para gestionar los depositos por solicitud
 import BoucherOfRequest from './views/document/BoucherOfRequest'
+//Documento: Modulo para crear una nueva solicitud 
+
+
+//  |--------------------------------------------------------------------------
+//  | Rutas API para el Sistema de Memoriales Universitarios
+//  |--------------------------------------------------------------------------    
+//  * M1. Añade una nueva solicitud para la elaboracion de memorial universitario              
+import AddRequestMemorial from './views/document/AddRequestMemorial'
+//  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+import RequestMemorial from './views/document/RequestMemorial'
+
+
 
 // Routes
 const router = new VueRouter({
@@ -62,8 +74,16 @@ const router = new VueRouter({
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
                 { path: '/requests', name: 'requests', component: Requests },
                 { path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
- 
+
                 { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
+                //  |--------------------------------------------------------------------------
+                //  | Rutas API para el Sistema de Memoriales Universitarios
+                //  |--------------------------------------------------------------------------    
+                //  * M1. Añade una nueva solicitud para la elaboracion de memorial universitario              
+                { path: '/AddRequestMemorial', name: 'addrequestMemorial', component: AddRequestMemorial },
+                //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+                { path: '/RequestMemorial', name: 'requestmemorial', component: RequestMemorial },
+
             ],
             meta: {
                 requiresAuth: true,

@@ -2,18 +2,20 @@
     <div>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span>lista de solicitudes para la venta de valores en linea</span>
-                <el-button size="small" type="default" icon="el-icon-plus" @click="initAddRequestInLine"
+                <span>lista de solicitudes de memoriales universitarios</span>
+                <el-button size="small" type="default" icon="el-icon-plus" @click="initAddRequestMemorial"
                     style="text-align: right; float: right">
-                    nueva solicitud para la venta de valores en linea</el-button>
+                    nueva solicitud para memorial universitario</el-button>
             </div>
-            <el-alert title="estados de la solicitud" type="success"
-                description="solicitado: cuando se tiene los valores seleccionados, en proceso de verificacion: cuando se envio el comprobante de pago, parcialmente pagado: cuando se cancelo solo una parte del pago total,verificado: concluido con exito el proceso de la solicitud"
-                show-icon>
-            </el-alert>
+            <p>
+                <el-alert title="importante" type="error"
+                    description="las solicitudes tienen validez de 30 dias calendario a partir de la fecha solicitada, durante ese periodo debe realizar la cancelacion del importe, a traves de caja universitaria y seguir con el procedimiento que se indica en la solicitud"
+                    show-icon>
+                </el-alert>
+            </p>
             <br />
             <div>
-                <el-table v-loading="loading" :data="requests" style="width: 100%">
+                <el-table v-loading="loading" :data="dataRequestsMemorial" style="width: 100%">
                     <el-table-column prop="fecha" label="fecha" width="150"></el-table-column>
                     <el-table-column label="numero" width="150">
                         <template slot-scope="scope">
@@ -26,11 +28,9 @@
                     <el-table-column prop="estado" label="estado" width="150"></el-table-column>
                     <el-table-column align="right" width="620">
                         <template slot-scope="scope">
-                            <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
-                                plain>registrar deposito del comprobante de pago</el-button>
-                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="warning" plain
+                            <el-button @click="initReportRequestMemorial(scope.$index, scope.row)" type="warning" plain
                                 size="mini">
-                                imprimir informacion para realizar el deposito</el-button>
+                                imprimir la solicitud</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -49,7 +49,7 @@ export default {
         return {
             loading: true,
             user: this.$store.state.user,
-            requests: [],
+            dataRequestsMemorial: [],
             pagination: {
                 page: 1,
             },
@@ -57,23 +57,25 @@ export default {
     },
     mounted() {
         let app = this;
-        this.getRequests(app.pagination.page);
-
+        this.getRequestsMemorial(app.pagination.page);
     },
     methods: {
         test() {
             alert("en proceso de desarrollo");
         },
-        async getRequests(page) {
+
+        //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+        async getRequestsMemorial(page) {
             let app = this;
+            console.log(app.user);
             try {
-                let response = await axios.post("/api/request", {
+                let response = await axios.post("/api/getRequestsMemorial", {
                     client: app.user,
                     year: app.user.gestion,
                     page: page,
                 });
                 app.loading = false;
-                app.requests = Object.values(response.data.data);
+                app.dataRequestsMemorial = Object.values(response.data.data);
                 app.pagination = response.data;
                 console.log(response.data.data);
             } catch (error) {
@@ -83,24 +85,35 @@ export default {
                 });
             }
         },
-        //  *  Route. Iniciar el registro de comprobantesde pago para la venta en linea de valores
-        initSaleBoucher(idx, row) {
-            console.log(idx, row);
-            let id = row.id;
-            this.$router.push({
-                name: "boucherofrequest",
+        //  * M1. Imprimir la solicitud de elaboracion de memorial universitario              
+        initReportRequestMemorial(idx, row) {
+            let app = this;
+            console.log(app.dataSaleDay);
+            axios({
+                url: "/api/reportRequestMemorial/",
                 params: {
-                    id: id,
+                    voucher: app.voucher,
+                    gestion: app.dataSaleDay.gestion,
                 },
+                method: "GET",
+                responseType: "arraybuffer",
+            }).then((response) => {
+                let blob = new Blob([response.data], {
+                    type: "application/pdf",
+                });
+                let link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                let url = window.URL.createObjectURL(blob);
+                window.open(url);
             });
+
         },
-        //  *  Route. Iniciar una nueva solicitud para la venta en linea de valores
-        initAddRequestInLine() {
+        //  *  Route. Iniciar una nueva solicitud para iniciar con el proceso de memorial universitario
+        initAddRequestMemorial() {
             this.$router.push({
-                name: "salestudents",
+                name: "addrequestmemorial",
             });
         },
-        initEditRequest(idx, row) { },
     },
 };
 </script>
