@@ -16,17 +16,23 @@
             <br />
             <div>
                 <el-table v-loading="loading" :data="dataRequestsMemorial" style="width: 100%">
-                    <el-table-column prop="fecha" label="fecha" width="150"></el-table-column>
-                    <el-table-column label="numero" width="150">
+                    <el-table-column prop="fec_tra" label="fecha" width="150" align="center"></el-table-column>
+                    <el-table-column label="numero de solicitud" width="150" align="center">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
                                 <el-tag size="medium">{{ scope.row.idc }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="importe" label="importe" width="150" align="right"></el-table-column>
-                    <el-table-column prop="estado" label="estado" width="150"></el-table-column>
-                    <el-table-column align="right" width="620">
+                    <el-table-column prop="obj_tipo" label="objeto" width="350" align="center"></el-table-column>
+                    <el-table-column label="estado" width="150">
+                        <template slot-scope="scope" align="center">
+                            <div slot="estado" class="name-wrapper">
+                                <el-tag size="medium">{{ scope.row.estado }}</el-tag>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column align="right" width="250">
                         <template slot-scope="scope">
                             <el-button @click="initReportRequestMemorial(scope.$index, scope.row)" type="warning" plain
                                 size="mini">
@@ -35,7 +41,7 @@
                     </el-table-column>
                 </el-table>
                 <el-pagination :page-size="pagination.per_page" layout="prev, pager, next"
-                    :current-page="pagination.current_page" :total="pagination.total" @current-change="getRequests">
+                    :current-page="pagination.current_page" :total="pagination.total" @current-change="getRequestsMemorial">
                 </el-pagination>
             </div>
         </el-card>
@@ -71,7 +77,6 @@ export default {
             try {
                 let response = await axios.post("/api/getRequestsMemorial", {
                     client: app.user,
-                    year: app.user.gestion,
                     page: page,
                 });
                 app.loading = false;
@@ -83,9 +88,10 @@ export default {
                 app.$alert(this.error.message, "Gestor de errores", {
                     dangerouslyUseHTMLString: true,
                 });
+                app.loading = false;
             }
         },
-        //  * M1. Imprimir la solicitud de elaboracion de memorial universitario              
+        //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
         initReportRequestMemorial(idx, row) {
             let app = this;
             console.log(app.dataSaleDay);

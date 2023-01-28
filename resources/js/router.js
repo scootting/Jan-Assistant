@@ -80,10 +80,9 @@ const router = new VueRouter({
                 //  | Rutas API para el Sistema de Memoriales Universitarios
                 //  |--------------------------------------------------------------------------    
                 //  * M1. Añade una nueva solicitud para la elaboracion de memorial universitario              
-                { path: '/AddRequestMemorial', name: 'addrequestMemorial', component: AddRequestMemorial },
+                { path: '/AddRequestMemorial', name: 'addrequestmemorial', component: AddRequestMemorial },
                 //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
                 { path: '/RequestMemorial', name: 'requestmemorial', component: RequestMemorial },
-
             ],
             meta: {
                 requiresAuth: true,

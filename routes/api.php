@@ -68,6 +68,12 @@ Route::group([
     Route::post('storeRequestMemorial', 'DocumentController@storeRequestMemorial');
     //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
     Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
+    //  * M4. Obtener la lista de memoriales habilitados para su seleccion               
+    Route::post('getTypesOfMemorials', 'DocumentController@getTypesOfMemorials');
+
+
+
+
 
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');

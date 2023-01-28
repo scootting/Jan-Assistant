@@ -25,15 +25,17 @@
               venta de valores en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="4" disabled>
             <i class="el-icon-star-off"></i>
             <router-link :to="{ name: 'salestudents' }" tag="span">
               venta de matriculas en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="5" disabled>
+          <el-menu-item index="5">
             <i class="el-icon-setting"></i>
-            <span>solvencia universitaria</span>
+            <router-link :to="{ name: 'requestmemorial' }" tag="span">
+              memorial universitario
+            </router-link>
           </el-menu-item>
           <el-menu-item index="6" disabled>
             <i class="el-icon-menu"></i>

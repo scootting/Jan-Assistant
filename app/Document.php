@@ -60,7 +60,23 @@ class Document extends Model
 
     }
 
+    //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+    //  * {id: carnet de identidad de la persona}
+    public static function GetRequestsMemorial($id)
+    {
+        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' order by fec_cre desc";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
+    //  * M4. Obtener la lista de memoriales habilitados para su seleccion               
+    //  * {gestion: gestion que se esta utilizando}
+    public static function GetTypesOfMemorials($gestion)
+    {
+        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEMO' order by s.objeto desc";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 
 
