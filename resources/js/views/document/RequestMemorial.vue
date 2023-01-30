@@ -16,17 +16,26 @@
             <br />
             <div>
                 <el-table v-loading="loading" :data="dataRequestsMemorial" style="width: 100%">
-                    <el-table-column prop="fec_tra" label="fecha" width="150" align="center"></el-table-column>
-                    <el-table-column label="numero de solicitud" width="150" align="center">
+                    <el-table-column label="Fecha" width="120">
+                        <template slot-scope="scope">
+                            <i class="el-icon-time"></i>
+                            <span style="margin-left: 10px">{{ scope.row.fec_tra }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="numero de solicitud" width="150">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
                                 <el-tag size="medium">{{ scope.row.idc }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="obj_tipo" label="objeto" width="350" align="center"></el-table-column>
+                    <el-table-column label="solicitud" width="350">
+                        <template slot-scope="scope">
+                            <span>solicitud de memorial para {{ scope.row.des_tipo }}</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column label="estado" width="150">
-                        <template slot-scope="scope" align="center">
+                        <template slot-scope="scope">
                             <div slot="estado" class="name-wrapper">
                                 <el-tag size="medium">{{ scope.row.estado }}</el-tag>
                             </div>
@@ -41,7 +50,8 @@
                     </el-table-column>
                 </el-table>
                 <el-pagination :page-size="pagination.per_page" layout="prev, pager, next"
-                    :current-page="pagination.current_page" :total="pagination.total" @current-change="getRequestsMemorial">
+                    :current-page="pagination.current_page" :total="pagination.total"
+                    @current-change="getRequestsMemorial">
                 </el-pagination>
             </div>
         </el-card>

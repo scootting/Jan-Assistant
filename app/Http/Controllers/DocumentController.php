@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Document;
-use Illuminate\Http\Request;
 use App\Libraries\JSRClient;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class DocumentController extends Controller
@@ -55,7 +55,6 @@ class DocumentController extends Controller
         return response()->json(['success' => 'Uploaded Successfully.']);
     }
 
-
     public function getDataRequestById(Request $request)
     {
         $id_sol = $request->get('id');
@@ -64,8 +63,7 @@ class DocumentController extends Controller
         return json_encode(['data' => $data, 'boucher' => $boucher]);
     }
 
-
-    //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+    //  * M2. Lista las solicitudes de elaboracion de memorial universitario
     public function getRequestsMemorial(Request $request)
     {
         $persona = $request->get('client');
@@ -82,35 +80,34 @@ class DocumentController extends Controller
         );
         return json_encode($paginate);
     }
-    //  * M1. Lista las solicitudes de elaboracion de memorial universitario              
+
+    //  * M1. guarda las solicitudes de memoriales solicitadas
     public function storeRequestMemorial(Request $request)
     {
-        \Log::info($request);
-        $solicitud = $request->get('tag');
-        $boucher = $request->get('boucher');
-        $fecha = $request->get('fecha');
-        $monto = $request->get('monto');
-        $ruta = "";
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $file_name = $file->getClientOriginalName();
-            $path = "treasure/" . strval($fecha) . '.' . strval($boucher);
-            $ruta = $path . "/" . $file_name;
-            $file->storeAs($path, $file_name);
-            $file->store('treasure');
-        } else {
-            return response()->json(['error' => 'File not exist!']);
+        $client = $request->get('client');
+        $ci_per = strtoupper($client['nodip']);
+        $des_per = strtoupper($client['descripcion']);
+        $gestion = $client['gestion'];
+
+        $adquirido = $request->get('acquired');
+        \log::info($adquirido);
+        foreach ($adquirido as $item) {
+            # code...
+            $id = $item['id'];
+            $abrv = $item['abrv'];
+            $tipo = $item['tipo'];
+            $data = Document::StoreRequestMemorial($id, $abrv, $tipo, $ci_per, $des_per, $gestion);
         }
-        $data = Document::StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta);
-        return response()->json(['success' => 'Uploaded Successfully.']);
+        return json_encode($id);
+        //return response()->json(['success' => 'Uploaded Successfully.']);
     }
 
-    //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+    //  * M3. Imprimir la solicitud de elaboracion de memorial universitario
     public function reportRequestMemorial(Request $request)
     {
         $nro_com = $request->get('voucher');
         $tip_tra = $request->get('tipo');
-        $gestion = $request->get('gestion');//$dataDays['gestion'];
+        $gestion = $request->get('gestion'); //$dataDays['gestion'];
         \Log::info("DATOS PARA LA IMPRESION DE BOUCHER");
         \Log::info($gestion);
         \Log::info($tip_tra);
@@ -126,8 +123,9 @@ class DocumentController extends Controller
         return $report;
     }
 
-    //  * M4. Obtener la lista de memoriales habilitados para su seleccion               
-    public function getTypesOfMemorials(Request $request){
+    //  * M4. Obtener la lista de memoriales habilitados para su seleccion
+    public function getTypesOfMemorials(Request $request)
+    {
         $gestion = $request->get('year');
         $data = Document::GetTypesOfMemorials($gestion);
         return json_encode($data);

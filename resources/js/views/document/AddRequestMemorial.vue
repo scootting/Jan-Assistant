@@ -13,10 +13,14 @@
                     </el-alert>
                 </p>
                 <el-col :span="12">
-                    <div class="grid-content bg-purple">
+                    <div class="grid-content bg-purple">tipo
                         <p>solicitudes de memoriales que se pueden adquirir</p>
                         <el-table v-loading="loading" :data="dataMemorials" style="width: 100%">
-                            <el-table-column prop="objeto" label="descripcion"></el-table-column>
+                            <el-table-column label="solicitud" width="350">
+                                <template slot-scope="scope">
+                                    <span>solicitud de memorial para {{ scope.row.tipo }}</span>
+                                </template>
+                            </el-table-column>
                             <el-table-column align="right">
                                 <template slot-scope="scope">
                                     <el-button @click="initAddValues(scope.$index, scope.row)" type="primary"
@@ -31,7 +35,11 @@
                     <div class="grid-content bg-purple">
                         <p>memoriales solicitados</p>
                         <el-table :data="acquired" style="width: 100%">
-                            <el-table-column prop="objeto" label="descripcion"></el-table-column>
+                            <el-table-column label="solicitud" width="350">
+                                <template slot-scope="scope">
+                                    <span>solicitud de memorial para {{ scope.row.tipo }}</span>
+                                </template>
+                            </el-table-column>
                             <el-table-column align="right">
                                 <template slot-scope="scope">
                                     <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary"
@@ -45,12 +53,31 @@
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="24">
-                    <div class="grid-content bg-purple">
-                        <p>informacion adicional que debe brindar para realizar su memorial rapidamente</p>
-                    </div>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <p>informacion adicional que debe brindar para realizar su memorial</p>
+                            <el-form ref="form" :model="this.adicional" label-width="200px" size="mini">
+                                <div v-show=adicional.carrera.visible>
+                                    <el-form-item label="nombre de la carrera">
+                                        <el-input v-model="adicional.requisito1"></el-input>
+                                    </el-form-item>
+                                </div>
+                                <div v-show=adicional.egreso.visible>
+                                    <el-form-item label="gestion de egreso">
+                                        <el-input v-model="adicional.requisito2"></el-input>
+                                    </el-form-item>
+                                </div>
+                                <div v-show=adicional.profesion.visible>
+                                    <el-form-item label="profesion actual">
+                                        <el-input v-model="adicional.requisito3"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </el-form>
+                        </div>
+                    </el-col>
                     <br>
                     <div style="text-align: right; float: right">
-                        <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitudes
+                        <el-button type="primary" size="small" @click="setMemorialsAcquired()">guardar la solicitudes
                             seleccionadas
                         </el-button>
                     </div>
@@ -61,7 +88,6 @@
 </template>
   
 <script>
-import { allowedNodeEnvironmentFlags } from 'process';
 
 export default {
     name: "",
@@ -71,11 +97,18 @@ export default {
             loading: true,
             dataMemorials: [],
             acquired: [],
-            checkboxGroup1: [],
+            adicional: {
+                carrera: { descripcion: '', visible: '' },
+                egreso: { descripcion: '', visible: '' },
+                profesion: { descripcion: '', visible: '' },
+            },
         };
     },
     mounted() {
         this.getTypesOfMemorials();
+        this.adicional.carrera.visible = false;
+        this.adicional.egreso.visible = false;
+        this.adicional.profesion.visible = false;
     },
     methods: {
         test() {
@@ -90,7 +123,6 @@ export default {
                 });
                 app.loading = false;
                 app.dataMemorials = response.data;
-                console.log(app.dataMemorials);
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {
@@ -99,31 +131,28 @@ export default {
             }
         },
 
-        //  *  T2. Guardar los valores para la venta en linea
-        async setValuesAcquired() {
+        //  *  T2. Guardar los memoriales adquiridos
+        async setMemorialsAcquired() {
             var app = this;
             console.log(app.acquired);
             try {
                 if (app.acquired.length <= 0) {
-                    this.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
+                    this.$alert('debe seleccionar por lo menos una solicitud', 'HA OCURRIDO UN ERROR', {
                         confirmButtonText: 'BUENO',
                     });
                 } else {
-                    let response = await axios.post("/api/setValuesAcquired/", {
+                    let response = await axios.post("/api/storeRequestMemorial/", {
                         client: app.client,
                         acquired: app.acquired,
-                        marker: "SALE",
+                        marker: "MEMO",
                     });
-                    this.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
+                    this.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, PUEDE REALIZAR LA IMPRESION DE SU SOLICITUD', 'LO HA CONSEGUIDO', {
                         confirmButtonText: 'BUENO',
                     });
-                    console.log(response.data[0].ff_nueva_solicitud);
-                    let id = response.data[0].ff_nueva_solicitud;
+                    console.log(response);
+                    //let id = response.data[0].ff_nueva_solicitud;
                     this.$router.push({
-                        name: "boucherofrequest",
-                        params: {
-                            id: id,
-                        },
+                        name: "requestmemorial",
                     });
                 }
             } catch (error) {
@@ -135,12 +164,58 @@ export default {
         },
         // * FUNLOCAL. agregar valores que se van a comprar
         initAddValues(index, row) {
+            this.initVisibleRequeriments(row);
             this.acquired.push(row);
+            console.log(this.client);
+            console.log(this.acquired);
         },
         // * FUNLOCAL. Quitar valores que se iban a comprar
         initRemoveValues(index, row) {
             this.acquired.splice(index, 1);
+            this.initRemoveRequeriments(row);
+
         },
+        initVisibleRequeriments(row) {
+            let app = this;
+            switch (row.idx) {
+                case 1:
+                case 2:
+                case 3:
+                    app.adicional.carrera.visible = true;
+                    break;
+                case 4:
+                    app.adicional.carrera.visible = true;
+                    app.adicional.egreso.visible = true;
+                    break;
+                case 5:
+                    app.adicional.profesion.visible = true;
+                    break;
+                default:
+                    break;
+            }
+        },
+        initRemoveRequeriments(row) {
+            let app = this;
+            switch (row.idx) {
+                case 1:
+                case 2:
+                case 3:
+                    app.adicional.carrera.visible = false;
+                    break;
+                case 4:
+                    app.adicional.carrera.visible = false;
+                    app.adicional.egreso.visible = false;
+                    break;
+                case 5:
+                    app.adicional.profesion.visible = false;
+                    break;
+                default:
+                    break;
+            }
+            this.acquired.forEach(element => {
+                app.initVisibleRequeriments(element)
+            });
+        }
 
     },
 };

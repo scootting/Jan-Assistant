@@ -5504,8 +5504,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! process */ "./node_modules/process/browser.js");
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5574,7 +5572,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -5583,11 +5607,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: true,
       dataMemorials: [],
       acquired: [],
-      checkboxGroup1: []
+      adicional: {
+        carrera: {
+          descripcion: '',
+          visible: ''
+        },
+        egreso: {
+          descripcion: '',
+          visible: ''
+        },
+        profesion: {
+          descripcion: '',
+          visible: ''
+        }
+      }
     };
   },
   mounted: function mounted() {
     this.getTypesOfMemorials();
+    this.adicional.carrera.visible = false;
+    this.adicional.egreso.visible = false;
+    this.adicional.profesion.visible = false;
   },
   methods: {
     test: function test() {
@@ -5614,32 +5654,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 app.loading = false;
                 app.dataMemorials = response.data;
-                console.log(app.dataMemorials);
-                _context.next = 14;
+                _context.next = 13;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](1);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 14:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 10]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
-    //  *  T2. Guardar los valores para la venta en linea
-    setValuesAcquired: function setValuesAcquired() {
+    //  *  T2. Guardar los memoriales adquiridos
+    setMemorialsAcquired: function setMemorialsAcquired() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var app, response, id;
+        var app, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -5653,65 +5692,115 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this2.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
+                _this2.$alert('debe seleccionar por lo menos una solicitud', 'HA OCURRIDO UN ERROR', {
                   confirmButtonText: 'BUENO'
                 });
 
-                _context2.next = 14;
+                _context2.next = 13;
                 break;
 
               case 7:
                 _context2.next = 9;
-                return axios.post("/api/setValuesAcquired/", {
+                return axios.post("/api/storeRequestMemorial/", {
                   client: app.client,
                   acquired: app.acquired,
-                  marker: "SALE"
+                  marker: "MEMO"
                 });
 
               case 9:
                 response = _context2.sent;
 
-                _this2.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
+                _this2.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, PUEDE REALIZAR LA IMPRESION DE SU SOLICITUD', 'LO HA CONSEGUIDO', {
                   confirmButtonText: 'BUENO'
                 });
 
-                console.log(response.data[0].ff_nueva_solicitud);
-                id = response.data[0].ff_nueva_solicitud;
+                console.log(response); //let id = response.data[0].ff_nueva_solicitud;
 
                 _this2.$router.push({
-                  name: "boucherofrequest",
-                  params: {
-                    id: id
-                  }
+                  name: "requestmemorial"
                 });
 
-              case 14:
-                _context2.next = 20;
+              case 13:
+                _context2.next = 19;
                 break;
 
-              case 16:
-                _context2.prev = 16;
+              case 15:
+                _context2.prev = 15;
                 _context2.t0 = _context2["catch"](2);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 20:
+              case 19:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 16]]);
+        }, _callee2, null, [[2, 15]]);
       }))();
     },
     // * FUNLOCAL. agregar valores que se van a comprar
     initAddValues: function initAddValues(index, row) {
+      this.initVisibleRequeriments(row);
       this.acquired.push(row);
+      console.log(this.client);
+      console.log(this.acquired);
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues: function initRemoveValues(index, row) {
       this.acquired.splice(index, 1);
+      this.initRemoveRequeriments(row);
+    },
+    initVisibleRequeriments: function initVisibleRequeriments(row) {
+      var app = this;
+
+      switch (row.idx) {
+        case 1:
+        case 2:
+        case 3:
+          app.adicional.carrera.visible = true;
+          break;
+
+        case 4:
+          app.adicional.carrera.visible = true;
+          app.adicional.egreso.visible = true;
+          break;
+
+        case 5:
+          app.adicional.profesion.visible = true;
+          break;
+
+        default:
+          break;
+      }
+    },
+    initRemoveRequeriments: function initRemoveRequeriments(row) {
+      var app = this;
+
+      switch (row.idx) {
+        case 1:
+        case 2:
+        case 3:
+          app.adicional.carrera.visible = false;
+          break;
+
+        case 4:
+          app.adicional.carrera.visible = false;
+          app.adicional.egreso.visible = false;
+          break;
+
+        case 5:
+          app.adicional.profesion.visible = false;
+          break;
+
+        default:
+          break;
+      }
+
+      this.acquired.forEach(function (element) {
+        app.initVisibleRequeriments(element);
+      });
     }
   }
 });
@@ -5966,6 +6055,16 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -87950,6 +88049,7 @@ var render = function() {
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
+                    _vm._v("tipo\n                    "),
                     _c("p", [
                       _vm._v("solicitudes de memoriales que se pueden adquirir")
                     ]),
@@ -87970,7 +88070,22 @@ var render = function() {
                       },
                       [
                         _c("el-table-column", {
-                          attrs: { prop: "objeto", label: "descripcion" }
+                          attrs: { label: "solicitud", width: "350" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c("span", [
+                                    _vm._v(
+                                      "solicitud de memorial para " +
+                                        _vm._s(scope.row.tipo)
+                                    )
+                                  ])
+                                ]
+                              }
+                            }
+                          ])
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
@@ -88031,7 +88146,22 @@ var render = function() {
                       },
                       [
                         _c("el-table-column", {
-                          attrs: { prop: "objeto", label: "descripcion" }
+                          attrs: { label: "solicitud", width: "350" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c("span", [
+                                    _vm._v(
+                                      "solicitud de memorial para " +
+                                        _vm._s(scope.row.tipo)
+                                    )
+                                  ])
+                                ]
+                              }
+                            }
+                          ])
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
@@ -88084,41 +88214,177 @@ var render = function() {
             "el-row",
             { attrs: { gutter: 20 } },
             [
-              _c("el-col", { attrs: { span: 24 } }, [
-                _c("div", { staticClass: "grid-content bg-purple" }, [
-                  _c("p", [
-                    _vm._v(
-                      "informacion adicional que debe brindar para realizar su memorial rapidamente"
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticStyle: { "text-align": "right", float: "right" } },
-                  [
+              _c(
+                "el-col",
+                { attrs: { span: 24 } },
+                [
+                  _c("el-col", { attrs: { span: 12 } }, [
                     _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setValuesAcquired()
-                          }
-                        }
-                      },
+                      "div",
+                      { staticClass: "grid-content bg-purple" },
                       [
-                        _vm._v(
-                          "guardar la solicitudes\n                        seleccionadas\n                    "
+                        _c("p", [
+                          _vm._v(
+                            "informacion adicional que debe brindar para realizar su memorial"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "el-form",
+                          {
+                            ref: "form",
+                            attrs: {
+                              model: this.adicional,
+                              "label-width": "200px",
+                              size: "mini"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.adicional.carrera.visible,
+                                    expression: "adicional.carrera.visible"
+                                  }
+                                ]
+                              },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  { attrs: { label: "nombre de la carrera" } },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.adicional.requisito1,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.adicional,
+                                            "requisito1",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "adicional.requisito1"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.adicional.egreso.visible,
+                                    expression: "adicional.egreso.visible"
+                                  }
+                                ]
+                              },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  { attrs: { label: "gestion de egreso" } },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.adicional.requisito2,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.adicional,
+                                            "requisito2",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "adicional.requisito2"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.adicional.profesion.visible,
+                                    expression: "adicional.profesion.visible"
+                                  }
+                                ]
+                              },
+                              [
+                                _c(
+                                  "el-form-item",
+                                  { attrs: { label: "profesion actual" } },
+                                  [
+                                    _c("el-input", {
+                                      model: {
+                                        value: _vm.adicional.requisito3,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.adicional,
+                                            "requisito3",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "adicional.requisito3"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ]
                         )
-                      ]
+                      ],
+                      1
                     )
-                  ],
-                  1
-                )
-              ])
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticStyle: { "text-align": "right", float: "right" } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary", size: "small" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setMemorialsAcquired()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "guardar la solicitudes\n                        seleccionadas\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -88641,20 +88907,27 @@ var render = function() {
               },
               [
                 _c("el-table-column", {
-                  attrs: {
-                    prop: "fec_tra",
-                    label: "fecha",
-                    width: "150",
-                    align: "center"
-                  }
+                  attrs: { label: "Fecha", width: "120" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c("i", { staticClass: "el-icon-time" }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { staticStyle: { "margin-left": "10px" } },
+                            [_vm._v(_vm._s(scope.row.fec_tra))]
+                          )
+                        ]
+                      }
+                    }
+                  ])
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: {
-                    label: "numero de solicitud",
-                    width: "150",
-                    align: "center"
-                  },
+                  attrs: { label: "numero de solicitud", width: "150" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -88681,12 +88954,22 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: {
-                    prop: "obj_tipo",
-                    label: "objeto",
-                    width: "350",
-                    align: "center"
-                  }
+                  attrs: { label: "solicitud", width: "350" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c("span", [
+                            _vm._v(
+                              "solicitud de memorial para " +
+                                _vm._s(scope.row.des_tipo)
+                            )
+                          ])
+                        ]
+                      }
+                    }
+                  ])
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {

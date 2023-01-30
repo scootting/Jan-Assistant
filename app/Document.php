@@ -64,7 +64,7 @@ class Document extends Model
     //  * {id: carnet de identidad de la persona}
     public static function GetRequestsMemorial($id)
     {
-        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' order by fec_cre desc";
+        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' order by idx desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -73,14 +73,20 @@ class Document extends Model
     //  * {gestion: gestion que se esta utilizando}
     public static function GetTypesOfMemorials($gestion)
     {
-        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEMO' order by s.objeto desc";
+        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEMO' order by s.idx asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
 
-
-
+    //  * M1. guarda las solicitudes de memoriales solicitadas
+    public static function StoreRequestMemorial($id, $abrv, $tipo, $ci_per, $des_per, $gestion)
+    {
+        $query = "select * from bdoc.ff_nueva_solicitud(" . $id . ",'" . $abrv . "','" . $tipo . "','" . $ci_per . "','" . $des_per . "','" . $gestion . "')";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 
 

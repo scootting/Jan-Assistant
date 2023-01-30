@@ -64,7 +64,7 @@ Route::group([
     //  |--------------------------------------------------------------------------    
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
     Route::post('getRequestsMemorial', 'DocumentController@getRequestsMemorial');
-    //  * M1. Lista las solicitudes de elaboracion de memorial universitario              
+    //  * M1. guarda las solicitudes realizadas             
     Route::post('storeRequestMemorial', 'DocumentController@storeRequestMemorial');
     //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
     Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
