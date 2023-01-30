@@ -20,11 +20,11 @@
                     type="text"
                     icon="el-icon-message"
                     circle
-                    @click.native="initAddTaxExemption"
+                    @click.native="initLogin"
                   ></el-button>
-                  <h4>facilito</h4>
+                  <h4>valores en linea</h4>
                   <p>
-                    modulo de pruebas
+                    modulo para la venta de valores en linea
                   </p>
                 </el-card>
               </el-col>
@@ -34,11 +34,11 @@
                     type="text"
                     icon="el-icon-edit"
                     circle
-                    @click.native="initToFormalities"
+                    @click.native="initLogin"
                   ></el-button>
                   <h4>tramites</h4>
                   <p>
-                    modulo de pruebas
+                    modulo para la solicitud de tramite
                   </p>
                 </el-card>
               </el-col>
@@ -48,20 +48,20 @@
                     type="text"
                     icon="el-icon-document"
                     circle
-                    @click.native="initToDocuments"
+                    @click.native="initLogin"
                   ></el-button>
-                  <h4>certificados</h4>
+                  <h4>solicitud de memorial</h4>
                   <p>
-                    modulo de pruebas
+                    modulo para la solicitud de memorial
                   </p>
                 </el-card>
               </el-col>
               <el-col :span="4">
                 <el-card>
-                  <el-button type="text" icon="el-icon-thumb" circle @click.native="LoginToClients"></el-button>
-                  <h4>clientes</h4>
+                  <el-button type="text" icon="el-icon-s-order" circle @click.native="initLogin"></el-button>
+                  <h4>solvencias</h4>
                   <p>
-                    modulo de pruebas
+                    modulo para la solicitud de solvencia
                   </p>
                 </el-card>
               </el-col>

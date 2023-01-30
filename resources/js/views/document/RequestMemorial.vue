@@ -108,8 +108,8 @@ export default {
             axios({
                 url: "/api/reportRequestMemorial/",
                 params: {
-                    voucher: app.voucher,
-                    gestion: app.dataSaleDay.gestion,
+                    id: row.id,
+                    gestion: app.user.gestion,
                 },
                 method: "GET",
                 responseType: "arraybuffer",

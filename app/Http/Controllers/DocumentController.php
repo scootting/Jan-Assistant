@@ -105,18 +105,15 @@ class DocumentController extends Controller
     //  * M3. Imprimir la solicitud de elaboracion de memorial universitario
     public function reportRequestMemorial(Request $request)
     {
-        $nro_com = $request->get('voucher');
-        $tip_tra = $request->get('tipo');
+        $id = $request->get('id');
         $gestion = $request->get('gestion'); //$dataDays['gestion'];
         \Log::info("DATOS PARA LA IMPRESION DE BOUCHER");
         \Log::info($gestion);
-        \Log::info($tip_tra);
-        \Log::info($nro_com);
+        \Log::info($id);
 
-        $nreport = 'DetailCreditSaleLetter';
+        $nreport = 'CustomerRequestMemo';
         $controls = array(
-            'p_nro_com' => trim($nro_com),
-            'p_tip_tra' => $tip_tra,
+            'p_id' => $id,
             'p_gestion' => $gestion,
         );
         $report = JSRClient::GetReportWithParameters($nreport, $controls);

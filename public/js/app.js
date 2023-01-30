@@ -6187,8 +6187,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios({
         url: "/api/reportRequestMemorial/",
         params: {
-          voucher: app.voucher,
-          gestion: app.dataSaleDay.gestion
+          id: row.id,
+          gestion: app.user.gestion
         },
         method: "GET",
         responseType: "arraybuffer"
@@ -86168,16 +86168,16 @@ var render = function() {
                                     },
                                     nativeOn: {
                                       click: function($event) {
-                                        return _vm.initAddTaxExemption($event)
+                                        return _vm.initLogin($event)
                                       }
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("h4", [_vm._v("facilito")]),
+                                  _c("h4", [_vm._v("valores en linea")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                  modulo de pruebas\n                "
+                                      "\n                  modulo para la venta de valores en linea\n                "
                                     )
                                   ])
                                 ],
@@ -86202,7 +86202,7 @@ var render = function() {
                                     },
                                     nativeOn: {
                                       click: function($event) {
-                                        return _vm.initToFormalities($event)
+                                        return _vm.initLogin($event)
                                       }
                                     }
                                   }),
@@ -86211,7 +86211,7 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                  modulo de pruebas\n                "
+                                      "\n                  modulo para la solicitud de tramite\n                "
                                     )
                                   ])
                                 ],
@@ -86236,16 +86236,16 @@ var render = function() {
                                     },
                                     nativeOn: {
                                       click: function($event) {
-                                        return _vm.initToDocuments($event)
+                                        return _vm.initLogin($event)
                                       }
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("h4", [_vm._v("certificados")]),
+                                  _c("h4", [_vm._v("solicitud de memorial")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                  modulo de pruebas\n                "
+                                      "\n                  modulo para la solicitud de memorial\n                "
                                     )
                                   ])
                                 ],
@@ -86265,21 +86265,21 @@ var render = function() {
                                   _c("el-button", {
                                     attrs: {
                                       type: "text",
-                                      icon: "el-icon-thumb",
+                                      icon: "el-icon-s-order",
                                       circle: ""
                                     },
                                     nativeOn: {
                                       click: function($event) {
-                                        return _vm.LoginToClients($event)
+                                        return _vm.initLogin($event)
                                       }
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("h4", [_vm._v("clientes")]),
+                                  _c("h4", [_vm._v("solvencias")]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
-                                      "\n                  modulo de pruebas\n                "
+                                      "\n                  modulo para la solicitud de solvencia\n                "
                                     )
                                   ])
                                 ],
