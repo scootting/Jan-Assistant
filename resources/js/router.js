@@ -38,6 +38,13 @@ import AddRequestMemorial from './views/document/AddRequestMemorial'
 //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
 import RequestMemorial from './views/document/RequestMemorial'
 
+//  |--------------------------------------------------------------------------
+//  | Rutas API para el Sistema de Solvencias Universitarias
+//  |--------------------------------------------------------------------------    
+//  * S1. Añade una nueva solicitud para la elaboracion de una solvencia universitaria              
+import AddRequestSolvencies from './views/document/AddRequestSolvencies'
+//  * S2. Lista las solicitudes de la solvencia universitaria              
+import RequestSolvencies from './views/document/RequestSolvencies'
 
 
 // Routes
@@ -83,6 +90,13 @@ const router = new VueRouter({
                 { path: '/AddRequestMemorial', name: 'addrequestmemorial', component: AddRequestMemorial },
                 //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
                 { path: '/RequestMemorial', name: 'requestmemorial', component: RequestMemorial },
+                //  |--------------------------------------------------------------------------
+                //  | Rutas API para el Sistema de Solvencias Universitarias
+                //  |--------------------------------------------------------------------------    
+                //  * S1. Añade una nueva solicitud para la elaboracion de una solvencia universitaria              
+                { path: '/AddRequestSolvencies', name: 'addrequestsolvencies', component: AddRequestSolvencies },
+                //  * S2. Lista las solicitudes de la solvencia universitaria              
+                { path: '/RequestSolvencies', name: 'requestsolvencies', component: RequestSolvencies },
             ],
             meta: {
                 requiresAuth: true,
