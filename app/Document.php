@@ -73,7 +73,7 @@ class Document extends Model
     //  * {gestion: gestion que se esta utilizando}
     public static function GetTypesOfMemorials($gestion)
     {
-        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEMO' order by s.idx asc";
+        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEM' order by s.idx asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
