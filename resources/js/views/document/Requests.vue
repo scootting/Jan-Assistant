@@ -8,7 +8,7 @@
                     nueva solicitud para la venta de valores en linea</el-button>
             </div>
             <el-alert title="estados de la solicitud" type="success"
-                description="solicitado: cuando se tiene los valores seleccionados, en proceso de verificacion: cuando se envio el comprobante de pago, parcialmente pagado: cuando se cancelo solo una parte del pago total,verificado: concluido con exito el proceso de la solicitud"
+                description="solicitado: cuando se tiene los valores seleccionados, procesando: cuando se envio el comprobante de pago y falta la verificacion, observado: cuando se cancelo solo una parte del pago total, verificado: concluido con exito el proceso de la solicitud"
                 show-icon>
             </el-alert>
             <br />
@@ -18,18 +18,23 @@
                     <el-table-column label="numero" width="150">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.idc }}</el-tag>
+                                <el-tag size="medium" effect="dark">{{ scope.row.idc }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="importe" label="importe" width="150" align="right"></el-table-column>
-                    <el-table-column prop="estado" label="estado" width="150"></el-table-column>
+                    <el-table-column prop="estado" label="estado" width="150" align="center">
+                        <template slot-scope="scope">
+                            <div slot="reference" class="name-wrapper">
+                                <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado }}</el-tag>
+                            </div>
+                        </template>
+                    </el-table-column>
                     <el-table-column align="right" width="620">
                         <template slot-scope="scope">
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
-                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="warning" plain
-                                size="mini">
+                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="warning" plain size="mini">
                                 imprimir informacion para realizar el deposito</el-button>
                         </template>
                     </el-table-column>

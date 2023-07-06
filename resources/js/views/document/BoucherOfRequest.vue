@@ -29,7 +29,10 @@
                 <el-input v-model="onlyRequest.importe" disabled></el-input>
               </el-form-item>
               <el-form-item label="estado">
+                <!--
                 <el-input v-model="onlyRequest.estado" disabled></el-input>
+                -->
+                <el-tag type="danger" effect="dark">{{ onlyRequest.estado }}</el-tag>
               </el-form-item>
             </el-form>
           </div>
@@ -40,6 +43,13 @@
               <el-table-column prop="fecha" label="fecha"></el-table-column>
               <el-table-column prop="boucher" label="numero"></el-table-column>
               <el-table-column prop="imp_bou" label="importe"></el-table-column>
+              <el-table-column align="right">
+                <template slot-scope="scope">
+                  <el-button @click="initGetDigitalBoucher(scope.$index, scope.row)" type="primary" size="mini" plain>Ver
+                    deposito
+                  </el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
         </el-col>
@@ -157,7 +167,27 @@ export default {
       this.fileList = fileList;
     },
 
-    async storeStatusOfRequest(){
+    async initGetDigitalBoucher(idx, row){
+      console.log(row);
+      let app = this;
+      axios({
+        url: "/api/getDigitalBoucher/",
+        params: {
+          id: row.id,
+          year: app.client.gestion,
+        },
+        method: "GET",
+        responseType: "blob",
+      }).then((response) => {
+        let pdfData = response.data;
+        console.log(response);
+        let blob = new Blob([pdfData], { type: 'application/pdf' });
+        let url = URL.createObjectURL(blob);
+        window.open(url);
+      });      
+    },
+
+    async storeStatusOfRequest() {
 
     }
   },
@@ -197,7 +227,7 @@ export default {
   background-color: #f9fafc;
 }
 
-.el-input__inner{
-  color:#000 !important;
+.el-input__inner {
+  color: #000 !important;
 }
 </style>

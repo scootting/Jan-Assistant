@@ -58,6 +58,9 @@ Route::group([
     //  *  D3. Obtener la informacion por cada solicitud
     //  * {id: id de la solicitud }
     Route::post('getDataRequestById', 'DocumentController@getDataRequestById');
+    //  *  D4. Obtener el documento digitalizado de cada solicitud
+    //  * {id: id del boucher digitalizado }
+    Route::get('getDigitalBoucher', 'DocumentController@getDigitalBoucher');
 
     //  |--------------------------------------------------------------------------
     //  | Rutas API para el Sistema de Memoriales Universitarios

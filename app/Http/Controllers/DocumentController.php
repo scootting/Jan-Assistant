@@ -40,19 +40,47 @@ class DocumentController extends Controller
         $boucher = $request->get('boucher');
         $fecha = $request->get('fecha');
         $monto = $request->get('monto');
-        $ruta = "";
+        $fileExt = $request->file('file')->getClientOriginalExtension();
+        $ruta = '';
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $file_name = $file->getClientOriginalName();
-            $path = "treasure/" . strval($fecha) . '.' . strval($boucher);
+            //path
+            $path = "documento";
+            $file_name = 'documento-' . $solicitud . '-' . strval($boucher) . '.' . $fileExt; //$file->getClientOriginalName();
             $ruta = $path . "/" . $file_name;
             $file->storeAs($path, $file_name);
-            $file->store('treasure');
+            //documento digital
+            $data = file_get_contents($file);
+            // Escapar el dato binario
+            $escaped = pg_escape_bytea($data);
+            // Insertarlo en la base de datos
+            $data = Document::StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta, $escaped);
+            //$data = Archive::StoreDigitalDocument($id_document, $escaped, $ruta);
         } else {
             return response()->json(['error' => 'File not exist!']);
         }
-        $data = Document::StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta);
+        $data = Document::storeChangeStateRequest($solicitud, 'Procesando');
         return response()->json(['success' => 'Uploaded Successfully.']);
+    }
+
+    //  *  D4. Obtener el documento digitalizado de cada solicitud
+    //  * {id: id del boucher digitalizado }
+    public function getDigitalBoucher(Request $request)
+    {
+        $id = $request->get('id');
+        $year = $request->get('year');
+        $result = Document::GetDigitalBoucher($id, $year);
+        \Log::info("Hola, ingresas aca!!!");
+
+        if (!empty($result[0]->pdf_data)) {
+            $my_bytea = stream_get_contents($result[0]->pdf_data);
+            \Log::info($my_bytea);
+            return $my_bytea;
+        } else {
+            return response()->json([
+                'error' => 'No se encontró ningún registro con el ID proporcionado.',
+            ]);
+        }
     }
 
     public function getDataRequestById(Request $request)

@@ -6222,6 +6222,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6330,17 +6340,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(response, file, fileList);
       this.fileList = fileList;
     },
-    storeStatusOfRequest: function storeStatusOfRequest() {
+    initGetDigitalBoucher: function initGetDigitalBoucher(idx, row) {
+      var _this3 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var app;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                console.log(row);
+                app = _this3;
+                axios({
+                  url: "/api/getDigitalBoucher/",
+                  params: {
+                    id: row.id,
+                    year: app.client.gestion
+                  },
+                  method: "GET",
+                  responseType: "blob"
+                }).then(function (response) {
+                  var pdfData = response.data;
+                  console.log(response);
+                  var blob = new Blob([pdfData], {
+                    type: 'application/pdf'
+                  });
+                  var url = URL.createObjectURL(blob);
+                  window.open(url);
+                });
+
+              case 3:
               case "end":
                 return _context3.stop();
             }
           }
         }, _callee3);
+      }))();
+    },
+    storeStatusOfRequest: function storeStatusOfRequest() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }
@@ -6715,6 +6762,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9092,7 +9144,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-c2719c3a] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-c2719c3a] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-c2719c3a] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-c2719c3a] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-c2719c3a] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-c2719c3a] {\r\n  border-radius: 4px;\r\n  padding: 15px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-c2719c3a] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\n.el-input__inner[data-v-c2719c3a]{\r\n  color:#000 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.el-row[data-v-c2719c3a] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-c2719c3a] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-c2719c3a] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-c2719c3a] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-c2719c3a] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-c2719c3a] {\r\n  border-radius: 4px;\r\n  padding: 15px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-c2719c3a] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\n.el-input__inner[data-v-c2719c3a] {\r\n  color: #000 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -89536,16 +89588,11 @@ var render = function() {
                           "el-form-item",
                           { attrs: { label: "estado" } },
                           [
-                            _c("el-input", {
-                              attrs: { disabled: "" },
-                              model: {
-                                value: _vm.onlyRequest.estado,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.onlyRequest, "estado", $$v)
-                                },
-                                expression: "onlyRequest.estado"
-                              }
-                            })
+                            _c(
+                              "el-tag",
+                              { attrs: { type: "danger", effect: "dark" } },
+                              [_vm._v(_vm._s(_vm.onlyRequest.estado))]
+                            )
                           ],
                           1
                         )
@@ -89589,6 +89636,42 @@ var render = function() {
                         _vm._v(" "),
                         _c("el-table-column", {
                           attrs: { prop: "imp_bou", label: "importe" }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: { align: "right" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        type: "primary",
+                                        size: "mini",
+                                        plain: ""
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initGetDigitalBoucher(
+                                            scope.$index,
+                                            scope.row
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Ver\n                  deposito\n                "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ])
                         })
                       ],
                       1
@@ -90350,7 +90433,7 @@ var render = function() {
               title: "estados de la solicitud",
               type: "success",
               description:
-                "solicitado: cuando se tiene los valores seleccionados, en proceso de verificacion: cuando se envio el comprobante de pago, parcialmente pagado: cuando se cancelo solo una parte del pago total,verificado: concluido con exito el proceso de la solicitud",
+                "solicitado: cuando se tiene los valores seleccionados, procesando: cuando se envio el comprobante de pago y falta la verificacion, observado: cuando se cancelo solo una parte del pago total, verificado: concluido con exito el proceso de la solicitud",
               "show-icon": ""
             }
           }),
@@ -90394,9 +90477,11 @@ var render = function() {
                                 slot: "reference"
                               },
                               [
-                                _c("el-tag", { attrs: { size: "medium" } }, [
-                                  _vm._v(_vm._s(scope.row.idc))
-                                ])
+                                _c(
+                                  "el-tag",
+                                  { attrs: { size: "medium", effect: "dark" } },
+                                  [_vm._v(_vm._s(scope.row.idc))]
+                                )
                               ],
                               1
                             )
@@ -90416,7 +90501,43 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "estado", label: "estado", width: "150" }
+                    attrs: {
+                      prop: "estado",
+                      label: "estado",
+                      width: "150",
+                      align: "center"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "name-wrapper",
+                                attrs: { slot: "reference" },
+                                slot: "reference"
+                              },
+                              [
+                                _c(
+                                  "el-tag",
+                                  {
+                                    attrs: {
+                                      size: "medium",
+                                      effect: "dark",
+                                      type: "danger"
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(scope.row.estado))]
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {

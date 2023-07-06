@@ -19,10 +19,10 @@ class Document extends Model
     //  *  D2. Guardar los boucher generados por cada solicitud
     //  * {boucher: imagen del boucher }
     //  * {request: informacion del boucher }
-    public static function StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta)
+    public static function StoreBoucherOfRequest($solicitud, $boucher, $fecha, $monto, $ruta, $archivo)
     {
-        $query = "insert into linea.deposito_solicitud(id_sol, boucher, fecha, imp_bou, ruta) " .
-            "values('" . $solicitud . "','" . $boucher . "','" . $fecha . "','" . $monto . "','" . $ruta . "')";
+        $query = "insert into linea.deposito_solicitud(id_sol, boucher, fecha, imp_bou, ruta, img) " .
+            "values('" . $solicitud . "','" . $boucher . "','" . $fecha . "','" . $monto . "','" . $ruta . "', '{$archivo}') ";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -52,13 +52,33 @@ class Document extends Model
     //  *  D3. Obtener los boucher de cada solicitud
     //  * {id: id de la solicitud }
     public static function getBoucherRequestById($id){
-        $query = "select * from linea.deposito_solicitud d 
+        $query = "select id, id_sol, boucher, fecha, imp_bou, ruta from linea.deposito_solicitud d 
                   where d.id_sol = '" . $id . "'";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
+    }
+
+    //  *  D4. Obtener el documento digitalizado de cada solicitud
+    //  * {id: id del boucher digitalizado }
+    public static function GetDigitalBoucher($id, $year){
+        $query = "SELECT img as pdf_data FROM linea.deposito_solicitud d WHERE d.id = ?";
+        \Log::info($query);
+        $data = DB::select($query, [$id]);
+        return $data;
+    }
+    //  *  D4. Cambia el estado de cada solicitud
+    //  * {id: id dela solicitud }
+    //  * {state: estado de la solicitud }
+    public static function StoreChangeStateRequest($id_request,  $state){
+        $query = "UPDATE linea.solicitudes set estado = '" . $state . "' where id = '" . $id_request . "'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
 
     }
+
+
+
 
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
     //  * {id: carnet de identidad de la persona}
