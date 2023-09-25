@@ -15,8 +15,8 @@
                 <el-col :span="24">
                     <div class="grid-content bg-purple">
                         <p>lista de solvencias universitarias disponibles</p>
-                        <el-row  v-for="(item, index) in dataSolvencies" :key="index">
-                            <el-col :span="6">
+                        <el-row>
+                            <el-col :span="6" v-for="(item, index) in dataSolvencies" :key="index">
                                 <el-card>
                                     <el-button type="text" icon="el-icon-document" circle
                                         @click.native="initAddInformationAditional(item)"></el-button>

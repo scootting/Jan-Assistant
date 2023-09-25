@@ -89051,48 +89051,45 @@ var render = function() {
                       _vm._v("lista de solvencias universitarias disponibles")
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.dataSolvencies, function(item, index) {
-                      return _c(
-                        "el-row",
-                        { key: index },
-                        [
-                          _c(
-                            "el-col",
-                            { attrs: { span: 6 } },
-                            [
-                              _c(
-                                "el-card",
-                                [
-                                  _c("el-button", {
-                                    attrs: {
-                                      type: "text",
-                                      icon: "el-icon-document",
-                                      circle: ""
-                                    },
-                                    nativeOn: {
-                                      click: function($event) {
-                                        return _vm.initAddInformationAditional(
-                                          item
-                                        )
-                                      }
+                    _c(
+                      "el-row",
+                      _vm._l(_vm.dataSolvencies, function(item, index) {
+                        return _c(
+                          "el-col",
+                          { key: index, attrs: { span: 6 } },
+                          [
+                            _c(
+                              "el-card",
+                              [
+                                _c("el-button", {
+                                  attrs: {
+                                    type: "text",
+                                    icon: "el-icon-document",
+                                    circle: ""
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      return _vm.initAddInformationAditional(
+                                        item
+                                      )
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("h4", [_vm._v(_vm._s(item.tipo))]),
-                                  _vm._v(" "),
-                                  _c("p", [_vm._v(_vm._s(item.sub))])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    })
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("h4", [_vm._v(_vm._s(item.tipo))]),
+                                _vm._v(" "),
+                                _c("p", [_vm._v(_vm._s(item.sub))])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      }),
+                      1
+                    )
                   ],
-                  2
+                  1
                 )
               ])
             ],
