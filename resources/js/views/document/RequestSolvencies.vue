@@ -15,29 +15,29 @@
             </p>
             <br />
             <div>
-                <el-table v-loading="loading" :data="dataRequestsMemorial" style="width: 100%">
+                <el-table v-loading="loading" :data="dataSolvencies" style="width: 100%">
                     <el-table-column label="Fecha" width="120">
                         <template slot-scope="scope">
                             <i class="el-icon-time"></i>
                             <span style="margin-left: 10px">{{ scope.row.fec_tra }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="numero de solicitud" width="150">
+                    <el-table-column label="numero de solicitud" width="150" align="center">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.idc }}</el-tag>
+                                <el-tag size="medium" effect="dark">{{ scope.row.idc }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="solicitud" width="350">
+                    <el-table-column label="tipo de solvencia" width="350">
                         <template slot-scope="scope">
-                            <span>solicitud de memorial para {{ scope.row.des_tipo }}</span>
+                            <span>solvencia para {{ scope.row.des_tipo }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="estado" width="150">
+                    <el-table-column label="estado" width="150" align="center">
                         <template slot-scope="scope">
                             <div slot="estado" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.estado }}</el-tag>
+                                <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
@@ -51,7 +51,7 @@
                 </el-table>
                 <el-pagination :page-size="pagination.per_page" layout="prev, pager, next"
                     :current-page="pagination.current_page" :total="pagination.total"
-                    @current-change="getRequestsMemorial">
+                    @current-change="getDataSolvencies">
                 </el-pagination>
             </div>
         </el-card>
@@ -65,7 +65,7 @@ export default {
         return {
             loading: true,
             user: this.$store.state.user,
-            dataRequestsMemorial: [],
+            dataSolvencies: [],
             pagination: {
                 page: 1,
             },
@@ -73,7 +73,7 @@ export default {
     },
     mounted() {
         let app = this;
-        this.getRequestsMemorial(app.pagination.page);
+        this.getDataSolvencies(app.pagination.page);
     },
     methods: {
         test() {
@@ -81,16 +81,18 @@ export default {
         },
 
         //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
-        async getRequestsMemorial(page) {
+        async getDataSolvencies(page) {
             let app = this;
             console.log(app.user);
+            let typea = 'SOL';
             try {
-                let response = await axios.post("/api/getRequestsMemorial", {
+                let response = await axios.post("/api/getDataDocument", {
                     client: app.user,
                     page: page,
+                    typea: typea,
                 });
                 app.loading = false;
-                app.dataRequestsMemorial = Object.values(response.data.data);
+                app.dataSolvencies = Object.values(response.data.data);
                 app.pagination = response.data;
                 console.log(response.data.data);
             } catch (error) {

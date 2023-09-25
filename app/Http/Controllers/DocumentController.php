@@ -92,11 +92,13 @@ class DocumentController extends Controller
     }
 
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario
-    public function getRequestsMemorial(Request $request)
+    public function getDataDocument(Request $request)
     {
         $persona = $request->get('client');
         $id = strtoupper($persona['nodip']);
-        $data = Document::GetRequestsMemorial($id);
+        $tipo = $request->get('typea');
+
+        $data = Document::GetDataDocument($id, $tipo);
         $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 10;
         $paginate = new LengthAwarePaginator(
@@ -148,11 +150,12 @@ class DocumentController extends Controller
         return $report;
     }
 
-    //  * M4. Obtener la lista de memoriales habilitados para su seleccion
-    public function getTypesOfMemorials(Request $request)
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    public function getTypesOfDocuments(Request $request)
     {
         $gestion = $request->get('year');
-        $data = Document::GetTypesOfMemorials($gestion);
+        $tipo = $request->get('typea');
+        $data = Document::GetTypesOfDocuments($gestion, $tipo);
         return json_encode($data);
     }
 

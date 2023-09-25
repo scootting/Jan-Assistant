@@ -2,83 +2,70 @@
     <div>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span>solicitud de memorial universitario</span>
+                <span>solicitud de solvencia universitaria</span>
                 <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
             </div>
             <el-row :gutter="20">
                 <p>
-                    <el-alert title="importante" type="warning"
-                        description="antes de realizar la solicitud de memorial universitario debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo haciendo click en la opcion'INFORMACION PERSONAL' del menu."
+                    <el-alert title="importante" type="error"
+                        description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
                         show-icon>
                     </el-alert>
                 </p>
-                <el-col :span="12">
-                    <div class="grid-content bg-purple">tipo
-                        <p>solicitudes de solvencia universitaria que se pueden adquirir</p>
-                        <el-tabs type="border-card">
-                            <el-tab-pane label="carreras">
-                                <el-radio-group v-model="radio1" size="mini">
-                                    <el-radio-button label="acta de aprobacion"></el-radio-button>
-                                    <el-radio-button label="diploca academico"></el-radio-button>
-                                    <el-radio-button label="defensa de tesis"></el-radio-button>
-                                    <el-radio-button label="examen de grado"></el-radio-button>
-                                </el-radio-group>
-                            </el-tab-pane>
-                            <el-tab-pane label="extension libre">
-                                <el-radio-group v-model="radio2" size="mini">
-                                    <el-radio-button label="quechua certificado de notas"></el-radio-button>
-                                    <el-radio-button
-                                        label="carton certificado de extension universitaria"></el-radio-button>
-                                </el-radio-group>
-                            </el-tab-pane>
-                            <el-tab-pane label="beneficios sociales">
-                                <el-radio-group v-model="radio3" size="mini">
-                                    <el-radio-button label="beneficios sociales"></el-radio-button>
-                                </el-radio-group>
-                            </el-tab-pane>
-                            <el-tab-pane label="antiguos egresados">
-                                <el-radio-group v-model="radio3" size="mini">
-                                    <el-radio-button label="certificado de notas y programa analiticos"></el-radio-button>
-                                    <el-radio-button label="certificado de notas y seguimiento academico"></el-radio-button>
-                                </el-radio-group>
-                            </el-tab-pane>
-                        </el-tabs>
-                    </div>
-                </el-col>
-                <el-col :span="12">
-                    <div class="grid-content bg-purple">
-                        <p>informacion adicional que debe brindar para realizar su memorial</p>
-                        <el-form ref="form" :model="this.adicional" label-width="200px" size="mini">
-                            <div v-show=adicional.carrera.visible>
-                                <el-form-item label="nombre de la carrera">
-                                    <el-input v-model="adicional.requisito1"></el-input>
-                                </el-form-item>
-                            </div>
-                            <div v-show=adicional.egreso.visible>
-                                <el-form-item label="gestion de egreso">
-                                    <el-input v-model="adicional.requisito2"></el-input>
-                                </el-form-item>
-                            </div>
-                            <div v-show=adicional.profesion.visible>
-                                <el-form-item label="profesion actual">
-                                    <el-input v-model="adicional.requisito3"></el-input>
-                                </el-form-item>
-                            </div>
-                        </el-form>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row :gutter="20">
                 <el-col :span="24">
-                    <br>
-                    <div style="text-align: right; float: right">
-                        <el-button type="primary" size="small" @click="setMemorialsAcquired()">guardar la solicitudes
-                            seleccionadas
-                        </el-button>
+                    <div class="grid-content bg-purple">
+                        <p>lista de solvencias universitarias disponibles</p>
+                        <el-row  v-for="(item, index) in dataSolvencies" :key="index">
+                            <el-col :span="6">
+                                <el-card>
+                                    <el-button type="text" icon="el-icon-document" circle
+                                        @click.native="initAddInformationAditional(item)"></el-button>
+                                    <h4>{{ item.tipo }}</h4>
+                                    <p>{{ item.sub }}</p>
+                                </el-card>
+                            </el-col>
+                        </el-row>
                     </div>
                 </el-col>
             </el-row>
         </el-card>
+
+        <!-- Form Add Register Input Manual-->
+        <el-dialog title="campo para el segundo registro" :visible.sync="dialogFormVisible">
+            <el-form :model="aditional" label-width="220px" size="small">
+                <el-form-item label="fecha del registro">
+                    <el-date-picker type="date" v-model="aditional.fec_tra" placeholder="seleccione una fecha"
+                        style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="Unidad academica">
+                    <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch"
+                        style="width: 100%;" placeholder="ingrese:carrera y seleccione..." :trigger-on-focus="false"
+                        @select="handleSelect"></el-autocomplete>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="success" size="small" @click="initStoreSolvency">Guardar</el-button>
+                <el-button type="warning" size="small" @click="initCancelSolvency">Cancelar</el-button>
+            </span>
+        </el-dialog>
+        <!-- Form Add Register Input Manual-->
+        <!-- Form Add Register Input Manual-->
+        <el-dialog title="campo para el primer registro" :visible.sync="dialogFormVisible2">
+            <el-form :model="aditional" label-width="220px" size="small">
+                <el-form-item label="fecha del registro">
+                    <el-date-picker type="date" v-model="aditional.fec_tra" placeholder="seleccione una fecha"
+                        style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="observacion">
+                    <el-input type="textarea" v-model="aditional.obs" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="success" size="small" @click="initStoreSolvency">Guardar</el-button>
+                <el-button type="warning" size="small" @click="initCancelSolvency2">Cancelar</el-button>
+            </span>
+        </el-dialog>
+        <!-- Form Add Register Input Manual-->
     </div>
 </template>
   
@@ -88,136 +75,119 @@ export default {
     data() {
         return {
             client: this.$store.state.user,
-            radio4: 'New York',
             loading: true,
-            dataMemorials: [],
-            acquired: [],
-            adicional: {
-                carrera: { descripcion: '', visible: '' },
-                egreso: { descripcion: '', visible: '' },
-                profesion: { descripcion: '', visible: '' },
-            },
+            dataSolvencies: [],
+            dataAditional: [],
+            dialogFormVisible: false,
+            dialogFormVisible2: false,
+            dataCareer: [],
+            solvency: {},
+            aditional: {},
         };
     },
     mounted() {
-        this.getTypesOfMemorials();
-        this.adicional.carrera.visible = false;
-        this.adicional.egreso.visible = false;
-        this.adicional.profesion.visible = false;
+        this.getTypesOfSolvencies();
+        this.getAditionalInformation();
     },
     methods: {
         test() {
             alert("llamar al 74246032 para asistencia tecnica");
         },
-        //  *  T1. Obtener los valores para la venta en linea
-        async getTypesOfMemorials() {
+        //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+        async getTypesOfSolvencies() {
             var app = this;
             try {
-                let response = await axios.post("/api/getTypesOfMemorials/", {
+                let response = await axios.post("/api/getTypesOfDocuments/", {
+                    year: app.client.gestion,
+                    typea: 'SOL'
+                });
+                app.loading = false;
+                app.dataSolvencies = response.data;
+                //console.log(app.dataSolvencies);
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
+        },
+        async getAditionalInformation() {
+            var app = this;
+            try {
+                let response = await axios.post("/api/getAditionalInformation/", {
                     year: app.client.gestion,
                 });
                 app.loading = false;
-                app.dataMemorials = response.data;
+                app.dataCareer = response.data;
+                //console.log(app.dataCareer);
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {
                     dangerouslyUseHTMLString: true,
                 });
             }
+        },
+        initAddInformationAditional(row) {
+            let app = this;
+            app.solvency = row;
+            switch (row.modal) {
+                case 1:
+                    app.dialogFormVisible = true;
+                    break;
+                case 2:
+                    app.dialogFormVisible2 = true;
+                    break;
+                default:
+                    break;
+            }
+        },
+        querySearch(queryString, cb) {
+            var links = this.dataCareer;
+            var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+            // call callback function to return suggestions
+            cb(results);
+        },
+        createFilter(queryString) {
+            return (link) => {
+                return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+        },
+        handleSelect(item) {
+            //console.log(item);
+            this.aditional.cod_prg = item.cod_prg;
+            this.aditional.des_prg = item.cat_des;
+            console.log('Consola');
+
+            console.log(this.aditional);
         },
 
-        //  *  T2. Guardar los memoriales adquiridos
-        async setMemorialsAcquired() {
-            var app = this;
-            console.log(app.acquired);
-            try {
-                if (app.acquired.length <= 0) {
-                    this.$alert('debe seleccionar por lo menos una solicitud', 'HA OCURRIDO UN ERROR', {
-                        confirmButtonText: 'BUENO',
-                    });
-                } else {
-                    let response = await axios.post("/api/storeRequestMemorial/", {
-                        client: app.client,
-                        acquired: app.acquired,
-                        marker: "MEMO",
-                    });
-                    this.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, PUEDE REALIZAR LA IMPRESION DE SU SOLICITUD', 'LO HA CONSEGUIDO', {
-                        confirmButtonText: 'BUENO',
-                    });
-                    console.log(response);
-                    //let id = response.data[0].ff_nueva_solicitud;
-                    this.$router.push({
-                        name: "requestmemorial",
-                    });
-                }
-            } catch (error) {
-                this.error = error.response.data;
-                app.$alert(this.error.message, "Gestor de errores", {
-                    dangerouslyUseHTMLString: true,
-                });
-            }
-        },
-        // * FUNLOCAL. agregar valores que se van a comprar
-        initAddValues(index, row) {
-            this.initVisibleRequeriments(row);
-            this.acquired.push(row);
+        initStoreSolvency() {
+            console.log('Store');
+            this.dialogFormVisible = false;
+            console.log(this.aditional);
+            console.log(this.solvency);
             console.log(this.client);
-            console.log(this.acquired);
         },
-        // * FUNLOCAL. Quitar valores que se iban a comprar
-        initRemoveValues(index, row) {
-            this.acquired.splice(index, 1);
-            this.initRemoveRequeriments(row);
-
+        initCancelSolvency() {
+            this.dialogFormVisible = false;
+            this.aditional = {};
         },
-        initVisibleRequeriments(row) {
-            let app = this;
-            switch (row.idx) {
-                case 1:
-                case 2:
-                case 3:
-                    app.adicional.carrera.visible = true;
-                    break;
-                case 4:
-                    app.adicional.carrera.visible = true;
-                    app.adicional.egreso.visible = true;
-                    break;
-                case 5:
-                    app.adicional.profesion.visible = true;
-                    break;
-                default:
-                    break;
-            }
+        initCancelSolvency2() {
+            this.dialogFormVisible2 = false;
+            this.aditional = {};
         },
-        initRemoveRequeriments(row) {
-            let app = this;
-            switch (row.idx) {
-                case 1:
-                case 2:
-                case 3:
-                    app.adicional.carrera.visible = false;
-                    break;
-                case 4:
-                    app.adicional.carrera.visible = false;
-                    app.adicional.egreso.visible = false;
-                    break;
-                case 5:
-                    app.adicional.profesion.visible = false;
-                    break;
-                default:
-                    break;
-            }
-            this.acquired.forEach(element => {
-                app.initVisibleRequeriments(element)
-            });
-        }
-
     },
 };
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.bg-purple .el-card .el-button {
+    font-size: 5rem;
+    display: block;
+    margin: 0 auto;
+}
+
 .el-row {
     margin-bottom: 20px;
 }

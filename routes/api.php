@@ -35,6 +35,12 @@ Route::group([
     //  * {pass_ant: password anterior, pass_act: password nuevo, pass_con: password confirmado}
     Route::post('updatePersonPassword', 'GeneralController@updatePersonPassword');
 
+    //  *  A7. Obtiene la lista de categorias programaticas
+    //  * {year: gestion en la que se desarrolla}
+    Route::post('getAditionalInformation', 'GeneralController@getAditionalInformation');
+
+
+    
     Route::post('logout', 'GeneralController@logoutUser');
 
     //  *  T1. Obtener los valores para la venta en linea
@@ -66,13 +72,13 @@ Route::group([
     //  | Rutas API para el Sistema de Memoriales Universitarios
     //  |--------------------------------------------------------------------------    
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
-    Route::post('getRequestsMemorial', 'DocumentController@getRequestsMemorial');
+    Route::post('getDataDocument', 'DocumentController@getDataDocument');
     //  * M1. guarda las solicitudes realizadas             
     Route::post('storeRequestMemorial', 'DocumentController@storeRequestMemorial');
     //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
     Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
-    //  * M4. Obtener la lista de memoriales habilitados para su seleccion               
-    Route::post('getTypesOfMemorials', 'DocumentController@getTypesOfMemorials');
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    Route::post('getTypesOfDocuments', 'DocumentController@getTypesOfDocuments');
 
 
 

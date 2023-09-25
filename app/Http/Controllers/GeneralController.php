@@ -72,8 +72,13 @@ class GeneralController extends Controller
         return json_encode($data);
     }
 
-
-
+    //  *  A7. Obtiene la lista de categorias programaticas
+    //  * {year: gestion en la que se desarrolla}
+    public function getAditionalInformation(Request $request){
+        $gestion = $request->get('year');
+        $data = General::GetProgramaticCategory($gestion);
+        return json_encode($data);
+    }
 
     //  * Quitar el registro de un usuario en el recurso.    
     public function logoutUser(Request $request)

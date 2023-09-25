@@ -5895,56 +5895,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
-      radio4: 'New York',
       loading: true,
-      dataMemorials: [],
-      acquired: [],
-      adicional: {
-        carrera: {
-          descripcion: '',
-          visible: ''
-        },
-        egreso: {
-          descripcion: '',
-          visible: ''
-        },
-        profesion: {
-          descripcion: '',
-          visible: ''
-        }
-      }
+      dataSolvencies: [],
+      dataAditional: [],
+      dialogFormVisible: false,
+      dialogFormVisible2: false,
+      dataCareer: [],
+      solvency: {},
+      aditional: {}
     };
   },
   mounted: function mounted() {
-    this.getTypesOfMemorials();
-    this.adicional.carrera.visible = false;
-    this.adicional.egreso.visible = false;
-    this.adicional.profesion.visible = false;
+    this.getTypesOfSolvencies();
+    this.getAditionalInformation();
   },
   methods: {
     test: function test() {
       alert("llamar al 74246032 para asistencia tecnica");
     },
-    //  *  T1. Obtener los valores para la venta en linea
-    getTypesOfMemorials: function getTypesOfMemorials() {
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    getTypesOfSolvencies: function getTypesOfSolvencies() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -5956,14 +5931,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app = _this;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.post("/api/getTypesOfMemorials/", {
-                  year: app.client.gestion
+                return axios.post("/api/getTypesOfDocuments/", {
+                  year: app.client.gestion,
+                  typea: 'SOL'
                 });
 
               case 4:
                 response = _context.sent;
                 app.loading = false;
-                app.dataMemorials = response.data;
+                app.dataSolvencies = response.data; //console.log(app.dataSolvencies);
+
                 _context.next = 13;
                 break;
 
@@ -5983,8 +5960,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 9]]);
       }))();
     },
-    //  *  T2. Guardar los memoriales adquiridos
-    setMemorialsAcquired: function setMemorialsAcquired() {
+    getAditionalInformation: function getAditionalInformation() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -5994,123 +5970,85 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 app = _this2;
-                console.log(app.acquired);
-                _context2.prev = 2;
-
-                if (!(app.acquired.length <= 0)) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _this2.$alert('debe seleccionar por lo menos una solicitud', 'HA OCURRIDO UN ERROR', {
-                  confirmButtonText: 'BUENO'
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.post("/api/getAditionalInformation/", {
+                  year: app.client.gestion
                 });
+
+              case 4:
+                response = _context2.sent;
+                app.loading = false;
+                app.dataCareer = response.data; //console.log(app.dataCareer);
 
                 _context2.next = 13;
                 break;
 
-              case 7:
-                _context2.next = 9;
-                return axios.post("/api/storeRequestMemorial/", {
-                  client: app.client,
-                  acquired: app.acquired,
-                  marker: "MEMO"
-                });
-
               case 9:
-                response = _context2.sent;
-
-                _this2.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, PUEDE REALIZAR LA IMPRESION DE SU SOLICITUD', 'LO HA CONSEGUIDO', {
-                  confirmButtonText: 'BUENO'
-                });
-
-                console.log(response); //let id = response.data[0].ff_nueva_solicitud;
-
-                _this2.$router.push({
-                  name: "requestmemorial"
-                });
-
-              case 13:
-                _context2.next = 19;
-                break;
-
-              case 15:
-                _context2.prev = 15;
-                _context2.t0 = _context2["catch"](2);
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](1);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 19:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 15]]);
+        }, _callee2, null, [[1, 9]]);
       }))();
     },
-    // * FUNLOCAL. agregar valores que se van a comprar
-    initAddValues: function initAddValues(index, row) {
-      this.initVisibleRequeriments(row);
-      this.acquired.push(row);
+    initAddInformationAditional: function initAddInformationAditional(row) {
+      var app = this;
+      app.solvency = row;
+
+      switch (row.modal) {
+        case 1:
+          app.dialogFormVisible = true;
+          break;
+
+        case 2:
+          app.dialogFormVisible2 = true;
+          break;
+
+        default:
+          break;
+      }
+    },
+    querySearch: function querySearch(queryString, cb) {
+      var links = this.dataCareer;
+      var results = queryString ? links.filter(this.createFilter(queryString)) : links; // call callback function to return suggestions
+
+      cb(results);
+    },
+    createFilter: function createFilter(queryString) {
+      return function (link) {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+      };
+    },
+    handleSelect: function handleSelect(item) {
+      //console.log(item);
+      this.aditional.cod_prg = item.cod_prg;
+      this.aditional.des_prg = item.cat_des;
+      console.log('Consola');
+      console.log(this.aditional);
+    },
+    initStoreSolvency: function initStoreSolvency() {
+      console.log('Store');
+      this.dialogFormVisible = false;
+      console.log(this.aditional);
+      console.log(this.solvency);
       console.log(this.client);
-      console.log(this.acquired);
     },
-    // * FUNLOCAL. Quitar valores que se iban a comprar
-    initRemoveValues: function initRemoveValues(index, row) {
-      this.acquired.splice(index, 1);
-      this.initRemoveRequeriments(row);
+    initCancelSolvency: function initCancelSolvency() {
+      this.dialogFormVisible = false;
+      this.aditional = {};
     },
-    initVisibleRequeriments: function initVisibleRequeriments(row) {
-      var app = this;
-
-      switch (row.idx) {
-        case 1:
-        case 2:
-        case 3:
-          app.adicional.carrera.visible = true;
-          break;
-
-        case 4:
-          app.adicional.carrera.visible = true;
-          app.adicional.egreso.visible = true;
-          break;
-
-        case 5:
-          app.adicional.profesion.visible = true;
-          break;
-
-        default:
-          break;
-      }
-    },
-    initRemoveRequeriments: function initRemoveRequeriments(row) {
-      var app = this;
-
-      switch (row.idx) {
-        case 1:
-        case 2:
-        case 3:
-          app.adicional.carrera.visible = false;
-          break;
-
-        case 4:
-          app.adicional.carrera.visible = false;
-          app.adicional.egreso.visible = false;
-          break;
-
-        case 5:
-          app.adicional.profesion.visible = false;
-          break;
-
-        default:
-          break;
-      }
-
-      this.acquired.forEach(function (element) {
-        app.initVisibleRequeriments(element);
-      });
+    initCancelSolvency2: function initCancelSolvency2() {
+      this.dialogFormVisible2 = false;
+      this.aditional = {};
     }
   }
 });
@@ -6653,7 +6591,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       loading: true,
       user: this.$store.state.user,
-      dataRequestsMemorial: [],
+      dataSolvencies: [],
       pagination: {
         page: 1
       }
@@ -6661,55 +6599,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     var app = this;
-    this.getRequestsMemorial(app.pagination.page);
+    this.getDataSolvencies(app.pagination.page);
   },
   methods: {
     test: function test() {
       alert("en proceso de desarrollo");
     },
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
-    getRequestsMemorial: function getRequestsMemorial(page) {
+    getDataSolvencies: function getDataSolvencies(page) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var app, response;
+        var app, typea, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 app = _this;
                 console.log(app.user);
-                _context.prev = 2;
-                _context.next = 5;
-                return axios.post("/api/getRequestsMemorial", {
+                typea = 'SOL';
+                _context.prev = 3;
+                _context.next = 6;
+                return axios.post("/api/getDataDocument", {
                   client: app.user,
-                  page: page
+                  page: page,
+                  typea: typea
                 });
 
-              case 5:
+              case 6:
                 response = _context.sent;
                 app.loading = false;
-                app.dataRequestsMemorial = Object.values(response.data.data);
+                app.dataSolvencies = Object.values(response.data.data);
                 app.pagination = response.data;
                 console.log(response.data.data);
-                _context.next = 17;
+                _context.next = 18;
                 break;
 
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](2);
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](3);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
                 app.loading = false;
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 12]]);
+        }, _callee, null, [[3, 13]]);
       }))();
     },
     //  * M3. Imprimir la solicitud de elaboracion de solvencia universitaria            
@@ -9125,7 +9065,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-018ab9d4] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-018ab9d4] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-018ab9d4] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-018ab9d4] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-018ab9d4] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-018ab9d4] {\r\n    border-radius: 4px;\r\n    padding: 15px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-018ab9d4] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n.bg-purple .el-card .el-button[data-v-018ab9d4] {\r\n    font-size: 5rem;\r\n    display: block;\r\n    margin: 0 auto;\n}\n.el-row[data-v-018ab9d4] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-018ab9d4] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-018ab9d4] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-018ab9d4] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-018ab9d4] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-018ab9d4] {\r\n    border-radius: 4px;\r\n    padding: 15px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-018ab9d4] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
 
 // exports
 
@@ -89067,7 +89007,7 @@ var render = function() {
               slot: "header"
             },
             [
-              _c("span", [_vm._v("solicitud de memorial universitario")]),
+              _c("span", [_vm._v("solicitud de solvencia universitaria")]),
               _vm._v(" "),
               _c(
                 "el-button",
@@ -89092,9 +89032,9 @@ var render = function() {
                   _c("el-alert", {
                     attrs: {
                       title: "importante",
-                      type: "warning",
+                      type: "error",
                       description:
-                        "antes de realizar la solicitud de memorial universitario debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo haciendo click en la opcion'INFORMACION PERSONAL' del menu.",
+                        "antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu.",
                       "show-icon": ""
                     }
                   })
@@ -89102,329 +89042,268 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _vm._v("tipo\n                    "),
-                    _c("p", [
-                      _vm._v(
-                        "solicitudes de solvencia universitaria que se pueden adquirir"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-tabs",
-                      { attrs: { type: "border-card" } },
-                      [
-                        _c(
-                          "el-tab-pane",
-                          { attrs: { label: "carreras" } },
-                          [
-                            _c(
-                              "el-radio-group",
-                              {
-                                attrs: { size: "mini" },
-                                model: {
-                                  value: _vm.radio1,
-                                  callback: function($$v) {
-                                    _vm.radio1 = $$v
-                                  },
-                                  expression: "radio1"
-                                }
-                              },
-                              [
-                                _c("el-radio-button", {
-                                  attrs: { label: "acta de aprobacion" }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", {
-                                  attrs: { label: "diploca academico" }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", {
-                                  attrs: { label: "defensa de tesis" }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", {
-                                  attrs: { label: "examen de grado" }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-tab-pane",
-                          { attrs: { label: "extension libre" } },
-                          [
-                            _c(
-                              "el-radio-group",
-                              {
-                                attrs: { size: "mini" },
-                                model: {
-                                  value: _vm.radio2,
-                                  callback: function($$v) {
-                                    _vm.radio2 = $$v
-                                  },
-                                  expression: "radio2"
-                                }
-                              },
-                              [
-                                _c("el-radio-button", {
-                                  attrs: {
-                                    label: "quechua certificado de notas"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", {
-                                  attrs: {
-                                    label:
-                                      "carton certificado de extension universitaria"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-tab-pane",
-                          { attrs: { label: "beneficios sociales" } },
-                          [
-                            _c(
-                              "el-radio-group",
-                              {
-                                attrs: { size: "mini" },
-                                model: {
-                                  value: _vm.radio3,
-                                  callback: function($$v) {
-                                    _vm.radio3 = $$v
-                                  },
-                                  expression: "radio3"
-                                }
-                              },
-                              [
-                                _c("el-radio-button", {
-                                  attrs: { label: "beneficios sociales" }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-tab-pane",
-                          { attrs: { label: "antiguos egresados" } },
-                          [
-                            _c(
-                              "el-radio-group",
-                              {
-                                attrs: { size: "mini" },
-                                model: {
-                                  value: _vm.radio3,
-                                  callback: function($$v) {
-                                    _vm.radio3 = $$v
-                                  },
-                                  expression: "radio3"
-                                }
-                              },
-                              [
-                                _c("el-radio-button", {
-                                  attrs: {
-                                    label:
-                                      "certificado de notas y programa analiticos"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("el-radio-button", {
-                                  attrs: {
-                                    label:
-                                      "certificado de notas y seguimiento academico"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
+              _c("el-col", { attrs: { span: 24 } }, [
                 _c(
                   "div",
                   { staticClass: "grid-content bg-purple" },
                   [
                     _c("p", [
-                      _vm._v(
-                        "informacion adicional que debe brindar para realizar su memorial"
-                      )
+                      _vm._v("lista de solvencias universitarias disponibles")
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "el-form",
-                      {
-                        ref: "form",
-                        attrs: {
-                          model: this.adicional,
-                          "label-width": "200px",
-                          size: "mini"
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.adicional.carrera.visible,
-                                expression: "adicional.carrera.visible"
-                              }
-                            ]
-                          },
-                          [
-                            _c(
-                              "el-form-item",
-                              { attrs: { label: "nombre de la carrera" } },
-                              [
-                                _c("el-input", {
-                                  model: {
-                                    value: _vm.adicional.requisito1,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.adicional, "requisito1", $$v)
+                    _vm._l(_vm.dataSolvencies, function(item, index) {
+                      return _c(
+                        "el-row",
+                        { key: index },
+                        [
+                          _c(
+                            "el-col",
+                            { attrs: { span: 6 } },
+                            [
+                              _c(
+                                "el-card",
+                                [
+                                  _c("el-button", {
+                                    attrs: {
+                                      type: "text",
+                                      icon: "el-icon-document",
+                                      circle: ""
                                     },
-                                    expression: "adicional.requisito1"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.adicional.egreso.visible,
-                                expression: "adicional.egreso.visible"
-                              }
-                            ]
-                          },
-                          [
-                            _c(
-                              "el-form-item",
-                              { attrs: { label: "gestion de egreso" } },
-                              [
-                                _c("el-input", {
-                                  model: {
-                                    value: _vm.adicional.requisito2,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.adicional, "requisito2", $$v)
-                                    },
-                                    expression: "adicional.requisito2"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.adicional.profesion.visible,
-                                expression: "adicional.profesion.visible"
-                              }
-                            ]
-                          },
-                          [
-                            _c(
-                              "el-form-item",
-                              { attrs: { label: "profesion actual" } },
-                              [
-                                _c("el-input", {
-                                  model: {
-                                    value: _vm.adicional.requisito3,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.adicional, "requisito3", $$v)
-                                    },
-                                    expression: "adicional.requisito3"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
+                                    nativeOn: {
+                                      click: function($event) {
+                                        return _vm.initAddInformationAditional(
+                                          item
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("h4", [_vm._v(_vm._s(item.tipo))]),
+                                  _vm._v(" "),
+                                  _c("p", [_vm._v(_vm._s(item.sub))])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
                   ],
-                  1
+                  2
                 )
               ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "campo para el segundo registro",
+            visible: _vm.dialogFormVisible
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogFormVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              attrs: {
+                model: _vm.aditional,
+                "label-width": "220px",
+                size: "small"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "fecha del registro" } },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "seleccione una fecha",
+                      format: "yyyy/MM/dd",
+                      "value-format": "yyyy-MM-dd"
+                    },
+                    model: {
+                      value: _vm.aditional.fec_tra,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "fec_tra", $$v)
+                      },
+                      expression: "aditional.fec_tra"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "Unidad academica" } },
+                [
+                  _c("el-autocomplete", {
+                    staticClass: "inline-input",
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      "fetch-suggestions": _vm.querySearch,
+                      placeholder: "ingrese:carrera y seleccione...",
+                      "trigger-on-focus": false
+                    },
+                    on: { select: _vm.handleSelect },
+                    model: {
+                      value: _vm.aditional.des_prg,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "des_prg", $$v)
+                      },
+                      expression: "aditional.des_prg"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
             [
-              _c("el-col", { attrs: { span: 24 } }, [
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticStyle: { "text-align": "right", float: "right" } },
-                  [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setMemorialsAcquired()
-                          }
-                        }
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "success", size: "small" },
+                  on: { click: _vm.initStoreSolvency }
+                },
+                [_vm._v("Guardar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "warning", size: "small" },
+                  on: { click: _vm.initCancelSolvency }
+                },
+                [_vm._v("Cancelar")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "campo para el primer registro",
+            visible: _vm.dialogFormVisible2
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogFormVisible2 = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              attrs: {
+                model: _vm.aditional,
+                "label-width": "220px",
+                size: "small"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "fecha del registro" } },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "seleccione una fecha",
+                      format: "yyyy/MM/dd",
+                      "value-format": "yyyy-MM-dd"
+                    },
+                    model: {
+                      value: _vm.aditional.fec_tra,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "fec_tra", $$v)
                       },
-                      [
-                        _vm._v(
-                          "guardar la solicitudes\n                        seleccionadas\n                    "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
+                      expression: "aditional.fec_tra"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "observacion" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "textarea", autocomplete: "off" },
+                    model: {
+                      value: _vm.aditional.obs,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "obs", $$v)
+                      },
+                      expression: "aditional.obs"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "success", size: "small" },
+                  on: { click: _vm.initStoreSolvency }
+                },
+                [_vm._v("Guardar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "warning", size: "small" },
+                  on: { click: _vm.initCancelSolvency2 }
+                },
+                [_vm._v("Cancelar")]
+              )
             ],
             1
           )
@@ -90214,7 +90093,7 @@ var render = function() {
                   }
                 ],
                 staticStyle: { width: "100%" },
-                attrs: { data: _vm.dataRequestsMemorial }
+                attrs: { data: _vm.dataSolvencies }
               },
               [
                 _c("el-table-column", {
@@ -90238,7 +90117,11 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { label: "numero de solicitud", width: "150" },
+                  attrs: {
+                    label: "numero de solicitud",
+                    width: "150",
+                    align: "center"
+                  },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -90252,9 +90135,11 @@ var render = function() {
                               slot: "reference"
                             },
                             [
-                              _c("el-tag", { attrs: { size: "medium" } }, [
-                                _vm._v(_vm._s(scope.row.idc))
-                              ])
+                              _c(
+                                "el-tag",
+                                { attrs: { size: "medium", effect: "dark" } },
+                                [_vm._v(_vm._s(scope.row.idc))]
+                              )
                             ],
                             1
                           )
@@ -90265,7 +90150,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { label: "solicitud", width: "350" },
+                  attrs: { label: "tipo de solvencia", width: "350" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -90273,8 +90158,7 @@ var render = function() {
                         return [
                           _c("span", [
                             _vm._v(
-                              "solicitud de memorial para " +
-                                _vm._s(scope.row.des_tipo)
+                              "solvencia para " + _vm._s(scope.row.des_tipo)
                             )
                           ])
                         ]
@@ -90284,7 +90168,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { label: "estado", width: "150" },
+                  attrs: { label: "estado", width: "150", align: "center" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -90298,9 +90182,17 @@ var render = function() {
                               slot: "estado"
                             },
                             [
-                              _c("el-tag", { attrs: { size: "medium" } }, [
-                                _vm._v(_vm._s(scope.row.estado))
-                              ])
+                              _c(
+                                "el-tag",
+                                {
+                                  attrs: {
+                                    size: "medium",
+                                    effect: "dark",
+                                    type: "danger"
+                                  }
+                                },
+                                [_vm._v(_vm._s(scope.row.estado))]
+                              )
                             ],
                             1
                           )
@@ -90356,7 +90248,7 @@ var render = function() {
                 "current-page": _vm.pagination.current_page,
                 total: _vm.pagination.total
               },
-              on: { "current-change": _vm.getRequestsMemorial }
+              on: { "current-change": _vm.getDataSolvencies }
             })
           ],
           1

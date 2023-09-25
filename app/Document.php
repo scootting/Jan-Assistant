@@ -77,26 +77,36 @@ class Document extends Model
 
     }
 
-
-
-
-    //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+    //  * M2. Lista las solicitudes de documentos por tipo de documento (MEMO, SOL, etc, etc)             
     //  * {id: carnet de identidad de la persona}
-    public static function GetRequestsMemorial($id)
+    public static function GetDataDocument($id, $tipo)
     {
-        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' order by idx desc";
+        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' and s.des_tipo ='" . $tipo . "' order by fec_tra desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
-    //  * M4. Obtener la lista de memoriales habilitados para su seleccion               
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
     //  * {gestion: gestion que se esta utilizando}
-    public static function GetTypesOfMemorials($gestion)
+    //  * {gestion: tipo de documento que se esta solicitando}
+    public static function GetTypesOfDocuments($gestion, $tipo)
     {
-        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = 'MEM' order by s.idx asc";
+        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = '". $tipo ."' order by s.sub asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+
+
+    //  * M1. guarda las solicitudes de memoriales solicitadas
+    public static function StoreRequestDataDocument($id, $abrv, $tipo, $ci_per, $des_per, $gestion)
+    {
+        $query = "select * from bdoc.ff_nueva_solicitud(" . $id . ",'" . $abrv . "','" . $tipo . "','" . $ci_per . "','" . $des_per . "','" . $gestion . "')";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+
 
 
     //  * M1. guarda las solicitudes de memoriales solicitadas

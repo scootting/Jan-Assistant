@@ -25,21 +25,32 @@ class General extends Model
         return $data;
     }
 
-    //  *  A4. Registrar la informacion personal del cliente
-    //  * {cliente: array con la informacion personalizada del cliente}    
-    public static function RegisterPersonInformation($card, $names, $paternal, $maternal, $sex, $birthdate, $direction, $phone, $email)
-    {
-        $query = "select * from pub.ff_registrar_persona('" . $card . "', '" . $paternal . "', '" . $maternal . "', '" . $names . "','" . $sex . "', '" . $birthdate . "')";
-        $data = collect(DB::select(DB::raw($query)));
-        return $data;
-    }
-
     //  *  A3. cambiar la contraseña personal del cliente
     //  * {pass_ant: password anterior, pass_act: password nuevo, pass_con: password confirmado}    
     public static function UpdatePersonPassword($card, $pass_actual, $pass_nuevo, $pass_confirma)
     {
         $query = "select * from pub.ff_contrasena_persona('" . $card . "', '" . $pass_actual . "', '" . $pass_nuevo . "', '" . $pass_confirma . "')";
         \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    //  *  A7. Obtiene la lista de categorias programaticas
+    //  * {year: gestion en la que se desarrolla}
+    public static function GetProgramaticCategory($year)
+    {
+        $query = "select *, cat_des as value from public.sis_cat_pro d where d.cat_ano = '" . $year . "' and d.cat_pro = '10' and d.cat_sis = 'ACTIVIDAD'";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+
+    //  *  A4. Registrar la informacion personal del cliente
+    //  * {cliente: array con la informacion personalizada del cliente}    
+    public static function RegisterPersonInformation($card, $names, $paternal, $maternal, $sex, $birthdate, $direction, $phone, $email)
+    {
+        $query = "select * from pub.ff_registrar_persona('" . $card . "', '" . $paternal . "', '" . $maternal . "', '" . $names . "','" . $sex . "', '" . $birthdate . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
