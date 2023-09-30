@@ -29,7 +29,6 @@ import Requests from './views/document/Requests'
 import BoucherOfRequest from './views/document/BoucherOfRequest'
 //Documento: Modulo para crear una nueva solicitud 
 
-
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Memoriales Universitarios
 //  |--------------------------------------------------------------------------    
@@ -46,6 +45,14 @@ import AddRequestSolvencies from './views/document/AddRequestSolvencies'
 //  * S2. Lista las solicitudes de la solvencia universitaria              
 import RequestSolvencies from './views/document/RequestSolvencies'
 
+//  |--------------------------------------------------------------------------
+//  | Rutas API para el Sistema de Elecciones
+//  |--------------------------------------------------------------------------       
+import InformationElection from './views/election/Information.vue'
+import ResponseInformation from './views/election/ResponseInformation.vue'
+import responseDataTablets from './views/election/responseDataTablets.vue'
+
+
 
 // Routes
 const router = new VueRouter({
@@ -53,9 +60,14 @@ const router = new VueRouter({
     linkActiveClass: 'is-active',
     routes: [
         {
-            path: '/', //path: '/login',
+            path: '/',
             name: 'home',
             component: Home,
+            children: [
+                { path: '', name: 'informationelection', component: InformationElection },
+                { path: '/responseinformation/:id', name: 'responseinformation', component: ResponseInformation },
+                { path: '/responsedatatablets', name: 'responsedatatablets', component: responseDataTablets },
+            ],
         },
         {
             path: '/login', //path: '/login',

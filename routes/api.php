@@ -83,8 +83,6 @@ Route::group([
 
 
 
-
-
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');
