@@ -13,15 +13,10 @@
                     </el-alert>
                 </p>
                 <el-col :span="12">
-                    <div class="grid-content bg-purple">
+                    <div class="grid-content bg-purple" v-if="encontrado !== false">
                         <p>datos de la persona</p>
                         <el-form ref="form" :model="user" label-width="200px" size="mini">
                             <el-form-item label="carnet de identidad">
-                                <!--
-                  <el-input v-model="user.ci_per" disabled></el-input>
-                                <el-input v-model="user.des_per" disabled></el-input>
-                                <el-input v-model="user.habilitado" disabled></el-input>
-                    -->
                                 {{ user.nro_dip }}
                             </el-form-item>
                             <el-form-item label="nombre completo">
@@ -74,11 +69,14 @@ export default {
     data() {
         return {
             id: 0,
+            id_election:0,
             user: {},
             tablet: {},
+            encontrado: false,
         };
     },
     mounted() {
+        this.id_election = this.$route.params.id_election;
         this.id = this.$route.params.id;
         this.initGetAuthorizedPerson();
     },
@@ -91,13 +89,19 @@ export default {
             try {
                 let response = await axios.post("/getAuthorizedPerson", {
                     id: app.id,
+                    id_election: app.id_election,
                 });
                 console.log(response);
+                app.encontrado = true;
                 app.user = response.data.dataPerson[0];
                 app.tablet = response.data.dataTablet[0];
             } catch (error) {
                 this.error = error.response.data;
+                /*
                 app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });*/
+                app.$alert("La persona con el numero de carnet de identidad: " + app.id + " no se encuentra registrada", "Gestor de errores", {
                     dangerouslyUseHTMLString: true,
                 });
             }

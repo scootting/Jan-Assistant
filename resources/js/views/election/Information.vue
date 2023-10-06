@@ -3,7 +3,7 @@
         <el-row :gutter="20" style="padding-top: 10px">
             <el-col :span="4" :offset="7">
                 <div class="header">
-                    <el-image :src="url_image" style="width: 90%; height: 90%">
+                    <el-image :src="url_image" style="width: 90%; height: 90%; ,padding-top:50px">
                         <div slot="placeholder" class="image-slot">
                             Loading<span class="dot">...</span>
                         </div>
@@ -13,6 +13,8 @@
             <el-col :span="6">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix" style="text-align: center;">
+                        <el-image :src="url_image_election" style="width: 40%; height: 40%">
+                        </el-image>
                         <h2>elecciones a vicerrector 2023 - 2026</h2>
                         <p>verifica si estas habilitado(a) para votar</p>
                         <!--
@@ -39,7 +41,8 @@
                 <div class="footer">
                     <!--
                     -->
-                    <el-button style="float: right; padding: 3px 0" type="text" @click.native="initGetDataTablets">Verifique la lista de mesas habilitadas</el-button>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click.native="initGetDataTablets">Verifique
+                        la lista de mesas habilitadas</el-button>
                     <div class="version">Version 1.00.01</div>
                 </div>
             </el-col>
@@ -56,8 +59,7 @@ export default {
                 username: null,
             },
             url_image: "/images/EUATF.png", //url('../images/EUATF.png'),//
-            loading: false,
-            error: null,
+            url_image_election: "/images/ICE.png", //url('../images/EUATF.png'),//
             rules: {
                 id: [
                     {
@@ -67,7 +69,7 @@ export default {
                     },
                 ],
             },
-            messages: {},
+            id_election: 2,
         };
     },
     methods: {
@@ -76,14 +78,18 @@ export default {
             this.$router.push({
                 name: "responseinformation",
                 params: {
+                    id_election: app.id_election,
                     id: app.user.id,
                 },
             });
         },
-        initGetDataTablets(){
+        initGetDataTablets() {
             let app = this;
             this.$router.push({
                 name: "responsedatatablets",
+                params: {
+                    id_election: app.id_election,
+                },
             });
         }
     },
@@ -126,4 +132,5 @@ export default {
     color: #9fb3c8;
     font-size: 15px;
     margin-top: 5px;
-}</style>
+}
+</style>

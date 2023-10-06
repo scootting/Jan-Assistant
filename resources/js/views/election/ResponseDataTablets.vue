@@ -6,35 +6,41 @@
                 <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
             </div>
             <el-row :gutter="20">
-                <p>
-                    <el-alert title="Nota importante"
-                        description="El resultado de esta consulta es de la lista de mesas habilitadas emitida por el comite electoral para las elecciones a vicerrector."
-                        type="success" show-icon>
-                    </el-alert>
-                </p>
+                <el-col :span="24">
+                    <p>
+                        <el-alert title="Nota importante"
+                            description="El resultado de esta consulta es de la lista de mesas habilitadas emitida por el comite electoral para las elecciones a vicerrector."
+                            type="success" show-icon>
+                        </el-alert>
+                    </p>
+                    <p>
+                        <el-button type="primary" size="small" @click="initRequestInformation">volver a
+                            consultar</el-button>
+                    </p>
+                </el-col>
                 <el-col :span="24">
                     <div class="grid-content bg-purple">
                         <el-row>
                             <el-col :span="4" offset="1" v-for="(item, index) in dataTablets" :key="index">
                                 <div style="align-items: center;">
                                     <el-card>
-                                        <el-button type="text" icon="el-icon-s-claim" circle
-                                            @click.native="initReportTabletDetail(item)"></el-button>
-                                        <h4>MESA NO.{{ item.numero }}</h4>
+                                        <div slot="header" class="clearfix">
+                                            <span>MESA NO. {{ item.numero }}</span>
+                                            <el-button style="float: right; padding: 3px 0" type="text"
+                                                @click="initReportTabletDetail(item)">Como puedo llegar?</el-button>
+                                        </div>
+                                        <h4></h4>
                                         <h1>{{ item.ubicacion }}</h1>
                                         <p>{{ item.obervaciones }}</p>
                                         <p>{{ item.descripcion }}</p>
+                                        <p>
+                                            <el-button type="danger" size="small" @click="initReportVotesForTablet(item)">Ver resultados</el-button>
+                                        </p>
                                     </el-card>
-                                    <p>
-                                        <el-button type="danger" @click="test">Como puedo llegar?</el-button>
-                                    </p>
                                 </div>
                             </el-col>
                         </el-row>
                     </div>
-                </el-col>
-                <el-col>
-                    <el-button type="primary" size="small" @click="initRequestInformation">volver a consultar</el-button>
                 </el-col>
             </el-row>
         </el-card>
@@ -48,9 +54,11 @@ export default {
         return {
             loading: true,
             dataTablets: [],
+            id_election: 0,
         };
     },
     mounted() {
+        this.id_election = this.$route.params.id;
         this.getInformationTablets();
     },
     methods: {
@@ -62,7 +70,7 @@ export default {
             var app = this;
             try {
                 let response = await axios.post("/getInformationTablets/", {
-                    id_election: '2'
+                    id_election: app.id_election
                 });
                 app.loading = false;
                 app.dataTablets = response.data.dataTablets;
@@ -75,6 +83,11 @@ export default {
         },
         initReportTabletDetail(row) {
             let app = this;
+            alert("Hola, como estas hoy?");
+        },
+        initReportVotesForTablet(row){
+            let app = this;
+            console.log(app.id);
         },
         initRequestInformation() {
             this.$router.push({
@@ -88,12 +101,6 @@ export default {
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.bg-purple .el-card .el-button {
-    font-size: 5rem;
-    display: block;
-    margin: 0 auto;
-}
-
 .el-row {
     margin-bottom: 20px;
 }
