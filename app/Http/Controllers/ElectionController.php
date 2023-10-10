@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Election;
+use App\Libraries\JSRClient;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
@@ -32,4 +33,15 @@ class ElectionController extends Controller
         return json_encode(['dataTablets' => $dataTablets]);
     }
 
+    //  * E4 . Obtener la lista de mesas habilitadas para la eleccion
+    public function reportInformationPerson(Request $request)
+    {
+        $id = $request->get('id');
+        $nreport = 'EconPersonTablet';
+        $controls = array(
+            'p_id' => $id,
+        );
+        $report = JSRClient::GetReportWithParameters($nreport, $controls);
+        return $report;
+    }
 }

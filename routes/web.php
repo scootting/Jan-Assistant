@@ -36,6 +36,9 @@ Route::post('getAuthorizedPerson', 'ElectionController@getAuthorizedPerson');
 Route::post('getTableElection', 'ElectionController@getTableElection');
 //  * E3 . Obtener la lista de mesas habilitadas para la eleccion
 Route::post('getInformationTablets', 'ElectionController@getInformationTablets');
+//  * E4 . Obtener la lista de mesas habilitadas para la eleccion
+Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
+
 /*
 Route::get('/', function () {
 return view('welcome');

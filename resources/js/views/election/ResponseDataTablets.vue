@@ -21,21 +21,29 @@
                 <el-col :span="24">
                     <div class="grid-content bg-purple">
                         <el-row>
-                            <el-col :span="4" offset="1" v-for="(item, index) in dataTablets" :key="index">
+                            <el-col :span="4" :offset="1" v-for="(item, index) in dataTablets" :key="index">
                                 <div style="align-items: center;">
-                                    <el-card>
+                                    <el-card :body-style="{ height: '180px'}" style="margin-top: 10px;">
                                         <div slot="header" class="clearfix">
                                             <span>MESA NO. {{ item.numero }}</span>
-                                            <el-button style="float: right; padding: 3px 0" type="text"
+                                            <span style="float: right; padding: 3px 0">{{ item.sede }}</span>
+                                            <!--
+                                            <el-button  type="text"
                                                 @click="initReportTabletDetail(item)">Como puedo llegar?</el-button>
+
+                                            -->
                                         </div>
-                                        <h4></h4>
                                         <h1>{{ item.ubicacion }}</h1>
                                         <p>{{ item.obervaciones }}</p>
                                         <p>{{ item.descripcion }}</p>
-                                        <p>
-                                            <el-button type="danger" size="small" @click="initReportVotesForTablet(item)">Ver resultados</el-button>
-                                        </p>
+                                        <div v-if="item.estado !== 'Habilitado'">
+                                            <el-button type="danger" size="small"
+                                                @click="initReportVotesForTablet(item)">Ver resultados</el-button>
+                                        </div>
+                                        <div v-else>
+                                            <el-button type="danger" size="small" disabled
+                                                @click="initReportVotesForTablet(item)">Ver resultados</el-button>
+                                        </div>
                                     </el-card>
                                 </div>
                             </el-col>
@@ -85,7 +93,7 @@ export default {
             let app = this;
             alert("Hola, como estas hoy?");
         },
-        initReportVotesForTablet(row){
+        initReportVotesForTablet(row) {
             let app = this;
             console.log(app.id);
         },

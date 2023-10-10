@@ -6877,6 +6877,8 @@ __webpack_require__.r(__webpack_exports__);
       //url('../images/EUATF.png'),//
       url_image_election: "/images/ICE.png",
       //url('../images/EUATF.png'),//
+      url_image_maps: "/images/MAPA.jpeg",
+      //url('../images/EUATF.png'),//
       rules: {
         id: [{
           required: true,
@@ -6884,7 +6886,8 @@ __webpack_require__.r(__webpack_exports__);
           trigger: "blur"
         }]
       },
-      id_election: 2
+      id_election: 2,
+      dialogMapVisible: false
     };
   },
   methods: {
@@ -6903,7 +6906,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: "responsedatatablets",
         params: {
-          id_election: app.id_election
+          id: app.id_election
         }
       });
     }
@@ -6991,9 +6994,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -7012,7 +7012,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     test: function test() {
-      alert("Hola, como esta tu dia?");
+      //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+      var app = this;
+      console.log(app.dataSaleDay);
+      axios({
+        url: "/reportInformationPerson/",
+        params: {
+          id: app.id
+        },
+        method: "GET",
+        responseType: "arraybuffer"
+      }).then(function (response) {
+        var blob = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        var url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });
     },
     initGetAuthorizedPerson: function initGetAuthorizedPerson() {
       var _this = this;
@@ -7137,6 +7155,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -7196,6 +7222,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     initReportTabletDetail: function initReportTabletDetail(row) {
       var app = this;
       alert("Hola, como estas hoy?");
+    },
+    initReportVotesForTablet: function initReportVotesForTablet(row) {
+      var app = this;
+      console.log(app.id);
     },
     initRequestInformation: function initRequestInformation() {
       this.$router.push({
@@ -90884,31 +90914,14 @@ var render = function() {
               "div",
               { staticClass: "header" },
               [
-                _c(
-                  "el-image",
-                  {
-                    staticStyle: {
-                      width: "90%",
-                      height: "90%",
-                      ",padding-top": "50px"
-                    },
-                    attrs: { src: _vm.url_image }
+                _c("el-image", {
+                  staticStyle: {
+                    width: "90%",
+                    height: "90%",
+                    ",padding-top": "50px"
                   },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "image-slot",
-                        attrs: { slot: "placeholder" },
-                        slot: "placeholder"
-                      },
-                      [
-                        _vm._v("\n                        Loading"),
-                        _c("span", { staticClass: "dot" }, [_vm._v("...")])
-                      ]
-                    )
-                  ]
-                )
+                  attrs: { src: _vm.url_image }
+                })
               ],
               1
             )
@@ -90933,7 +90946,7 @@ var render = function() {
                       attrs: { src: _vm.url_image_election }
                     }),
                     _vm._v(" "),
-                    _c("h2", [_vm._v("elecciones a vicerrector 2023 - 2026")]),
+                    _c("h2", [_vm._v("elecciones a vicerrector 2023 - 2027")]),
                     _vm._v(" "),
                     _c("p", [
                       _vm._v("verifica si estas habilitado(a) para votar")
@@ -90997,7 +91010,6 @@ var render = function() {
                               {
                                 staticClass: "login-button",
                                 attrs: {
-                                  loading: _vm.loading,
                                   type: "primary",
                                   "native-type": "submit",
                                   block: ""
@@ -91042,8 +91054,26 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticStyle: { float: "right", padding: "3px 0" },
+                      attrs: { type: "text" },
+                      nativeOn: {
+                        click: function($event) {
+                          _vm.dialogMapVisible = true
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "Mapa\n                    de\n                    mesas habilitadas"
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("div", { staticClass: "version" }, [
-                    _vm._v("Version 1.00.01")
+                    _vm._v("Version 1.0.01")
                   ])
                 ],
                 1
@@ -91052,6 +91082,20 @@ var render = function() {
             1
           )
         ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "Shipping address", visible: _vm.dialogMapVisible },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogMapVisible = $event
+            }
+          }
+        },
+        [_c("el-image", { attrs: { src: _vm.url_image_maps } })],
         1
       )
     ],
@@ -91245,7 +91289,7 @@ var render = function() {
                           [
                             _c(
                               "el-form-item",
-                              { attrs: { label: "numero" } },
+                              { attrs: { label: "Mesa Nro." } },
                               [
                                 _c(
                                   "el-tag",
@@ -91274,18 +91318,6 @@ var render = function() {
                               [
                                 _vm._v(
                                   "\n                            " +
-                                    _vm._s(_vm.tablet.observaciones) +
-                                    "\n                        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-form-item",
-                              { attrs: { label: "descripcion" } },
-                              [
-                                _vm._v(
-                                  "\n                            " +
                                     _vm._s(_vm.tablet.descripcion) +
                                     "\n                        "
                                 )
@@ -91301,7 +91333,7 @@ var render = function() {
                                     attrs: { type: "primary" },
                                     on: { click: _vm.test }
                                   },
-                                  [_vm._v("Como puedo llegar?")]
+                                  [_vm._v("Desea imprimir?")]
                                 )
                               ],
                               1
@@ -91432,74 +91464,104 @@ var render = function() {
                       _vm._l(_vm.dataTablets, function(item, index) {
                         return _c(
                           "el-col",
-                          { key: index, attrs: { span: 4, offset: "1" } },
+                          { key: index, attrs: { span: 4, offset: 1 } },
                           [
                             _c(
                               "div",
                               { staticStyle: { "align-items": "center" } },
                               [
-                                _c("el-card", [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "clearfix",
-                                      attrs: { slot: "header" },
-                                      slot: "header"
-                                    },
-                                    [
-                                      _c("span", [
-                                        _vm._v(
-                                          "MESA NO. " + _vm._s(item.numero)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "el-button",
-                                        {
-                                          staticStyle: {
-                                            float: "right",
-                                            padding: "3px 0"
-                                          },
-                                          attrs: { type: "text" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.initReportTabletDetail(
-                                                item
-                                              )
+                                _c(
+                                  "el-card",
+                                  {
+                                    staticStyle: { "margin-top": "10px" },
+                                    attrs: { "body-style": { height: "180px" } }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "clearfix",
+                                        attrs: { slot: "header" },
+                                        slot: "header"
+                                      },
+                                      [
+                                        _c("span", [
+                                          _vm._v(
+                                            "MESA NO. " + _vm._s(item.numero)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              float: "right",
+                                              padding: "3px 0"
                                             }
-                                          }
-                                        },
-                                        [_vm._v("Como puedo llegar?")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("h4"),
-                                  _vm._v(" "),
-                                  _c("h1", [_vm._v(_vm._s(item.ubicacion))]),
-                                  _vm._v(" "),
-                                  _c("p", [_vm._v(_vm._s(item.obervaciones))]),
-                                  _vm._v(" "),
-                                  _c("p", [_vm._v(_vm._s(item.descripcion))]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    [
-                                      _c(
-                                        "el-button",
-                                        {
-                                          attrs: {
-                                            type: "danger",
-                                            size: "small"
-                                          }
-                                        },
-                                        [_vm._v("Ver resultados")]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ])
+                                          },
+                                          [_vm._v(_vm._s(item.sede))]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h1", [_vm._v(_vm._s(item.ubicacion))]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(_vm._s(item.obervaciones))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [_vm._v(_vm._s(item.descripcion))]),
+                                    _vm._v(" "),
+                                    item.estado !== "Habilitado"
+                                      ? _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "el-button",
+                                              {
+                                                attrs: {
+                                                  type: "danger",
+                                                  size: "small"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.initReportVotesForTablet(
+                                                      item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Ver resultados")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "el-button",
+                                              {
+                                                attrs: {
+                                                  type: "danger",
+                                                  size: "small",
+                                                  disabled: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.initReportVotesForTablet(
+                                                      item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Ver resultados")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                  ]
+                                )
                               ],
                               1
                             )

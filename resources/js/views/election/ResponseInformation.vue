@@ -39,20 +39,17 @@
                     <div class="grid-content bg-purple" v-if="user.estado === 'Habilitado'">
                         <p>datos de la mesa</p>
                         <el-form ref="form" :model="tablet" label-width="200px" size="mini">
-                            <el-form-item label="numero">
+                            <el-form-item label="Mesa Nro.">
                                 <el-tag type="" effect="dark">{{ tablet.numero }}</el-tag>
                             </el-form-item>
                             <el-form-item label="ubicacion">
                                 {{ tablet.ubicacion }}
                             </el-form-item>
                             <el-form-item label="piso/ambiente">
-                                {{ tablet.observaciones }}
-                            </el-form-item>
-                            <el-form-item label="descripcion">
                                 {{ tablet.descripcion }}
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="test">Como puedo llegar?</el-button>
+                                <el-button type="primary" @click="test">Desea imprimir?</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -82,7 +79,25 @@ export default {
     },
     methods: {
         test() {
-            alert("Hola, como esta tu dia?");
+        //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+            let app = this;
+            console.log(app.dataSaleDay);
+            axios({
+                url: "/reportInformationPerson/",
+                params: {
+                    id: app.id,
+                },
+                method: "GET",
+                responseType: "arraybuffer",
+            }).then((response) => {
+                let blob = new Blob([response.data], {
+                    type: "application/pdf",
+                });
+                let link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                let url = window.URL.createObjectURL(blob);
+                window.open(url);
+            });
         },
         async initGetAuthorizedPerson() {
             var app = this;
@@ -111,6 +126,7 @@ export default {
                 name: "informationelection",
             });
         },
+
     },
 };
 </script>

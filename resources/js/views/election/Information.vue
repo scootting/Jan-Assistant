@@ -4,9 +4,6 @@
             <el-col :span="4" :offset="7">
                 <div class="header">
                     <el-image :src="url_image" style="width: 90%; height: 90%; ,padding-top:50px">
-                        <div slot="placeholder" class="image-slot">
-                            Loading<span class="dot">...</span>
-                        </div>
                     </el-image>
                 </div>
             </el-col>
@@ -15,11 +12,9 @@
                     <div slot="header" class="clearfix" style="text-align: center;">
                         <el-image :src="url_image_election" style="width: 40%; height: 40%">
                         </el-image>
-                        <h2>elecciones a vicerrector 2023 - 2026</h2>
+                        <h2>elecciones a vicerrector 2023 - 2027</h2>
                         <p>verifica si estas habilitado(a) para votar</p>
                         <!--
-                <el-button style="float: right; padding: 3px 0" type="text" @click.native="drawer = true">ayuda
-                </el-button>
                 -->
                     </div>
                     <div>
@@ -31,7 +26,7 @@
                                 </el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button :loading="loading" class="login-button" type="primary" native-type="submit"
+                                <el-button class="login-button" type="primary" native-type="submit"
                                     block>consultar
                                 </el-button>
                             </el-form-item>
@@ -39,14 +34,19 @@
                     </div>
                 </el-card>
                 <div class="footer">
-                    <!--
-                    -->
                     <el-button style="float: right; padding: 3px 0" type="text" @click.native="initGetDataTablets">Verifique
                         la lista de mesas habilitadas</el-button>
-                    <div class="version">Version 1.00.01</div>
+                    <el-button style="float: right; padding: 3px 0" type="text" @click.native="dialogMapVisible = true">Mapa
+                        de
+                        mesas habilitadas</el-button>
+                    <div class="version">Version 1.0.01</div>
                 </div>
             </el-col>
         </el-row>
+        <el-dialog title="Shipping address" :visible.sync="dialogMapVisible">
+            <el-image :src="url_image_maps">
+            </el-image>
+        </el-dialog>
     </div>
 </template>
   
@@ -60,6 +60,7 @@ export default {
             },
             url_image: "/images/EUATF.png", //url('../images/EUATF.png'),//
             url_image_election: "/images/ICE.png", //url('../images/EUATF.png'),//
+            url_image_maps: "/images/MAPA.jpeg", //url('../images/EUATF.png'),//
             rules: {
                 id: [
                     {
@@ -70,6 +71,7 @@ export default {
                 ],
             },
             id_election: 2,
+            dialogMapVisible: false,
         };
     },
     methods: {
@@ -88,7 +90,7 @@ export default {
             this.$router.push({
                 name: "responsedatatablets",
                 params: {
-                    id_election: app.id_election,
+                    id: app.id_election,
                 },
             });
         }
