@@ -40,7 +40,7 @@
           <div class="footer">
             <el-button style="float: right; padding: 3px 0" type="text" @click.native="saber = true">Verifique que está
               registrado</el-button>
-            <div class="version">Version 1.00.01</div>
+            <div class="version">Version 1.01.01</div>
           </div>
         </el-col>
       </el-row>

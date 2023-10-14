@@ -21,7 +21,7 @@
                 <el-col :span="24">
                     <div class="grid-content bg-purple">
                         <el-row>
-                            <el-col :span="4" :offset="1" v-for="(item, index) in dataTablets" :key="index">
+                            <el-col :span="4" :xs="22" :offset="1" v-for="(item, index) in dataTablets" :key="index">
                                 <div style="align-items: center;">
                                     <el-card :body-style="{ height: '180px'}" style="margin-top: 10px;">
                                         <div slot="header" class="clearfix">
@@ -77,7 +77,7 @@ export default {
         async getInformationTablets() {
             var app = this;
             try {
-                let response = await axios.post("/getInformationTablets/", {
+                let response = await axios.post("/getInformationTablets", {
                     id_election: app.id_election
                 });
                 app.loading = false;

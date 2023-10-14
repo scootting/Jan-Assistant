@@ -64,9 +64,12 @@ const router = new VueRouter({
             name: 'home',
             component: Home,
             children: [
+                { path: '', name: 'layout', component: Layout },
+                /*
                 { path: '', name: 'informationelection', component: InformationElection },
                 { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },
                 { path: '/responsedatatablets/:id', name: 'responsedatatablets', component: responseDataTablets },
+                */
             ],
         },
         {

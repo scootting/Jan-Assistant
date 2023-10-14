@@ -4509,6 +4509,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Bienvenido",
+  data: function data() {
+    return {
+      messages: {},
+      data: {}
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    test: function test() {
+      alert("bienvenido al modulo");
+    },
+    initLogin: function initLogin() {
+      this.$router.push({
+        name: "login"
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Layout.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4569,56 +4621,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: "login"
       });
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Layout.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Layout.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Bienvenido",
-  data: function data() {
-    return {
-      messages: {},
-      data: {}
-    };
-  },
-  mounted: function mounted() {},
-  methods: {
-    test: function test() {
-      alert("bienvenido al modulo");
     }
   }
 });
@@ -6994,6 +6996,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -7014,9 +7019,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     test: function test() {
       //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
       var app = this;
-      console.log(app.dataSaleDay);
       axios({
-        url: "/reportInformationPerson/",
+        url: "/api/reportInformationPerson/",
         params: {
           id: app.id
         },
@@ -7192,7 +7196,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app = _this;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.post("/getInformationTablets/", {
+                return axios.post("/getInformationTablets", {
                   id_election: app.id_election
                 });
 
@@ -87251,7 +87255,25 @@ var render = function() {
           _c(
             "el-container",
             [
-              _c("el-main", [_c("el-row", [_c("router-view")], 1)], 1),
+              _c(
+                "el-main",
+                [
+                  _c(
+                    "el-row",
+                    { attrs: { gutter: 20 } },
+                    [
+                      _c(
+                        "el-col",
+                        { attrs: { span: 16, offset: 4 } },
+                        [_c("router-view")],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "el-footer",
@@ -87667,7 +87689,7 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "version" }, [
-                        _vm._v("Version 1.00.01")
+                        _vm._v("Version 1.01.01")
                       ])
                     ],
                     1
@@ -90909,7 +90931,7 @@ var render = function() {
         "el-row",
         { staticStyle: { "padding-top": "10px" }, attrs: { gutter: 20 } },
         [
-          _c("el-col", { attrs: { span: 4, offset: 7 } }, [
+          _c("el-col", { attrs: { span: 4, offset: 7, xs: 10 } }, [
             _c(
               "div",
               { staticClass: "header" },
@@ -90929,7 +90951,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-col",
-            { attrs: { span: 6 } },
+            { attrs: { span: 6, xs: 24 } },
             [
               _c("el-card", { staticClass: "box-card" }, [
                 _c(
@@ -91088,7 +91110,11 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          attrs: { title: "Shipping address", visible: _vm.dialogMapVisible },
+          attrs: {
+            title: "Ubicacion de las mesas",
+            visible: _vm.dialogMapVisible,
+            width: "80%"
+          },
           on: {
             "update:visible": function($event) {
               _vm.dialogMapVisible = $event
@@ -91138,20 +91164,7 @@ var render = function() {
               attrs: { slot: "header" },
               slot: "header"
             },
-            [
-              _c("span", [_vm._v("informacion sobre la consulta")]),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  staticStyle: { float: "right", padding: "3px 0" },
-                  attrs: { type: "text" },
-                  on: { click: _vm.test }
-                },
-                [_vm._v("ayuda")]
-              )
-            ],
-            1
+            [_c("span", [_vm._v("informacion sobre la consulta")])]
           ),
           _vm._v(" "),
           _c(
@@ -91174,7 +91187,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
+              _c("el-col", { attrs: { span: 12, xs: 24 } }, [
                 _vm.encontrado !== false
                   ? _c(
                       "div",
@@ -91188,7 +91201,7 @@ var render = function() {
                             ref: "form",
                             attrs: {
                               model: _vm.user,
-                              "label-width": "200px",
+                              "label-width": "150px",
                               size: "mini"
                             }
                           },
@@ -91268,7 +91281,9 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
+              _c("p"),
+              _vm._v(" "),
+              _c("el-col", { attrs: { span: 12, xs: 24 } }, [
                 _vm.user.estado === "Habilitado"
                   ? _c(
                       "div",
@@ -91282,7 +91297,7 @@ var render = function() {
                             ref: "form",
                             attrs: {
                               model: _vm.tablet,
-                              "label-width": "200px",
+                              "label-width": "150px",
                               size: "mini"
                             }
                           },
@@ -91464,7 +91479,7 @@ var render = function() {
                       _vm._l(_vm.dataTablets, function(item, index) {
                         return _c(
                           "el-col",
-                          { key: index, attrs: { span: 4, offset: 1 } },
+                          { key: index, attrs: { span: 4, xs: 22, offset: 1 } },
                           [
                             _c(
                               "div",
@@ -108260,17 +108275,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _views_Home__WEBPACK_IMPORTED_MODULE_10__["default"],
     children: [{
       path: '',
-      name: 'informationelection',
-      component: _views_election_Information_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
-    }, {
-      path: '/responseinformation/:id_election/:id',
-      name: 'responseinformation',
-      component: _views_election_ResponseInformation_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
-    }, {
-      path: '/responsedatatablets/:id',
-      name: 'responsedatatablets',
-      component: _views_election_responseDataTablets_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
-    }]
+      name: 'layout',
+      component: _views_Layout__WEBPACK_IMPORTED_MODULE_11__["default"]
+    }
+    /*
+    { path: '', name: 'informationelection', component: InformationElection },
+    { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },
+    { path: '/responsedatatablets/:id', name: 'responsedatatablets', component: responseDataTablets },
+    */
+    ]
   }, {
     path: '/login',
     //path: '/login',

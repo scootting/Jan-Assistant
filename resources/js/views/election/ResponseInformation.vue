@@ -3,7 +3,9 @@
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>informacion sobre la consulta</span>
+                <!--
                 <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
+                -->
             </div>
             <el-row :gutter="20">
                 <p>
@@ -12,10 +14,10 @@
                         type="success" show-icon>
                     </el-alert>
                 </p>
-                <el-col :span="12">
+                <el-col :span="12" :xs="24">
                     <div class="grid-content bg-purple" v-if="encontrado !== false">
                         <p>datos de la persona</p>
-                        <el-form ref="form" :model="user" label-width="200px" size="mini">
+                        <el-form ref="form" :model="user" label-width="150px" size="mini">
                             <el-form-item label="carnet de identidad">
                                 {{ user.nro_dip }}
                             </el-form-item>
@@ -35,10 +37,11 @@
                         </el-form>
                     </div>
                 </el-col>
-                <el-col :span="12">
+                <p></p>
+                <el-col :span="12" :xs="24">
                     <div class="grid-content bg-purple" v-if="user.estado === 'Habilitado'">
                         <p>datos de la mesa</p>
-                        <el-form ref="form" :model="tablet" label-width="200px" size="mini">
+                        <el-form ref="form" :model="tablet" label-width="150px" size="mini">
                             <el-form-item label="Mesa Nro.">
                                 <el-tag type="" effect="dark">{{ tablet.numero }}</el-tag>
                             </el-form-item>
@@ -66,7 +69,7 @@ export default {
     data() {
         return {
             id: 0,
-            id_election:0,
+            id_election: 0,
             user: {},
             tablet: {},
             encontrado: false,
@@ -79,11 +82,10 @@ export default {
     },
     methods: {
         test() {
-        //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+            //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
             let app = this;
-            console.log(app.dataSaleDay);
             axios({
-                url: "/reportInformationPerson/",
+                url: "/api/reportInformationPerson/",
                 params: {
                     id: app.id,
                 },

@@ -18,6 +18,46 @@
         nosotros para seguir mejorando. Agradecemos su apoyo constante.
       </p>
     </el-card>
+    <!--
+    <el-row :gutter="20">
+      <el-col :offset="4" :span="4">
+        <el-card>
+          <el-button type="text" icon="el-icon-message" circle @click.native="initLogin"></el-button>
+          <h4>valores en linea</h4>
+          <p>
+            modulo para la venta de valores en linea
+          </p>
+        </el-card>
+      </el-col>
+      <el-col :span="4">
+        <el-card>
+          <el-button type="text" icon="el-icon-edit" circle @click.native="initLogin"></el-button>
+          <h4>tramites</h4>
+          <p>
+            modulo para la solicitud de tramite
+          </p>
+        </el-card>
+      </el-col>
+      <el-col :span="4">
+        <el-card>
+          <el-button type="text" icon="el-icon-document" circle @click.native="initLogin"></el-button>
+          <h4>solicitud de memorial</h4>
+          <p>
+            modulo para la solicitud de memorial
+          </p>
+        </el-card>
+      </el-col>
+      <el-col :span="4">
+        <el-card>
+          <el-button type="text" icon="el-icon-s-order" circle @click.native="initLogin"></el-button>
+          <h4>solvencias</h4>
+          <p>
+            modulo para la solicitud de solvencia
+          </p>
+        </el-card>
+      </el-col>
+    </el-row>
+    -->
   </div>
 </template>
 
@@ -30,11 +70,14 @@ export default {
       data: {},
     };
   },
-  mounted() {},
+  mounted() { },
   methods: {
     test() {
       alert("bienvenido al modulo");
     },
+    initLogin() {
+      this.$router.push({ name: "login" });
+    }
   },
 };
 </script>

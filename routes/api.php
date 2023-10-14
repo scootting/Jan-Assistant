@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
+
 Route::get('persona', 'GeneralController@getPersonByCI');
 
 //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento

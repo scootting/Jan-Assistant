@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-row :gutter="20" style="padding-top: 10px">
-            <el-col :span="4" :offset="7">
+            <el-col :span="4" :offset="7" :xs="10">
                 <div class="header">
                     <el-image :src="url_image" style="width: 90%; height: 90%; ,padding-top:50px">
                     </el-image>
                 </div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="6" :xs="24">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix" style="text-align: center;">
                         <el-image :src="url_image_election" style="width: 40%; height: 40%">
@@ -43,7 +43,7 @@
                 </div>
             </el-col>
         </el-row>
-        <el-dialog title="Shipping address" :visible.sync="dialogMapVisible">
+        <el-dialog title="Ubicacion de las mesas" :visible.sync="dialogMapVisible" width='80%'>
             <el-image :src="url_image_maps">
             </el-image>
         </el-dialog>
