@@ -4,6 +4,7 @@ Vue.use(VueRouter)
 
 // Pages
 import NotFound from './views/NotFound'
+import Success from './views/Success'
 import Login from './views/Login'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
@@ -11,8 +12,6 @@ import Information from './views/clients/Information'
 import Password from './views/clients/Password'
 
 
-
-import NuevaConvocatoria from './views/NewCall'
 
 //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
@@ -97,7 +96,7 @@ const router = new VueRouter({
                 { path: '/requests', name: 'requests', component: Requests },
                 { path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
 
-                { path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
+                //{ path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
                 //  |--------------------------------------------------------------------------
                 //  | Rutas API para el Sistema de Memoriales Universitarios
                 //  |--------------------------------------------------------------------------    
@@ -121,6 +120,11 @@ const router = new VueRouter({
             path: '/404',
             name: '404',
             component: NotFound,
+        },
+        {
+            path: '/Success',
+            name: 'success',
+            component: Success,
         },
         {
             path: '*',

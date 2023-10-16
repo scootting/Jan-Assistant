@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('persona', 'GeneralController@getPersonByCI');
-Route::post('newPerson', 'GeneralController@saveNewPerson');
+//Route::get('persona', 'GeneralController@getPersonByCI');
+//Route::post('newPerson', 'GeneralController@saveNewPerson');
 Route::get('person/{id}', 'GeneralController@getPersonById');
-Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
+//Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
+Route::post('notification', 'GeneralController@setNotification');
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
