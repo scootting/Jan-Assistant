@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('person/{id}', 'GeneralController@getPersonById');
 //Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
 Route::post('notification', 'GeneralController@PPENotification');
-Route::get('notification2', 'GeneralController@PPENotification2');
+Route::get('notification2/{id}', 'GeneralController@PPENotification2');
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
