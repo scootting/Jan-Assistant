@@ -96,6 +96,7 @@ class GeneralController extends Controller
     public function PPENotification2(Request $request){
         //$data = General::GetPersonByIdentityCard('6600648');
         //return json_encode($data);
+        $input = $request->all();
         return response()->json('Successfully', 200);
     }
 

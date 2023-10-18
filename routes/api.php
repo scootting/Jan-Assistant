@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+//Route::post('notification2', 'GeneralController@PPENotification2');
+
 
 Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
 
