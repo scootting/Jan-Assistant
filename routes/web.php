@@ -18,10 +18,10 @@ Route::get('person/{id}', 'GeneralController@getPersonById');
 //Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
 Route::post('notification', 'GeneralController@PPENotification');
 //Route::match(['get', 'post'], 'notification2', 'GeneralController@PPENotification2');
-
+Route::post('notification2/{id}', 'GeneralController@PPENotification2');//->withoutMiddleware(['csrf']);
 //Route::post('/notification2', 'GeneralController@PPENotification2PPENotification2');
 //Route::post('notification2', 'GeneralController@PPENotification2');
-Route::match(array('GET', 'POST'), '/notification2', 'GeneralController@PPENotification2');
+//Route::match(array('GET', 'POST'), '/notification2', 'GeneralController@PPENotification2');
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 //Route::post('notification2', 'GeneralController@PPENotification2');
+//Route::any('notification2', 'GeneralController@PPENotification2');
 
 
 Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
