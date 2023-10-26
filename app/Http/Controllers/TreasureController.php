@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Treasure;
 use App\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class TreasureController extends Controller
 {
@@ -14,7 +16,11 @@ class TreasureController extends Controller
     {
         $year = $request->get('year');
         $typed = 'U';
-        $data = Treasure::getValuesOffered($year, $typed);
+        $valuesOffered = Treasure::getValuesOffered($year, $typed);
+        $typed = 'T';
+        $valuesAcquired = Treasure::getValuesOffered($year, $typed);
+        return json_encode(['valuesOffered' => $valuesOffered, 'valuesAcquired' => $valuesAcquired]);
+
         return json_encode($data);
     }
 
@@ -38,6 +44,8 @@ class TreasureController extends Controller
 
         \Log::info("este es el id de la nueva solicitud". $id);
         $tip_tra = '10';
+
+        $array_products = array();
         foreach ($acquired as $item) {
             # code...
             $cod_val = $item['cod_val'];
@@ -45,7 +53,46 @@ class TreasureController extends Controller
             $can_val = 1;
             $pre_uni = $item['pre_uni'];
             $data = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
+            array_push($array_products, array('actividadEconomica' => "1",
+                                              'codigo' => $cod_val,
+                                              'descripcion' => $des_val,
+                                              'precioUnitario' => (float)$pre_uni,
+                                              'unidadMedida' => 1,
+                                              'cantidad' => $can_val));
         }
-        return json_encode($id);
+
+        $array_b = array('descripcion' => 'Pago por valores universitarios',
+                         'codigoOrden'=> 'VA'.$id_sol,
+                         'datosPago' => array ('nombresCliente' => $descripcion,
+                         'apellidosCliente' => $descripcion,
+                         'numeroDocumentoCliente' => $no_dip,
+                         'fechaNacimientoCliente' => '2000-01-01',
+                         'cuentaBancaria' => '1000005678',
+                         'montoTotal' => $total,
+                         'moneda' => 'BOB',
+                         'tipoCambioMoneda' => 1,
+                    ),
+                      "productos" => $array_products,
+                    );        
+        \Log::info($array_b);
+
+        $apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
+  
+        $headers = [
+            
+            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM'
+        ];
+  
+        $response = Http::withHeaders($headers)->post($apiURL, $array_b);
+  
+        $statusCode = $response->status();
+        $responseBody = json_decode($response->getBody(), true);
+        \Log::info($response);
+        \Log::info($statusCode);
+        \Log::info($responseBody);
+        return json_encode($responseBody);
+        //return json_encode($id);
     }
 }

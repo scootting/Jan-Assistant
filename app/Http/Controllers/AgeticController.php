@@ -11,10 +11,10 @@ class AgeticController extends Controller
     //
     public function storeOnlineSalesRequest(Request $request)
     {
-
+        
         $string_json = '{
             "descripcion": "PAGO DE PRUEBA UNIVERSIDAD TOMAS FRIAS",
-            "codigoOrden": "PAGO0009",
+            "codigoOrden": "PAGO0060",
             "datosPago": {
               "nombresCliente": "JUAN",
               "apellidosCliente": "PEREZ",

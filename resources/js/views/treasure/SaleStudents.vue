@@ -17,6 +17,7 @@
             <p>valores en linea que puede adquirir</p>
             <el-table v-loading="loading" :data="offered" style="width: 100%">
               <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
+              <el-table-column prop="cantidad" label="cantidad" width="100" align="right"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
               <el-table-column align="right" width="100">
                 <template slot-scope="scope">
@@ -32,9 +33,10 @@
             <p>valores en linea solicitados para su compra</p>
             <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar">
               <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
+              <el-table-column prop="cantidad" label="cantidad" width="100" align="right"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
               <el-table-column align="right" width="100">
-                <template slot-scope="scope">
+                <template slot-scope="scope" v-if="scope.row.compuesto === 'U'">
                   <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
                   </el-button>
                 </template>
@@ -65,7 +67,8 @@ export default {
       loading: true,
       offered: [],
       acquired: [],
-      total: 0.00,
+      total: 1.00,
+      dataRequest: {},
     };
   },
   mounted() {
@@ -79,11 +82,12 @@ export default {
     async getValuesOffered() {
       var app = this;
       try {
-        let response = await axios.post("/api/getValuesOffered/", {
+        let response = await axios.post("/api/getValuesOffered", {
           year: app.client.gestion,
         });
         app.loading = false;
-        app.offered = response.data;
+        app.offered = response.data.valuesOffered;
+        app.acquired = response.data.valuesAcquired;
         console.log(response.data);
       } catch (error) {
         this.error = error.response.data;
@@ -98,28 +102,33 @@ export default {
       var app = this;
       console.log(app.acquired);
       try {
-        if (app.acquired.length <= 0) {
+        if (app.acquired.length <= 1) {
           this.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
             confirmButtonText: 'BUENO',
           });
         } else {
-          let response = await axios.post("/api/setValuesAcquired/", {
+          let response = await axios.post("/api/setValuesAcquired", {
             client: app.client,
             total: app.total,
             acquired: app.acquired,
             marker: "SALE",
           });
-          this.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
-            confirmButtonText: 'BUENO',
-          });
-          console.log(response.data[0].ff_nueva_solicitud);
-          let id = response.data[0].ff_nueva_solicitud;
+          /*
+          this.$alert('acaba de crear una solicitud de venta de valores en linea, desea continuar?', 'LO HA CONSEGUIDO', {
+            confirmButtonText: 'SI',
+          });*/
+          /*
           this.$router.push({
             name: "boucherofrequest",
             params: {
               id: id,
             },
           });
+          */
+          console.log(response);
+          this.dataRequest = response.data.datos;
+          console.log(this.dataRequest.urlRedireccion);
+          window.location.href = this.dataRequest.urlRedireccion;
         }
       } catch (error) {
         this.error = error.response.data;

@@ -7260,6 +7260,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
@@ -7269,7 +7271,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: true,
       offered: [],
       acquired: [],
-      total: 0.00
+      total: 1.00,
+      dataRequest: {}
     };
   },
   mounted: function mounted() {
@@ -7292,32 +7295,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app = _this;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.post("/api/getValuesOffered/", {
+                return axios.post("/api/getValuesOffered", {
                   year: app.client.gestion
                 });
 
               case 4:
                 response = _context.sent;
                 app.loading = false;
-                app.offered = response.data;
+                app.offered = response.data.valuesOffered;
+                app.acquired = response.data.valuesAcquired;
                 console.log(response.data);
-                _context.next = 14;
+                _context.next = 15;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](1);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 10]]);
+        }, _callee, null, [[1, 11]]);
       }))();
     },
     //  *  T2. Guardar los valores para la venta en linea
@@ -7325,7 +7329,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var app, response, id;
+        var app, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -7334,7 +7338,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(app.acquired);
                 _context2.prev = 2;
 
-                if (!(app.acquired.length <= 0)) {
+                if (!(app.acquired.length <= 1)) {
                   _context2.next = 7;
                   break;
                 }
@@ -7348,7 +7352,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 _context2.next = 9;
-                return axios.post("/api/setValuesAcquired/", {
+                return axios.post("/api/setValuesAcquired", {
                   client: app.client,
                   total: app.total,
                   acquired: app.acquired,
@@ -7358,19 +7362,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 response = _context2.sent;
 
-                _this2.$alert('ACABA DE CREAR UNA NUEVA SOLICITUD, SI CUENTA CON EL COMPROBANTE DE PAGO PUEDE REALIZAR SU REGISTRO', 'LO HA CONSEGUIDO', {
-                  confirmButtonText: 'BUENO'
-                });
+                /*
+                this.$alert('acaba de crear una solicitud de venta de valores en linea, desea continuar?', 'LO HA CONSEGUIDO', {
+                  confirmButtonText: 'SI',
+                });*/
 
-                console.log(response.data[0].ff_nueva_solicitud);
-                id = response.data[0].ff_nueva_solicitud;
-
-                _this2.$router.push({
+                /*
+                this.$router.push({
                   name: "boucherofrequest",
                   params: {
-                    id: id
-                  }
+                    id: id,
+                  },
                 });
+                */
+                console.log(response);
+                _this2.dataRequest = response.data.datos;
+                console.log(_this2.dataRequest.urlRedireccion);
+                window.location.href = _this2.dataRequest.urlRedireccion;
 
               case 14:
                 _context2.next = 20;
@@ -91503,6 +91511,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("el-table-column", {
                           attrs: {
+                            prop: "cantidad",
+                            label: "cantidad",
+                            width: "100",
+                            align: "right"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
                             prop: "pre_uni",
                             label: "precio",
                             width: "100",
@@ -91579,6 +91596,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("el-table-column", {
                           attrs: {
+                            prop: "cantidad",
+                            label: "cantidad",
+                            width: "100",
+                            align: "right"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("el-table-column", {
+                          attrs: {
                             prop: "pre_uni",
                             label: "precio",
                             width: "100",
@@ -91588,34 +91614,40 @@ var render = function() {
                         _vm._v(" "),
                         _c("el-table-column", {
                           attrs: { align: "right", width: "100" },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "default",
-                              fn: function(scope) {
-                                return [
-                                  _c(
-                                    "el-button",
-                                    {
-                                      attrs: {
-                                        type: "primary",
-                                        size: "mini",
-                                        plain: ""
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.initRemoveValues(
-                                            scope.$index,
-                                            scope.row
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Quitar\n                ")]
-                                  )
-                                ]
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "default",
+                                fn: function(scope) {
+                                  return scope.row.compuesto === "U"
+                                    ? [
+                                        _c(
+                                          "el-button",
+                                          {
+                                            attrs: {
+                                              type: "primary",
+                                              size: "mini",
+                                              plain: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.initRemoveValues(
+                                                  scope.$index,
+                                                  scope.row
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Quitar\n                ")]
+                                        )
+                                      ]
+                                    : undefined
+                                }
                               }
-                            }
-                          ])
+                            ],
+                            null,
+                            true
+                          )
                         })
                       ],
                       1
