@@ -23,16 +23,16 @@ Route::post('notification2/{id}', 'GeneralController@PPENotification2');//->with
 //Route::post('notification2', 'GeneralController@PPENotification2');
 //Route::match(array('GET', 'POST'), '/notification2', 'GeneralController@PPENotification2');
 
+//  * Ruta añadida para redireccionar a la misma pagina.
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
-//  * Ruta añadida para redireccionar a la misma pagina.
-
+/*
 Route::get('files', 'FileController@index');
 Route::post('upload', 'FileController@uploadFile');
 Route::get('delete/upload-folder/{file}', 'FileController@deleteFile');
 Route::get('download/upload-folder/{file}', 'FileController@downloadFile');
 Route::get('reportSelectedFixedAssets2/', 'FixedAssetController@getReportSelectedFixedAssets2');
-
+*/
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Elecciones
 //  |--------------------------------------------------------------------------

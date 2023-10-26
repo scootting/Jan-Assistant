@@ -23,7 +23,7 @@
                         <el-row>
                             <el-col :span="4" :xs="22" :offset="1" v-for="(item, index) in dataTablets" :key="index">
                                 <div style="align-items: center;">
-                                    <el-card :body-style="{ height: '180px'}" style="margin-top: 10px;">
+                                    <el-card :body-style="{ height: '180px' }" style="margin-top: 10px;">
                                         <div slot="header" class="clearfix">
                                             <span>MESA NO. {{ item.numero }}</span>
                                             <span style="float: right; padding: 3px 0">{{ item.sede }}</span>

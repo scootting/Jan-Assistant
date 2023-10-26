@@ -13,7 +13,8 @@ class TreasureController extends Controller
     public function getValuesOffered(Request $request)
     {
         $year = $request->get('year');
-        $data = Treasure::getValuesOffered($year);
+        $typed = 'U';
+        $data = Treasure::getValuesOffered($year, $typed);
         return json_encode($data);
     }
 

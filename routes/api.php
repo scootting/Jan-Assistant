@@ -32,6 +32,14 @@ Route::group([
     'middleware' => 'jwt.auth',
 ], function () {
 
+
+    //  |--------------------------------------------------------------------------
+    //  | Rutas API para el Sistema de Ventas en Linea - Agetic
+    //  |--------------------------------------------------------------------------    
+    //  *  AG1. Guardar la venta de valores en linea en la PPE
+    Route::post('storeOnlineSalesRequest', 'AgeticController@storeOnlineSalesRequest');
+
+
     //  *  A2. Actualizar la informacion personal del cliente
     //  * {cliente: array con la informacion personalizada del cliente}
     Route::post('storePersonInformation', 'GeneralController@storePersonInformation');

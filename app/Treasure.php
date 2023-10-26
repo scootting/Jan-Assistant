@@ -9,10 +9,10 @@ class Treasure extends Model
 {
 //  *  T1. Obtener los valores para la venta en linea
     //  * {gestion: gestion de los valores disponibles}
-    public static function getValuesOffered($year)
+    public static function getValuesOffered($year, $typed)
     {
         //select * from cluster.f_nuevos_datacenter('10547123', '2019', '2')
-        $query = "select * from linea.ff_datos_valores('" . $year . "')";
+        $query = "select * from ppe.ff_valores_habilitados('" . $year . "','" . $typed . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -28,12 +28,6 @@ class Treasure extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
-
-
-
-
-
 
     //  * Encontrar los valores de un tramite a traves de su descripcion.
     //  * {description: descripcion de la busqueda}

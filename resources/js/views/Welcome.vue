@@ -6,7 +6,7 @@
         <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
-      <el-button type="primary" @click="reporte">Reporte</el-button>
+      <el-button type="primary" @click="test">Curl</el-button>
     </el-card>
   </div>
 </template>
@@ -16,35 +16,32 @@ import example from "./components/example.vue";
 
 export default {
   name: "Bienvenido",
-  components: {
-    example,
-  },
   data() {
     return {
+      data:[],
+      dataResponse:{},
     };
   },
   mounted() { },
   methods: {
-    test() {
-      alert("bienvenido al modulo");
-    },
-    reporte() {
-      axios
-        .get("/api/reportSelectedFixedAssets2/", {
-          responseType: "arraybuffer",
-        })
-        .then((response) => {
-          let blob = new Blob([response.data], { type: "application/pdf" });
-          let link = document.createElement("a");
-          let url = window.URL.createObjectURL(blob);
-          window.open(url);
+    async test() {
+      var app = this;
+      try {
+        let response = await axios.post("/api/storeOnlineSalesRequest", {
         });
+        app.loading = false;
+        app.data = response.data;
+      } catch (error) {
+        console.log(error);
+        this.error = error.response.data;
+        app.$alert(this.error.message, "Gestor de errores", {
+          dangerouslyUseHTMLString: true,
+        });
+      }
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
