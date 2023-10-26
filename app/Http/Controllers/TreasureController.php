@@ -92,7 +92,14 @@ class TreasureController extends Controller
         \Log::info($response);
         \Log::info($statusCode);
         \Log::info($responseBody);
+        if($statusCode == 202){
+            # Satisfactorio...
+            $codigoTransaccion = $responseBody['datos']['codigoTransaccion']; 
+            \Log::info($responseBody['datos']['codigoTransaccion']);
+            $id = treasure::setIdCptRequest($codigoTransaccion, $id_sol);
+        }
         return json_encode($responseBody);
+
         //return json_encode($id);
     }
 }

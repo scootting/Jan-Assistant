@@ -94,9 +94,7 @@ class GeneralController extends Controller
 
     //  *  A8 Obtiene las notificaciones efectuadas por la AGETIC a traves de PPE
     public function PPENotification2(Request $request){
-        //$data = General::GetPersonByIdentityCard('6600648');
-        //return json_encode($data);
-        //$input = $request->all();
+        \Log::info($request);
         return response()->json('Successfully', 200);
     }
 

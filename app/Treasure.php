@@ -29,6 +29,17 @@ class Treasure extends Model
         return $data;
     }
 
+    //  *  T2. Actualiza el codigo cpt de una solicitud de venta de valores en linea
+    //  * {codigoTransaccion: codigo de la transaccion}
+    //  * {id_sol: id de la solicitud}
+    public static function SetIdCptRequest($codigoTransaccion, $id_sol)
+    {
+        $query = "update linea.solicitudes set id_cpt = '" . $codigoTransaccion . "', estado = 'En Proceso' where id = '" . $id_sol . "'";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+
     //  * Encontrar los valores de un tramite a traves de su descripcion.
     //  * {description: descripcion de la busqueda}
     //  * {user: usuario}
