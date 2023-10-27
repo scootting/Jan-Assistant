@@ -57,7 +57,7 @@ class General extends Model
 
     public static function SetValuesAndCptState($codigoTransaccion, $estado)
     {
-        $query = "select * from pub.ff_registrar_transacciones('" . $codigoTransaccion . "', '" . $estado . "')";
+        $query = "select * from ppe.ff_registrar_transacciones('" . $codigoTransaccion . "', '" . $estado . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
