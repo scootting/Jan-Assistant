@@ -55,7 +55,12 @@ class General extends Model
         return $data;
     }
 
-
+    public static function SetValuesAndCptState($codigoTransaccion, $estado)
+    {
+        $query = "select * from pub.ff_registrar_transacciones('" . $codigoTransaccion . "', '" . $estado . "')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 
     // *** - funcion para el registro de usuarios - ***
