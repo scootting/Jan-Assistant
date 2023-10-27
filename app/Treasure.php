@@ -34,7 +34,7 @@ class Treasure extends Model
     //  * {id_sol: id de la solicitud}
     public static function setIdCptRequest($codigoTransaccion, $id_sol)
     {
-        $query = "update linea.solicitudes set id_cpt = '" . $codigoTransaccion . "', estado = 'En Proceso' where id = '" . $id_sol . "'";
+        $query = "update linea.solicitudes set id_cpt = '" . $codigoTransaccion . "', estado = 'EN PROCESO' where id = '" . $id_sol . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

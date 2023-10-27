@@ -6667,6 +6667,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -90523,7 +90524,7 @@ var render = function() {
               title: "estados de la solicitud",
               type: "success",
               description:
-                "solicitado: cuando se tiene los valores seleccionados, procesando: cuando se envio el comprobante de pago y falta la verificacion, observado: cuando se cancelo solo una parte del pago total, verificado: concluido con exito el proceso de la solicitud",
+                "creado: cuando se tiene los valores seleccionados, pero no se creo el CPT, en proceso: falta pagar por el CPT generado, procesado: cuando se cancelo el pago total, anulado: cuando se anulo la solicitud de CPT, expirado: cuando paso el tiempo valido para pagar por el CPT",
               "show-icon": ""
             }
           }),
@@ -90630,8 +90631,20 @@ var render = function() {
                     ])
                   }),
                   _vm._v(" "),
+                  _c(
+                    "el-table-column",
+                    {
+                      attrs: { label: "detalle", width: "450", align: "right" }
+                    },
+                    [
+                      _c("p", [
+                        _vm._v("por la venta de valores universitarios")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { align: "right", width: "620" },
+                    attrs: { align: "right", width: "220" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
@@ -90656,7 +90669,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                            imprimir informacion para realizar el deposito"
+                                  "\n                            imprimir comprobantes de pago"
                                 )
                               ]
                             )

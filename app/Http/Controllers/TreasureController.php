@@ -36,6 +36,11 @@ class TreasureController extends Controller
         $marker = $request->get('marker');
 
         $descripcion = $client['descripcion'];
+        if($client['paterno'] == "")
+            $apellidos = $client['materno'];
+        else
+            $apellidos = $client['paterno']. " ". $client['materno'];
+        $nombres = $client['nombres'];
         $no_dip = $client['nodip'];
         $gestion = $client['gestion'];
 
@@ -43,6 +48,7 @@ class TreasureController extends Controller
         $id_sol = $id[0]->{'ff_nueva_solicitud'};
 
         \Log::info("este es el id de la nueva solicitud". $id);
+        \Log::info($client);
         $tip_tra = '10';
 
         $array_products = array();
@@ -63,8 +69,8 @@ class TreasureController extends Controller
 
         $array_b = array('descripcion' => 'Pago por valores universitarios',
                          'codigoOrden'=> 'VA'.$id_sol,
-                         'datosPago' => array ('nombresCliente' => $descripcion,
-                         'apellidosCliente' => $descripcion,
+                         'datosPago' => array ('nombresCliente' => $nombres,
+                         'apellidosCliente' => $apellidos,
                          'numeroDocumentoCliente' => $no_dip,
                          'fechaNacimientoCliente' => '2000-01-01',
                          'cuentaBancaria' => '1000005678',

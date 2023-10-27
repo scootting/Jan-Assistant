@@ -8,7 +8,7 @@
                     nueva solicitud para la venta de valores en linea</el-button>
             </div>
             <el-alert title="estados de la solicitud" type="success"
-                description="solicitado: cuando se tiene los valores seleccionados, procesando: cuando se envio el comprobante de pago y falta la verificacion, observado: cuando se cancelo solo una parte del pago total, verificado: concluido con exito el proceso de la solicitud"
+                description="creado: cuando se tiene los valores seleccionados, pero no se creo el CPT, en proceso: falta pagar por el CPT generado, procesado: cuando se cancelo el pago total, anulado: cuando se anulo la solicitud de CPT, expirado: cuando paso el tiempo valido para pagar por el CPT"
                 show-icon>
             </el-alert>
             <br />
@@ -30,14 +30,15 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column align="right" width="620">
+                    <el-table-column label="detalle" width="450" align="right"><p>por la venta de valores universitarios</p></el-table-column>
+                    <el-table-column align="right" width="220">
                         <template slot-scope="scope">
                             <!--
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
                             -->
                             <el-button @click="initEditRequest(scope.$index, scope.row)" type="info" plain size="mini">
-                                imprimir informacion para realizar el deposito</el-button>
+                                imprimir comprobantes de pago</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
