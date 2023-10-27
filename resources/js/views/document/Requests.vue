@@ -32,9 +32,11 @@
                     </el-table-column>
                     <el-table-column align="right" width="620">
                         <template slot-scope="scope">
+                            <!--
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
-                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="warning" plain size="mini">
+                            -->
+                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="info" plain size="mini">
                                 imprimir informacion para realizar el deposito</el-button>
                         </template>
                     </el-table-column>

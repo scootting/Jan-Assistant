@@ -6665,6 +6665,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -90639,31 +90641,7 @@ var render = function() {
                               "el-button",
                               {
                                 attrs: {
-                                  type: "primary",
-                                  size: "mini",
-                                  plain: ""
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.initSaleBoucher(
-                                      scope.$index,
-                                      scope.row
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "registrar deposito del comprobante de pago"
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: {
-                                  type: "warning",
+                                  type: "info",
                                   plain: "",
                                   size: "mini"
                                 },
