@@ -100,7 +100,7 @@ class GeneralController extends Controller
 
         $codigo_transaccion = $request->get('codigoSeguimiento'); 
         $estado = $request->get('estado');
-        $data = General::SetValuesAndCptState($codigoTransaccion, $estado);
+        $data = General::SetValuesAndCptState($codigo_transaccion, $estado);
         return response()->json('Successfully', 200);
     }
 
