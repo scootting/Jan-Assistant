@@ -37,7 +37,7 @@
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
                             -->
-                            <el-button @click="initEditRequest(scope.$index, scope.row)" type="info" plain size="mini">
+                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="success" plain size="small">
                                 imprimir comprobantes de pago</el-button>
                         </template>
                     </el-table-column>
@@ -92,6 +92,7 @@ export default {
             }
         },
         //  *  Route. Iniciar el registro de comprobantesde pago para la venta en linea de valores
+        /*
         initSaleBoucher(idx, row) {
             console.log(idx, row);
             let id = row.id;
@@ -102,13 +103,22 @@ export default {
                 },
             });
         },
+        */
         //  *  Route. Iniciar una nueva solicitud para la venta en linea de valores
         initAddRequestInLine() {
             this.$router.push({
                 name: "salestudents",
             });
         },
-        initEditRequest(idx, row) { },
+        initPrintRequestReport(idx, row) { 
+            let id = row.id;
+            this.$router.push({
+                name: "salevaluesdetails",
+                params: {
+                    id: id,
+                },
+            });
+        },
     },
 };
 </script>

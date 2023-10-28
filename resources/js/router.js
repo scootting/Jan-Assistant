@@ -22,10 +22,11 @@ import Layout from './views/Layout'
 
 //Tesoro: Modulo para seleccionar los valores en linea
 import SaleStudents from './views/treasure/SaleStudents'
+//Documento: Modulo para imprimir los comprobantes de pago por solicitud
+import SaleValuesDetails from './views/treasure/SaleValuesDetails'
+//import BoucherOfRequest from './views/document/BoucherOfRequest'
 //Documento: Modulo para gestionar las solicitudes
 import Requests from './views/document/Requests'
-//Documento: Modulo para gestionar los depositos por solicitud
-import BoucherOfRequest from './views/document/BoucherOfRequest'
 //Documento: Modulo para crear una nueva solicitud 
 
 //  |--------------------------------------------------------------------------
@@ -92,9 +93,14 @@ const router = new VueRouter({
                 { path: '', name: 'welcome', component: Welcome },
                 { path: '/information', name: 'information', component: Information },
                 { path: '/password', name: 'password', component: Password },
-                { path: '/salestudents', name: 'salestudents', component: SaleStudents },
+
+                //  |--------------------------------------------------------------------------
+                //  | Rutas API para el Sistema de venta de valores en linea
+                //  |--------------------------------------------------------------------------    
                 { path: '/requests', name: 'requests', component: Requests },
-                { path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
+                { path: '/salestudents', name: 'salestudents', component: SaleStudents },
+                { path: '/salevaluesdetails/:id', name: 'salevaluesdetails', component: SaleValuesDetails },
+                //{ path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
 
                 //{ path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
                 //  |--------------------------------------------------------------------------
