@@ -32,11 +32,12 @@
                     </el-table-column>
                     <el-table-column label="detalle" width="450" align="right"><p>por la venta de valores universitarios</p></el-table-column>
                     <el-table-column align="right" width="220">
-                        <template slot-scope="scope">
+                        <template slot-scope="scope" v-if="scope.row.estado === 'PROCESADO'">
                             <!--
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
                             -->
+                            
                             <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="success" plain size="small">
                                 imprimir comprobantes de pago</el-button>
                         </template>

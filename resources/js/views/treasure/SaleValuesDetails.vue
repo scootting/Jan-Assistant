@@ -43,23 +43,22 @@
                 <el-col :span="15">
                     <div class="grid-content bg-purple">
                         <p>valores en linea adquiridos</p>
-                        <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar">
+                        <el-table :data="dataRequestDetails" style="width: 100%" show-summary
+                            sum-text="importe total a cancelar">
                             <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
-                            <el-table-column prop="cantidad" label="cantidad" width="100" align="right"></el-table-column>
-                            <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
-                            <el-table-column align="right" width="100">
-                                <!--
-                            <template slot-scope="scope" v-if="scope.row.compuesto === 'U'">
-                                <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
-                                </el-button>
-                            </template>
-                    -->
+                            <el-table-column prop="can_val" label="cantidad" width="100" align="right"></el-table-column>
+                            <el-table-column prop="imp_val" label="precio" width="100" align="right"></el-table-column>
+                            <el-table-column align="right" width="200">
+                                <template slot-scope="scope" v-if="scope.row.id_compuesto === 'U'">
+                                    <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary" size="mini"
+                                        plain>imprimir comprobante
+                                    </el-button>
+                                </template>
                             </el-table-column>
                         </el-table>
                     </div>
                     <br>
                     <div style="text-align: right; float: right">
-                        <el-tag type="success" effect="dark">IMPORTE CANCELADO: {{ total }}</el-tag>
                         <!--
                         <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitud de valores
                             en linea
@@ -87,7 +86,7 @@ export default {
             acquired: [],
             total: 1.00,
             dataRequest: {},
-            onlyRequest:{},
+            dataRequestDetails: [],
         };
     },
     mounted() {
@@ -107,9 +106,8 @@ export default {
                 });
                 app.loading = false;
                 console.log(response);
-                app.dataRequest = response.data.data;
-                app.boucherRequest = response.data.boucher;
-                app.dataRequest = response.data.data[0];
+                app.dataRequest = response.data.dataRequest[0];
+                app.dataRequestDetails = response.data.dataRequestDetails;
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {
@@ -117,6 +115,9 @@ export default {
                 });
             }
         },
+        async initPrintComprobate(){
+
+        }
     },
 };
 </script>

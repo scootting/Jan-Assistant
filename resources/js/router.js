@@ -24,11 +24,11 @@ import Layout from './views/Layout'
 import SaleStudents from './views/treasure/SaleStudents'
 //Documento: Modulo para imprimir los comprobantes de pago por solicitud
 import SaleValuesDetails from './views/treasure/SaleValuesDetails'
-//import BoucherOfRequest from './views/document/BoucherOfRequest'
+import InformationSaleDetails from './views/treasure/InformationSaleDetails'
 //Documento: Modulo para gestionar las solicitudes
 import Requests from './views/document/Requests'
-//Documento: Modulo para crear una nueva solicitud 
 
+//Documento: Modulo para crear una nueva solicitud 
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Memoriales Universitarios
 //  |--------------------------------------------------------------------------    
@@ -65,6 +65,8 @@ const router = new VueRouter({
             component: Home,
             children: [
                 { path: '', name: 'layout', component: Layout },
+                { path: '/transaction/:id', name: 'informationsaledetails', component: InformationSaleDetails },
+
                 /*
                 { path: '', name: 'informationelection', component: InformationElection },
                 { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },

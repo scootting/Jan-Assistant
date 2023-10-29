@@ -46,6 +46,13 @@ Route::post('getInformationTablets', 'ElectionController@getInformationTablets')
 Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
 //Route::get('report', 'ElectionController@report');
 
+//  |--------------------------------------------------------------------------
+//  | Rutas API para el Sistema de Tesoro
+//  |--------------------------------------------------------------------------
+
+Route::post('getDataTransactionById', 'TreasureController@getDataTransactionById');
+
+
 /*
 Route::get('/', function () {
 return view('welcome');

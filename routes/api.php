@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
  */
 //Route::post('notification2', 'GeneralController@PPENotification2');
 //Route::any('notification2', 'GeneralController@PPENotification2');
-
-
-Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
+//Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
 
 Route::get('persona', 'GeneralController@getPersonByCI');
+
 
 //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento
 //  * {username: carnet de identidad del usuario, password: fecha de nacimiento del usuario o personalizado}
 Route::post('login', 'GeneralController@loginClient');
+
 
 //  *  A4. Registrar la informacion personal del cliente
 //  * {cliente: array con la informacion personalizada del cliente}
@@ -31,13 +31,6 @@ Route::post('login', 'GeneralController@loginClient');
 Route::group([
     'middleware' => 'jwt.auth',
 ], function () {
-
-
-    //  |--------------------------------------------------------------------------
-    //  | Rutas API para el Sistema de Ventas en Linea - Agetic
-    //  |--------------------------------------------------------------------------    
-    //  *  AG1. Guardar la venta de valores en linea en la PPE
-    Route::post('storeOnlineSalesRequest', 'AgeticController@storeOnlineSalesRequest');
 
 
     //  *  A2. Actualizar la informacion personal del cliente
@@ -52,9 +45,12 @@ Route::group([
     //  * {year: gestion en la que se desarrolla}
     Route::post('getAditionalInformation', 'GeneralController@getAditionalInformation');
 
-
-    
     Route::post('logout', 'GeneralController@logoutUser');
+    //  |--------------------------------------------------------------------------
+    //  | Rutas API para el Sistema de Ventas en Linea - Agetic
+    //  |--------------------------------------------------------------------------    
+    //  *  AG1. Guardar la venta de valores en linea en la PPE
+    Route::post('storeOnlineSalesRequest', 'AgeticController@storeOnlineSalesRequest');
 
     //  *  T1. Obtener los valores para la venta en linea
     //  * {gestion: gestion de los valores disponibles}
@@ -69,14 +65,18 @@ Route::group([
     //  * {gestion: gestion activa}
     Route::post('request', 'DocumentController@getRequests');
 
+    //  *  D3. Obtener la informacion por cada solicitud
+    //  * {id: id de la solicitud }
+    Route::post('getDataRequestById', 'TreasureController@getDataRequestById');
+
+
+
+
     //  *  D2. Guardar los boucher generados por cada solicitud
     //  * {boucher: imagen del boucher }
     //  * {request: informacion del boucher }
     Route::post('storeBoucherOfRequest', 'DocumentController@storeBoucherOfRequest');
 
-    //  *  D3. Obtener la informacion por cada solicitud
-    //  * {id: id de la solicitud }
-    Route::post('getDataRequestById', 'DocumentController@getDataRequestById');
     //  *  D4. Obtener el documento digitalizado de cada solicitud
     //  * {id: id del boucher digitalizado }
     Route::get('getDigitalBoucher', 'DocumentController@getDigitalBoucher');

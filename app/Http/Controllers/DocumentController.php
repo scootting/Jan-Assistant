@@ -83,14 +83,6 @@ class DocumentController extends Controller
         }
     }
 
-    public function getDataRequestById(Request $request)
-    {
-        $id_sol = $request->get('id');
-        $data = Document::GetDataRequestById($id_sol);
-        $boucher = Document::getBoucherRequestById($id_sol);
-        return json_encode(['data' => $data, 'boucher' => $boucher]);
-    }
-
     //  * M2. Lista las solicitudes de elaboracion de memorial universitario
     public function getDataDocument(Request $request)
     {
