@@ -69,6 +69,8 @@ Route::group([
     //  * {id: id de la solicitud }
     Route::post('getDataRequestById', 'TreasureController@getDataRequestById');
 
+    //  *  D3. Imprimir los comprobantes de pago
+    Route::get('printComprobate', 'TreasureController@printComprobate');
 
 
 

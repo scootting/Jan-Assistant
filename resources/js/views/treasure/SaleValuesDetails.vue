@@ -115,8 +115,26 @@ export default {
                 });
             }
         },
-        async initPrintComprobate(){
-
+        async initPrintComprobate(idx, row){
+            console.log(idx);
+            console.log(row);
+            let app = this;
+            axios({
+                url: "/api/printComprobate/",
+                params: {
+                    id: row.id_tran,
+                },
+                method: "GET",
+                responseType: "arraybuffer",
+            }).then((response) => {
+                let blob = new Blob([response.data], {
+                    type: "application/pdf",
+                });
+                let link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                let url = window.URL.createObjectURL(blob);
+                window.open(url);
+            });
         }
     },
 };

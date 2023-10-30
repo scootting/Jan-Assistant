@@ -6,6 +6,8 @@ use App\Document;
 use App\Treasure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Libraries\JSRClient;
+
 
 class TreasureController extends Controller
 {
@@ -126,6 +128,17 @@ class TreasureController extends Controller
         $dataRequest = Treasure::getDataRequestById($id);
         $dataRequestDetails = Treasure::getDataValuesRequestById($id);
         return json_encode(['dataRequest' => $dataRequest, 'dataRequestDetails' => $dataRequestDetails]);
+    }
+
+    public function printComprobate(Request $request)
+    {
+        $id = $request->get('id');
+        $nreport = 'Treasure_Values';
+        $controls = array(
+            'id_tran' => $id,
+        );
+        $report = JSRClient::GetReportWithParameters($nreport, $controls);
+        return $report;
     }
 
 }

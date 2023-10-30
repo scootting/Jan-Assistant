@@ -7433,12 +7433,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 11]]);
       }))();
     },
-    initPrintComprobate: function initPrintComprobate() {
+    initPrintComprobate: function initPrintComprobate(idx, row) {
+      var _this2 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var app;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                console.log(idx);
+                console.log(row);
+                app = _this2;
+                axios({
+                  url: "/api/printComprobate/",
+                  params: {
+                    id: row.id_tran
+                  },
+                  method: "GET",
+                  responseType: "arraybuffer"
+                }).then(function (response) {
+                  var blob = new Blob([response.data], {
+                    type: "application/pdf"
+                  });
+                  var link = document.createElement("a");
+                  link.href = window.URL.createObjectURL(blob);
+                  var url = window.URL.createObjectURL(blob);
+                  window.open(url);
+                });
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
