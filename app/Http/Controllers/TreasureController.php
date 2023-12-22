@@ -76,7 +76,7 @@ class TreasureController extends Controller
                 'apellidosCliente' => $apellidos,
                 'numeroDocumentoCliente' => $no_dip,
                 'fechaNacimientoCliente' => '2000-01-01',
-                'cuentaBancaria' => '1000005678',
+                'cuentaBancaria' => '10000006023167',/* Cambiar el numero de cuenta */
                 'montoTotal' => $total,
                 'moneda' => 'BOB',
                 'tipoCambioMoneda' => 1,
