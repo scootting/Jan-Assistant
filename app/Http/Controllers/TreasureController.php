@@ -76,7 +76,7 @@ class TreasureController extends Controller
                 'apellidosCliente' => $apellidos,
                 'numeroDocumentoCliente' => $no_dip,
                 'fechaNacimientoCliente' => '2000-01-01',
-                'cuentaBancaria' => '10000006023167',/* Cambiar el numero de cuenta */
+                'cuentaBancaria' => '/-+6+',/* Cambiar el numero de cuenta */
                 'montoTotal' => $total,
                 'moneda' => 'BOB',
                 'tipoCambioMoneda' => 1,
@@ -89,8 +89,8 @@ class TreasureController extends Controller
 
         $headers = [
 
-            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
-            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDIwNTM2MTMsImlkVXN1YXJpb0FwbGljYWNpb24iOjExMywiaWRUcmFtaXRlIjoiMTExMyJ9.mi0gk2X7yi7D5zd_UiPkm_9zuIQrF1A7trL_W0BRgOQ',
+            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
+            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDIwNTM2MTMsImlkVXN1YXJpb0FwbGljYWNpb24iOjExMywiaWRUcmFtaXRlIjoiMTExMyJ9.mi0gk2X7yi7D5zd_UiPkm_9zuIQrF1A7trL_W0BRgOQ',
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
         ];
