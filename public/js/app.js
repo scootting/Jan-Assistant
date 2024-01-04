@@ -5027,7 +5027,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      messages: {},
+      data: {}
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    test: function test() {//alert("bienvenido al modulo");
+    },
+    initPage: function initPage() {
+      window.location.href = 'https://estudiantes.uatf.edu.bo/home';
+    }
+  }
+});
 
 /***/ }),
 
@@ -88263,22 +88293,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c(
+        "el-row",
+        { attrs: { gutter: 20 } },
+        [
+          _c(
+            "el-col",
+            { attrs: { span: 6, offset: 9 } },
+            [
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("span", [_vm._v("¿Realizo el pago correctamente?")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("p", [
+                      _vm._v(
+                        "Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "center",
+                      [
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "success" },
+                            on: { click: _vm.initPage }
+                          },
+                          [_vm._v("Imprimir\n              Matricula")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", { staticClass: "title" }, [_vm._v("Funciono!!!!")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Woops! Vuelva a su plataforma para imprimir su boucher.")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
