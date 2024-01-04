@@ -28,9 +28,13 @@ export default {
       data: {},
     };
   },
-  mounted() { },
+  mounted() { 
+    this.initPage();
+
+  },
   methods: {
     test() {
+
       //alert("bienvenido al modulo");
     },
     initPage() {
