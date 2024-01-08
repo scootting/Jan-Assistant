@@ -29,8 +29,7 @@ export default {
     };
   },
   mounted() { 
-    this.initPage();
-
+    //this.initPage();
   },
   methods: {
     test() {

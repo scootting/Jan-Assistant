@@ -5049,8 +5049,7 @@ __webpack_require__.r(__webpack_exports__);
       data: {}
     };
   },
-  mounted: function mounted() {
-    this.initPage();
+  mounted: function mounted() {//this.initPage();
   },
   methods: {
     test: function test() {//alert("bienvenido al modulo");
