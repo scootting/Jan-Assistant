@@ -64,5 +64,11 @@ class Treasure extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+    public static function getDataValuesRequestById2($id){
+        $query = "select * from ppe.ff_valores_no_verificados(" . $id . ")";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
 }

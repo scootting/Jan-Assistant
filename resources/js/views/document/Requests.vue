@@ -30,15 +30,21 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="detalle" width="450" align="right"><p>por la venta de valores universitarios</p></el-table-column>
+                    <el-table-column label="detalle" width="450" align="right">
+                        <p>por la venta de valores universitarios</p>
+                    </el-table-column>
                     <el-table-column align="right" width="220">
+                        <!--
                         <template slot-scope="scope" v-if="scope.row.estado === 'PROCESADO'">
+                        -->
+                        <template slot-scope="scope">
                             <!--
                             <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
                                 plain>registrar deposito del comprobante de pago</el-button>
                             -->
-                            
-                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="success" plain size="small">
+
+                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="success" plain
+                                size="small">
                                 imprimir comprobantes de pago</el-button>
                         </template>
                     </el-table-column>
@@ -111,7 +117,7 @@ export default {
                 name: "salestudents",
             });
         },
-        initPrintRequestReport(idx, row) { 
+        initPrintRequestReport(idx, row) {
             let id = row.id;
             this.$router.push({
                 name: "salevaluesdetails",

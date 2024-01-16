@@ -6523,6 +6523,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7426,10 +7432,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -90718,44 +90720,38 @@ var render = function() {
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: { align: "right", width: "220" },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return scope.row.estado === "PROCESADO"
-                              ? [
-                                  _c(
-                                    "el-button",
-                                    {
-                                      attrs: {
-                                        type: "success",
-                                        plain: "",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.initPrintRequestReport(
-                                            scope.$index,
-                                            scope.row
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            imprimir comprobantes de pago"
-                                      )
-                                    ]
-                                  )
-                                ]
-                              : undefined
-                          }
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: {
+                                  type: "success",
+                                  plain: "",
+                                  size: "small"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.initPrintRequestReport(
+                                      scope.$index,
+                                      scope.row
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            imprimir comprobantes de pago"
+                                )
+                              ]
+                            )
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 ],
                 1
@@ -92056,17 +92052,13 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "importe a cancelar" } },
-                          [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.dataRequest.importe) +
-                                "\n                        "
-                            )
-                          ]
-                        ),
+                        _c("el-form-item", { attrs: { label: "importe" } }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.dataRequest.importe) +
+                              "\n                        "
+                          )
+                        ]),
                         _vm._v(" "),
                         _c(
                           "el-form-item",
@@ -92102,7 +92094,7 @@ var render = function() {
                         attrs: {
                           data: _vm.dataRequestDetails,
                           "show-summary": "",
-                          "sum-text": "importe total a cancelar"
+                          "sum-text": "importe total"
                         }
                       },
                       [
@@ -92110,7 +92102,7 @@ var render = function() {
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "350"
+                            width: "450"
                           }
                         }),
                         _vm._v(" "),
@@ -92118,7 +92110,7 @@ var render = function() {
                           attrs: {
                             prop: "can_val",
                             label: "cantidad",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
@@ -92127,7 +92119,7 @@ var render = function() {
                           attrs: {
                             prop: "imp_val",
                             label: "precio",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
@@ -92147,7 +92139,7 @@ var render = function() {
                                             attrs: {
                                               type: "primary",
                                               size: "mini",
-                                              plain: ""
+                                              disabled: scope.row.id_tran === 0
                                             },
                                             on: {
                                               click: function($event) {
