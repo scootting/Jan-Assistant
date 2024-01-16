@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //Route::any('notification2', 'GeneralController@PPENotification2');
 //Route::get('reportInformationPerson', 'ElectionController@reportInformationPerson');
 
-Route::get('persona', 'GeneralController@getPersonByCI');
+//Route::post('persona', 'GeneralController@getPersonByCI');
 
 
 //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento

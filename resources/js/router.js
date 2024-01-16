@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 import NotFound from './views/NotFound'
 import Success from './views/Success'
 import Login from './views/Login'
+import Register from './views/Register'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
 import Information from './views/clients/Information'
@@ -78,6 +79,11 @@ const router = new VueRouter({
             path: '/login', //path: '/login',
             name: 'login',
             component: Login,
+        },
+        {
+            path: '/register', //path: '/login',
+            name: 'register',
+            component: Register,
         },
         {
             path: '/logout',

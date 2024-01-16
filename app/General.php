@@ -152,10 +152,9 @@ class General extends Model
     }
 
     //funcion para guardar a una persona nueva
-    public static function saveNewPerson($nro_dip, $nombres, $paterno, $materno, $nacimiento, $sexo, $telefono, $direccion, $correo)
+    public static function AddPerson($nro_dip, $nombres, $paterno, $materno, $nacimiento, $sexo, $telefono, $direccion, $correo)
     {
-        $query = "select * from public.guardar_nueva_persona('" . $nro_dip . "','" . $nombres . "','" . $paterno . "','" . $materno . "',
-        '" . $nacimiento . "','" . $sexo . "','" . $telefono . "','" . $direccion . "','" . $correo . "')";
+        $query = "select * from public.ff_registrar_persona_extra('" . $nro_dip . "', '" . $paterno . "', '" . $materno . "', '" . $nombres . "','" . $sexo . "', '" . $nacimiento. "', '" . $telefono . "', '" . $direccion . "', '" . $correo. "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

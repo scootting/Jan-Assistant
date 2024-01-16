@@ -11,7 +11,10 @@
             <center>
               <el-button type="success" @click="initPage">Imprimir
                 Matricula</el-button>
-
+            </center>
+            <center>
+              <el-button type="info" @click="initPage">Imprimir
+                Comprobante de pago de valores</el-button>
             </center>
           </div>
         </el-card>
@@ -38,6 +41,9 @@ export default {
     },
     initPage() {
       window.location.href = 'https://estudiantes.uatf.edu.bo/home';
+    },
+    initSecondPage() {
+      window.location.href = 'https://asistente.uatf.edu.bo/requests';
     },
   },
 };

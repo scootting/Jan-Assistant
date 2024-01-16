@@ -6,7 +6,9 @@
         <el-button style="float: right; padding: 3px 0" type="text">ayuda</el-button>
       </div>
       <h5>esta pagina a sido intencionalmente puesta en blanco</h5>
+      <!--
       <el-button type="primary" @click="test">Curl</el-button>
+      -->
     </el-card>
   </div>
 </template>

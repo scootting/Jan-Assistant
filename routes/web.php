@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 //Route::get('persona', 'GeneralController@getPersonByCI');
-//Route::post('newPerson', 'GeneralController@saveNewPerson');
-Route::get('person/{id}', 'GeneralController@getPersonById');
+Route::post('storePerson', 'GeneralController@storePerson');
+Route::post('person', 'GeneralController@getPersonById');
 //Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
 Route::post('notification', 'GeneralController@PPENotification');
 //Route::match(['get', 'post'], 'notification2', 'GeneralController@PPENotification2');

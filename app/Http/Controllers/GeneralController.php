@@ -149,28 +149,34 @@ class GeneralController extends Controller
 
     //  * Obtener una persona de el recurso utilizado.
     //  * {id: numero de carnet de identidad}    
-    public function getPersonById($id)
+    public function getPersonById(Request $request)
     {
-        $data = General::GetPersonByIdentityCard($id);
-        return json_encode($data);
+        $id = ($request->get('nodip') ? $request->get('nodip') : '');
+        $dataPerson = General::GetPersonByIdentityCard($id);
+        return json_encode(['dataPerson' => $dataPerson]);
+        //return json_encode($data);
     }
 
     //  * Guardas los datos de una persona en el recurso utilizado.
     public function storePerson(Request $request)
     {
         $persona = $request->get('persona');
+        \Log::info($request);
         $personal = $persona['personal'];
         $nombres = strtoupper($persona['nombres']);
         $paterno = strtoupper($persona['paterno']);
         $materno = strtoupper($persona['materno']);
         $sexo = strtoupper($persona['sexo']);
         $nacimiento = $persona['nacimiento'];
+        $telefono = $persona['telefono'];
+        $direccion = strtoupper($persona['direccion']);
+        $correo = strtoupper($persona['correo']);
 
         $marcador = $request->get('marker');
 
         switch ($marcador) {
             case 'registrar':
-                $data = General::AddPerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
+                $data = General::AddPerson($personal, $nombres, $paterno, $materno, $nacimiento, $sexo, $telefono, $direccion, $correo);
                 break;
             case 'editar':
                 $data = General::UpdatePerson($personal, $nombres, $paterno, $materno, $sexo, $nacimiento);
