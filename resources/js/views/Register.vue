@@ -22,7 +22,7 @@
                                                 <el-button size="small" type="primary"
                                                     @click.prevent="search">Buscar</el-button>
                                                 <el-button size="small" type="success"
-                                                    @click.prevent="initLogin">Volver</el-button>
+                                                    @click.prevent="initLogin">Volver al inicio</el-button>
                                             </el-form-item>
                                         </el-form>
                                     </el-col>
@@ -77,6 +77,8 @@
                                             </el-form-item>
                                             <el-form-item>
                                                 <el-button size="small" type="primary" @click.prevent="savePerson">Guardar</el-button>
+                                                <el-button size="small" type="success"
+                                                    @click.prevent="initLogin">Volver al inicio</el-button>
                                             </el-form-item>
                                         </el-form>
                                     </el-col>
@@ -245,13 +247,10 @@ export default {
                 });
             } catch (error) {
                 console.log(error);
-                /*
                 this.error = error.response.data;
-                this.error.message = "La persona con el numero de carnet " + app.nodip + " no se encuentra en nuestros registros.";
                 app.$alert(this.error.message, "Gestor de errores", {
                     dangerouslyUseHTMLString: true,
                 });
-                */
             }
         },
     },

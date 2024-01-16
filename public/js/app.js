@@ -4913,6 +4913,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -5077,22 +5079,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 app.$alert("Se ha creado el registro de la persona, puede ingresar a traves de la plataforma usando su ci y fecha de nacimiento si es la primera vez.", "INFORMACION", {
                   dangerouslyUseHTMLString: true
                 });
-                _context2.next = 11;
+                _context2.next = 13;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
                 console.log(_context2.t0);
-                /*
-                this.error = error.response.data;
-                this.error.message = "La persona con el numero de carnet " + app.nodip + " no se encuentra en nuestros registros.";
-                app.$alert(this.error.message, "Gestor de errores", {
-                    dangerouslyUseHTMLString: true,
+                _this2.error = _context2.t0.response.data;
+                app.$alert(_this2.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
                 });
-                */
 
-              case 11:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -88191,7 +88190,7 @@ var render = function() {
                                                     }
                                                   }
                                                 },
-                                                [_vm._v("Volver")]
+                                                [_vm._v("Volver al inicio")]
                                               )
                                             ],
                                             1
@@ -88554,6 +88553,25 @@ var render = function() {
                                                   }
                                                 },
                                                 [_vm._v("Guardar")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "el-button",
+                                                {
+                                                  attrs: {
+                                                    size: "small",
+                                                    type: "success"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.initLogin(
+                                                        $event
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Volver al inicio")]
                                               )
                                             ],
                                             1
