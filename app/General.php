@@ -30,7 +30,7 @@ class General extends Model
     public static function UpdatePersonPassword($card, $pass_actual, $pass_nuevo, $pass_confirma)
     {
         $query = "select * from pub.ff_contrasena_persona('" . $card . "', '" . $pass_actual . "', '" . $pass_nuevo . "', '" . $pass_confirma . "')";
-        \Log::info($query);
+        //\Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -40,7 +40,7 @@ class General extends Model
     public static function GetProgramaticCategory($year)
     {
         $query = "select *, cat_des as value from public.sis_cat_pro d where d.cat_ano = '" . $year . "' and d.cat_pro = '10' and d.cat_sis = 'ACTIVIDAD'";
-        \Log::info($query);
+        //\Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -92,7 +92,7 @@ class General extends Model
 
     public static function GetPersonsByDescription($description)
     {
-        \Log::info("Description: " . $description);
+        //\Log::info("Description: " . $description);
         if ($description == '')
         # code...
         {
@@ -101,7 +101,7 @@ class General extends Model
             $query = "select * from public.ff_buscar_personas('" . $description . "')";
         }
 
-        \Log::info($query);
+        //\Log::info($query);
         //$query = "select * from public.personas where paterno ='".$description."' order by paterno, materno, nombres";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -127,7 +127,7 @@ class General extends Model
             $query = "select * from app.users where nodip ='" . $description . "' order by nodip, descripcion, usuario";
         }
 
-        \Log::info($query);
+        //\Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

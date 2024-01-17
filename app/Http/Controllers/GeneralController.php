@@ -166,7 +166,7 @@ class GeneralController extends Controller
     public function storePerson(Request $request)
     {
         $persona = $request->get('persona');
-        \Log::info($request);
+        //\Log::info($request);
         $personal = $persona['personal'];
         $nombres = strtoupper($persona['nombres']);
         $paterno = strtoupper($persona['paterno']);
