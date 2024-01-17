@@ -75,9 +75,9 @@ class TreasureController extends Controller
                 'apellidosCliente' => $apellidos,
                 'numeroDocumentoCliente' => $no_dip,
                 'fechaNacimientoCliente' => '2000-01-01',
-                'cuentaBancaria' => '1000005678', /* Cambiar el numero de cuenta */
-                //'cuentaBancaria' => '10000006023167',/* Cambiar el numero de cuenta */
-                //'cuentaBancaria' => '10000006714592',/* Cambiar el numero de cuenta */
+                //'cuentaBancaria' => '1000005678', /* pruebas */
+                //'cuentaBancaria' => '10000006023167',/* preproduccion */
+                'cuentaBancaria' => '10000006714592',/* produccion */
                 'montoTotal' => $total,
                 'moneda' => 'BOB',
                 'tipoCambioMoneda' => 1,
@@ -86,12 +86,12 @@ class TreasureController extends Controller
         );
         \Log::info($array_b);
 
-        $apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
-        //$apiURL = 'https://ppe.agetic.gob.bo/transaccion/deuda';
+        //$apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
+        $apiURL = 'https://ppe.agetic.gob.bo/transaccion/deuda';
 
         $headers = [
-            //
-            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgxODYyNTgsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTcifQ.xBwL9mzzV9o2EA3xXMo-xvd2TW5NmFiGsE9ijRjj_BY',
+            //pruebas
+            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgxODYyNTgsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTcifQ.xBwL9mzzV9o2EA3xXMo-xvd2TW5NmFiGsE9ijRjj_BY',
             //preproduccion matricula
             //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
             //produccion matricula
@@ -100,10 +100,14 @@ class TreasureController extends Controller
             //produccion pruebas
             //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM
             //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM',
+            //produccion valores
+            //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM
+            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
+            //pruebas
+            //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
             //produccion
-            //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
+            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
 
         ];
 
