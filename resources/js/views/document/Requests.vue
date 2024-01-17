@@ -22,7 +22,7 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="importe" label="importe" width="150" align="right"></el-table-column>
+                    <el-table-column prop="importe" label="importe" width="100" align="right"></el-table-column>
                     <el-table-column prop="estado" label="estado" width="150" align="center">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
@@ -30,22 +30,14 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="detalle" width="450" align="right">
+                    <el-table-column label="detalle" width="250" align="right">
                         <p>por la venta de valores universitarios</p>
                     </el-table-column>
-                    <el-table-column align="right" width="220">
-                        <!--
-                        <template slot-scope="scope" v-if="scope.row.estado === 'PROCESADO'">
-                        -->
+                    <el-table-column align="right" width="250" fixed="right" label="Operaciones">
                         <template slot-scope="scope">
-                            <!--
-                            <el-button @click="initSaleBoucher(scope.$index, scope.row)" type="primary" size="mini"
-                                plain>registrar deposito del comprobante de pago</el-button>
-                            -->
-
-                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="success" plain
+                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="primary" plain
                                 size="small">
-                                imprimir comprobantes de pago</el-button>
+                                ver detalle de la solicitud</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

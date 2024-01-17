@@ -42,10 +42,10 @@
                         <p>valores en linea adquiridos</p>
                         <el-table :data="dataRequestDetails" style="width: 100%" show-summary
                             sum-text="importe total">
-                            <el-table-column prop="des_val" label="descripcion" width="450"></el-table-column>
+                            <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
                             <el-table-column prop="can_val" label="cantidad" width="90" align="right"></el-table-column>
                             <el-table-column prop="imp_val" label="precio" width="90" align="right"></el-table-column>
-                            <el-table-column align="right" width="200">
+                            <el-table-column align="right" width="200" fixed="right">
                                 <template slot-scope="scope" v-if="scope.row.id_compuesto === 'U'">
                                     <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary" size="mini" :disabled="scope.row.id_tran === 0">imprimir comprobante
                                     </el-button>

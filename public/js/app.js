@@ -6532,14 +6532,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -90708,7 +90700,7 @@ var render = function() {
                     attrs: {
                       prop: "importe",
                       label: "importe",
-                      width: "150",
+                      width: "100",
                       align: "right"
                     }
                   }),
@@ -90756,7 +90748,7 @@ var render = function() {
                   _c(
                     "el-table-column",
                     {
-                      attrs: { label: "detalle", width: "450", align: "right" }
+                      attrs: { label: "detalle", width: "250", align: "right" }
                     },
                     [
                       _c("p", [
@@ -90766,7 +90758,12 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { align: "right", width: "220" },
+                    attrs: {
+                      align: "right",
+                      width: "250",
+                      fixed: "right",
+                      label: "Operaciones"
+                    },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
@@ -90776,7 +90773,7 @@ var render = function() {
                               "el-button",
                               {
                                 attrs: {
-                                  type: "success",
+                                  type: "primary",
                                   plain: "",
                                   size: "small"
                                 },
@@ -90791,7 +90788,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                            imprimir comprobantes de pago"
+                                  "\n                            ver detalle de la solicitud"
                                 )
                               ]
                             )
@@ -91739,7 +91736,7 @@ var render = function() {
                       title: "importante",
                       type: "error",
                       description:
-                        "las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
+                        "las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe.",
                       "show-icon": ""
                     }
                   })
@@ -91773,7 +91770,7 @@ var render = function() {
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "350"
+                            width: "300"
                           }
                         }),
                         _vm._v(" "),
@@ -91781,7 +91778,7 @@ var render = function() {
                           attrs: {
                             prop: "cantidad",
                             label: "cantidad",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
@@ -91790,13 +91787,17 @@ var render = function() {
                           attrs: {
                             prop: "pre_uni",
                             label: "precio",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
-                          attrs: { align: "right", width: "100" },
+                          attrs: {
+                            align: "right",
+                            width: "100",
+                            fixed: "right"
+                          },
                           scopedSlots: _vm._u([
                             {
                               key: "default",
@@ -91858,7 +91859,7 @@ var render = function() {
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "350"
+                            width: "300"
                           }
                         }),
                         _vm._v(" "),
@@ -91866,7 +91867,7 @@ var render = function() {
                           attrs: {
                             prop: "cantidad",
                             label: "cantidad",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
@@ -91875,13 +91876,17 @@ var render = function() {
                           attrs: {
                             prop: "pre_uni",
                             label: "precio",
-                            width: "100",
+                            width: "90",
                             align: "right"
                           }
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
-                          attrs: { align: "right", width: "100" },
+                          attrs: {
+                            align: "right",
+                            width: "100",
+                            fixed: "right"
+                          },
                           scopedSlots: _vm._u(
                             [
                               {
@@ -92149,7 +92154,7 @@ var render = function() {
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "450"
+                            width: "300"
                           }
                         }),
                         _vm._v(" "),
@@ -92172,7 +92177,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("el-table-column", {
-                          attrs: { align: "right", width: "200" },
+                          attrs: {
+                            align: "right",
+                            width: "200",
+                            fixed: "right"
+                          },
                           scopedSlots: _vm._u(
                             [
                               {

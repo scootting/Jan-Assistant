@@ -8,7 +8,7 @@
       <el-row :gutter="20">
         <p>
           <el-alert title="importante" type="error"
-            description="las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
+            description="las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe."
             show-icon>
           </el-alert>
         </p>
@@ -16,10 +16,10 @@
           <div class="grid-content bg-purple">
             <p>valores en linea que puede adquirir</p>
             <el-table v-loading="loading" :data="offered" style="width: 100%">
-              <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
-              <el-table-column prop="cantidad" label="cantidad" width="100" align="right"></el-table-column>
-              <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
-              <el-table-column align="right" width="100">
+              <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
+              <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
+              <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
+              <el-table-column align="right" width="100" fixed="right" >
                 <template slot-scope="scope">
                   <el-button @click="initAddValues(scope.$index, scope.row)" type="primary" size="mini" plain>Agregar
                   </el-button>
@@ -32,10 +32,10 @@
           <div class="grid-content bg-purple">
             <p>valores en linea solicitados para su compra</p>
             <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar">
-              <el-table-column prop="des_val" label="descripcion" width="350"></el-table-column>
-              <el-table-column prop="cantidad" label="cantidad" width="100" align="right"></el-table-column>
-              <el-table-column prop="pre_uni" label="precio" width="100" align="right"></el-table-column>
-              <el-table-column align="right" width="100">
+              <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
+              <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
+              <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
+              <el-table-column align="right" width="100" fixed="right" >
                 <template slot-scope="scope" v-if="scope.row.compuesto === 'U'">
                   <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
                   </el-button>
