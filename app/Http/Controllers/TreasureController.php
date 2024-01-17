@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Libraries\JSRClient;
 use App\Treasure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Libraries\JSRClient;
-
 
 class TreasureController extends Controller
 {
@@ -76,7 +75,7 @@ class TreasureController extends Controller
                 'apellidosCliente' => $apellidos,
                 'numeroDocumentoCliente' => $no_dip,
                 'fechaNacimientoCliente' => '2000-01-01',
-                'cuentaBancaria' => '1000005678',/* Cambiar el numero de cuenta */
+                'cuentaBancaria' => '1000005678', /* Cambiar el numero de cuenta */
                 //'cuentaBancaria' => '10000006023167',/* Cambiar el numero de cuenta */
                 //'cuentaBancaria' => '10000006714592',/* Cambiar el numero de cuenta */
                 'montoTotal' => $total,
@@ -104,7 +103,7 @@ class TreasureController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
             //produccion
-            //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',            
+            //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
 
         ];
 
@@ -140,13 +139,13 @@ class TreasureController extends Controller
     {
         $id = $request->get('id');
         $dataRequest = Treasure::getDataRequestById($id);
-        \Log::info($dataRequest);
-        if($dataRequest->get('estado')!= 'PROCESADO'){
+        \Log::info($dataRequest[0]->estado);
+        if ($dataRequest[0]->estado != 'PROCESADO') {
             $dataRequestDetails = Treasure::getDataValuesRequestById2($id);
-        }else{
+        } else {
             $dataRequestDetails = Treasure::getDataValuesRequestById($id);
         }
-        
+
         return json_encode(['dataRequest' => $dataRequest, 'dataRequestDetails' => $dataRequestDetails]);
     }
 

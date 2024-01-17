@@ -100,12 +100,13 @@ class GeneralController extends Controller
 
         $codigo_transaccion = $request->get('codigoSeguimiento'); 
         $estado = $request->get('estado');
+        $fecha = $request->get('fecha');
         $codigo_orden = $request->get('detalle');
         $codigo_orden = $codigo_orden['codigoOrden'];
         \Log::info($codigo_orden);
 
         //guardamos las transacciones de acuerdo al codigo de transaccion
-        $data = General::SetValuesAndCptState($codigo_transaccion, $estado);
+        $data = General::SetValuesAndCptState($codigo_transaccion, $estado, $fecha);
         return response()->json('Successfully', 200);
     }
 
