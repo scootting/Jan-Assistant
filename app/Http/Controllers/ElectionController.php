@@ -14,7 +14,6 @@ class ElectionController extends Controller
     //  * parametros {id: numero de carnet de identidad de la persona, id_election:  id de la eleccion que se esta realizando}
     public function getAuthorizedPerson(Request $request)
     {
-        \Log::info("Hola22222222222222222222");        
         $id = $request->get('id');
         $id_election = $request->get('id_election');
         $id_election = 2;
@@ -38,11 +37,6 @@ class ElectionController extends Controller
     //  * E4 . Obtener la lista de mesas habilitadas para la eleccion
     public function reportInformationPerson(Request $request)
     {
-        \Log::info("Hola");
-        \Log::info("Hola");
-        \Log::info("Hola");
-        \Log::info("Hola");
-        \Log::info("Hola");
         $id = $request->get('id');
         $nreport = 'EconInformationPerson';
         $controls = array(

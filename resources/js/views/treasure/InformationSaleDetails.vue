@@ -12,15 +12,15 @@
                         show-icon>
                     </el-alert>
                 </p>
-                <el-col :span="12">
+                <el-col :span="18" :offset="3">
                     <div class="grid-content bg-purple">
                         <p>datos de la venta realizada</p>
                         <el-form ref="form" :model="this.dataTransaction" label-width="200px" size="mini">
                             <el-form-item label="fecha">
                                 {{ dataTransaction.fec_tra }}
                             </el-form-item>
-                            <el-form-item label="valorado">
-                                {{ dataTransaction.cod_val }}
+                            <el-form-item label="valor universitario">
+                                {{ dataTransaction.cod_val  + " - " + dataTransaction.des_val}}
                             </el-form-item>
                             <el-form-item label="apellidos y nombres">
                                 {{ dataTransaction.des_per }}
@@ -40,7 +40,6 @@
 </template>
   
 <script>
-import { allowedNodeEnvironmentFlags } from 'process';
 
 export default {
     name: "",

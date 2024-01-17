@@ -43,7 +43,7 @@ class Treasure extends Model
     //  * {id: id de la transaccion }
     public static function GetDataTransactionById($transaction)
     {
-        $query = "select * from val.tra_dia d where d.id_tran = '" . $transaction . "'";
+        $query = "select * from val.tra_dia d inner join val.valores e on e.cod_val = d.cod_val where d.id_tran = '" . $transaction . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

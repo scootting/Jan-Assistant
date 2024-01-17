@@ -25,10 +25,10 @@ class JSRClient
             self::$jasperPass,
             ""
         );
-        \Log::info($client->serverInfo());
-        \Log::info($controls);
+        //\Log::info($client->serverInfo());
+        //\Log::info($controls);
         $report = $client->reportService()->runReport('/reports/interactive/'.$nameReport, 'pdf', null, null, $controls);
-        \Log::info("este es el reporte que usamos".$report);
+        //\Log::info("este es el reporte que usamos".$report);
         return $report; 
     }
 
@@ -39,7 +39,7 @@ class JSRClient
             self::$jasperPass,
             ""
         );
-        \Log::info($client->serverInfo());
+        //\Log::info($client->serverInfo());
         $report = $client->reportService()->runReport('/reports/interactive/'.$nameReport, 'pdf');
         return $report; 
     }

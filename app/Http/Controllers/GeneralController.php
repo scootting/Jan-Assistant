@@ -94,10 +94,11 @@ class GeneralController extends Controller
 
     //  *  A8 Obtiene las notificaciones efectuadas por la AGETIC a traves de PPE
     public function PPENotification2(Request $request){
+        /*
         \Log::info($request);
         \Log::info($request->get('codigoSeguimiento'));
         \Log::info($request->get('estado'));
-
+        */
         $codigo_transaccion = $request->get('codigoSeguimiento'); 
         $estado = $request->get('estado');
         $fecha = $request->get('fecha');
