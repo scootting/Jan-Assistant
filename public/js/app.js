@@ -4912,9 +4912,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -5113,6 +5110,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -88650,47 +88661,83 @@ var render = function() {
                     attrs: { slot: "header" },
                     slot: "header"
                   },
-                  [_c("span", [_vm._v("¿Realizo el pago correctamente?")])]
+                  [_c("span", [_vm._v("Pago de matriculas")])]
                 ),
                 _vm._v(" "),
                 _c(
                   "div",
                   [
-                    _c("p", [
-                      _vm._v(
-                        "Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula"
-                      )
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "center",
                       [
+                        _c("p", [
+                          _vm._v(
+                            "Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula"
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "el-button",
                           {
-                            attrs: { type: "success" },
+                            attrs: { type: "success", size: "small" },
                             on: { click: _vm.initPage }
                           },
                           [_vm._v("Imprimir\n              Matricula")]
                         )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("p"),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        { attrs: { gutter: 20 } },
+        [
+          _c(
+            "el-col",
+            { attrs: { span: 6, offset: 9 } },
+            [
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("span", [_vm._v("pago de valores universitarios")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
                     _c(
                       "center",
                       [
+                        _c("p", [
+                          _vm._v(
+                            "Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir los comprobantes de\n              pago de los valores adquiridos"
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "el-button",
                           {
-                            attrs: { type: "info" },
-                            on: { click: _vm.initPage }
+                            attrs: { type: "primary", size: "small" },
+                            on: { click: _vm.initSecondPage }
                           },
-                          [
-                            _vm._v(
-                              "Imprimir\n              Comprobante de pago de valores"
-                            )
-                          ]
+                          [_vm._v("Imprimir\n              papeletas de pago")]
                         )
                       ],
                       1

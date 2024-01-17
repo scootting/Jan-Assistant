@@ -4,17 +4,31 @@
       <el-col :span="6" :offset="9">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>¿Realizo el pago correctamente?</span>
+            <span>Pago de matriculas</span>
           </div>
           <div>
-            <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula</p>
             <center>
-              <el-button type="success" @click="initPage">Imprimir
+              <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula</p>
+              <el-button type="success" @click="initPage" size="small">Imprimir
                 Matricula</el-button>
             </center>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <p></p>
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="9">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>pago de valores universitarios</span>
+          </div>
+          <div>
             <center>
-              <el-button type="info" @click="initPage">Imprimir
-                Comprobante de pago de valores</el-button>
+              <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir los comprobantes de
+                pago de los valores adquiridos</p>
+              <el-button type="primary" @click="initSecondPage" size="small">Imprimir
+                papeletas de pago</el-button>
             </center>
           </div>
         </el-card>
@@ -31,7 +45,7 @@ export default {
       data: {},
     };
   },
-  mounted() { 
+  mounted() {
     //this.initPage();
   },
   methods: {

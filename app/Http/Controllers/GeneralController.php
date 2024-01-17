@@ -110,7 +110,6 @@ class GeneralController extends Controller
         return response()->json('Successfully', 200);
     }
 
-
     //  * Registrar un usuario en el recurso.    
     public function storeUser(Request $request)
     {

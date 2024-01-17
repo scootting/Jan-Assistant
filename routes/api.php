@@ -95,9 +95,6 @@ Route::group([
     //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
     Route::post('getTypesOfDocuments', 'DocumentController@getTypesOfDocuments');
 
-
-
-
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***
     Route::post('persons', 'GeneralController@getPersonsByDescription');
