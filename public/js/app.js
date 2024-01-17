@@ -87265,7 +87265,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-menu-item",
-                    { attrs: { index: "5" } },
+                    { attrs: { index: "5", disabled: "" } },
                     [
                       _c("i", { staticClass: "el-icon-setting" }),
                       _vm._v(" "),
@@ -87289,7 +87289,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-menu-item",
-                    { attrs: { index: "6" } },
+                    { attrs: { index: "6", disabled: "" } },
                     [
                       _c("i", { staticClass: "el-icon-menu" }),
                       _vm._v(" "),

@@ -31,13 +31,13 @@
               venta de matriculas en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="5" disabled>
             <i class="el-icon-setting"></i>
             <router-link :to="{ name: 'requestmemorial' }" tag="span">
               memorial universitario
             </router-link>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="6" disabled>
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" tag="span">
               Solvencia Universitaria
