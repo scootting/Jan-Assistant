@@ -8,7 +8,7 @@
             <el-row :gutter="20">
                 <p>
                     <el-alert title="importante" type="error"
-                        description="las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
+                        description="las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
                         show-icon>
                     </el-alert>
                 </p>
@@ -119,6 +119,7 @@ export default {
                 url: "/api/printComprobate",
                 params: {
                     id: row.id_tran,
+                    cod: row.cod_val,
                 },
                 method: "GET",
                 responseType: "arraybuffer",

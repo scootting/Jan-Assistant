@@ -156,7 +156,11 @@ class TreasureController extends Controller
     public function printComprobate(Request $request)
     {
         $id = $request->get('id');
-        $nreport = 'Treasure_Values';
+        $cod_val = $request->get('cod');
+        if($cod_val == '9351')
+            $nreport = 'Treasure_Values_Physical';
+        else    
+            $nreport = 'Treasure_Values';
         $controls = array(
             'id_tran' => $id,
         );
