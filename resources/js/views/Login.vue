@@ -1,7 +1,20 @@
 <template>
   <div>
     <el-main>
-      <el-row :gutter="20" style="padding-top: 200px">
+      <el-row>
+        <el-col :span="20" :offset="2">
+          <el-alert title="Que valores puede adquirir?" type="error"
+            description="Aca puede comprar los siguientes valores: CURSO DE CAPACITACIÓN POSTULANTES A LAS BECAS ALIMENTACION  E INTERNADO UNIVERSITARIO,
+        FORMULARIO DE CONVALIDACION DE LABORATORIO DE FISICA, DERECHO A PROGRAMACION DE LABORATORIO DE FISICA, CURSO DE CAPACITACIÓN - PARA AUXILIARES DE DOCENCIA, DERECHO A CERTIFICACION DE NOTAS PARA INGRESO A RESIDENCIA MEDICA.">
+          </el-alert>
+        </el-col>
+        <el-col :span="20" style="padding-top: 10px" :offset="2">
+          <el-alert title="Como puede ingresar?" type="error"
+            description="Para ingresar por primera vez, debe colocar como usuario su numero de identidad, y la contraseña es su fecha de nacimiento sin ningun tipo de caracteres, ejemplo 01/01/1990 deberia colocar 01011990.">
+          </el-alert>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" style="padding-top: 50px">
         <el-col :span="4" :offset="7">
           <div class="header">
             <el-image :src="url_image" style="width: 90%; height: 90%">
@@ -68,31 +81,31 @@ export default {
       loading: false,
       error: null,
       rules: {
-                username: [
-                    {
-                        required: true,
-                        message: "El usuario es requerido",
-                        trigger: "blur",
-                    },
-                    {
-                        min: 4,
-                        message: "El usuario de tener por lo menos 5 caracteres",
-                        trigger: "blur",
-                    },
-                ],
-                password: [
-                    {
-                        required: true,
-                        message: "La contraseña es requerida",
-                        trigger: "blur",
-                    },
-                    {
-                        min: 5,
-                        message: "La contraseña de tener por lo menos 5 caracteres",
-                        trigger: "blur",
-                    },
-                ],
-            },
+        username: [
+          {
+            required: true,
+            message: "El usuario es requerido",
+            trigger: "blur",
+          },
+          {
+            min: 4,
+            message: "El usuario de tener por lo menos 5 caracteres",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: "La contraseña es requerida",
+            trigger: "blur",
+          },
+          {
+            min: 5,
+            message: "La contraseña de tener por lo menos 5 caracteres",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {

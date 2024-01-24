@@ -4692,6 +4692,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
   data: function data() {
@@ -7582,7 +7595,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 axios({
                   url: "/api/printComprobate",
                   params: {
-                    id: row.id_tran
+                    id: row.id_tran,
+                    cod: row.cod_val
                   },
                   method: "GET",
                   responseType: "arraybuffer"
@@ -87744,7 +87758,48 @@ var render = function() {
         [
           _c(
             "el-row",
-            { staticStyle: { "padding-top": "200px" }, attrs: { gutter: 20 } },
+            [
+              _c(
+                "el-col",
+                { attrs: { span: 20, offset: 2 } },
+                [
+                  _c("el-alert", {
+                    attrs: {
+                      title: "Que valores puede adquirir?",
+                      type: "error",
+                      description:
+                        "Aca puede comprar los siguientes valores: CURSO DE CAPACITACIÓN POSTULANTES A LAS BECAS ALIMENTACION  E INTERNADO UNIVERSITARIO,\n      FORMULARIO DE CONVALIDACION DE LABORATORIO DE FISICA, DERECHO A PROGRAMACION DE LABORATORIO DE FISICA, CURSO DE CAPACITACIÓN - PARA AUXILIARES DE DOCENCIA, DERECHO A CERTIFICACION DE NOTAS PARA INGRESO A RESIDENCIA MEDICA."
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                {
+                  staticStyle: { "padding-top": "10px" },
+                  attrs: { span: 20, offset: 2 }
+                },
+                [
+                  _c("el-alert", {
+                    attrs: {
+                      title: "Como puede ingresar?",
+                      type: "error",
+                      description:
+                        "Para ingresar por primera vez, debe colocar como usuario su numero de identidad, y la contraseña es su fecha de nacimiento sin ningun tipo de caracteres, ejemplo 01/01/1990 deberia colocar 01011990."
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-row",
+            { staticStyle: { "padding-top": "50px" }, attrs: { gutter: 20 } },
             [
               _c("el-col", { attrs: { span: 4, offset: 7 } }, [
                 _c(
@@ -92047,7 +92102,7 @@ var render = function() {
                       title: "importante",
                       type: "error",
                       description:
-                        "las solicitudes tienen validez de 30 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
+                        "las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
                       "show-icon": ""
                     }
                   })
@@ -108651,30 +108706,32 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   linkActiveClass: 'is-active',
-  routes: [{
+  routes: [
+  /*
+  {
+      path: '/',
+      name: 'home',
+      component: Home,
+      children: [
+          { path: '', name: 'layout', component: Layout },
+          { path: '/transaction/:id', name: 'informationsaledetails', component: InformationSaleDetails },
+            /*
+          { path: '', name: 'informationelection', component: InformationElection },
+          { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },
+          { path: '/responsedatatablets/:id', name: 'responsedatatablets', component: responseDataTablets },
+      ],
+  },
+  */
+  {
     path: '/',
-    name: 'home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_11__["default"],
+    //path: '/login',
+    name: 'login',
+    component: _views_Login__WEBPACK_IMPORTED_MODULE_4__["default"],
     children: [{
-      path: '',
-      name: 'layout',
-      component: _views_Layout__WEBPACK_IMPORTED_MODULE_12__["default"]
-    }, {
       path: '/transaction/:id',
       name: 'informationsaledetails',
       component: _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_15__["default"]
-    }
-    /*
-    { path: '', name: 'informationelection', component: InformationElection },
-    { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },
-    { path: '/responsedatatablets/:id', name: 'responsedatatablets', component: responseDataTablets },
-    */
-    ]
-  }, {
-    path: '/login',
-    //path: '/login',
-    name: 'login',
-    component: _views_Login__WEBPACK_IMPORTED_MODULE_4__["default"]
+    }]
   }, {
     path: '/register',
     //path: '/login',

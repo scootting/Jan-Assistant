@@ -60,6 +60,7 @@ const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'is-active',
     routes: [
+        /*
         {
             path: '/',
             name: 'home',
@@ -72,13 +73,16 @@ const router = new VueRouter({
                 { path: '', name: 'informationelection', component: InformationElection },
                 { path: '/responseinformation/:id_election/:id', name: 'responseinformation', component: ResponseInformation },
                 { path: '/responsedatatablets/:id', name: 'responsedatatablets', component: responseDataTablets },
-                */
             ],
         },
+        */
         {
-            path: '/login', //path: '/login',
+            path: '/', //path: '/login',
             name: 'login',
             component: Login,
+            children: [
+                { path: '/transaction/:id', name: 'informationsaledetails', component: InformationSaleDetails },
+            ]            
         },
         {
             path: '/register', //path: '/login',
