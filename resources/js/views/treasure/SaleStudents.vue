@@ -6,12 +6,22 @@
         <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
       </div>
       <el-row :gutter="20">
-        <p>
-          <el-alert title="importante" type="error"
-            description="las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe."
-            show-icon>
+          <el-alert title="Que debo hacer?" type="error"
+            description="Seleccione los valores que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad de valores que solicita ya que estos estaran a su nombre y no de terceros.">
           </el-alert>
-        </p>
+          <br>
+          <el-alert title="Cuales son los metodos de pago?" type="success"
+            description="Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado.">
+          </el-alert>
+          <br>
+          <el-alert title="Que precauciones tomar?" type="warning"
+            description="Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona.">
+          </el-alert>
+          <br>
+          <el-alert title="cuanto tiempo tengo para pagar?" type="error"
+            description="el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe.">
+          </el-alert>
+          <br>
         <el-col :span="12">
           <div class="grid-content bg-purple">
             <p>valores en linea que puede adquirir</p>
@@ -19,7 +29,7 @@
               <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
               <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
-              <el-table-column align="right" width="100" fixed="right" >
+              <el-table-column align="right" width="100" fixed="right">
                 <template slot-scope="scope">
                   <el-button @click="initAddValues(scope.$index, scope.row)" type="primary" size="mini" plain>Agregar
                   </el-button>
@@ -35,7 +45,7 @@
               <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
               <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
               <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
-              <el-table-column align="right" width="100" fixed="right" >
+              <el-table-column align="right" width="100" fixed="right">
                 <template slot-scope="scope" v-if="scope.row.compuesto === 'U'">
                   <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
                   </el-button>

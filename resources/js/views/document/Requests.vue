@@ -3,16 +3,20 @@
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>lista de solicitudes para la venta de valores en linea</span>
-                <el-button size="small" type="default" icon="el-icon-plus" @click="initAddRequestInLine"
+                <el-button size="small" type="primary" icon="el-icon-plus" @click="initAddRequestInLine"
                     style="text-align: right; float: right">
                     nueva solicitud para la venta de valores en linea</el-button>
             </div>
-            <el-alert title="estados de la solicitud" type="success"
-                description="creado: cuando se tiene los valores seleccionados, pero no se creo el CPT, en proceso: falta pagar por el CPT generado, procesado: cuando se cancelo el pago total, anulado: cuando se anulo la solicitud de CPT, expirado: cuando paso el tiempo valido para pagar por el CPT"
-                show-icon>
-            </el-alert>
             <br />
             <div>
+                <el-alert title="Que debo hacer?" type="error"
+                    description="Seleccione la opcion de nueva solicitud para la compra de los valores que desea adquirir.">
+                </el-alert>
+                <br>
+                <el-alert title="Como se que ya se proceso mi solicitud?" type="success"
+                    description="Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automatico) el estado de su solicitud estara en proceso, si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud.">
+                </el-alert>
+                <br>
                 <el-table v-loading="loading" :data="requests" style="width: 100%">
                     <el-table-column prop="fecha" label="fecha" width="150"></el-table-column>
                     <el-table-column label="numero" width="150">
@@ -25,8 +29,15 @@
                     <el-table-column prop="importe" label="importe" width="100" align="right"></el-table-column>
                     <el-table-column prop="estado" label="estado" width="150" align="center">
                         <template slot-scope="scope">
-                            <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado }}</el-tag>
+                            <div v-if="scope.row.estado === 'PROCESADO'">
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="primary">{{ scope.row.estado }}</el-tag>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="success">{{ scope.row.estado }}</el-tag>
+                                </div>
                             </div>
                         </template>
                     </el-table-column>
@@ -35,8 +46,7 @@
                     </el-table-column>
                     <el-table-column align="right" width="250" fixed="right" label="Operaciones">
                         <template slot-scope="scope">
-                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="primary" plain
-                                size="small">
+                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="primary" size="small">
                                 ver detalle de la solicitud</el-button>
                         </template>
                     </el-table-column>

@@ -6545,6 +6545,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7273,6 +7283,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
@@ -7445,6 +7465,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -90648,226 +90671,246 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "el-card",
-        { staticClass: "box-card" },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "clearfix",
-              attrs: { slot: "header" },
-              slot: "header"
-            },
-            [
-              _c("span", [
-                _vm._v("lista de solicitudes para la venta de valores en linea")
-              ]),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  staticStyle: { "text-align": "right", float: "right" },
-                  attrs: {
-                    size: "small",
-                    type: "default",
-                    icon: "el-icon-plus"
-                  },
-                  on: { click: _vm.initAddRequestInLine }
-                },
-                [
-                  _vm._v(
-                    "\n                nueva solicitud para la venta de valores en linea"
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-alert", {
-            attrs: {
-              title: "estados de la solicitud",
-              type: "success",
-              description:
-                "creado: cuando se tiene los valores seleccionados, pero no se creo el CPT, en proceso: falta pagar por el CPT generado, procesado: cuando se cancelo el pago total, anulado: cuando se anulo la solicitud de CPT, expirado: cuando paso el tiempo valido para pagar por el CPT",
-              "show-icon": ""
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c(
-                "el-table",
-                {
-                  directives: [
-                    {
-                      name: "loading",
-                      rawName: "v-loading",
-                      value: _vm.loading,
-                      expression: "loading"
-                    }
-                  ],
-                  staticStyle: { width: "100%" },
-                  attrs: { data: _vm.requests }
-                },
-                [
-                  _c("el-table-column", {
-                    attrs: { prop: "fecha", label: "fecha", width: "150" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: { label: "numero", width: "150" },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "name-wrapper",
-                                attrs: { slot: "reference" },
-                                slot: "reference"
-                              },
-                              [
-                                _c(
-                                  "el-tag",
-                                  { attrs: { size: "medium", effect: "dark" } },
-                                  [_vm._v(_vm._s(scope.row.idc))]
-                                )
-                              ],
-                              1
-                            )
-                          ]
-                        }
-                      }
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "importe",
-                      label: "importe",
-                      width: "100",
-                      align: "right"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "estado",
-                      label: "estado",
-                      width: "150",
-                      align: "center"
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "name-wrapper",
-                                attrs: { slot: "reference" },
-                                slot: "reference"
-                              },
-                              [
-                                _c(
-                                  "el-tag",
-                                  {
-                                    attrs: {
-                                      size: "medium",
-                                      effect: "dark",
-                                      type: "danger"
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(scope.row.estado))]
-                                )
-                              ],
-                              1
-                            )
-                          ]
-                        }
-                      }
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "el-table-column",
-                    {
-                      attrs: { label: "detalle", width: "250", align: "right" }
-                    },
-                    [
-                      _c("p", [
-                        _vm._v("por la venta de valores universitarios")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      align: "right",
-                      width: "250",
-                      fixed: "right",
-                      label: "Operaciones"
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: {
-                                  type: "primary",
-                                  plain: "",
-                                  size: "small"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.initPrintRequestReport(
-                                      scope.$index,
-                                      scope.row
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            ver detalle de la solicitud"
-                                )
-                              ]
-                            )
-                          ]
-                        }
-                      }
-                    ])
-                  })
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "clearfix",
+            attrs: { slot: "header" },
+            slot: "header"
+          },
+          [
+            _c("span", [
+              _vm._v("lista de solicitudes para la venta de valores en linea")
+            ]),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                staticStyle: { "text-align": "right", float: "right" },
+                attrs: { size: "small", type: "primary", icon: "el-icon-plus" },
+                on: { click: _vm.initAddRequestInLine }
+              },
+              [
+                _vm._v(
+                  "\n                nueva solicitud para la venta de valores en linea"
+                )
+              ]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c("el-alert", {
+              attrs: {
+                title: "Que debo hacer?",
+                type: "error",
+                description:
+                  "Seleccione la opcion de nueva solicitud para la compra de los valores que desea adquirir."
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("el-alert", {
+              attrs: {
+                title: "Como se que ya se proceso mi solicitud?",
+                type: "success",
+                description:
+                  "Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automatico) el estado de su solicitud estara en proceso, si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud."
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "el-table",
+              {
+                directives: [
+                  {
+                    name: "loading",
+                    rawName: "v-loading",
+                    value: _vm.loading,
+                    expression: "loading"
+                  }
                 ],
-                1
-              ),
-              _vm._v(" "),
-              _c("el-pagination", {
-                attrs: {
-                  "page-size": _vm.pagination.per_page,
-                  layout: "prev, pager, next",
-                  "current-page": _vm.pagination.current_page,
-                  total: _vm.pagination.total
-                },
-                on: { "current-change": _vm.getRequests }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      )
+                staticStyle: { width: "100%" },
+                attrs: { data: _vm.requests }
+              },
+              [
+                _c("el-table-column", {
+                  attrs: { prop: "fecha", label: "fecha", width: "150" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "numero", width: "150" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "name-wrapper",
+                              attrs: { slot: "reference" },
+                              slot: "reference"
+                            },
+                            [
+                              _c(
+                                "el-tag",
+                                { attrs: { size: "medium", effect: "dark" } },
+                                [_vm._v(_vm._s(scope.row.idc))]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "importe",
+                    label: "importe",
+                    width: "100",
+                    align: "right"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "estado",
+                    label: "estado",
+                    width: "150",
+                    align: "center"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          scope.row.estado === "PROCESADO"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      {
+                                        attrs: {
+                                          size: "medium",
+                                          effect: "dark",
+                                          type: "primary"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      {
+                                        attrs: {
+                                          size: "medium",
+                                          effect: "dark",
+                                          type: "success"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "el-table-column",
+                  { attrs: { label: "detalle", width: "250", align: "right" } },
+                  [_c("p", [_vm._v("por la venta de valores universitarios")])]
+                ),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    align: "right",
+                    width: "250",
+                    fixed: "right",
+                    label: "Operaciones"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary", size: "small" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.initPrintRequestReport(
+                                    scope.$index,
+                                    scope.row
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            ver detalle de la solicitud"
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("el-pagination", {
+              attrs: {
+                "page-size": _vm.pagination.per_page,
+                layout: "prev, pager, next",
+                "current-page": _vm.pagination.current_page,
+                total: _vm.pagination.total
+              },
+              on: { "current-change": _vm.getRequests }
+            })
+          ],
+          1
+        )
+      ])
     ],
     1
   )
@@ -91788,21 +91831,49 @@ var render = function() {
             "el-row",
             { attrs: { gutter: 20 } },
             [
-              _c(
-                "p",
-                [
-                  _c("el-alert", {
-                    attrs: {
-                      title: "importante",
-                      type: "error",
-                      description:
-                        "las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe.",
-                      "show-icon": ""
-                    }
-                  })
-                ],
-                1
-              ),
+              _c("el-alert", {
+                attrs: {
+                  title: "Que debo hacer?",
+                  type: "error",
+                  description:
+                    "Seleccione los valores que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad de valores que solicita ya que estos estaran a su nombre y no de terceros."
+                }
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("el-alert", {
+                attrs: {
+                  title: "Cuales son los metodos de pago?",
+                  type: "success",
+                  description:
+                    "Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado."
+                }
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("el-alert", {
+                attrs: {
+                  title: "Que precauciones tomar?",
+                  type: "warning",
+                  description:
+                    "Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona."
+                }
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("el-alert", {
+                attrs: {
+                  title: "cuanto tiempo tengo para pagar?",
+                  type: "error",
+                  description:
+                    "el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe."
+                }
+              }),
+              _vm._v(" "),
+              _c("br"),
               _vm._v(" "),
               _c("el-col", { attrs: { span: 12 } }, [
                 _c(
@@ -92099,11 +92170,21 @@ var render = function() {
                 [
                   _c("el-alert", {
                     attrs: {
-                      title: "importante",
+                      title: "Cuanto tiempo dura verificar su pago?",
                       type: "error",
                       description:
-                        "las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad",
-                      "show-icon": ""
+                        "Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("el-alert", {
+                    attrs: {
+                      title: "Como saber si todo esta correcto?",
+                      type: "success",
+                      description:
+                        "El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas."
                     }
                   })
                 ],

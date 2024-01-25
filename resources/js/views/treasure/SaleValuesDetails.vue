@@ -7,9 +7,12 @@
             </div>
             <el-row :gutter="20">
                 <p>
-                    <el-alert title="importante" type="error"
-                        description="las solicitudes tienen validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion de importe, a traves de la cuenta unica de la universidad"
-                        show-icon>
+                    <el-alert title="Cuanto tiempo dura verificar su pago?" type="error"
+                        description="Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago">
+                    </el-alert>
+                    <br>
+                    <el-alert title="Como saber si todo esta correcto?" type="success"
+                        description="El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas.">
                     </el-alert>
                 </p>
                 <el-col :span="9">
@@ -40,14 +43,14 @@
                 <el-col :span="15">
                     <div class="grid-content bg-purple">
                         <p>valores en linea adquiridos</p>
-                        <el-table :data="dataRequestDetails" style="width: 100%" show-summary
-                            sum-text="importe total">
+                        <el-table :data="dataRequestDetails" style="width: 100%" show-summary sum-text="importe total">
                             <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
                             <el-table-column prop="can_val" label="cantidad" width="90" align="right"></el-table-column>
                             <el-table-column prop="imp_val" label="precio" width="90" align="right"></el-table-column>
                             <el-table-column align="right" width="200" fixed="right">
                                 <template slot-scope="scope" v-if="scope.row.id_compuesto === 'U'">
-                                    <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary" size="mini" :disabled="scope.row.id_tran === 0">imprimir comprobante
+                                    <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary"
+                                        size="mini" :disabled="scope.row.id_tran === 0">imprimir comprobante
                                     </el-button>
                                 </template>
                             </el-table-column>
@@ -111,7 +114,7 @@ export default {
                 });
             }
         },
-        async initPrintComprobate(idx, row){
+        async initPrintComprobate(idx, row) {
             console.log(idx);
             console.log(row);
             let app = this;
