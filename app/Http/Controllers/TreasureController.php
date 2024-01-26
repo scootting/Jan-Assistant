@@ -69,7 +69,7 @@ class TreasureController extends Controller
                 'cantidad' => $can_val));
         }
 
-        $array_b = array('descripcion' => 'Pago por valores universitarios',
+        $array_b = array('descripcion' => 'VU - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
             'codigoOrden' => 'V' . $id_sol,
             'datosPago' => array('nombresCliente' => $nombres,
                 'apellidosCliente' => $apellidos,
@@ -77,7 +77,7 @@ class TreasureController extends Controller
                 'fechaNacimientoCliente' => '2000-01-01',
                 //'cuentaBancaria' => '1000005678', /* pruebas */
                 //'cuentaBancaria' => '10000006023167',/* preproduccion */
-                'cuentaBancaria' => '10000006714592',/* produccion */
+                'cuentaBancaria' => '10000006714592', /* produccion */
                 'montoTotal' => $total,
                 'moneda' => 'BOB',
                 'tipoCambioMoneda' => 1,
@@ -157,10 +157,12 @@ class TreasureController extends Controller
     {
         $id = $request->get('id');
         $cod_val = $request->get('cod');
-        if($cod_val == '9351')
+        if ($cod_val == '9351') {
             $nreport = 'Treasure_Values_Physical';
-        else    
+        } else {
             $nreport = 'Treasure_Values';
+        }
+
         $controls = array(
             'id_tran' => $id,
         );
