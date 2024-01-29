@@ -80,9 +80,11 @@ const router = new VueRouter({
             path: '/', //path: '/login',
             name: 'login',
             component: Login,
-            children: [
-                { path: '/transaction/:id', name: 'informationsaledetails', component: InformationSaleDetails },
-            ]            
+        },
+        {
+            path: '/transaction/:id', //path: '/login',
+            name: 'informationsaledetails',
+            component: InformationSaleDetails,
         },
         {
             path: '/register', //path: '/login',

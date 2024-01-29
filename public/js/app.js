@@ -108807,12 +108807,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/',
     //path: '/login',
     name: 'login',
-    component: _views_Login__WEBPACK_IMPORTED_MODULE_4__["default"],
-    children: [{
-      path: '/transaction/:id',
-      name: 'informationsaledetails',
-      component: _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_15__["default"]
-    }]
+    component: _views_Login__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/transaction/:id',
+    //path: '/login',
+    name: 'informationsaledetails',
+    component: _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_15__["default"]
   }, {
     path: '/register',
     //path: '/login',
