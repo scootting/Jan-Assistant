@@ -79,6 +79,7 @@ export default {
       acquired: [],
       total: 1.00,
       dataRequest: {},
+      message:'',
     };
   },
   mounted() {
@@ -150,7 +151,34 @@ export default {
     // * FUNLOCAL. agregar valores que se van a comprar
     initAddValues(index, row) {
       this.total += parseFloat(row.pre_uni);
-      this.acquired.push(row);
+      console.log(row);
+      if(row.cod_val == '9365'){
+        this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
+      }
+      if(row.cod_val == '9366'){
+        this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
+      }
+      if(row.cod_val == '9367'){
+        this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
+      }
+      if(row.cod_val == '9368'){
+        this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
+      }
+
+      if(this.message == ''){
+        this.acquired.push(row);
+      }
+      else{
+        this.$confirm(this.message, 'Alerta', {
+          confirmButtonText: 'Agregar',
+          cancelButtonText: 'Cancelar',
+          type: 'warning'
+        }).then(() => {
+          this.acquired.push(row);
+        }).catch(() => {
+        });
+        this.message = '';
+      }
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues(index, row) {
