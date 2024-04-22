@@ -17,6 +17,9 @@ class DocumentController extends Controller
         $persona = $request->get('client');
         $id = strtoupper($persona['nodip']);
         $gestion = $request->get('year');
+
+
+        
         $data = Document::GetRequests($id, $gestion);
         $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 10;
