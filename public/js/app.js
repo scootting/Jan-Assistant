@@ -4509,12 +4509,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
     return {
       messages: {},
-      data: {}
+      data: {},
+      activeIndex: '1'
     };
   },
   mounted: function mounted() {},
@@ -4526,6 +4575,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: "login"
       });
+    },
+    handleSelect: function handleSelect(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
 });
@@ -4541,6 +4593,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -5266,6 +5322,214 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee, null, [[1, 9]]);
       }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "",
+  data: function data() {
+    return {
+      client: this.$store.state.user,
+      id: '',
+      gestion: '',
+      dataFinancial: [],
+      //diferentes tipos de archivos que pertenecen a un documento
+      dataDocuments: []
+    };
+  },
+  mounted: function mounted() {
+    this.getFinancialStatements();
+  },
+  methods: {
+    test: function test() {
+      alert("bienvenido al modulo");
+    },
+    //  * EF1. Obtener la lista de estados financieros 
+    getFinancialStatements: function getFinancialStatements() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var app, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                app = _this;
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.post("/getFinancialStatements", {
+                  id: app.id,
+                  year: app.client.gestion
+                });
+
+              case 4:
+                response = _context.sent;
+                app.dataFinancial = response.data; //console.log(response);
+
+                _context.next = 13;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                _this.error = _context.t0.response.data;
+                app.$alert(_this.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+                console.log(_context.t0);
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 8]]);
+      }))();
+    },
+    //* actualizar un componente al hacer la seleccion nueva *//
+    OnchangeTypeDocument: function OnchangeTypeDocument(idx) {
+      console.log(idx);
+      var resultado = this.dataFinancial.find(function (data) {
+        return data.id == idx;
+      });
+      this.id = resultado.id;
+      this.gestion = resultado.gestion;
+      this.getDocumentsbyFinalcialStatemet();
+    },
+    //  * A2. Obtiene la lista de documentos que pertenecen a un archivo
+    getDocumentsbyFinalcialStatemet: function getDocumentsbyFinalcialStatemet() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var app, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                app = _this2;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.post("/getDocumentsbyFinalcialStatemet", {
+                  id: app.id,
+                  year: app.gestion
+                });
+
+              case 4:
+                response = _context2.sent;
+                app.dataDocuments = response.data;
+                console.log(response.data);
+                _context2.next = 13;
+                break;
+
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](1);
+                _this2.error = _context2.t0.response.data;
+                app.$alert(_this2.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 9]]);
+      }))();
+    },
+    //  * EF4. Obtener documentos digitalizados
+    getDigitalDocumentById: function getDigitalDocumentById(idx, row) {
+      var app = this;
+      axios({
+        url: "/api/getDigitalFinancialDocument",
+        params: {
+          id: row.id,
+          year: app.gestion
+        },
+        method: "GET",
+        responseType: "blob"
+      }).then(function (response) {
+        var pdfData = response.data;
+        console.log(response);
+        var blob = new Blob([pdfData], {
+          type: 'application/pdf'
+        });
+        var url = URL.createObjectURL(blob);
+        window.open(url);
+      });
     }
   }
 });
@@ -9589,7 +9853,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside[data-v-63cd6604] {\r\n  color: #010e1f;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  line-height: 60px;\n}\n.el-header span[data-v-63cd6604] {\r\n  float: left;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-row[data-v-63cd6604] {\r\n  margin-bottom: 20px;\n}\n.el-card .el-button[data-v-63cd6604] {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\n}\n.el-card h4[data-v-63cd6604] {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\n}\n.el-card p[data-v-63cd6604] {\r\n  font-size: 15px;\n}\nul[data-v-63cd6604] {\r\n  list-style-type: none;\n}\nli[data-v-63cd6604] {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\n}\na[data-v-63cd6604] {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\n}\r\n", ""]);
+exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  /*line-height: 120px;*/\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\r\n\r\n\r\n/*\r\n.el-aside {\r\n  color: #010e1f;\r\n}\r\n\r\n\r\n.el-header span {\r\n  float: left;\r\n}\r\n\r\n\r\n\r\n.el-row {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.el-card .el-button {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\r\n}\r\n\r\n\r\n\r\n\r\n.el-card h4 {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\r\n}\r\n\r\n.el-card p {\r\n  font-size: 15px;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\r\n}\r\n\r\na {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\r\n}\r\n*/\r\n", ""]);
 
 // exports
 
@@ -9628,6 +9892,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n#app[data-v-3563ad7c] {\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    text-align: left;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.el-row[data-v-432b9d82] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-432b9d82] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-432b9d82] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-432b9d82] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-432b9d82] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-432b9d82] {\r\n    border-radius: 4px;\r\n    padding: 15px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-432b9d82] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
 
 // exports
 
@@ -86055,6 +86338,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/clients/Information.vue?vue&type=style&index=0&id=042b07d6&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/clients/Information.vue?vue&type=style&index=0&id=042b07d6&scoped=true&lang=css& ***!
@@ -87554,13 +87867,149 @@ var render = function() {
           _c(
             "el-header",
             [
-              _c("span", [
-                _vm._v("SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA")
-              ]),
+              _c(
+                "el-row",
+                { attrs: { gutter: 12 } },
+                [
+                  _c("el-col", { attrs: { span: 6 } }, [
+                    _c("span", [
+                      _vm._v("DIRECCION ADMINISTRATIVA Y FINANCIERA")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-col",
+                    { attrs: { span: 12 } },
+                    [
+                      _c(
+                        "el-menu",
+                        {
+                          staticClass: "el-menu-demo",
+                          staticStyle: { "border-bottom": "0 !important" },
+                          attrs: {
+                            "default-active": _vm.activeIndex,
+                            mode: "horizontal",
+                            "background-color": "#010e1f",
+                            "text-color": "#fff",
+                            "active-text-color": "#ffd04b"
+                          }
+                        },
+                        [
+                          _c(
+                            "el-menu-item",
+                            { attrs: { index: "1" } },
+                            [
+                              _c("i", { staticClass: "el-icon-setting" }),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: { to: { name: "layout" }, tag: "span" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Inicio\n              "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-submenu",
+                            { attrs: { index: "2" } },
+                            [
+                              _c("template", { slot: "title" }, [
+                                _c("i", { staticClass: "el-icon-notebook-2" }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Publicaciones")])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "el-menu-item",
+                                { attrs: { index: "2.1" } },
+                                [
+                                  _c("i", { staticClass: "el-icon-document" }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: { name: "financialstatements" },
+                                        tag: "span"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  ESTADOS FINANCIEROS\n                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-menu-item",
+                                { attrs: { index: "2.2", tag: "span" } },
+                                [
+                                  _c("i", { staticClass: "el-icon-document" }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: { name: "layout" },
+                                        tag: "span"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  CIRCULARES\n                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-menu-item",
+                            { attrs: { index: "3" } },
+                            [
+                              _c("i", { staticClass: "el-icon-s-platform" }),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: { to: { name: "login" }, tag: "span" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                pagos en linea\n              "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("el-button", { on: { click: _vm.initLogin } }, [
-                _vm._v("LOGIN")
-              ])
+              _c("div"),
+              _vm._v(" "),
+              _c("div")
             ],
             1
           ),
@@ -87755,7 +88204,7 @@ var render = function() {
         "el-card",
         { staticClass: "box-card", staticStyle: { "text-align": "justify" } },
         [
-          _c("h1", [_vm._v("Hola, Bienvenidos a la nueva plataforma!")]),
+          _c("h1", [_vm._v("Bienvenidos!")]),
           _vm._v(" "),
           _c("p", [
             _vm._v(
@@ -87763,14 +88212,23 @@ var render = function() {
             ),
             _c("br"),
             _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _c("br"),
             _vm._v(
-              "La migración a la nueva plataforma otorga nueva tecnología\n      que nos ayuda a mejorar la experiencia de nuestros visitantes. Durante\n      los próximos meses, comenzará a ver cambios sutiles en el diseño del\n      sitio entre los que se incluyen modificaciones en la navegación, para\n      que se simplifique aún más la búsqueda de la información y el\n      lanzamiento de nuevas herramientas para asistirlos en sus necesidades\n      comerciales. "
+              "La migración a la nueva plataforma otorga nueva tecnología\n      que nos ayuda a mejorar la experiencia de nuestros visitantes. Durante\n      los próximos meses, comenzará a ver cambios sutiles en el diseño del\n      sitio entre los que se incluyen modificaciones en la navegación, para\n      que se simplifique aún más la búsqueda de la información y el\n      lanzamiento de nuevas herramientas para asistirlos en sus necesidades\n      comerciales. \n      "
             ),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
             _c("br"),
             _c("br"),
             _vm._v(
               "Nuestro objetivo es mejorar su experiencia como\n      visitante y continuar facilitando la realización de sus tramites.\n      "
             ),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
             _c("br"),
             _c("br"),
             _vm._v(
@@ -88907,6 +89365,232 @@ var render = function() {
           _vm._v("esta pagina a sido intencionalmente puesta en blanco")
         ])
       ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "el-card",
+        { staticClass: "box-card" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "clearfix",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c("span", [_vm._v("estados financieros")]),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticStyle: { float: "right", padding: "3px 0" },
+                  attrs: { type: "text" },
+                  on: { click: _vm.test }
+                },
+                [_vm._v("ayuda")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-row",
+            { attrs: { gutter: 10 } },
+            [
+              _c(
+                "p",
+                [
+                  _c("el-alert", {
+                    attrs: {
+                      title:
+                        "Esta informacion es generada por el Sistema de Gestion Publica (SIGEP) para la Universidad Autonoma Tomas Frias.",
+                      type: "success"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("el-col", { attrs: { span: 18 } }, [
+                _c(
+                  "div",
+                  { staticClass: "grid-content bg-purple" },
+                  [
+                    _c("p", [_vm._v("Elija la gestion que desea consultar")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-form",
+                      { attrs: { "label-width": "100px" } },
+                      [
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: "gestion" } },
+                          [
+                            _c(
+                              "el-select",
+                              {
+                                attrs: {
+                                  "value-key": "id",
+                                  size: "small",
+                                  placeholder: "seleccione el tipo de documento"
+                                },
+                                on: { change: _vm.OnchangeTypeDocument },
+                                model: {
+                                  value: _vm.gestion,
+                                  callback: function($$v) {
+                                    _vm.gestion = $$v
+                                  },
+                                  expression: "gestion"
+                                }
+                              },
+                              _vm._l(_vm.dataFinancial, function(item) {
+                                return _c("el-option", {
+                                  key: item.id,
+                                  attrs: { label: item.gestion, value: item.id }
+                                })
+                              }),
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      [
+                        _c(
+                          "el-table",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              data: _vm.dataDocuments,
+                              border: "",
+                              size: "small"
+                            }
+                          },
+                          [
+                            _c("el-table-column", {
+                              attrs: {
+                                prop: "idx",
+                                label: "indice",
+                                align: "right",
+                                width: "100"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
+                              attrs: {
+                                prop: "descripcion",
+                                label: "descripcion",
+                                width: "450",
+                                align: "left"
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-tag",
+                                        { attrs: { size: "medium" } },
+                                        [_vm._v(_vm._s(scope.row.descripcion))]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
+                            }),
+                            _vm._v(
+                              "\n                            ...\n                            "
+                            ),
+                            _c("el-table-column", {
+                              attrs: {
+                                align: "right-center",
+                                label: "",
+                                width: "150",
+                                fixed: "right"
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-button",
+                                        {
+                                          attrs: {
+                                            disabled:
+                                              scope.row.guardado === true,
+                                            type: "primary",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.getDigitalDocumentById(
+                                                scope.$index,
+                                                scope.row
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "ver\n                                        documento"
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -108759,17 +109443,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
 /* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
 /* harmony import */ var _views_Layout__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/Layout */ "./resources/js/views/Layout.vue");
-/* harmony import */ var _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/treasure/SaleStudents */ "./resources/js/views/treasure/SaleStudents.vue");
-/* harmony import */ var _views_treasure_SaleValuesDetails__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/treasure/SaleValuesDetails */ "./resources/js/views/treasure/SaleValuesDetails.vue");
-/* harmony import */ var _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/treasure/InformationSaleDetails */ "./resources/js/views/treasure/InformationSaleDetails.vue");
-/* harmony import */ var _views_document_Requests__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/document/Requests */ "./resources/js/views/document/Requests.vue");
-/* harmony import */ var _views_document_AddRequestMemorial__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/document/AddRequestMemorial */ "./resources/js/views/document/AddRequestMemorial.vue");
-/* harmony import */ var _views_document_RequestMemorial__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./views/document/RequestMemorial */ "./resources/js/views/document/RequestMemorial.vue");
-/* harmony import */ var _views_document_AddRequestSolvencies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/document/AddRequestSolvencies */ "./resources/js/views/document/AddRequestSolvencies.vue");
-/* harmony import */ var _views_document_RequestSolvencies__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./views/document/RequestSolvencies */ "./resources/js/views/document/RequestSolvencies.vue");
-/* harmony import */ var _views_election_Information_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./views/election/Information.vue */ "./resources/js/views/election/Information.vue");
-/* harmony import */ var _views_election_ResponseInformation_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./views/election/ResponseInformation.vue */ "./resources/js/views/election/ResponseInformation.vue");
-/* harmony import */ var _views_election_responseDataTablets_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./views/election/responseDataTablets.vue */ "./resources/js/views/election/responseDataTablets.vue");
+/* harmony import */ var _views_application_FinancialStatements__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/application/FinancialStatements */ "./resources/js/views/application/FinancialStatements.vue");
+/* harmony import */ var _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/treasure/SaleStudents */ "./resources/js/views/treasure/SaleStudents.vue");
+/* harmony import */ var _views_treasure_SaleValuesDetails__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/treasure/SaleValuesDetails */ "./resources/js/views/treasure/SaleValuesDetails.vue");
+/* harmony import */ var _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/treasure/InformationSaleDetails */ "./resources/js/views/treasure/InformationSaleDetails.vue");
+/* harmony import */ var _views_document_Requests__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/document/Requests */ "./resources/js/views/document/Requests.vue");
+/* harmony import */ var _views_document_AddRequestMemorial__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./views/document/AddRequestMemorial */ "./resources/js/views/document/AddRequestMemorial.vue");
+/* harmony import */ var _views_document_RequestMemorial__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/document/RequestMemorial */ "./resources/js/views/document/RequestMemorial.vue");
+/* harmony import */ var _views_document_AddRequestSolvencies__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./views/document/AddRequestSolvencies */ "./resources/js/views/document/AddRequestSolvencies.vue");
+/* harmony import */ var _views_document_RequestSolvencies__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./views/document/RequestSolvencies */ "./resources/js/views/document/RequestSolvencies.vue");
+/* harmony import */ var _views_election_Information_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./views/election/Information.vue */ "./resources/js/views/election/Information.vue");
+/* harmony import */ var _views_election_ResponseInformation_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./views/election/ResponseInformation.vue */ "./resources/js/views/election/ResponseInformation.vue");
+/* harmony import */ var _views_election_responseDataTablets_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./views/election/responseDataTablets.vue */ "./resources/js/views/election/responseDataTablets.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Pages
@@ -108783,6 +109468,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
  //certificado de diplomados
 //import AddGraduateCertificate from './views/document/AddGraduateCertificate'
+
 
 
 
@@ -108836,6 +109522,19 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   },
   */
   {
+    path: '/home',
+    name: 'home',
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_11__["default"],
+    children: [{
+      path: '',
+      name: 'layout',
+      component: _views_Layout__WEBPACK_IMPORTED_MODULE_12__["default"]
+    }, {
+      path: '/financial',
+      name: 'financialstatements',
+      component: _views_application_FinancialStatements__WEBPACK_IMPORTED_MODULE_13__["default"]
+    }]
+  }, {
     path: '/',
     //path: '/login',
     name: 'login',
@@ -108844,7 +109543,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/transaction/:id',
     //path: '/login',
     name: 'informationsaledetails',
-    component: _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_15__["default"]
+    component: _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_16__["default"]
   }, {
     path: '/register',
     //path: '/login',
@@ -108879,15 +109578,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     {
       path: '/requests',
       name: 'requests',
-      component: _views_document_Requests__WEBPACK_IMPORTED_MODULE_16__["default"]
+      component: _views_document_Requests__WEBPACK_IMPORTED_MODULE_17__["default"]
     }, {
       path: '/salestudents',
       name: 'salestudents',
-      component: _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_13__["default"]
+      component: _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_14__["default"]
     }, {
       path: '/salevaluesdetails/:id',
       name: 'salevaluesdetails',
-      component: _views_treasure_SaleValuesDetails__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _views_treasure_SaleValuesDetails__WEBPACK_IMPORTED_MODULE_15__["default"]
     }, //{ path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
     //{ path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
     //  |--------------------------------------------------------------------------
@@ -108897,12 +109596,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     {
       path: '/AddRequestMemorial',
       name: 'addrequestmemorial',
-      component: _views_document_AddRequestMemorial__WEBPACK_IMPORTED_MODULE_17__["default"]
+      component: _views_document_AddRequestMemorial__WEBPACK_IMPORTED_MODULE_18__["default"]
     }, //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
     {
       path: '/RequestMemorial',
       name: 'requestmemorial',
-      component: _views_document_RequestMemorial__WEBPACK_IMPORTED_MODULE_18__["default"]
+      component: _views_document_RequestMemorial__WEBPACK_IMPORTED_MODULE_19__["default"]
     }, //  |--------------------------------------------------------------------------
     //  | Rutas API para el Sistema de Solvencias Universitarias
     //  |--------------------------------------------------------------------------    
@@ -108910,12 +109609,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     {
       path: '/AddRequestSolvencies',
       name: 'addrequestsolvencies',
-      component: _views_document_AddRequestSolvencies__WEBPACK_IMPORTED_MODULE_19__["default"]
+      component: _views_document_AddRequestSolvencies__WEBPACK_IMPORTED_MODULE_20__["default"]
     }, //  * S2. Lista las solicitudes de la solvencia universitaria              
     {
       path: '/RequestSolvencies',
       name: 'requestsolvencies',
-      component: _views_document_RequestSolvencies__WEBPACK_IMPORTED_MODULE_20__["default"]
+      component: _views_document_RequestSolvencies__WEBPACK_IMPORTED_MODULE_21__["default"]
     }],
     meta: {
       requiresAuth: true
@@ -109811,6 +110510,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Welcome_vue_vue_type_template_id_1ae8ae93_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Welcome_vue_vue_type_template_id_1ae8ae93_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/application/FinancialStatements.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/views/application/FinancialStatements.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true& */ "./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true&");
+/* harmony import */ var _FinancialStatements_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FinancialStatements.vue?vue&type=script&lang=js& */ "./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& */ "./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _FinancialStatements_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "432b9d82",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/application/FinancialStatements.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FinancialStatements.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=style&index=0&id=432b9d82&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_style_index_0_id_432b9d82_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/application/FinancialStatements.vue?vue&type=template&id=432b9d82&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FinancialStatements_vue_vue_type_template_id_432b9d82_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

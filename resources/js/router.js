@@ -9,6 +9,7 @@ import Login from './views/Login'
 import Register from './views/Register'
 import Logout from './views/Logout'
 import Dashboard from './views/Dashboard'
+
 import Information from './views/clients/Information'
 import Password from './views/clients/Password'
 
@@ -20,6 +21,7 @@ import Password from './views/clients/Password'
 import Welcome from './views/Welcome'
 import Home from './views/Home'
 import Layout from './views/Layout'
+import FinancialStatements from './views/application/FinancialStatements'
 
 //Tesoro: Modulo para seleccionar los valores en linea
 import SaleStudents from './views/treasure/SaleStudents'
@@ -76,6 +78,16 @@ const router = new VueRouter({
             ],
         },
         */
+
+        {
+            path: '/home',
+            name: 'home',
+            component: Home,
+            children: [
+                { path: '', name: 'layout', component: Layout },
+                { path: '/financial', name: 'financialstatements', component: FinancialStatements },
+            ],
+        },
         {
             path: '/', //path: '/login',
             name: 'login',

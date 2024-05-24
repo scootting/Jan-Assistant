@@ -2,8 +2,56 @@
   <div>
     <el-container>
       <el-header>
-        <span>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</span>
-        <el-button @click="initLogin">LOGIN</el-button>
+        <el-row :gutter="12">
+          <el-col :span="6">
+            <span>DIRECCION ADMINISTRATIVA Y FINANCIERA</span>
+
+          </el-col>
+          <el-col :span="12">
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#010e1f"
+              text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0 !important">
+              <el-menu-item index="1">
+                <i class="el-icon-setting"></i>
+                <router-link :to="{ name: 'layout' }" tag="span">
+                  Inicio
+                </router-link>
+              </el-menu-item>
+              <el-submenu index="2">
+                <template slot="title">
+                  <i class="el-icon-notebook-2"></i>
+                  <span>Publicaciones</span>
+                  </template>
+                <el-menu-item index="2.1">
+                  <i class="el-icon-document"></i>
+                  <router-link :to="{ name: 'financialstatements' }" tag="span">
+                    ESTADOS FINANCIEROS
+                  </router-link>
+                </el-menu-item>
+                <el-menu-item index="2.2" tag="span">
+                  <i class="el-icon-document"></i>
+                  <router-link :to="{ name: 'layout' }" tag="span">
+                    CIRCULARES
+                  </router-link>
+                </el-menu-item>
+              </el-submenu>
+              <el-menu-item index="3">
+                <i class="el-icon-s-platform"></i>
+                <router-link :to="{ name: 'login' }" tag="span">
+                  pagos en linea
+                </router-link>
+              </el-menu-item>
+            </el-menu>
+          </el-col>
+          <!--
+          <el-col :span="6">
+            <el-button @click="initLogin">LOGIN</el-button>
+          </el-col>
+          -->
+        </el-row>
+        <div>
+        </div>
+        <div>
+        </div>
       </el-header>
       <el-container>
         <el-main>
@@ -82,6 +130,7 @@ export default {
     return {
       messages: {},
       data: {},
+      activeIndex: '1',
     };
   },
   mounted() { },
@@ -92,6 +141,10 @@ export default {
     initLogin() {
       this.$router.push({ name: "login" });
     },
+
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    }
   },
 };
 </script>
@@ -114,18 +167,11 @@ textarea {
   color: inherit;
 }
 
-.el-aside {
-  color: #010e1f;
-}
 
 .el-header {
   background: #010e1f;
   color: #fff;
-  line-height: 60px;
-}
-
-.el-header span {
-  float: left;
+  /*line-height: 120px;*/
 }
 
 .el-header .el-button {
@@ -142,6 +188,19 @@ textarea {
   float: left;
 }
 
+
+/*
+.el-aside {
+  color: #010e1f;
+}
+
+
+.el-header span {
+  float: left;
+}
+
+
+
 .el-row {
   margin-bottom: 20px;
 }
@@ -152,6 +211,9 @@ textarea {
   display: block;
   margin: 0 auto;
 }
+
+
+
 
 .el-card h4 {
   font-size: 2rem;
@@ -180,4 +242,5 @@ a {
   text-decoration: none;
   padding: 5px 5px 0;
 }
+*/
 </style>

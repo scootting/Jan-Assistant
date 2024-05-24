@@ -10,6 +10,39 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class DocumentController extends Controller
 {
 
+    //  * EF1. Obtener la lista de estados financieros
+    public function getFinancialStatements(Request $request)
+    {
+        $year = $request->get('year');
+        $data = Document::GetFinancialStatements($year);
+        return json_encode($data);
+    }
+    //  * EF2. Obtener la lista de documentos por estado financiero
+    public function getDocumentsbyFinalcialStatemet(Request $request)
+    {
+        $id = $request->get('id');
+        $gestion = $request->get('gestion');
+        $data = Document::GetDocumentsbyFinalcialStatemet($id, $gestion);
+        return json_encode($data);
+    }
+    //  * EF4. Obtener documentos digitalizados
+    public function getDigitalFinancialDocument(Request $request)
+    {
+        \Log::info("Me la pelas");        
+        \Log::info($request);        
+        $id = $request->get('id');
+        $year = $request->get('year');
+        $result = Document::getDigitalFinancialDocument($id, $year);
+        if (!empty($result[0]->pdf_data)) {
+            $my_bytea = stream_get_contents($result[0]->pdf_data);
+            return $my_bytea;
+        } else {
+            return response()->json([
+                'error' => 'No se encontró ningún registro con el ID proporcionado.',
+            ]);
+        }
+    }
+
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     public function getRequests(Request $request)
@@ -18,8 +51,6 @@ class DocumentController extends Controller
         $id = strtoupper($persona['nodip']);
         $gestion = $request->get('year');
 
-
-        
         $data = Document::GetRequests($id, $gestion);
         $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 10;
@@ -145,7 +176,7 @@ class DocumentController extends Controller
         return $report;
     }
 
-    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias
     public function getTypesOfDocuments(Request $request)
     {
         $gestion = $request->get('year');

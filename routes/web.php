@@ -18,7 +18,7 @@ Route::post('person', 'GeneralController@getPersonById');
 //Route::get('description/{abr}', 'DocumentController@getDescriptionByAbr');
 Route::post('notification', 'GeneralController@PPENotification');
 //Route::match(['get', 'post'], 'notification2', 'GeneralController@PPENotification2');
-Route::post('notification2/{id}', 'GeneralController@PPENotification2');//->withoutMiddleware(['csrf']);
+Route::post('notification2/{id}', 'GeneralController@PPENotification2'); //->withoutMiddleware(['csrf']);
 //Route::post('/notification2', 'GeneralController@PPENotification2PPENotification2');
 //Route::post('notification2', 'GeneralController@PPENotification2');
 //Route::match(array('GET', 'POST'), '/notification2', 'GeneralController@PPENotification2');
@@ -32,7 +32,7 @@ Route::post('upload', 'FileController@uploadFile');
 Route::get('delete/upload-folder/{file}', 'FileController@deleteFile');
 Route::get('download/upload-folder/{file}', 'FileController@downloadFile');
 Route::get('reportSelectedFixedAssets2/', 'FixedAssetController@getReportSelectedFixedAssets2');
-*/
+ */
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Elecciones
 //  |--------------------------------------------------------------------------
@@ -52,6 +52,13 @@ Route::get('reportInformationPerson', 'ElectionController@reportInformationPerso
 
 Route::post('getDataTransactionById', 'TreasureController@getDataTransactionById');
 
+//  |--------------------------------------------------------------------------
+//  | Rutas API para el Sistema de Estados Financieros
+//  |--------------------------------------------------------------------------
+//  * EF1. Obtener la lista de estados financieros
+Route::post('getFinancialStatements', 'DocumentController@getFinancialStatements');
+//  * EF2. Obtener la lista de documentos subidos para cada estado financiero
+Route::post('getDocumentsbyFinalcialStatemet', 'DocumentController@getDocumentsbyFinalcialStatemet');
 
 /*
 Route::get('/', function () {

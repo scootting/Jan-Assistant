@@ -7,6 +7,35 @@ use Illuminate\Support\Facades\DB;
 
 class Document extends Model
 {
+    //  * EF1. Obtener la lista de estados financieros
+    public static function GetFinancialStatements($year)
+    {
+        $query = "SELECT * FROM efe.estados e order by gestion desc";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    //  * EF2. Obtener la lista de documentos
+    public static function GetDocumentsbyFinalcialStatemet($id, $year)
+    {
+        $query = "SELECT id, idx, descripcion, estado FROM efe.estado_detalle d WHERE d.id_estado ='" . $id . "' order by idx asc";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    //  * EF4. Obtener documentos digitalizados
+    public static function getDigitalFinancialDocument($id, $year)
+    {
+        $query = "SELECT digitalizado as pdf_data FROM efe.estado_detalle d WHERE d.id = ?";
+        \Log::info($id);        
+        \Log::info($query);        
+        $data = DB::select($query, [$id]);
+        return $data;
+    }
+
+
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     public static function GetRequests($id, $year)
@@ -33,7 +62,8 @@ class Document extends Model
     //  * {marker: tipo de solicitud }
     //  * {nodip: carnet de identidad de la persona }
     //  * {descripcion: detalle de la persona }
-    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total){
+    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total)
+    {
         $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "')";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
@@ -51,8 +81,9 @@ class Document extends Model
     }
     //  *  D3. Obtener los boucher de cada solicitud
     //  * {id: id de la solicitud }
-    public static function getBoucherRequestById($id){
-        $query = "select id, id_sol, boucher, fecha, imp_bou, ruta from linea.deposito_solicitud d 
+    public static function getBoucherRequestById($id)
+    {
+        $query = "select id, id_sol, boucher, fecha, imp_bou, ruta from linea.deposito_solicitud d
                   where d.id_sol = '" . $id . "'";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
@@ -61,7 +92,8 @@ class Document extends Model
 
     //  *  D4. Obtener el documento digitalizado de cada solicitud
     //  * {id: id del boucher digitalizado }
-    public static function GetDigitalBoucher($id, $year){
+    public static function GetDigitalBoucher($id, $year)
+    {
         $query = "SELECT img as pdf_data FROM linea.deposito_solicitud d WHERE d.id = ?";
         \Log::info($query);
         $data = DB::select($query, [$id]);
@@ -70,14 +102,15 @@ class Document extends Model
     //  *  D4. Cambia el estado de cada solicitud
     //  * {id: id dela solicitud }
     //  * {state: estado de la solicitud }
-    public static function StoreChangeStateRequest($id_request,  $state){
+    public static function StoreChangeStateRequest($id_request, $state)
+    {
         $query = "UPDATE linea.solicitudes set estado = '" . $state . "' where id = '" . $id_request . "'";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
 
     }
 
-    //  * M2. Lista las solicitudes de documentos por tipo de documento (MEMO, SOL, etc, etc)             
+    //  * M2. Lista las solicitudes de documentos por tipo de documento (MEMO, SOL, etc, etc)
     //  * {id: carnet de identidad de la persona}
     public static function GetDataDocument($id, $tipo)
     {
@@ -86,16 +119,15 @@ class Document extends Model
         return $data;
     }
 
-    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias
     //  * {gestion: gestion que se esta utilizando}
     //  * {gestion: tipo de documento que se esta solicitando}
     public static function GetTypesOfDocuments($gestion, $tipo)
     {
-        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = '". $tipo ."' order by s.sub asc";
+        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = '" . $tipo . "' order by s.sub asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-
 
     //  * M1. guarda las solicitudes de memoriales solicitadas
     public static function StoreRequestDataDocument($id, $abrv, $tipo, $ci_per, $des_per, $gestion)
@@ -106,9 +138,6 @@ class Document extends Model
         return $data;
     }
 
-
-
-
     //  * M1. guarda las solicitudes de memoriales solicitadas
     public static function StoreRequestMemorial($id, $abrv, $tipo, $ci_per, $des_per, $gestion)
     {
@@ -118,15 +147,8 @@ class Document extends Model
         return $data;
     }
 
-
-
-
-
-
-
     // *** - funcion para la busqueda de las personas por carnet de identidad - ***
     // *** - parametros [carnet de identidad] - ***
-
 
     public static function getDescriptionByAbr($abr)
     {

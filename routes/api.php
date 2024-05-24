@@ -18,11 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 //Route::post('persona', 'GeneralController@getPersonByCI');
 
-
 //  *  A1. Acceder a la plataforma ingresando el nro de ci y fecha de nacimiento
 //  * {username: carnet de identidad del usuario, password: fecha de nacimiento del usuario o personalizado}
 Route::post('login', 'GeneralController@loginClient');
 
+
+//  * EF4. Obtener documentos digitalizados
+Route::get('getDigitalFinancialDocument', 'DocumentController@getDigitalFinancialDocument');
 
 //  *  A4. Registrar la informacion personal del cliente
 //  * {cliente: array con la informacion personalizada del cliente}
@@ -48,7 +50,7 @@ Route::group([
     Route::post('logout', 'GeneralController@logoutUser');
     //  |--------------------------------------------------------------------------
     //  | Rutas API para el Sistema de Ventas en Linea - Agetic
-    //  |--------------------------------------------------------------------------    
+    //  |--------------------------------------------------------------------------
     //  *  AG1. Guardar la venta de valores en linea en la PPE
     Route::post('storeOnlineSalesRequest', 'AgeticController@storeOnlineSalesRequest');
 
@@ -60,7 +62,7 @@ Route::group([
     //  * {cliente: informacion del cliente}
     //  * {valores: valores seleccionados}
     Route::post('setValuesAcquired', 'TreasureController@setValuesAcquired');
- 
+
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     Route::post('request', 'DocumentController@getRequests');
@@ -71,8 +73,6 @@ Route::group([
 
     //  *  D3. Imprimir los comprobantes de pago
     Route::get('printComprobate', 'TreasureController@printComprobate');
-
-
 
     //  *  D2. Guardar los boucher generados por cada solicitud
     //  * {boucher: imagen del boucher }
@@ -85,14 +85,14 @@ Route::group([
 
     //  |--------------------------------------------------------------------------
     //  | Rutas API para el Sistema de Memoriales Universitarios
-    //  |--------------------------------------------------------------------------    
-    //  * M2. Lista las solicitudes de elaboracion de memorial universitario              
+    //  |--------------------------------------------------------------------------
+    //  * M2. Lista las solicitudes de elaboracion de memorial universitario
     Route::post('getDataDocument', 'DocumentController@getDataDocument');
-    //  * M1. guarda las solicitudes realizadas             
+    //  * M1. guarda las solicitudes realizadas
     Route::post('storeRequestMemorial', 'DocumentController@storeRequestMemorial');
-    //  * M3. Imprimir la solicitud de elaboracion de memorial universitario              
+    //  * M3. Imprimir la solicitud de elaboracion de memorial universitario
     Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
-    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias 
+    //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias
     Route::post('getTypesOfDocuments', 'DocumentController@getTypesOfDocuments');
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');
