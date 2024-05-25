@@ -5405,6 +5405,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -89494,20 +89498,6 @@ var render = function() {
             "el-row",
             { attrs: { gutter: 10 } },
             [
-              _c(
-                "p",
-                [
-                  _c("el-alert", {
-                    attrs: {
-                      title:
-                        "Esta informacion es generada por el Sistema de Gestion Publica (SIGEP) para la Universidad Autonoma Tomas Frias.",
-                      type: "success"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c("el-col", { attrs: { span: 18 } }, [
                 _c(
                   "div",
@@ -89554,6 +89544,8 @@ var render = function() {
                       ],
                       1
                     ),
+                    _vm._v(" "),
+                    _c("p"),
                     _vm._v(" "),
                     _c(
                       "div",

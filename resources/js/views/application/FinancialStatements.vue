@@ -6,12 +6,6 @@
                 <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
             </div>
             <el-row :gutter="10">
-                <p>
-                    <el-alert
-                        title="Esta informacion es generada por el Sistema de Gestion Publica (SIGEP) para la Universidad Autonoma Tomas Frias."
-                        type="success">
-                    </el-alert>
-                </p>
                 <el-col :span="18">
                     <div class="grid-content bg-purple">
                         <p>Elija la gestion que desea consultar</p>
@@ -25,6 +19,16 @@
                                 </el-select>
                             </el-form-item>
                         </el-form>
+                        <p>
+                            <!--
+                            <h4>documentos de la gestion: {{ gestion }}</h4>
+                    <el-alert
+                        title="Esta informacion es generada por el Sistema de Gestion Publica (SIGEP) para la Universidad Autonoma Tomas Frias."
+                        type="success">
+                    </el-alert>
+
+                    -->
+                        </p>
                         <div>
                             <el-table :data="dataDocuments" border style="width: 100%" size="small">
                                 <el-table-column prop="idx" label="indice" align="right" width="100">
