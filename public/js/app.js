@@ -5400,15 +5400,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -9864,7 +9855,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  /*line-height: 120px;*/\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\r\n\r\n\r\n/*\r\n.el-aside {\r\n  color: #010e1f;\r\n}\r\n\r\n\r\n.el-header span {\r\n  float: left;\r\n}\r\n\r\n\r\n\r\n.el-row {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.el-card .el-button {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\r\n}\r\n\r\n\r\n\r\n\r\n.el-card h4 {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\r\n}\r\n\r\n.el-card p {\r\n  font-size: 15px;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\r\n}\r\n\r\na {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\r\n}\r\n*/\r\n", ""]);
+exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  /*line-height: 120px;*/\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-footer ul[data-v-63cd6604] {\r\n  list-style-type: none;\n}\n.el-footer li[data-v-63cd6604] {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\n}\n.el-footer a[data-v-63cd6604] {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\n}\r\n\r\n\r\n/*\r\n.el-aside {\r\n  color: #010e1f;\r\n}\r\n\r\n\r\n.el-header span {\r\n  float: left;\r\n}\r\n\r\n\r\n\r\n.el-row {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.el-card .el-button {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\r\n}\r\n\r\n\r\n\r\n\r\n.el-card h4 {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\r\n}\r\n\r\n.el-card p {\r\n  font-size: 15px;\r\n}\r\n\r\n*/\r\n", ""]);
 
 // exports
 
@@ -88105,19 +88096,19 @@ var render = function() {
                     { attrs: { gutter: 20 } },
                     [
                       _c("el-col", { attrs: { span: 8 } }, [
-                        _c("h5", [_vm._v("ministerio de economia y finanzas")]),
+                        _c("h5", [_vm._v("informacion")]),
                         _vm._v(" "),
                         _c("p", [
                           _c("ul", [
                             _c("li", [
                               _vm._v(
-                                "\n                Curso de Pagos Electrónicos para Entidades Territoriales Autónomas y Universidades\n              "
+                                "\n                ubicacion: calle serrudo casi esquina civica\n              "
                               )
                             ]),
                             _vm._v(" "),
                             _c("li", [
                               _vm._v(
-                                "\n                sistema de gestion gubernamental SIGEP\n              "
+                                "\n                telefono:\n              "
                               )
                             ])
                           ])
@@ -88139,7 +88130,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                  paginal principal\n                "
+                                    "\n                    paginal principal\n                "
                                   )
                                 ]
                               )
@@ -89516,10 +89507,11 @@ var render = function() {
                             _c(
                               "el-select",
                               {
+                                staticStyle: { width: "200px" },
                                 attrs: {
                                   "value-key": "id",
                                   size: "small",
-                                  placeholder: "seleccione el tipo de documento"
+                                  placeholder: "seleccione la gestion"
                                 },
                                 on: { change: _vm.OnchangeTypeDocument },
                                 model: {
@@ -89592,9 +89584,7 @@ var render = function() {
                                 }
                               ])
                             }),
-                            _vm._v(
-                              "\n                            ...\n                            "
-                            ),
+                            _vm._v(" "),
                             _c("el-table-column", {
                               attrs: {
                                 align: "right-center",
@@ -89611,8 +89601,6 @@ var render = function() {
                                         "el-button",
                                         {
                                           attrs: {
-                                            disabled:
-                                              scope.row.guardado === true,
                                             type: "primary",
                                             size: "small"
                                           },
@@ -109583,7 +109571,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   },
   */
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: _views_Home__WEBPACK_IMPORTED_MODULE_11__["default"],
     children: [{
@@ -109596,7 +109584,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: _views_application_FinancialStatements__WEBPACK_IMPORTED_MODULE_13__["default"]
     }]
   }, {
-    path: '/',
+    path: '/login',
     //path: '/login',
     name: 'login',
     component: _views_Login__WEBPACK_IMPORTED_MODULE_4__["default"]

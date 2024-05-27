@@ -64,14 +64,14 @@
         <el-footer>
           <el-row :gutter="20">
             <el-col :span="8">
-              <h5>ministerio de economia y finanzas</h5>
+              <h5>informacion</h5>
               <p>
               <ul>
                 <li>
-                  Curso de Pagos Electrónicos para Entidades Territoriales Autónomas y Universidades
+                  ubicacion: calle serrudo casi esquina civica
                 </li>
                 <li>
-                  sistema de gestion gubernamental SIGEP
+                  telefono:
                 </li>
               </ul>
               </p>
@@ -82,7 +82,7 @@
               <ul>
                 <li>
                   <a href="http://academico.uatf.edu.bo/">
-                    paginal principal
+                      paginal principal
                   </a>
                 </li>
                 <li>
@@ -189,6 +189,24 @@ textarea {
 }
 
 
+.el-footer ul {
+  list-style-type: none;
+}
+
+.el-footer li {
+  padding: 5px 0;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.el-footer a {
+  color: cadetblue;
+  outline: none;
+  text-decoration: none;
+  padding: 5px 5px 0;
+}
+
+
 /*
 .el-aside {
   color: #010e1f;
@@ -226,21 +244,5 @@ textarea {
   font-size: 15px;
 }
 
-ul {
-  list-style-type: none;
-}
-
-li {
-  padding: 5px 0;
-  box-sizing: border-box;
-  display: flex;
-}
-
-a {
-  color: cadetblue;
-  outline: none;
-  text-decoration: none;
-  padding: 5px 5px 0;
-}
 */
 </style>

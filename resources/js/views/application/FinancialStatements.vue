@@ -11,8 +11,8 @@
                         <p>Elija la gestion que desea consultar</p>
                         <el-form label-width="100px">
                             <el-form-item label="gestion">
-                                <el-select v-model="gestion" value-key="id" size="small"
-                                    placeholder="seleccione el tipo de documento" @change="OnchangeTypeDocument">
+                                <el-select v-model="gestion" value-key="id" size="small" style="width:200px"
+                                    placeholder="seleccione la gestion" @change="OnchangeTypeDocument">
                                     <el-option v-for="item in dataFinancial" :key="item.id" :label="item.gestion"
                                         :value="item.id">
                                     </el-option>
@@ -20,14 +20,6 @@
                             </el-form-item>
                         </el-form>
                         <p>
-                            <!--
-                            <h4>documentos de la gestion: {{ gestion }}</h4>
-                    <el-alert
-                        title="Esta informacion es generada por el Sistema de Gestion Publica (SIGEP) para la Universidad Autonoma Tomas Frias."
-                        type="success">
-                    </el-alert>
-
-                    -->
                         </p>
                         <div>
                             <el-table :data="dataDocuments" border style="width: 100%" size="small">
@@ -38,10 +30,9 @@
                                         <el-tag size="medium">{{ scope.row.descripcion }}</el-tag>
                                     </template>
                                 </el-table-column>
-                                ...
                                 <el-table-column align="right-center" label="" width="150" fixed="right">
                                     <template slot-scope="scope">
-                                        <el-button :disabled="scope.row.guardado === true" type="primary" size="small"
+                                        <el-button type="primary" size="small"
                                             @click="getDigitalDocumentById(scope.$index, scope.row)">ver
                                             documento</el-button>
                                     </template>

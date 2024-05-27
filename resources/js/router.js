@@ -80,7 +80,7 @@ const router = new VueRouter({
         */
 
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: Home,
             children: [
@@ -89,7 +89,7 @@ const router = new VueRouter({
             ],
         },
         {
-            path: '/', //path: '/login',
+            path: '/login', //path: '/login',
             name: 'login',
             component: Login,
         },
