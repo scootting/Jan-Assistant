@@ -12,6 +12,7 @@
                         show-icon>
                     </el-alert>
                 </p>
+                <!--
                 <el-col :span="24">
                     <div class="grid-content bg-purple">
                         <p>lista de solvencias universitarias disponibles</p>
@@ -27,14 +28,43 @@
                         </el-row>
                     </div>
                 </el-col>
+                -->
+                <el-row :gutter="50">
+                    <el-col :span="24">
+                        <div>
+                            <el-table :data="dataSolvencies" style="width: 100%" size="small" fixed border>
+                                <el-table-column prop="descr" label="documento" >
+                                    <template slot-scope="scope">
+                                        <el-tag size="medium">{{ scope.row.sub }}</el-tag>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="tipo" label="tipo" fixed="right">
+                                </el-table-column>
+                                <el-table-column label="" fixed="right">
+                                    <template slot-scope="scope">
+                                        <el-button :disabled="scope.row.guardado === true" type="primary" size="mini"
+                                            icon="el-icon-tickets"
+                                            @click="initAddInformationAditional(scope.$index, scope.row)">seleccionar</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                    </el-col>
+                </el-row>
+
+
             </el-row>
         </el-card>
 
         <!-- Form Add Register Input Manual-->
-        <el-dialog title="campo para el segundo registro" :visible.sync="dialogFormVisible">
-            <el-form :model="aditional" label-width="220px" size="small">
+        <el-dialog title="informacion adicional" :visible.sync="dialogFormVisible">
+            <el-alert title="importante" type="error"
+                description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
+                show-icon>
+            </el-alert>
+            <el-form :model="aditional" label-width="200px" size="mini">
                 <el-form-item label="fecha del registro">
-                    <el-date-picker type="date" v-model="aditional.fec_tra" placeholder="seleccione una fecha"
+                    <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
                         style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="Unidad academica">
@@ -43,32 +73,56 @@
                         @select="handleSelect"></el-autocomplete>
                 </el-form-item>
             </el-form>
+            <el-form ref="form" :model="this.client" label-width="200px" size="mini">
+                <el-form-item label="direccion">
+                    <el-input v-model="client.direccion"></el-input>
+                </el-form-item>
+                <el-form-item label="telefono/celular">
+                    <el-input v-model="client.telefono"></el-input>
+                </el-form-item>
+                <el-form-item label="correo electronico">
+                    <el-input v-model="client.correo"></el-input>
+                </el-form-item>
+            </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="success" size="small" @click="initStoreSolvency">Guardar</el-button>
-                <el-button type="warning" size="small" @click="initCancelSolvency">Cancelar</el-button>
+                <el-button type="primary" size="mini" @click="initStoreSolvency">Guardar</el-button>
+                <el-button type="danger" size="mini" @click="initCancelSolvency">Cancelar</el-button>
             </span>
         </el-dialog>
         <!-- Form Add Register Input Manual-->
         <!-- Form Add Register Input Manual-->
-        <el-dialog title="campo para el primer registro" :visible.sync="dialogFormVisible2">
-            <el-form :model="aditional" label-width="220px" size="small">
+        <el-dialog title="informacion adicional" :visible.sync="dialogFormVisible2">
+            <el-alert title="importante" type="error"
+                description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
+                show-icon>
+            </el-alert>
+
+            <el-form :model="aditional" label-width="200px" size="mini">
                 <el-form-item label="fecha del registro">
-                    <el-date-picker type="date" v-model="aditional.fec_tra" placeholder="seleccione una fecha"
+                    <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
                         style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="observacion">
-                    <el-input type="textarea" v-model="aditional.obs" autocomplete="off"></el-input>
+            </el-form>
+            <el-form ref="form" :model="this.client" label-width="200px" size="mini">
+                <el-form-item label="direccion">
+                    <el-input v-model="client.direccion"></el-input>
+                </el-form-item>
+                <el-form-item label="telefono/celular">
+                    <el-input v-model="client.telefono"></el-input>
+                </el-form-item>
+                <el-form-item label="correo electronico">
+                    <el-input v-model="client.correo"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="success" size="small" @click="initStoreSolvency">Guardar</el-button>
-                <el-button type="warning" size="small" @click="initCancelSolvency2">Cancelar</el-button>
+                <el-button type="primary" size="mini" @click="initStoreSolvency">Guardar</el-button>
+                <el-button type="danger" size="mini" @click="initCancelSolvency2">Cancelar</el-button>
             </span>
         </el-dialog>
         <!-- Form Add Register Input Manual-->
     </div>
 </template>
-  
+
 <script>
 export default {
     name: "",
@@ -127,10 +181,10 @@ export default {
                 });
             }
         },
-        initAddInformationAditional(row) {
+        initAddInformationAditional(index, row) {
             let app = this;
             app.solvency = row;
-            switch (row.modal) {
+            switch (row.adicional) {
                 case 1:
                     app.dialogFormVisible = true;
                     break;
@@ -144,7 +198,6 @@ export default {
         querySearch(queryString, cb) {
             var links = this.dataCareer;
             var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-            // call callback function to return suggestions
             cb(results);
         },
         createFilter(queryString) {
@@ -153,20 +206,42 @@ export default {
             };
         },
         handleSelect(item) {
-            //console.log(item);
             this.aditional.cod_prg = item.cod_prg;
             this.aditional.des_prg = item.cat_des;
             console.log('Consola');
-
             console.log(this.aditional);
         },
 
-        initStoreSolvency() {
+
+        async setValuesAcquired() {
+        },
+
+        //  *  M5. Guardar la solvencia escogida en linea
+        async initStoreSolvency() {
             console.log('Store');
             this.dialogFormVisible = false;
             console.log(this.aditional);
             console.log(this.solvency);
             console.log(this.client);
+            var app = this;
+            console.log(app.acquired);
+            try {
+                let response = await axios.post("/api/storeDataSolvency", {
+                    cliente: app.client,
+                    solvencia: app.solvency,
+                    adicional: app.aditional,
+                    marker: "registrar",
+                });
+                console.log(response);
+                this.$router.push({
+                name: "requestsolvencies",
+            });
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
         },
         initCancelSolvency() {
             this.dialogFormVisible = false;
@@ -179,8 +254,8 @@ export default {
     },
 };
 </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bg-purple .el-card .el-button {
     font-size: 5rem;
@@ -219,4 +294,3 @@ export default {
     background-color: #f9fafc;
 }
 </style>
-  

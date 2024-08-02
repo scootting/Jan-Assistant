@@ -6231,6 +6231,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6336,11 +6390,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[1, 9]]);
       }))();
     },
-    initAddInformationAditional: function initAddInformationAditional(row) {
+    initAddInformationAditional: function initAddInformationAditional(index, row) {
       var app = this;
       app.solvency = row;
 
-      switch (row.modal) {
+      switch (row.adicional) {
         case 1:
           app.dialogFormVisible = true;
           break;
@@ -6355,8 +6409,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     querySearch: function querySearch(queryString, cb) {
       var links = this.dataCareer;
-      var results = queryString ? links.filter(this.createFilter(queryString)) : links; // call callback function to return suggestions
-
+      var results = queryString ? links.filter(this.createFilter(queryString)) : links;
       cb(results);
     },
     createFilter: function createFilter(queryString) {
@@ -6365,18 +6418,76 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     },
     handleSelect: function handleSelect(item) {
-      //console.log(item);
       this.aditional.cod_prg = item.cod_prg;
       this.aditional.des_prg = item.cat_des;
       console.log('Consola');
       console.log(this.aditional);
     },
+    setValuesAcquired: function setValuesAcquired() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    //  *  M5. Guardar la solvencia escogida en linea
     initStoreSolvency: function initStoreSolvency() {
-      console.log('Store');
-      this.dialogFormVisible = false;
-      console.log(this.aditional);
-      console.log(this.solvency);
-      console.log(this.client);
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var app, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log('Store');
+                _this3.dialogFormVisible = false;
+                console.log(_this3.aditional);
+                console.log(_this3.solvency);
+                console.log(_this3.client);
+                app = _this3;
+                console.log(app.acquired);
+                _context4.prev = 7;
+                _context4.next = 10;
+                return axios.post("/api/storeDataSolvency", {
+                  cliente: app.client,
+                  solvencia: app.solvency,
+                  adicional: app.aditional,
+                  marker: "registrar"
+                });
+
+              case 10:
+                response = _context4.sent;
+                console.log(response);
+
+                _this3.$router.push({
+                  name: "requestsolvencies"
+                });
+
+                _context4.next = 19;
+                break;
+
+              case 15:
+                _context4.prev = 15;
+                _context4.t0 = _context4["catch"](7);
+                _this3.error = _context4.t0.response.data;
+                app.$alert(_this3.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 19:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[7, 15]]);
+      }))();
     },
     initCancelSolvency: function initCancelSolvency() {
       this.dialogFormVisible = false;
@@ -6643,6 +6754,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -6689,12 +6801,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 app.loading = false;
                 app.dataSolvencies = Object.values(response.data.data);
                 app.pagination = response.data;
-                console.log(response.data.data);
-                _context.next = 18;
+                _context.next = 17;
                 break;
 
-              case 13:
-                _context.prev = 13;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 _this.error = _context.t0.response.data;
                 app.$alert(_this.error.message, "Gestor de errores", {
@@ -6702,35 +6813,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 app.loading = false;
 
-              case 18:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 13]]);
+        }, _callee, null, [[3, 12]]);
       }))();
     },
-    //  * M3. Imprimir la solicitud de elaboracion de solvencia universitaria            
-    initReportRequestMemorial: function initReportRequestMemorial(idx, row) {
-      var app = this;
-      console.log(app.dataSaleDay);
-      axios({
-        url: "/api/reportRequestMemorial/",
-        params: {
-          id: row.id,
-          gestion: app.user.gestion
-        },
-        method: "GET",
-        responseType: "arraybuffer"
-      }).then(function (response) {
-        var blob = new Blob([response.data], {
-          type: "application/pdf"
-        });
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        var url = window.URL.createObjectURL(blob);
-        window.open(url);
-      });
+    //  *  M6. Imprimir la solvencia en linea
+    initPrintSolvency: function initPrintSolvency(idx, row) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var app;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                app = _this2;
+                axios({
+                  url: "/api/printDocumentSolvency",
+                  params: {
+                    id: row.id_solvencia,
+                    gestion: row.gestion
+                  },
+                  method: "GET",
+                  responseType: "arraybuffer"
+                }).then(function (response) {
+                  var blob = new Blob([response.data], {
+                    type: "application/pdf"
+                  });
+                  var link = document.createElement("a");
+                  link.href = window.URL.createObjectURL(blob);
+                  var url = window.URL.createObjectURL(blob);
+                  window.open(url);
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     //  *  Route. Iniciar una nueva solicitud para iniciar con el proceso de solvencia universitaria
     initAddRequestSolvency: function initAddRequestSolvency() {
@@ -87719,7 +87845,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-menu-item",
-                    { attrs: { index: "6", disabled: "" } },
+                    { attrs: { index: "6" } },
                     [
                       _c("i", { staticClass: "el-icon-menu" }),
                       _vm._v(" "),
@@ -90649,56 +90775,95 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 24 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [
-                      _vm._v("lista de solvencias universitarias disponibles")
-                    ]),
-                    _vm._v(" "),
+              _c(
+                "el-row",
+                { attrs: { gutter: 50 } },
+                [
+                  _c("el-col", { attrs: { span: 24 } }, [
                     _c(
-                      "el-row",
-                      _vm._l(_vm.dataSolvencies, function(item, index) {
-                        return _c(
-                          "el-col",
-                          { key: index, attrs: { span: 6 } },
+                      "div",
+                      [
+                        _c(
+                          "el-table",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              data: _vm.dataSolvencies,
+                              size: "small",
+                              fixed: "",
+                              border: ""
+                            }
+                          },
                           [
-                            _c(
-                              "el-card",
-                              [
-                                _c("el-button", {
-                                  attrs: {
-                                    type: "text",
-                                    icon: "el-icon-document",
-                                    circle: ""
-                                  },
-                                  nativeOn: {
-                                    click: function($event) {
-                                      return _vm.initAddInformationAditional(
-                                        item
+                            _c("el-table-column", {
+                              attrs: { prop: "descr", label: "documento" },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-tag",
+                                        { attrs: { size: "medium" } },
+                                        [_vm._v(_vm._s(scope.row.sub))]
                                       )
-                                    }
+                                    ]
                                   }
-                                }),
-                                _vm._v(" "),
-                                _c("h4", [_vm._v(_vm._s(item.tipo))]),
-                                _vm._v(" "),
-                                _c("p", [_vm._v(_vm._s(item.sub))])
-                              ],
-                              1
-                            )
+                                }
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
+                              attrs: {
+                                prop: "tipo",
+                                label: "tipo",
+                                fixed: "right"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("el-table-column", {
+                              attrs: { label: "", fixed: "right" },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-button",
+                                        {
+                                          attrs: {
+                                            disabled:
+                                              scope.row.guardado === true,
+                                            type: "primary",
+                                            size: "mini",
+                                            icon: "el-icon-tickets"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.initAddInformationAditional(
+                                                scope.$index,
+                                                scope.row
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("seleccionar")]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ])
+                            })
                           ],
                           1
                         )
-                      }),
+                      ],
                       1
                     )
-                  ],
-                  1
-                )
-              ])
+                  ])
+                ],
+                1
+              )
             ],
             1
           )
@@ -90710,7 +90875,7 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "campo para el segundo registro",
+            title: "informacion adicional",
             visible: _vm.dialogFormVisible
           },
           on: {
@@ -90720,13 +90885,23 @@ var render = function() {
           }
         },
         [
+          _c("el-alert", {
+            attrs: {
+              title: "importante",
+              type: "error",
+              description:
+                "antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu.",
+              "show-icon": ""
+            }
+          }),
+          _vm._v(" "),
           _c(
             "el-form",
             {
               attrs: {
                 model: _vm.aditional,
-                "label-width": "220px",
-                size: "small"
+                "label-width": "200px",
+                size: "mini"
               }
             },
             [
@@ -90743,11 +90918,11 @@ var render = function() {
                       "value-format": "yyyy-MM-dd"
                     },
                     model: {
-                      value: _vm.aditional.fec_tra,
+                      value: _vm.aditional.fecha,
                       callback: function($$v) {
-                        _vm.$set(_vm.aditional, "fec_tra", $$v)
+                        _vm.$set(_vm.aditional, "fecha", $$v)
                       },
-                      expression: "aditional.fec_tra"
+                      expression: "aditional.fecha"
                     }
                   })
                 ],
@@ -90783,79 +90958,27 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "success", size: "small" },
-                  on: { click: _vm.initStoreSolvency }
-                },
-                [_vm._v("Guardar")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "warning", size: "small" },
-                  on: { click: _vm.initCancelSolvency }
-                },
-                [_vm._v("Cancelar")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: {
-            title: "campo para el primer registro",
-            visible: _vm.dialogFormVisible2
-          },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogFormVisible2 = $event
-            }
-          }
-        },
-        [
-          _c(
             "el-form",
             {
+              ref: "form",
               attrs: {
-                model: _vm.aditional,
-                "label-width": "220px",
-                size: "small"
+                model: this.client,
+                "label-width": "200px",
+                size: "mini"
               }
             },
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "fecha del registro" } },
+                { attrs: { label: "direccion" } },
                 [
-                  _c("el-date-picker", {
-                    staticStyle: { width: "100%" },
-                    attrs: {
-                      type: "date",
-                      placeholder: "seleccione una fecha",
-                      format: "yyyy/MM/dd",
-                      "value-format": "yyyy-MM-dd"
-                    },
+                  _c("el-input", {
                     model: {
-                      value: _vm.aditional.fec_tra,
+                      value: _vm.client.direccion,
                       callback: function($$v) {
-                        _vm.$set(_vm.aditional, "fec_tra", $$v)
+                        _vm.$set(_vm.client, "direccion", $$v)
                       },
-                      expression: "aditional.fec_tra"
+                      expression: "client.direccion"
                     }
                   })
                 ],
@@ -90864,16 +90987,32 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "observacion" } },
+                { attrs: { label: "telefono/celular" } },
                 [
                   _c("el-input", {
-                    attrs: { type: "textarea", autocomplete: "off" },
                     model: {
-                      value: _vm.aditional.obs,
+                      value: _vm.client.telefono,
                       callback: function($$v) {
-                        _vm.$set(_vm.aditional, "obs", $$v)
+                        _vm.$set(_vm.client, "telefono", $$v)
                       },
-                      expression: "aditional.obs"
+                      expression: "client.telefono"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "correo electronico" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.correo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "correo", $$v)
+                      },
+                      expression: "client.correo"
                     }
                   })
                 ],
@@ -90894,7 +91033,7 @@ var render = function() {
               _c(
                 "el-button",
                 {
-                  attrs: { type: "success", size: "small" },
+                  attrs: { type: "primary", size: "mini" },
                   on: { click: _vm.initStoreSolvency }
                 },
                 [_vm._v("Guardar")]
@@ -90903,7 +91042,165 @@ var render = function() {
               _c(
                 "el-button",
                 {
-                  attrs: { type: "warning", size: "small" },
+                  attrs: { type: "danger", size: "mini" },
+                  on: { click: _vm.initCancelSolvency }
+                },
+                [_vm._v("Cancelar")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "informacion adicional",
+            visible: _vm.dialogFormVisible2
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogFormVisible2 = $event
+            }
+          }
+        },
+        [
+          _c("el-alert", {
+            attrs: {
+              title: "importante",
+              type: "error",
+              description:
+                "antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu.",
+              "show-icon": ""
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              attrs: {
+                model: _vm.aditional,
+                "label-width": "200px",
+                size: "mini"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "fecha del registro" } },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "seleccione una fecha",
+                      format: "yyyy/MM/dd",
+                      "value-format": "yyyy-MM-dd"
+                    },
+                    model: {
+                      value: _vm.aditional.fecha,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "fecha", $$v)
+                      },
+                      expression: "aditional.fecha"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              ref: "form",
+              attrs: {
+                model: this.client,
+                "label-width": "200px",
+                size: "mini"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "direccion" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.direccion,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "direccion", $$v)
+                      },
+                      expression: "client.direccion"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "telefono/celular" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.telefono,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "telefono", $$v)
+                      },
+                      expression: "client.telefono"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "correo electronico" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.correo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "correo", $$v)
+                      },
+                      expression: "client.correo"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: { click: _vm.initStoreSolvency }
+                },
+                [_vm._v("Guardar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "danger", size: "mini" },
                   on: { click: _vm.initCancelSolvency2 }
                 },
                 [_vm._v("Cancelar")]
@@ -91203,11 +91500,7 @@ var render = function() {
                 attrs: { size: "small", type: "default", icon: "el-icon-plus" },
                 on: { click: _vm.initAddRequestSolvency }
               },
-              [
-                _vm._v(
-                  "\n                nueva solicitud de solvencia universitaria"
-                )
-              ]
+              [_vm._v("\n                registrar solvencia universitaria")]
             )
           ],
           1
@@ -91246,11 +91539,16 @@ var render = function() {
                   }
                 ],
                 staticStyle: { width: "100%" },
-                attrs: { data: _vm.dataSolvencies }
+                attrs: {
+                  data: _vm.dataSolvencies,
+                  size: "small",
+                  fixed: "",
+                  border: ""
+                }
               },
               [
                 _c("el-table-column", {
-                  attrs: { label: "Fecha", width: "120" },
+                  attrs: { label: "fecha" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -91261,7 +91559,7 @@ var render = function() {
                           _c(
                             "span",
                             { staticStyle: { "margin-left": "10px" } },
-                            [_vm._v(_vm._s(scope.row.fec_tra))]
+                            [_vm._v(_vm._s(scope.row.fecha))]
                           )
                         ]
                       }
@@ -91270,11 +91568,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: {
-                    label: "numero de solicitud",
-                    width: "150",
-                    align: "center"
-                  },
+                  attrs: { label: "programa" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -91288,11 +91582,9 @@ var render = function() {
                               slot: "reference"
                             },
                             [
-                              _c(
-                                "el-tag",
-                                { attrs: { size: "medium", effect: "dark" } },
-                                [_vm._v(_vm._s(scope.row.idc))]
-                              )
+                              _c("el-tag", { attrs: { size: "medium" } }, [
+                                _vm._v(_vm._s(scope.row.des_prg))
+                              ])
                             ],
                             1
                           )
@@ -91303,16 +91595,14 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { label: "tipo de solvencia", width: "350" },
+                  attrs: { label: "tipo" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
                       fn: function(scope) {
                         return [
                           _c("span", [
-                            _vm._v(
-                              "solvencia para " + _vm._s(scope.row.des_tipo)
-                            )
+                            _vm._v("solvencia para " + _vm._s(scope.row.tipo))
                           ])
                         ]
                       }
@@ -91321,7 +91611,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { label: "estado", width: "150", align: "center" },
+                  attrs: { label: "estado" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -91337,13 +91627,7 @@ var render = function() {
                             [
                               _c(
                                 "el-tag",
-                                {
-                                  attrs: {
-                                    size: "medium",
-                                    effect: "dark",
-                                    type: "danger"
-                                  }
-                                },
+                                { attrs: { size: "medium", type: "danger" } },
                                 [_vm._v(_vm._s(scope.row.estado))]
                               )
                             ],
@@ -91356,7 +91640,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: { align: "right", width: "250" },
+                  attrs: { align: "right", fixed: "right" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -91365,25 +91649,33 @@ var render = function() {
                           _c(
                             "el-button",
                             {
-                              attrs: {
-                                type: "warning",
-                                plain: "",
-                                size: "mini"
-                              },
+                              attrs: { type: "success", size: "mini" },
                               on: {
                                 click: function($event) {
-                                  return _vm.initReportRequestMemorial(
+                                  return _vm.initEditSolvency(
                                     scope.$index,
                                     scope.row
                                   )
                                 }
                               }
                             },
-                            [
-                              _vm._v(
-                                "\n                            imprimir la solicitud"
-                              )
-                            ]
+                            [_vm._v("\n                            editar")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary", size: "mini" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.initPrintSolvency(
+                                    scope.$index,
+                                    scope.row
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("\n                            imprimir")]
                           )
                         ]
                       }

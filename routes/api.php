@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 //  * {username: carnet de identidad del usuario, password: fecha de nacimiento del usuario o personalizado}
 Route::post('login', 'GeneralController@loginClient');
 
-
 //  * EF4. Obtener documentos digitalizados
 Route::get('getDigitalFinancialDocument', 'DocumentController@getDigitalFinancialDocument');
 
@@ -33,7 +32,6 @@ Route::get('getDigitalFinancialDocument', 'DocumentController@getDigitalFinancia
 Route::group([
     'middleware' => 'jwt.auth',
 ], function () {
-
 
     //  *  A2. Actualizar la informacion personal del cliente
     //  * {cliente: array con la informacion personalizada del cliente}
@@ -94,6 +92,11 @@ Route::group([
     Route::get('reportRequestMemorial', 'DocumentController@reportRequestMemorial');
     //  * M4. Obtiene la lista de de documentos, por tipo 'MEM' Memoriales, 'SOL' Solvencias
     Route::post('getTypesOfDocuments', 'DocumentController@getTypesOfDocuments');
+    //  *  M5. Guardar la solvencia escogida en linea
+    Route::post('storeDataSolvency', 'DocumentController@storeDataSolvency');
+    //  *  M6. Imprimir la solvencia en linea
+    Route::get('printDocumentSolvency', 'DocumentController@printDocumentSolvency');
+    
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');
     // *** - Buscar - ***

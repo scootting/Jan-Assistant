@@ -28,8 +28,8 @@ class DocumentController extends Controller
     //  * EF4. Obtener documentos digitalizados
     public function getDigitalFinancialDocument(Request $request)
     {
-        \Log::info("Me la pelas");        
-        \Log::info($request);        
+        \Log::info("Me la pelas");
+        \Log::info($request);
         $id = $request->get('id');
         $year = $request->get('year');
         $result = Document::getDigitalFinancialDocument($id, $year);
@@ -185,4 +185,59 @@ class DocumentController extends Controller
         return json_encode($data);
     }
 
+    //  *  M5. Guardar la solvencia escogida en linea
+    public function storeDataSolvency(Request $request)
+    {
+        $cliente = $request->get('cliente');
+        $adicional = $request->get('adicional');
+        $solvencia = $request->get('solvencia');
+
+        $fecha = $adicional['fecha'];
+        $cod_prg = $adicional['cod_prg'];
+        $des_prg = $adicional['des_prg'];
+
+        $id_tipo = $solvencia['id'];        
+        
+        $ci_per = $cliente['nodip'];
+        $des_per = $cliente['descripcion'];
+        $gestion = $cliente['gestion'];
+        $direccion = $cliente['direccion'];
+        $telefono = $cliente['telefono'];
+        $correo = $cliente['correo'];
+
+        $marcador = $request->get('marker');
+
+        switch ($marcador) {
+            case 'registrar':
+                $data = Document::StoreDataSolvency($fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
+                break;
+            case 'editar':
+                $data = Document::UpdateDataSolvency($id_solvencia, $fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
+                break;
+            default:
+                break;
+        }
+        return json_encode($data);
+    }
+
+    //  *  M6. Imprimir la solvencia en linea
+    public function printDocumentSolvency(Request $request)
+    {
+        $id = $request->get('id');
+        $gestion = $request->get('gestion');
+
+        /*
+        if ($cod_val == '9351') {
+            $nreport = 'Treasure_Values_Physical';
+        } else {
+            $nreport = 'Treasure_Values';
+        }
+        */
+        $nreport = 'Treasure_Values_Solvency';
+        $controls = array(
+            'id' => $id,
+        );
+        $report = JSRClient::GetReportWithParameters($nreport, $controls);
+        return $report;
+    }
 }

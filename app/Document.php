@@ -114,7 +114,9 @@ class Document extends Model
     //  * {id: carnet de identidad de la persona}
     public static function GetDataDocument($id, $tipo)
     {
-        $query = "select * from bdoc.diario s where s.ci_per ='" . $id . "' and s.des_tipo ='" . $tipo . "' order by fec_tra desc";
+        $query = "select *, s.id as id_solvencia from bdoc.documentos s inner join bdoc.tipos t on s.id_tipo = t.id ".
+                 "where s.ci_per ='" . $id . 
+                 "' and s.id_tipo in (select id from bdoc.tipos where abrv = '" . $tipo . "') order by fecha desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -124,7 +126,7 @@ class Document extends Model
     //  * {gestion: tipo de documento que se esta solicitando}
     public static function GetTypesOfDocuments($gestion, $tipo)
     {
-        $query = "select * from bdoc.tipo s where s.gestion ='" . $gestion . "' and s.abrv = '" . $tipo . "' order by s.sub asc";
+        $query = "select * from bdoc.tipos s where s.gestion ='" . $gestion . "' and s.abrv = '" . $tipo . "' order by s.sub asc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -188,4 +190,12 @@ class Document extends Model
         return $data;
     }
 
+    //  *  M5. Guardar la solvencia escogida en linea
+    public static function StoreDataSolvency($fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo)
+    {
+        $query = "select * from bdoc.ff_registrar_solvencia('" . $fecha . "','" . $cod_prg . "','" . $des_prg . "'," . $id_tipo . ",'" . $ci_per . "','" . $des_per . "','" . $gestion . "','" . $direccion . "','" . $telefono . "','" . $correo . "')";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 }

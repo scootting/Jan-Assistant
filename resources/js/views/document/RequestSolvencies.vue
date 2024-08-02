@@ -5,7 +5,7 @@
                 <span>lista de solicitudes de solvencia universitaria</span>
                 <el-button size="small" type="default" icon="el-icon-plus" @click="initAddRequestSolvency"
                     style="text-align: right; float: right">
-                    nueva solicitud de solvencia universitaria</el-button>
+                    registrar solvencia universitaria</el-button>
             </div>
             <p>
                 <el-alert title="importante" type="error"
@@ -15,37 +15,38 @@
             </p>
             <br />
             <div>
-                <el-table v-loading="loading" :data="dataSolvencies" style="width: 100%">
-                    <el-table-column label="Fecha" width="120">
+                <el-table v-loading="loading" :data="dataSolvencies" style="width: 100%" size="small" fixed border>
+                    <el-table-column label="fecha">
                         <template slot-scope="scope">
                             <i class="el-icon-time"></i>
-                            <span style="margin-left: 10px">{{ scope.row.fec_tra }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.fecha }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="numero de solicitud" width="150" align="center">
+                    <el-table-column label="programa">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium" effect="dark">{{ scope.row.idc }}</el-tag>
+                                <el-tag size="medium">{{ scope.row.des_prg }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="tipo de solvencia" width="350">
+                    <el-table-column label="tipo">
                         <template slot-scope="scope">
-                            <span>solvencia para {{ scope.row.des_tipo }}</span>
+                            <span>solvencia para {{ scope.row.tipo }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="estado" width="150" align="center">
+                    <el-table-column label="estado">
                         <template slot-scope="scope">
                             <div slot="estado" class="name-wrapper">
-                                <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado }}</el-tag>
+                                <el-tag size="medium" type="danger">{{ scope.row.estado }}</el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column align="right" width="250">
+                    <el-table-column align="right" fixed="right">
                         <template slot-scope="scope">
-                            <el-button @click="initReportRequestMemorial(scope.$index, scope.row)" type="warning" plain
-                                size="mini">
-                                imprimir la solicitud</el-button>
+                            <el-button @click="initEditSolvency(scope.$index, scope.row)" type="success" size="mini">
+                                editar</el-button>
+                            <el-button @click="initPrintSolvency(scope.$index, scope.row)" type="primary" size="mini">
+                                imprimir</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -57,7 +58,7 @@
         </el-card>
     </div>
 </template>
-  
+
 <script>
 export default {
     name: "lista_de_solicitudes_para_la_venta_en_linea",
@@ -94,7 +95,6 @@ export default {
                 app.loading = false;
                 app.dataSolvencies = Object.values(response.data.data);
                 app.pagination = response.data;
-                console.log(response.data.data);
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {
@@ -103,15 +103,14 @@ export default {
                 app.loading = false;
             }
         },
-        //  * M3. Imprimir la solicitud de elaboracion de solvencia universitaria            
-        initReportRequestMemorial(idx, row) {
+        //  *  M6. Imprimir la solvencia en linea
+        async initPrintSolvency(idx, row) {
             let app = this;
-            console.log(app.dataSaleDay);
             axios({
-                url: "/api/reportRequestMemorial/",
+                url: "/api/printDocumentSolvency",
                 params: {
-                    id: row.id,
-                    gestion: app.user.gestion,
+                    id: row.id_solvencia,
+                    gestion: row.gestion,
                 },
                 method: "GET",
                 responseType: "arraybuffer",
@@ -124,7 +123,6 @@ export default {
                 let url = window.URL.createObjectURL(blob);
                 window.open(url);
             });
-
         },
         //  *  Route. Iniciar una nueva solicitud para iniciar con el proceso de solvencia universitaria
         initAddRequestSolvency() {
@@ -135,10 +133,9 @@ export default {
     },
 };
 </script>
-  
+
 <style scoped>
 .el-input .el-select {
     width: 180px;
 }
 </style>
-  

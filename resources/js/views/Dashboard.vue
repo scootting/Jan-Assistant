@@ -37,7 +37,7 @@
               memorial universitario
             </router-link>
           </el-menu-item>
-          <el-menu-item index="6" disabled>
+          <el-menu-item index="6">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" tag="span">
               Solvencia Universitaria
