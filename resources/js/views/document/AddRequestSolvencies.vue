@@ -151,7 +151,7 @@ export default {
         async getTypesOfSolvencies() {
             var app = this;
             try {
-                let response = await axios.post("/api/getTypesOfDocuments/", {
+                let response = await axios.post("/api/getTypesOfDocuments", {
                     year: app.client.gestion,
                     typea: 'SOL'
                 });
@@ -168,7 +168,7 @@ export default {
         async getAditionalInformation() {
             var app = this;
             try {
-                let response = await axios.post("/api/getAditionalInformation/", {
+                let response = await axios.post("/api/getAditionalInformation", {
                     year: app.client.gestion,
                 });
                 app.loading = false;

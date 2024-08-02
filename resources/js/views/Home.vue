@@ -48,7 +48,7 @@
                 <el-menu-item index="4.1">
                   <i class="el-icon-document"></i>
                   <router-link :to="{ name: 'login' }" tag="span">
-                    solvencia universitaria
+                    SOLVENCIA UNIVERSITARIA
                   </router-link>
                 </el-menu-item>
               </el-submenu>
