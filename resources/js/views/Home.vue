@@ -20,7 +20,7 @@
                 <template slot="title">
                   <i class="el-icon-notebook-2"></i>
                   <span>Publicaciones</span>
-                  </template>
+                </template>
                 <el-menu-item index="2.1">
                   <i class="el-icon-document"></i>
                   <router-link :to="{ name: 'financialstatements' }" tag="span">
@@ -40,6 +40,18 @@
                   pagos en linea
                 </router-link>
               </el-menu-item>
+              <el-submenu index="4">
+                <template slot="title">
+                  <i class="el-icon-document"></i>
+                  <span>tramites</span>
+                </template>
+                <el-menu-item index="4.1">
+                  <i class="el-icon-document"></i>
+                  <router-link :to="{ name: 'login' }" tag="span">
+                    solvencia universitaria
+                  </router-link>
+                </el-menu-item>
+              </el-submenu>
             </el-menu>
           </el-col>
           <!--
@@ -82,7 +94,7 @@
               <ul>
                 <li>
                   <a href="http://academico.uatf.edu.bo/">
-                      paginal principal
+                    paginal principal
                   </a>
                 </li>
                 <li>
