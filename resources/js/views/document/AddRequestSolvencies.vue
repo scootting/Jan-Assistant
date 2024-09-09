@@ -12,23 +12,6 @@
                         show-icon>
                     </el-alert>
                 </p>
-                <!--
-                <el-col :span="24">
-                    <div class="grid-content bg-purple">
-                        <p>lista de solvencias universitarias disponibles</p>
-                        <el-row>
-                            <el-col :span="6" v-for="(item, index) in dataSolvencies" :key="index">
-                                <el-card>
-                                    <el-button type="text" icon="el-icon-document" circle
-                                        @click.native="initAddInformationAditional(item)"></el-button>
-                                    <h4>{{ item.tipo }}</h4>
-                                    <p>{{ item.sub }}</p>
-                                </el-card>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </el-col>
-                -->
                 <el-row :gutter="50">
                     <el-col :span="24">
                         <div>
@@ -42,7 +25,7 @@
                                 </el-table-column>
                                 <el-table-column label="" fixed="right">
                                     <template slot-scope="scope">
-                                        <el-button :disabled="scope.row.guardado === true" type="primary" size="mini"
+                                        <el-button :disabled="scope.row.guardado === true" type="primary" size="small"
                                             icon="el-icon-tickets"
                                             @click="initAddInformationAditional(scope.$index, scope.row)">seleccionar</el-button>
                                     </template>
@@ -62,6 +45,7 @@
                 description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
                 show-icon>
             </el-alert>
+            <br>
             <el-form :model="aditional" label-width="200px" size="mini">
                 <el-form-item label="fecha del registro">
                     <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
@@ -69,7 +53,7 @@
                 </el-form-item>
                 <el-form-item label="Unidad academica">
                     <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch"
-                        style="width: 100%;" placeholder="ingrese:carrera y seleccione..." :trigger-on-focus="false"
+                        style="width: 100%;" placeholder="ingrese: la descripcion de la carrera y seleccione" :trigger-on-focus="false"
                         @select="handleSelect"></el-autocomplete>
                 </el-form-item>
             </el-form>
@@ -157,7 +141,6 @@ export default {
                 });
                 app.loading = false;
                 app.dataSolvencies = response.data;
-                //console.log(app.dataSolvencies);
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {

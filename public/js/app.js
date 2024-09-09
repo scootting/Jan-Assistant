@@ -6285,22 +6285,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6345,8 +6329,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 response = _context.sent;
                 app.loading = false;
-                app.dataSolvencies = response.data; //console.log(app.dataSolvencies);
-
+                app.dataSolvencies = response.data;
                 _context.next = 13;
                 break;
 
@@ -6710,6 +6693,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -90776,7 +90761,7 @@ var render = function() {
                                             disabled:
                                               scope.row.guardado === true,
                                             type: "primary",
-                                            size: "mini",
+                                            size: "small",
                                             icon: "el-icon-tickets"
                                           },
                                           on: {
@@ -90836,6 +90821,8 @@ var render = function() {
             }
           }),
           _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
           _c(
             "el-form",
             {
@@ -90879,7 +90866,8 @@ var render = function() {
                     staticStyle: { width: "100%" },
                     attrs: {
                       "fetch-suggestions": _vm.querySearch,
-                      placeholder: "ingrese:carrera y seleccione...",
+                      placeholder:
+                        "ingrese: la descripcion de la carrera y seleccione",
                       "trigger-on-focus": false
                     },
                     on: { select: _vm.handleSelect },
@@ -91590,22 +91578,6 @@ var render = function() {
                           _c(
                             "el-button",
                             {
-                              attrs: { type: "success", size: "mini" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.initEditSolvency(
-                                    scope.$index,
-                                    scope.row
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("\n                            editar")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-button",
-                            {
                               attrs: { type: "primary", size: "mini" },
                               on: {
                                 click: function($event) {
@@ -91616,7 +91588,11 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("\n                            imprimir")]
+                            [
+                              _vm._v(
+                                "\n                            imprimir formulario"
+                              )
+                            ]
                           )
                         ]
                       }

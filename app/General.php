@@ -39,7 +39,8 @@ class General extends Model
     //  * {year: gestion en la que se desarrolla}
     public static function GetProgramaticCategory($year)
     {
-        $query = "select *, cat_des as value from public.sis_cat_pro d where d.cat_ano = '" . $year . "' and d.cat_pro = '10' and d.cat_sis = 'ACTIVIDAD'";
+        //$query = "select *, cat_des as value from public.sis_cat_pro d where d.cat_ano = '" . $year . "' and d.cat_pro = '10' and d.cat_sis = 'ACTIVIDAD'";
+        $query = "select *, id_programa as cod_prg, programa as cat_des, programa as value from bdoc.adicional d where d.gestion = '" . $year . "'";
         //\Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
