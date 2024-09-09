@@ -91,6 +91,7 @@ export default {
     },
     //  *  T1. Obtener los valores para la venta en linea
     async getValuesOffered() {
+      console.log(this.client);
       var app = this;
       try {
         let response = await axios.post("/api/getValuesOffered", {
@@ -124,18 +125,6 @@ export default {
             acquired: app.acquired,
             marker: "SALE",
           });
-          /*
-          this.$alert('acaba de crear una solicitud de venta de valores en linea, desea continuar?', 'LO HA CONSEGUIDO', {
-            confirmButtonText: 'SI',
-          });*/
-          /*
-          this.$router.push({
-            name: "boucherofrequest",
-            params: {
-              id: id,
-            },
-          });
-          */
           console.log(response);
           this.dataRequest = response.data.datos;
           console.log(this.dataRequest.urlRedireccion);

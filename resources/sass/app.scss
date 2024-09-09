@@ -9,17 +9,29 @@ $backgroud: #2c3e50;	    //(44;62;80)
 
 /* Color del tema */
 //$--color-primary: teal;
-$--color-primary:#115293;
-$--color-warning:#F57C00;
-$--color-danger:#9A0036;
-$--color-info:#1976D2;
-$--color-text-primary:#303030;
-$--color-text-regular:#303030;
-$--color-text-secondary:#424242;
-$--color-text-placeholder:#424242;
-$--border-color-base:#303030;
-$--border-color-light:#424242;
+//$--color-primary:#115293;
+//$--color-warning:#F57C00;
+//$--color-danger:#9A0036;
+//$--color-info:#1976D2;
+//$--color-text-primary:#303030;
+//$--color-text-regular:#303030;
+//$--color-text-secondary:#424242;
+//$--color-text-placeholder:#424242;
+//$--border-color-base:#303030;
+//$--border-color-light:#424242;
 
+/* Color del tema inspirado en Quasar Framework para un tema claro */
+$--color-primary: #1976D2;  /* Azul vibrante para el color principal */
+$--color-warning: #FFC107;  /* Amarillo brillante para advertencias */
+$--color-danger: #F44336;   /* Rojo fuerte para mensajes de error */
+$--color-info: #2196F3;     /* Azul claro para información */
+$--color-success: #4CAF50;  /* Verde vivo para éxito */
+$--color-text-primary: #212121; /* Gris oscuro casi negro para texto principal */
+$--color-text-secondary: #757575; /* Gris medio para texto secundario */
+$--color-text-placeholder: #B0BEC5; /* Gris claro para placeholders */
+$--border-color-base: #E0E0E0; /* Gris claro para bordes */
+$--border-color-light: #EEEEEE; /* Gris muy claro para bordes ligeros */
+$--background-color-base: #FFFFFF; /* Blanco puro para el fondo principal */
 
 /* Ubicación de la fuente, obligatoria */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
