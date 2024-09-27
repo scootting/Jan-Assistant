@@ -225,19 +225,21 @@ class DocumentController extends Controller
     {
         $id = $request->get('id');
         $gestion = $request->get('gestion');
-
-        /*
-        if ($cod_val == '9351') {
-            $nreport = 'Treasure_Values_Physical';
-        } else {
-            $nreport = 'Treasure_Values';
-        }
-        */
         $nreport = 'Treasure_Values_Solvency';
         $controls = array(
             'id' => $id,
         );
         $report = JSRClient::GetReportWithParameters($nreport, $controls);
         return $report;
+    }
+
+    //  *  M7. Edita la solvencia escogida en linea
+    public function getDataSolvencyById(Request $request)
+    {
+        $id_solvencia = $request->get('id');
+        $usuario = $request->get('user');
+        $gestion = $usuario['gestion'];        
+        $data = Document::GetDataSolvencyById($id_solvencia, $gestion);
+        return json_encode($data);
     }
 }

@@ -43,12 +43,10 @@
                     </el-table-column>
                     <el-table-column align="right" fixed="right">
                         <template slot-scope="scope">
-                            <!--
                             <el-button @click="initEditSolvency(scope.$index, scope.row)" type="success" size="mini">
                                 editar</el-button>
-                            -->
                             <el-button @click="initPrintSolvency(scope.$index, scope.row)" type="primary" size="mini">
-                                imprimir formulario</el-button>
+                                imprimir</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -104,6 +102,17 @@ export default {
                 });
                 app.loading = false;
             }
+        },
+
+        initEditSolvency(idx, row){
+            console.log(idx, row);
+            let id = row.id_solvencia;
+            this.$router.push({
+                name: "editrequestsolvencies",
+                params: {
+                    id: row.id_solvencia,
+                },
+            });
         },
         //  *  M6. Imprimir la solvencia en linea
         async initPrintSolvency(idx, row) {

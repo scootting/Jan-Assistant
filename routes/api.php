@@ -96,6 +96,9 @@ Route::group([
     Route::post('storeDataSolvency', 'DocumentController@storeDataSolvency');
     //  *  M6. Imprimir la solvencia en linea
     Route::get('printDocumentSolvency', 'DocumentController@printDocumentSolvency');
+    //  *  M7. Edita la solvencia escogida en linea
+    Route::post('getDataSolvencyById', 'DocumentController@getDataSolvencyById');
+
     
 
     Route::post('profiles', 'GeneralController@registerUserProfiles');

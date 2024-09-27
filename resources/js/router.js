@@ -47,6 +47,8 @@ import RequestMemorial from './views/document/RequestMemorial'
 import AddRequestSolvencies from './views/document/AddRequestSolvencies'
 //  * S2. Lista las solicitudes de la solvencia universitaria              
 import RequestSolvencies from './views/document/RequestSolvencies'
+//  * S2. Editar las solicitudes de la solvencia universitaria              
+import EditRequestSolvencies from './views/document/EditRequestSolvencies'
 
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Elecciones
@@ -143,6 +145,8 @@ const router = new VueRouter({
                 { path: '/AddRequestSolvencies', name: 'addrequestsolvencies', component: AddRequestSolvencies },
                 //  * S2. Lista las solicitudes de la solvencia universitaria              
                 { path: '/RequestSolvencies', name: 'requestsolvencies', component: RequestSolvencies },
+                //  * S2. Lista las solicitudes de la solvencia universitaria              
+                { path: '/RequestSolvencies/:id', name: 'editrequestsolvencies', component: EditRequestSolvencies },
             ],
             meta: {
                 requiresAuth: true,

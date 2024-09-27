@@ -5,7 +5,6 @@
         <el-row :gutter="12">
           <el-col :span="6">
             <span>DIRECCION ADMINISTRATIVA Y FINANCIERA</span>
-
           </el-col>
           <el-col :span="12">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#010e1f"
@@ -54,82 +53,47 @@
               </el-submenu>
             </el-menu>
           </el-col>
-          <!--
-          <el-col :span="6">
-            <el-button @click="initLogin">LOGIN</el-button>
-          </el-col>
-          -->
         </el-row>
         <div>
         </div>
-        <div>
-        </div>
       </el-header>
-      <el-container>
         <el-main>
+          <!-- Añadimos margen superior para que el contenido no se solape con el header -->
           <el-row :gutter="20">
-            <el-col :span="16" :offset="4">
+            <el-col :xs="24" :md="16" :offset="4">
               <router-view></router-view>
             </el-col>
           </el-row>
         </el-main>
-        <el-footer>
-          <el-row :gutter="20">
-            <el-col :span="8">
-              <h5>informacion</h5>
-              <p>
-              <ul>
-                <li>
-                  ubicacion: calle serrudo casi esquina civica
-                </li>
-                <li>
-                  telefono:
-                </li>
-              </ul>
-              </p>
-            </el-col>
-            <el-col :span="8">
-              <h5>universidad autonoma tomas frias</h5>
-              <p>
-              <ul>
-                <li>
-                  <a href="http://academico.uatf.edu.bo/">
-                    paginal principal
-                  </a>
-                </li>
-                <li>
-                  <a href="https://mail.uatf.edu.bo/">
-                    correo institucional
-                  </a>
-                </li>
-              </ul>
-              </p>
-            </el-col>
-            <el-col :span="8">
-              <h5>otros enlaces de interes</h5>
-              <ul>
-                <li>
-                  <a href="https://www.economiayfinanzas.gob.bo">
-                    ministerio de economía y finanzas bolivia
-                  </a>
-                </li>
-                <li>
-                  <a href="https://adsib.gob.bo/portal_frontend/">
-                    adsib bolivia
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.contraloria.gob.bo/portal/">
-                    Contraloría General del Estado - Bolivia
-                  </a>
-                </li>
-              </ul>
-            </el-col>
-          </el-row>
-          <el-divider></el-divider>
-          <span>© UATF. Todos los derechos reservados.</span>
-        </el-footer>
-      </el-container>
+      <!-- Footer -->
+      <el-footer>
+        <el-row :gutter="20">
+          <el-col :xs="24" :md="8">
+            <h5>Información</h5>
+            <ul>
+              <li>Ubicación: Calle Serrudo, casi esquina cívica</li>
+              <li>Teléfono:</li>
+            </ul>
+          </el-col>
+          <el-col :xs="24" :md="8">
+            <h5>Universidad Autónoma Tomás Frías</h5>
+            <ul>
+              <li><a href="http://academico.uatf.edu.bo/">Página principal</a></li>
+              <li><a href="https://mail.uatf.edu.bo/">Correo institucional</a></li>
+            </ul>
+          </el-col>
+          <el-col :xs="24" :md="8">
+            <h5>Otros enlaces de interés</h5>
+            <ul>
+              <li><a href="https://www.economiayfinanzas.gob.bo">Ministerio de Economía y Finanzas Bolivia</a></li>
+              <li><a href="https://adsib.gob.bo/portal_frontend/">ADSIB Bolivia</a></li>
+              <li><a href="https://www.contraloria.gob.bo/portal/">Contraloría General del Estado - Bolivia</a></li>
+            </ul>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <span>© UATF. Todos los derechos reservados.</span>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -153,7 +117,6 @@ export default {
     initLogin() {
       this.$router.push({ name: "login" });
     },
-
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
@@ -179,11 +142,9 @@ textarea {
   color: inherit;
 }
 
-
 .el-header {
   background: #010e1f;
   color: #fff;
-  /*line-height: 120px;*/
 }
 
 .el-header .el-button {
@@ -199,7 +160,6 @@ textarea {
   color: #fff;
   float: left;
 }
-
 
 .el-footer ul {
   list-style-type: none;
@@ -218,43 +178,13 @@ textarea {
   padding: 5px 5px 0;
 }
 
-
-/*
-.el-aside {
-  color: #010e1f;
+/* Ajustes en pantallas pequeñas */
+@media (max-width: 768px) {
+  .el-header {
+    text-align: center;
+  }
+  .el-container{
+    width: 100%;
+  }
 }
-
-
-.el-header span {
-  float: left;
-}
-
-
-
-.el-row {
-  margin-bottom: 20px;
-}
-
-.el-card .el-button {
-  font-size: 5rem;
-  color: #d02431;
-  display: block;
-  margin: 0 auto;
-}
-
-
-
-
-.el-card h4 {
-  font-size: 2rem;
-  margin: 10px;
-  display: block;
-  text-align: center;
-}
-
-.el-card p {
-  font-size: 15px;
-}
-
-*/
 </style>

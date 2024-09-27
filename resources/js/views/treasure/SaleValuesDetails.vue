@@ -21,9 +21,6 @@
                         <el-form ref="form" :model="this.dataRequest" label-width="200px" size="mini">
                             <el-form-item label="numero de solicitud">
                                 {{ dataRequest.idc }}
-                                <!--
-                                <el-input v-model="onlyRequest.idc" disabled></el-input>
-                                -->
                             </el-form-item>
                             <el-form-item label="fecha en la que se realizo">
                                 {{ dataRequest.fecha }}

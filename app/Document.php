@@ -198,4 +198,15 @@ class Document extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
+
+    //  *  M7. Edita la solvencia escogida en linea
+    public static function GetDataSolvencyById($id, $year)
+    {
+        $query = "select * from bdoc.ff_obtener_solvencia('" . $id . "'," . $year . ")";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    
 }
