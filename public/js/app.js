@@ -4563,16 +4563,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -88202,7 +88192,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-col",
-                    { attrs: { span: 12 } },
+                    { attrs: { span: 18 } },
                     [
                       _c(
                         "el-menu",
@@ -88265,7 +88255,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                  ESTADOS FINANCIEROS\n                "
+                                        "\n                  estados financieros\n                "
                                       )
                                     ]
                                   )
@@ -88365,11 +88355,7 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c("div"),
-              _vm._v(" "),
-              _c("div")
+              )
             ],
             1
           ),

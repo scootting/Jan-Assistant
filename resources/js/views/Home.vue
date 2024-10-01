@@ -5,9 +5,8 @@
         <el-row :gutter="12">
           <el-col :span="6">
             <span>DIRECCION ADMINISTRATIVA Y FINANCIERA</span>
-
           </el-col>
-          <el-col :span="12">
+          <el-col :span="18">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#010e1f"
               text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0 !important">
               <el-menu-item index="1">
@@ -24,7 +23,7 @@
                 <el-menu-item index="2.1">
                   <i class="el-icon-document"></i>
                   <router-link :to="{ name: 'financialstatements' }" tag="span">
-                    ESTADOS FINANCIEROS
+                    estados financieros
                   </router-link>
                 </el-menu-item>
                 <el-menu-item index="2.2" tag="span">
@@ -54,16 +53,7 @@
               </el-submenu>
             </el-menu>
           </el-col>
-          <!--
-          <el-col :span="6">
-            <el-button @click="initLogin">LOGIN</el-button>
-          </el-col>
-          -->
         </el-row>
-        <div>
-        </div>
-        <div>
-        </div>
       </el-header>
       <el-container>
         <el-main>
