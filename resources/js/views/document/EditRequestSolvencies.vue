@@ -40,8 +40,8 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-button type="success" size="small" @click="updatePersonInformation()">actualizar informacion</el-button>
-            <el-button type="primary" size="small" @click="updatePersonPassword()">imprimir solicitud</el-button>
+            <el-button type="success" size="small" @click="storeDataSolvency()">actualizar informacion</el-button>
+            <el-button type="primary" size="small" @click="initPrintSolvency()">imprimir solicitud</el-button>
         </el-card>
     </div>
 </template>
@@ -82,9 +82,47 @@ export default {
             }
         },
 
-        async storeStatusOfRequest() {
+        async storeDataSolvency() {
+            var app = this;
+            console.log(app.document);
+            try {
+                let response = await axios.post("/api/storeDataSolvency", {
+                    cliente: app.client,
+                    solvencia: app.document,
+                    marker: "editar",
+                });
+                console.log(response);
+                alert("Datos Actualizados correctamente");
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
+        },
 
-        }
+        //  *  M6. Imprimir la solvencia en linea
+        async initPrintSolvency() {
+            let app = this;
+            axios({
+                url: "/api/printDocumentSolvency",
+                params: {
+                    id: app.document.id,
+                    gestion: app.document.gestion,
+                },
+                method: "GET",
+                responseType: "arraybuffer",
+            }).then((response) => {
+                let blob = new Blob([response.data], {
+                    type: "application/pdf",
+                });
+                let link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                let url = window.URL.createObjectURL(blob);
+                window.open(url);
+            });
+        },
+
     },
 };
 </script>

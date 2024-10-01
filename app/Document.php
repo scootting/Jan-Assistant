@@ -208,5 +208,13 @@ class Document extends Model
         return $data;
     }
 
+    //  *  M5. Guardar la solvencia escogida en linea
+    public static function UpdateDataSolvency($id_solvencia, $fecha, $cod_prg, $des_prg, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo)
+    {
+        $query = "select * from bdoc.ff_editar_solvencia(" . $id_solvencia . ",'" . $fecha . "','" . $cod_prg . "','" . $des_prg . "','" . $ci_per . "','" . $des_per . "','" . $gestion . "','" . $direccion . "','" . $telefono . "','" . $correo . "')";
+        \Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
     
 }

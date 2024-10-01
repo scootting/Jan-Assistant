@@ -34,8 +34,6 @@
                         </div>
                     </el-col>
                 </el-row>
-
-
             </el-row>
         </el-card>
 
@@ -201,13 +199,8 @@ export default {
 
         //  *  M5. Guardar la solvencia escogida en linea
         async initStoreSolvency() {
-            console.log('Store');
             this.dialogFormVisible = false;
-            console.log(this.aditional);
-            console.log(this.solvency);
-            console.log(this.client);
             var app = this;
-            console.log(app.acquired);
             try {
                 let response = await axios.post("/api/storeDataSolvency", {
                     cliente: app.client,
@@ -221,6 +214,7 @@ export default {
             });
             } catch (error) {
                 this.error = error.response.data;
+                console.log(error.response);
                 app.$alert(this.error.message, "Gestor de errores", {
                     dangerouslyUseHTMLString: true,
                 });

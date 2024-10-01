@@ -188,31 +188,43 @@ class DocumentController extends Controller
     //  *  M5. Guardar la solvencia escogida en linea
     public function storeDataSolvency(Request $request)
     {
-        $cliente = $request->get('cliente');
-        $adicional = $request->get('adicional');
-        $solvencia = $request->get('solvencia');
-
-        $fecha = $adicional['fecha'];
-        $cod_prg = $adicional['cod_prg'];
-        $des_prg = $adicional['des_prg'];
-
-        $id_tipo = $solvencia['id'];        
-        
-        $ci_per = $cliente['nodip'];
-        $des_per = $cliente['descripcion'];
-        $gestion = $cliente['gestion'];
-        $direccion = $cliente['direccion'];
-        $telefono = $cliente['telefono'];
-        $correo = $cliente['correo'];
-
         $marcador = $request->get('marker');
 
         switch ($marcador) {
             case 'registrar':
+                $cliente = $request->get('cliente');
+                $adicional = $request->get('adicional');
+                $solvencia = $request->get('solvencia');
+        
+                $id_tipo = $solvencia['id'];
+                $fecha = $adicional['fecha'];
+                $cod_prg = $adicional['cod_prg'];
+                $des_prg = $adicional['des_prg'];
+        
+                $ci_per = $cliente['nodip'];
+                $des_per = $cliente['descripcion'];
+                $gestion = $cliente['gestion'];
+                $direccion = $cliente['direccion'];
+                $telefono = $cliente['telefono'];
+                $correo = $cliente['correo'];        
                 $data = Document::StoreDataSolvency($fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
                 break;
             case 'editar':
-                $data = Document::UpdateDataSolvency($id_solvencia, $fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
+                $cliente = $request->get('cliente');
+                $solvencia = $request->get('solvencia');
+
+                $id_solvencia = $solvencia['id'];        
+                $fecha = $solvencia['fecha'];
+                $cod_prg = $solvencia['cod_prg'];
+                $des_prg = $solvencia['des_prg'];
+        
+                $ci_per = $solvencia['ci_per'];
+                $des_per = $solvencia['des_per'];
+                $gestion = $solvencia['gestion'];
+                $direccion = $solvencia['direccion'];
+                $telefono = $solvencia['tel_per'];
+                $correo = $solvencia['correo'];        
+                $data = Document::UpdateDataSolvency($id_solvencia, $fecha, $cod_prg, $des_prg, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
                 break;
             default:
                 break;

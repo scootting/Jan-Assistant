@@ -3,10 +3,12 @@
     <el-main>
       <el-row>
         <el-col :span="20" :offset="2">
+          <!--
           <el-alert title="Que valores puede adquirir?" type="error"
             description="Aca puede comprar los siguientes valores: CURSO DE CAPACITACIÓN POSTULANTES A LAS BECAS ALIMENTACION  E INTERNADO UNIVERSITARIO,
         FORMULARIO DE CONVALIDACION DE LABORATORIO DE FISICA, DERECHO A PROGRAMACION DE LABORATORIO DE FISICA, CURSO DE CAPACITACIÓN - PARA AUXILIARES DE DOCENCIA, DERECHO A CERTIFICACION DE NOTAS PARA INGRESO A RESIDENCIA MEDICA.">
           </el-alert>
+          -->
         </el-col>
         <el-col :span="20" style="padding-top: 10px" :offset="2">
           <el-alert title="Como puede ingresar?" type="error"

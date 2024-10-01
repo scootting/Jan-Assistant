@@ -4748,6 +4748,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
   data: function data() {
@@ -6247,8 +6249,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6409,15 +6409,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('Store');
                 _this3.dialogFormVisible = false;
-                console.log(_this3.aditional);
-                console.log(_this3.solvency);
-                console.log(_this3.client);
                 app = _this3;
-                console.log(app.acquired);
-                _context4.prev = 7;
-                _context4.next = 10;
+                _context4.prev = 2;
+                _context4.next = 5;
                 return axios.post("/api/storeDataSolvency", {
                   cliente: app.client,
                   solvencia: app.solvency,
@@ -6425,7 +6420,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   marker: "registrar"
                 });
 
-              case 10:
+              case 5:
                 response = _context4.sent;
                 console.log(response);
 
@@ -6433,23 +6428,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: "requestsolvencies"
                 });
 
-                _context4.next = 19;
+                _context4.next = 15;
                 break;
 
-              case 15:
-                _context4.prev = 15;
-                _context4.t0 = _context4["catch"](7);
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](2);
                 _this3.error = _context4.t0.response.data;
+                console.log(_context4.t0.response);
                 app.$alert(_this3.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 19:
+              case 15:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[7, 15]]);
+        }, _callee4, null, [[2, 10]]);
       }))();
     },
     initCancelSolvency: function initCancelSolvency() {
@@ -6587,17 +6583,83 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 9]]);
       }))();
     },
-    storeStatusOfRequest: function storeStatusOfRequest() {
+    storeDataSolvency: function storeDataSolvency() {
+      var _this2 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var app, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                app = _this2;
+                console.log(app.document);
+                _context2.prev = 2;
+                _context2.next = 5;
+                return axios.post("/api/storeDataSolvency", {
+                  cliente: app.client,
+                  solvencia: app.document,
+                  marker: "editar"
+                });
+
+              case 5:
+                response = _context2.sent;
+                console.log(response);
+                alert("Datos Actualizados correctamente");
+                _context2.next = 14;
+                break;
+
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](2);
+                _this2.error = _context2.t0.response.data;
+                app.$alert(_this2.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 14:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[2, 10]]);
+      }))();
+    },
+    //  *  M6. Imprimir la solvencia en linea
+    initPrintSolvency: function initPrintSolvency() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var app;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                app = _this3;
+                axios({
+                  url: "/api/printDocumentSolvency",
+                  params: {
+                    id: app.document.id,
+                    gestion: app.document.gestion
+                  },
+                  method: "GET",
+                  responseType: "arraybuffer"
+                }).then(function (response) {
+                  var blob = new Blob([response.data], {
+                    type: "application/pdf"
+                  });
+                  var link = document.createElement("a");
+                  link.href = window.URL.createObjectURL(blob);
+                  var url = window.URL.createObjectURL(blob);
+                  window.open(url);
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -6945,6 +7007,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 app = _this2;
+                console.log(row);
                 axios({
                   url: "/api/printDocumentSolvency",
                   params: {
@@ -6963,7 +7026,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   window.open(url);
                 });
 
-              case 2:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -88502,21 +88565,7 @@ var render = function() {
           _c(
             "el-row",
             [
-              _c(
-                "el-col",
-                { attrs: { span: 20, offset: 2 } },
-                [
-                  _c("el-alert", {
-                    attrs: {
-                      title: "Que valores puede adquirir?",
-                      type: "error",
-                      description:
-                        "Aca puede comprar los siguientes valores: CURSO DE CAPACITACIÓN POSTULANTES A LAS BECAS ALIMENTACION  E INTERNADO UNIVERSITARIO,\n      FORMULARIO DE CONVALIDACION DE LABORATORIO DE FISICA, DERECHO A PROGRAMACION DE LABORATORIO DE FISICA, CURSO DE CAPACITACIÓN - PARA AUXILIARES DE DOCENCIA, DERECHO A CERTIFICACION DE NOTAS PARA INGRESO A RESIDENCIA MEDICA."
-                    }
-                  })
-                ],
-                1
-              ),
+              _c("el-col", { attrs: { span: 20, offset: 2 } }),
               _vm._v(" "),
               _c(
                 "el-col",
@@ -91467,7 +91516,7 @@ var render = function() {
               attrs: { type: "success", size: "small" },
               on: {
                 click: function($event) {
-                  return _vm.updatePersonInformation()
+                  return _vm.storeDataSolvency()
                 }
               }
             },
@@ -91480,7 +91529,7 @@ var render = function() {
               attrs: { type: "primary", size: "small" },
               on: {
                 click: function($event) {
-                  return _vm.updatePersonPassword()
+                  return _vm.initPrintSolvency()
                 }
               }
             },

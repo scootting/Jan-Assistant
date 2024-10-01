@@ -117,6 +117,7 @@ export default {
         //  *  M6. Imprimir la solvencia en linea
         async initPrintSolvency(idx, row) {
             let app = this;
+            console.log(row);
             axios({
                 url: "/api/printDocumentSolvency",
                 params: {
