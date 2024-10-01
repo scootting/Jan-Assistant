@@ -4537,6 +4537,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -10121,7 +10157,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-footer ul[data-v-63cd6604] {\r\n  list-style-type: none;\n}\n.el-footer li[data-v-63cd6604] {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\n}\n.el-footer a[data-v-63cd6604] {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\n}\r\n\r\n/* Ajustes en pantallas pequeñas */\n@media (max-width: 768px) {\n.el-header[data-v-63cd6604] {\r\n    text-align: center;\n}\n.el-container[data-v-63cd6604]{\r\n    width: 100%;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  /*line-height: 120px;*/\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-footer ul[data-v-63cd6604] {\r\n  list-style-type: none;\n}\n.el-footer li[data-v-63cd6604] {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\n}\n.el-footer a[data-v-63cd6604] {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\n}\r\n\r\n\r\n/*\r\n.el-aside {\r\n  color: #010e1f;\r\n}\r\n\r\n\r\n.el-header span {\r\n  float: left;\r\n}\r\n\r\n\r\n\r\n.el-row {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.el-card .el-button {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\r\n}\r\n\r\n\r\n\r\n\r\n.el-card h4 {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\r\n}\r\n\r\n.el-card p {\r\n  font-size: 15px;\r\n}\r\n\r\n*/\r\n", ""]);
 
 // exports
 
@@ -88311,7 +88347,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                  SOLVENCIA UNIVERSITARIA\n                "
+                                        "\n                  solvencia universitaria\n                "
                                       )
                                     ]
                                   )
@@ -88331,120 +88367,164 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("div"),
+              _vm._v(" "),
               _c("div")
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "el-main",
+            "el-container",
             [
               _c(
-                "el-row",
-                { attrs: { gutter: 20 } },
+                "el-main",
                 [
                   _c(
-                    "el-col",
-                    { attrs: { xs: 24, md: 16, offset: 4 } },
-                    [_c("router-view")],
+                    "el-row",
+                    { attrs: { gutter: 20 } },
+                    [
+                      _c(
+                        "el-col",
+                        { attrs: { span: 16, offset: 4 } },
+                        [_c("router-view")],
+                        1
+                      )
+                    ],
                     1
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-footer",
-            [
-              _c(
-                "el-row",
-                { attrs: { gutter: 20 } },
-                [
-                  _c("el-col", { attrs: { xs: 24, md: 8 } }, [
-                    _c("h5", [_vm._v("Información")]),
-                    _vm._v(" "),
-                    _c("ul", [
-                      _c("li", [
-                        _vm._v("Ubicación: Calle Serrudo, casi esquina cívica")
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [_vm._v("Teléfono:")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("el-col", { attrs: { xs: 24, md: 8 } }, [
-                    _c("h5", [_vm._v("Universidad Autónoma Tomás Frías")]),
-                    _vm._v(" "),
-                    _c("ul", [
-                      _c("li", [
-                        _c(
-                          "a",
-                          { attrs: { href: "http://academico.uatf.edu.bo/" } },
-                          [_vm._v("Página principal")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "a",
-                          { attrs: { href: "https://mail.uatf.edu.bo/" } },
-                          [_vm._v("Correo institucional")]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("el-col", { attrs: { xs: 24, md: 8 } }, [
-                    _c("h5", [_vm._v("Otros enlaces de interés")]),
-                    _vm._v(" "),
-                    _c("ul", [
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "https://www.economiayfinanzas.gob.bo"
-                            }
-                          },
-                          [_vm._v("Ministerio de Economía y Finanzas Bolivia")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "https://adsib.gob.bo/portal_frontend/"
-                            }
-                          },
-                          [_vm._v("ADSIB Bolivia")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "https://www.contraloria.gob.bo/portal/"
-                            }
-                          },
-                          [_vm._v("Contraloría General del Estado - Bolivia")]
-                        )
-                      ])
-                    ])
-                  ])
-                ],
-                1
               ),
               _vm._v(" "),
-              _c("el-divider"),
-              _vm._v(" "),
-              _c("span", [_vm._v("© UATF. Todos los derechos reservados.")])
+              _c(
+                "el-footer",
+                [
+                  _c(
+                    "el-row",
+                    { attrs: { gutter: 20 } },
+                    [
+                      _c("el-col", { attrs: { span: 8 } }, [
+                        _c("h5", [_vm._v("informacion")]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("ul", [
+                            _c("li", [
+                              _vm._v(
+                                "\n                ubicacion: calle serrudo casi esquina civica\n              "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _vm._v(
+                                "\n                telefono:\n              "
+                              )
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("el-col", { attrs: { span: 8 } }, [
+                        _c("h5", [_vm._v("universidad autonoma tomas frias")]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("ul", [
+                            _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "http://academico.uatf.edu.bo/"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  paginal principal\n                "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "https://mail.uatf.edu.bo/" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  correo institucional\n                "
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("el-col", { attrs: { span: 8 } }, [
+                        _c("h5", [_vm._v("otros enlaces de interes")]),
+                        _vm._v(" "),
+                        _c("ul", [
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "https://www.economiayfinanzas.gob.bo"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  ministerio de economía y finanzas bolivia\n                "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "https://adsib.gob.bo/portal_frontend/"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  adsib bolivia\n                "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "https://www.contraloria.gob.bo/portal/"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  Contraloría General del Estado - Bolivia\n                "
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("el-divider"),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("© UATF. Todos los derechos reservados.")])
+                ],
+                1
+              )
             ],
             1
           )
