@@ -4,12 +4,29 @@
       <el-col :span="6" :offset="9">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>Pago de matriculas</span>
+            <span>Pago de matriculas (para estudiantes regulares)</span>
           </div>
           <div>
             <center>
               <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula</p>
               <el-button type="success" @click="initPage" size="small">Imprimir
+                Matricula</el-button>
+            </center>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <p></p>
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="9">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>Pago de postulaciones (para estudiantes de colegio)</span>
+          </div>
+          <div>
+            <center>
+              <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula</p>
+              <el-button type="warning" @click="initThirdPage" size="small">Imprimir
                 Matricula</el-button>
             </center>
           </div>
@@ -58,6 +75,9 @@ export default {
     },
     initSecondPage() {
       window.location.href = 'https://asistente.uatf.edu.bo/requests';
+    },
+    initThirdPage() {
+      window.location.href = 'https://postulaciones.uatf.edu.bo';
     },
   },
 };

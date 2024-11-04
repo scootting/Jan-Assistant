@@ -204,7 +204,7 @@ class DocumentController extends Controller
                 $ci_per = $cliente['nodip'];
                 $des_per = $cliente['descripcion'];
                 $gestion = $cliente['gestion'];
-                $direccion = $cliente['direccion'];
+                $direccion = strtoupper($cliente['direccion']);
                 $telefono = $cliente['telefono'];
                 $correo = $cliente['correo'];        
                 $data = Document::StoreDataSolvency($fecha, $cod_prg, $des_prg, $id_tipo, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
@@ -221,7 +221,7 @@ class DocumentController extends Controller
                 $ci_per = $solvencia['ci_per'];
                 $des_per = $solvencia['des_per'];
                 $gestion = $solvencia['gestion'];
-                $direccion = $solvencia['direccion'];
+                $direccion = strtoupper($solvencia['direccion']);
                 $telefono = $solvencia['tel_per'];
                 $correo = $solvencia['correo'];        
                 $data = Document::UpdateDataSolvency($id_solvencia, $fecha, $cod_prg, $des_prg, $ci_per, $des_per, $gestion, $direccion, $telefono, $correo);
