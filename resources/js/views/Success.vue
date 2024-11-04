@@ -27,7 +27,7 @@
             <center>
               <p>Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula</p>
               <el-button type="warning" @click="initThirdPage" size="small">Imprimir
-                Matricula</el-button>
+                confirmacion</el-button>
             </center>
           </div>
         </el-card>
