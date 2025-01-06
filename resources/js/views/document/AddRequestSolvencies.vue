@@ -119,7 +119,7 @@
                         @select="handleSelect"></el-autocomplete>
                 </el-form-item>
             </el-form>
-            <el-form ref="form" :model="this.client" label-width="200px" size="mini">
+            <el-form ref="form" :model="this.client" label-width="250px" size="mini">
                 <el-form-item label="direccion">
                     <el-input v-model="client.direccion"></el-input>
                 </el-form-item>

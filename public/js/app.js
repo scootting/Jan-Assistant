@@ -91598,7 +91598,7 @@ var render = function() {
               ref: "form",
               attrs: {
                 model: this.client,
-                "label-width": "200px",
+                "label-width": "250px",
                 size: "mini"
               }
             },
