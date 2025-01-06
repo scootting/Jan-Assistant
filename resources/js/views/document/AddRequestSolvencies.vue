@@ -102,6 +102,40 @@
             </span>
         </el-dialog>
         <!-- Form Add Register Input Manual-->
+        <!-- Form Add Register Input Manual 3-->
+        <el-dialog title="informacion adicional" :visible.sync="dialogFormVisible3">
+            <el-alert title="importante" type="error"
+                description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
+                show-icon>
+            </el-alert>
+            <el-form :model="aditional" label-width="200px" size="mini">
+                <el-form-item label="fecha del registro">
+                    <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
+                        style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="Unidad academica o administrativa">
+                    <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch3"
+                        style="width: 100%;" placeholder="ingrese: la descripcion de la carrera y seleccione" :trigger-on-focus="false"
+                        @select="handleSelect"></el-autocomplete>
+                </el-form-item>
+            </el-form>
+            <el-form ref="form" :model="this.client" label-width="200px" size="mini">
+                <el-form-item label="direccion">
+                    <el-input v-model="client.direccion"></el-input>
+                </el-form-item>
+                <el-form-item label="telefono/celular">
+                    <el-input v-model="client.telefono"></el-input>
+                </el-form-item>
+                <el-form-item label="correo electronico">
+                    <el-input v-model="client.correo"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" size="mini" @click="initStoreSolvency">Guardar</el-button>
+                <el-button type="danger" size="mini" @click="initCancelSolvency3">Cancelar</el-button>
+            </span>
+        </el-dialog>
+        <!-- Form Add Register Input Manual-->
     </div>
 </template>
 
@@ -116,6 +150,8 @@ export default {
             dataAditional: [],
             dialogFormVisible: false,
             dialogFormVisible2: false,
+            dialogFormVisible3: false,
+            dataUniversity: [],
             dataCareer: [],
             solvency: {},
             aditional: {},
@@ -153,7 +189,8 @@ export default {
                     year: app.client.gestion,
                 });
                 app.loading = false;
-                app.dataCareer = response.data;
+                app.dataCareer = response.data.dataCareer;
+                app.dataUniversity = response.data.dataUniversity;
                 //console.log(app.dataCareer);
             } catch (error) {
                 this.error = error.response.data;
@@ -172,6 +209,9 @@ export default {
                 case 2:
                     app.dialogFormVisible2 = true;
                     break;
+                case 3:
+                    app.dialogFormVisible3 = true;
+                    break;
                 default:
                     break;
             }
@@ -181,6 +221,13 @@ export default {
             var results = queryString ? links.filter(this.createFilter(queryString)) : links;
             cb(results);
         },
+
+        querySearch3(queryString, cb) {
+            var links = this.dataUniversity;
+            var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+            cb(results);
+        },
+
         createFilter(queryString) {
             return (link) => {
                 return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
@@ -224,8 +271,14 @@ export default {
             this.dialogFormVisible = false;
             this.aditional = {};
         },
+
         initCancelSolvency2() {
             this.dialogFormVisible2 = false;
+            this.aditional = {};
+        },
+
+        initCancelSolvency3() {
+            this.dialogFormVisible3 = false;
             this.aditional = {};
         },
     },

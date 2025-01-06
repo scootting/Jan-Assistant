@@ -5233,6 +5233,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5250,6 +5267,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     initSecondPage: function initSecondPage() {
       window.location.href = 'https://asistente.uatf.edu.bo/requests';
+    },
+    initThirdPage: function initThirdPage() {
+      window.location.href = 'https://postulaciones.uatf.edu.bo';
     }
   }
 });
@@ -6275,6 +6295,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6285,6 +6339,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dataAditional: [],
       dialogFormVisible: false,
       dialogFormVisible2: false,
+      dialogFormVisible3: false,
+      dataUniversity: [],
       dataCareer: [],
       solvency: {},
       aditional: {}
@@ -6358,25 +6414,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 response = _context2.sent;
                 app.loading = false;
-                app.dataCareer = response.data; //console.log(app.dataCareer);
+                app.dataCareer = response.data.dataCareer;
+                app.dataUniversity = response.data.dataUniversity; //console.log(app.dataCareer);
 
-                _context2.next = 13;
+                _context2.next = 14;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 10:
+                _context2.prev = 10;
                 _context2.t0 = _context2["catch"](1);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 13:
+              case 14:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9]]);
+        }, _callee2, null, [[1, 10]]);
       }))();
     },
     initAddInformationAditional: function initAddInformationAditional(index, row) {
@@ -6392,12 +6449,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           app.dialogFormVisible2 = true;
           break;
 
+        case 3:
+          app.dialogFormVisible3 = true;
+          break;
+
         default:
           break;
       }
     },
     querySearch: function querySearch(queryString, cb) {
       var links = this.dataCareer;
+      var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+      cb(results);
+    },
+    querySearch3: function querySearch3(queryString, cb) {
+      var links = this.dataUniversity;
       var results = queryString ? links.filter(this.createFilter(queryString)) : links;
       cb(results);
     },
@@ -6480,6 +6546,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     initCancelSolvency2: function initCancelSolvency2() {
       this.dialogFormVisible2 = false;
+      this.aditional = {};
+    },
+    initCancelSolvency3: function initCancelSolvency3() {
+      this.dialogFormVisible3 = false;
       this.aditional = {};
     }
   }
@@ -89563,7 +89633,11 @@ var render = function() {
                     attrs: { slot: "header" },
                     slot: "header"
                   },
-                  [_c("span", [_vm._v("Pago de matriculas")])]
+                  [
+                    _c("span", [
+                      _vm._v("Pago de matriculas (para estudiantes regulares)")
+                    ])
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -89585,6 +89659,67 @@ var render = function() {
                             on: { click: _vm.initPage }
                           },
                           [_vm._v("Imprimir\n              Matricula")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("p"),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        { attrs: { gutter: 20 } },
+        [
+          _c(
+            "el-col",
+            { attrs: { span: 6, offset: 9 } },
+            [
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [
+                    _c("span", [
+                      _vm._v(
+                        "Pago de postulaciones (para estudiantes de colegio)"
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c(
+                      "center",
+                      [
+                        _c("p", [
+                          _vm._v(
+                            "Si realizo el pago correctamente, haga click en el siguiente enlace para imprimir su matricula"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "warning", size: "small" },
+                            on: { click: _vm.initThirdPage }
+                          },
+                          [_vm._v("Imprimir\n              confirmacion")]
                         )
                       ],
                       1
@@ -91360,6 +91495,190 @@ var render = function() {
                 {
                   attrs: { type: "danger", size: "mini" },
                   on: { click: _vm.initCancelSolvency2 }
+                },
+                [_vm._v("Cancelar")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "informacion adicional",
+            visible: _vm.dialogFormVisible3
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogFormVisible3 = $event
+            }
+          }
+        },
+        [
+          _c("el-alert", {
+            attrs: {
+              title: "importante",
+              type: "error",
+              description:
+                "antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu.",
+              "show-icon": ""
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              attrs: {
+                model: _vm.aditional,
+                "label-width": "200px",
+                size: "mini"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "fecha del registro" } },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "seleccione una fecha",
+                      format: "yyyy/MM/dd",
+                      "value-format": "yyyy-MM-dd"
+                    },
+                    model: {
+                      value: _vm.aditional.fecha,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "fecha", $$v)
+                      },
+                      expression: "aditional.fecha"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "Unidad academica o administrativa" } },
+                [
+                  _c("el-autocomplete", {
+                    staticClass: "inline-input",
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      "fetch-suggestions": _vm.querySearch3,
+                      placeholder:
+                        "ingrese: la descripcion de la carrera y seleccione",
+                      "trigger-on-focus": false
+                    },
+                    on: { select: _vm.handleSelect },
+                    model: {
+                      value: _vm.aditional.des_prg,
+                      callback: function($$v) {
+                        _vm.$set(_vm.aditional, "des_prg", $$v)
+                      },
+                      expression: "aditional.des_prg"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              ref: "form",
+              attrs: {
+                model: this.client,
+                "label-width": "200px",
+                size: "mini"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "direccion" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.direccion,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "direccion", $$v)
+                      },
+                      expression: "client.direccion"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "telefono/celular" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.telefono,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "telefono", $$v)
+                      },
+                      expression: "client.telefono"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "correo electronico" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.client.correo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.client, "correo", $$v)
+                      },
+                      expression: "client.correo"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: { click: _vm.initStoreSolvency }
+                },
+                [_vm._v("Guardar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "danger", size: "mini" },
+                  on: { click: _vm.initCancelSolvency3 }
                 },
                 [_vm._v("Cancelar")]
               )

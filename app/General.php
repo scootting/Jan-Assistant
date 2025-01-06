@@ -46,6 +46,13 @@ class General extends Model
         return $data;
     }
 
+    public static function GetProgramaticCategoryUniversity($year)
+    {
+        $query = "select *, cat_des as value from public.sis_cat_pro d where d.cat_ano = '" . $year . "' and d.cat_pro in ('00','01','02','03', '10','51', '61') and d.cat_sis = 'ACTIVIDAD'";
+        //\Log::info($query);
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
 
     //  *  A4. Registrar la informacion personal del cliente
     //  * {cliente: array con la informacion personalizada del cliente}    

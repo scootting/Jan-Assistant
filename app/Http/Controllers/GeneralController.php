@@ -77,7 +77,9 @@ class GeneralController extends Controller
     public function getAditionalInformation(Request $request){
         $gestion = $request->get('year');
         $data = General::GetProgramaticCategory($gestion);
-        return json_encode($data);
+        $dataUniversity = General::GetProgramaticCategoryUniversity($gestion);
+        //return json_encode($data);
+        return json_encode(['dataCareer' => $data, 'dataUniversity' => $dataUniversity]);
     }
 
     //  * Quitar el registro de un usuario en el recurso.    
