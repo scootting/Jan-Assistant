@@ -91534,7 +91534,7 @@ var render = function() {
             {
               attrs: {
                 model: _vm.aditional,
-                "label-width": "200px",
+                "label-width": "250px",
                 size: "mini"
               }
             },
@@ -91573,7 +91573,7 @@ var render = function() {
                     attrs: {
                       "fetch-suggestions": _vm.querySearch3,
                       placeholder:
-                        "ingrese: la descripcion de la carrera y seleccione",
+                        "ingrese: la descripcion inicial y seleccione..",
                       "trigger-on-focus": false
                     },
                     on: { select: _vm.handleSelect },

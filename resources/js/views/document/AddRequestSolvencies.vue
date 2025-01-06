@@ -108,14 +108,14 @@
                 description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
                 show-icon>
             </el-alert>
-            <el-form :model="aditional" label-width="200px" size="mini">
+            <el-form :model="aditional" label-width="250px" size="mini">
                 <el-form-item label="fecha del registro">
                     <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
                         style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="Unidad academica o administrativa">
                     <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch3"
-                        style="width: 100%;" placeholder="ingrese: la descripcion de la carrera y seleccione" :trigger-on-focus="false"
+                        style="width: 100%;" placeholder="ingrese: la descripcion inicial y seleccione.." :trigger-on-focus="false"
                         @select="handleSelect"></el-autocomplete>
                 </el-form-item>
             </el-form>
