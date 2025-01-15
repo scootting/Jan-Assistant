@@ -32,7 +32,7 @@
                                 {{ dataRequest.importe }}
                             </el-form-item>
                             <el-form-item label="estado">
-                                <el-tag type="" effect="dark">{{ dataRequest.estado }}</el-tag>
+                                <el-tag type="success" effect="dark">{{ dataRequest.estado }}</el-tag>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -41,11 +41,11 @@
                     <div class="grid-content bg-purple">
                         <p>valores en linea adquiridos</p>
                         <el-table :data="dataRequestDetails" style="width: 100%" show-summary sum-text="importe total">
-                            <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
+                            <el-table-column prop="des_val" label="descripcion" width="350" style="text-align: center !important;"></el-table-column>
                             <el-table-column prop="can_val" label="cantidad" width="90" align="right"></el-table-column>
                             <el-table-column prop="imp_val" label="precio" width="90" align="right"></el-table-column>
                             <el-table-column align="right" width="200" fixed="right">
-                                <template slot-scope="scope" v-if="scope.row.id_compuesto === 'U'">
+                                <template slot-scope="scope" v-if="scope.row.cod_val !== '9999'"  > 
                                     <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary"
                                         size="mini" :disabled="scope.row.id_tran === 0">imprimir comprobante
                                     </el-button>

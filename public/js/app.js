@@ -7219,6 +7219,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -92513,10 +92539,6 @@ var render = function() {
               },
               [
                 _c("el-table-column", {
-                  attrs: { prop: "fecha", label: "fecha", width: "150" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
                   attrs: { label: "numero", width: "150" },
                   scopedSlots: _vm._u([
                     {
@@ -92543,6 +92565,10 @@ var render = function() {
                       }
                     }
                   ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "fecha", label: "fecha", width: "150" }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {
@@ -92582,7 +92608,7 @@ var render = function() {
                                         attrs: {
                                           size: "medium",
                                           effect: "dark",
-                                          type: "primary"
+                                          type: "success"
                                         }
                                       },
                                       [_vm._v(_vm._s(scope.row.estado))]
@@ -92591,7 +92617,31 @@ var render = function() {
                                   1
                                 )
                               ])
-                            : _c("div", [
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.estado === "CREADO"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      { attrs: { size: "medium" } },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.estado === "EXPIRADO"
+                            ? _c("div", [
                                 _c(
                                   "div",
                                   {
@@ -92606,7 +92656,7 @@ var render = function() {
                                         attrs: {
                                           size: "medium",
                                           effect: "dark",
-                                          type: "success"
+                                          type: "warning"
                                         }
                                       },
                                       [_vm._v(_vm._s(scope.row.estado))]
@@ -92615,6 +92665,88 @@ var render = function() {
                                   1
                                 )
                               ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.estado === "EN PROCESO"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      {
+                                        attrs: {
+                                          size: "medium",
+                                          effect: "dark",
+                                          type: "primary"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.estado === "FALLIDO"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      {
+                                        attrs: {
+                                          size: "medium",
+                                          effect: "dark",
+                                          type: "danger"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.estado === "ANULADO"
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "name-wrapper",
+                                    attrs: { slot: "reference" },
+                                    slot: "reference"
+                                  },
+                                  [
+                                    _c(
+                                      "el-tag",
+                                      {
+                                        attrs: {
+                                          size: "medium",
+                                          effect: "dark",
+                                          type: "danger"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(scope.row.estado))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _vm._e()
                         ]
                       }
                     }
@@ -92623,17 +92755,12 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "el-table-column",
-                  { attrs: { label: "detalle", width: "250", align: "right" } },
+                  { attrs: { label: "detalle", align: "right" } },
                   [_c("p", [_vm._v("por la venta de valores universitarios")])]
                 ),
                 _vm._v(" "),
                 _c("el-table-column", {
-                  attrs: {
-                    align: "right",
-                    width: "250",
-                    fixed: "right",
-                    label: "Operaciones"
-                  },
+                  attrs: { align: "right", fixed: "right" },
                   scopedSlots: _vm._u([
                     {
                       key: "default",
@@ -92654,7 +92781,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            ver detalle de la solicitud"
+                                "\n                            imprimir comprobante"
                               )
                             ]
                           )
@@ -94028,7 +94155,7 @@ var render = function() {
                           [
                             _c(
                               "el-tag",
-                              { attrs: { type: "", effect: "dark" } },
+                              { attrs: { type: "success", effect: "dark" } },
                               [_vm._v(_vm._s(_vm.dataRequest.estado))]
                             )
                           ],
@@ -94061,10 +94188,11 @@ var render = function() {
                       },
                       [
                         _c("el-table-column", {
+                          staticStyle: { "text-align": "center !important" },
                           attrs: {
                             prop: "des_val",
                             label: "descripcion",
-                            width: "300"
+                            width: "350"
                           }
                         }),
                         _vm._v(" "),
@@ -94097,7 +94225,7 @@ var render = function() {
                               {
                                 key: "default",
                                 fn: function(scope) {
-                                  return scope.row.id_compuesto === "U"
+                                  return scope.row.cod_val !== "9999"
                                     ? [
                                         _c(
                                           "el-button",

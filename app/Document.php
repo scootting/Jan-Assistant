@@ -40,7 +40,7 @@ class Document extends Model
     //  * {gestion: gestion activa}
     public static function GetRequests($id, $year)
     {
-        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion = '" . $year . "' order by fec_cre desc";
+        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' order by fec_cre desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

@@ -18,7 +18,6 @@
                 </el-alert>
                 <br>
                 <el-table v-loading="loading" :data="requests" style="width: 100%">
-                    <el-table-column prop="fecha" label="fecha" width="150"></el-table-column>
                     <el-table-column label="numero" width="150">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
@@ -26,28 +25,55 @@
                             </div>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="fecha" label="fecha" width="150"></el-table-column>
                     <el-table-column prop="importe" label="importe" width="100" align="right"></el-table-column>
                     <el-table-column prop="estado" label="estado" width="150" align="center">
                         <template slot-scope="scope">
                             <div v-if="scope.row.estado === 'PROCESADO'">
                                 <div slot="reference" class="name-wrapper">
-                                    <el-tag size="medium" effect="dark" type="primary">{{ scope.row.estado }}</el-tag>
+                                    <el-tag size="medium" effect="dark" type="success">{{ scope.row.estado }}</el-tag>
                                 </div>
                             </div>
-                            <div v-else>
+                            <div v-if="scope.row.estado === 'CREADO'">
                                 <div slot="reference" class="name-wrapper">
-                                    <el-tag size="medium" effect="dark" type="success">{{ scope.row.estado }}</el-tag>
+                                    <el-tag size="medium">{{ scope.row.estado
+                                        }}</el-tag>
+                                </div>
+                            </div>
+                            <div v-if="scope.row.estado === 'EXPIRADO'">
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="warning">{{ scope.row.estado
+                                        }}</el-tag>
+                                </div>
+                            </div>
+                            <div v-if="scope.row.estado === 'EN PROCESO'">
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="primary">{{ scope.row.estado
+                                        }}</el-tag>
+                                </div>
+                            </div>
+                            <div v-if="scope.row.estado === 'FALLIDO'">
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado
+                                        }}</el-tag>
+                                </div>
+                            </div>
+                            <div v-if="scope.row.estado === 'ANULADO'">
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium" effect="dark" type="danger">{{ scope.row.estado
+                                        }}</el-tag>
                                 </div>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column label="detalle" width="250" align="right">
+                    <el-table-column label="detalle" align="right">
                         <p>por la venta de valores universitarios</p>
                     </el-table-column>
-                    <el-table-column align="right" width="250" fixed="right" label="Operaciones">
+                    <el-table-column align="right" fixed="right">
                         <template slot-scope="scope">
-                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="primary" size="small">
-                                ver detalle de la solicitud</el-button>
+                            <el-button @click="initPrintRequestReport(scope.$index, scope.row)" type="primary"
+                                size="small">
+                                imprimir comprobante</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -58,7 +84,7 @@
         </el-card>
     </div>
 </template>
-  
+
 <script>
 export default {
     name: "lista_de_solicitudes_para_la_venta_en_linea",
@@ -131,10 +157,9 @@ export default {
     },
 };
 </script>
-  
+
 <style scoped>
 .el-input .el-select {
     width: 180px;
 }
 </style>
-  
