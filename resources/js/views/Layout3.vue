@@ -4,7 +4,7 @@
       <div class="block">
         <el-carousel height="350px">
           <el-carousel-item v-for="item in 4" :key="item">
-            <h3 class="small">{{ "imagen "+ item }}</h3>
+            <h3 class="small">{{ "imagen " }}</h3>
           </el-carousel-item>
         </el-carousel>
       </div>
