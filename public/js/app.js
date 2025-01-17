@@ -4521,48 +4521,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Bienvenido",
   data: function data() {
@@ -4599,55 +4557,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10243,7 +10152,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-63cd6604] {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton[data-v-63cd6604],\r\ninput[data-v-63cd6604],\r\nselect[data-v-63cd6604],\r\ntextarea[data-v-63cd6604] {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-header[data-v-63cd6604] {\r\n  background: #010e1f;\r\n  color: #fff;\r\n  /*line-height: 120px;*/\n}\n.el-header .el-button[data-v-63cd6604] {\r\n  line-height: 5px;\r\n  margin-top: 15px;\r\n  color: #000;\r\n  float: right;\n}\n.el-footer[data-v-63cd6604] {\r\n  height: auto !important;\r\n  background-color: #010e1f;\r\n  color: #fff;\r\n  float: left;\n}\n.el-footer ul[data-v-63cd6604] {\r\n  list-style-type: none;\n}\n.el-footer li[data-v-63cd6604] {\r\n  padding: 5px 0;\r\n  box-sizing: border-box;\r\n  display: flex;\n}\n.el-footer a[data-v-63cd6604] {\r\n  color: cadetblue;\r\n  outline: none;\r\n  text-decoration: none;\r\n  padding: 5px 5px 0;\n}\r\n\r\n\r\n/*\r\n.el-aside {\r\n  color: #010e1f;\r\n}\r\n\r\n\r\n.el-header span {\r\n  float: left;\r\n}\r\n\r\n\r\n\r\n.el-row {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.el-card .el-button {\r\n  font-size: 5rem;\r\n  color: #d02431;\r\n  display: block;\r\n  margin: 0 auto;\r\n}\r\n\r\n\r\n\r\n\r\n.el-card h4 {\r\n  font-size: 2rem;\r\n  margin: 10px;\r\n  display: block;\r\n  text-align: center;\r\n}\r\n\r\n.el-card p {\r\n  font-size: 15px;\r\n}\r\n\r\n*/\r\n", ""]);
+exports.push([module.i, "\nbody[data-v-63cd6604] {\r\n    margin: 0;\r\n    font-family: Arial, sans-serif;\n}\n.header[data-v-63cd6604] {\r\n    background-color: #001f3f;\r\n    color: white;\r\n    padding: 10px 10px;\r\n    text-align: center;\n}\n.logo[data-v-63cd6604] {\r\n    font-size: 1.5em;\r\n    font-weight: bold;\r\n    margin-bottom: 10px;\n}\n.menu[data-v-63cd6604] {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\n}\n.menu>*[data-v-63cd6604] {\r\n    margin: 5px;\n}\n@media (max-width: 768px) {\n.menu[data-v-63cd6604] {\r\n        flex-direction: column;\r\n        align-items: center;\n}\n}\n.links[data-v-63cd6604] {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-around;\r\n    margin: 0px 20px;\r\n    gap: 10px;\n}\n.links div[data-v-63cd6604] {\r\n    flex: 1 1 30%;\r\n    min-width: 200px;\n}\n@media (max-width: 768px) {\n.links[data-v-63cd6604] {\r\n        flex-direction: column;\r\n        align-items: stretch;\n}\n.links div[data-v-63cd6604] {\r\n        flex: 1 1 auto;\n}\n}\n.body[data-v-63cd6604]{\r\n    margin: 20px;\n}\n.footer[data-v-63cd6604] {\r\n    color: white;\r\n    background-color: #001f3f;\n}\n.info[data-v-63cd6604] {\r\n    color: white;\r\n    text-align: center;\r\n    padding: 10px 0;\n}\na[data-v-63cd6604] {\r\n    color: #FFD700;\r\n    text-decoration: none;\n}\na[data-v-63cd6604]:hover {\r\n    text-decoration: underline;\n}\r\n", ""]);
 
 // exports
 
@@ -10262,7 +10171,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.el-carousel__item h3 {\r\n  color: #475669;\r\n  font-size: 14px;\r\n  opacity: 0.75;\r\n  line-height: 150px;\r\n  text-align: center;\r\n  margin: 0;\n}\n.el-carousel__item:nth-child(2n) {\r\n  background-color: #99a9bf;\n}\n.el-carousel__item:nth-child(2n+1) {\r\n  background-color: #d3dce6;\n}\r\n", ""]);
+exports.push([module.i, "\n.carousel-container {\r\n  margin: 20px;\n}\n.el-carousel__item:nth-child(2n) {\r\n  background-color: #99a9bf;\n}\n.el-carousel__item:nth-child(2n+1) {\r\n  background-color: #d3dce6;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -88267,357 +88176,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "el-container",
-        [
-          _c(
-            "el-header",
-            [
-              _c(
-                "el-row",
-                { attrs: { gutter: 12 } },
-                [
-                  _c("el-col", { attrs: { span: 6 } }, [
-                    _c("span", [
-                      _vm._v("DIRECCION ADMINISTRATIVA Y FINANCIERA")
-                    ])
-                  ]),
+  return _c("div", { attrs: { id: "app" } }, [
+    _c(
+      "div",
+      { staticClass: "header" },
+      [
+        _c("div", { staticClass: "logo" }, [
+          _vm._v("DIRECCIÓN ADMINISTRATIVA Y FINANCIERA")
+        ]),
+        _vm._v(" "),
+        _c(
+          "el-menu",
+          {
+            staticClass: "menu",
+            staticStyle: { "border-bottom": "0 !important" },
+            attrs: {
+              mode: "horizontal",
+              "default-active": "1",
+              "background-color": "#001f3f",
+              "text-color": "#ffffff",
+              "active-text-color": "#FFD700"
+            }
+          },
+          [
+            _c(
+              "el-menu-item",
+              { attrs: { index: "1" } },
+              [
+                _c("i", { staticClass: "el-icon-setting" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "layout" }, tag: "span" } },
+                  [_vm._v("\n                    Inicio\n                ")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "el-submenu",
+              { attrs: { index: "2" } },
+              [
+                _c("template", { slot: "title" }, [
+                  _c("i", { staticClass: "el-icon-notebook-2" }),
                   _vm._v(" "),
-                  _c(
-                    "el-col",
-                    { attrs: { span: 18 } },
-                    [
-                      _c(
-                        "el-menu",
-                        {
-                          staticClass: "el-menu-demo",
-                          staticStyle: { "border-bottom": "0 !important" },
-                          attrs: {
-                            "default-active": _vm.activeIndex,
-                            mode: "horizontal",
-                            "background-color": "#010e1f",
-                            "text-color": "#fff",
-                            "active-text-color": "#ffd04b"
-                          }
-                        },
-                        [
-                          _c(
-                            "el-menu-item",
-                            { attrs: { index: "1" } },
-                            [
-                              _c("i", { staticClass: "el-icon-setting" }),
-                              _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: { to: { name: "layout" }, tag: "span" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                Inicio\n              "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-submenu",
-                            { attrs: { index: "2" } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _c("i", { staticClass: "el-icon-notebook-2" }),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Publicaciones")])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "2.1" } },
-                                [
-                                  _c("i", { staticClass: "el-icon-document" }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to: { name: "financialstatements" },
-                                        tag: "span"
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                  estados financieros\n                "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "2.2", tag: "span" } },
-                                [
-                                  _c("i", { staticClass: "el-icon-document" }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to: { name: "layout" },
-                                        tag: "span"
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                  CIRCULARES\n                "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item",
-                            { attrs: { index: "3" } },
-                            [
-                              _c("i", { staticClass: "el-icon-s-platform" }),
-                              _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: { to: { name: "login" }, tag: "span" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                pagos en linea\n              "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-submenu",
-                            { attrs: { index: "4" } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _c("i", { staticClass: "el-icon-document" }),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("tramites")])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "4.1" } },
-                                [
-                                  _c("i", { staticClass: "el-icon-document" }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to: { name: "login" },
-                                        tag: "span"
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                  solvencia universitaria\n                "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-container",
-            [
-              _c(
-                "el-main",
-                [
-                  _c(
-                    "el-row",
-                    { attrs: { gutter: 20 } },
-                    [
-                      _c(
-                        "el-col",
-                        { attrs: { span: 16, offset: 4 } },
-                        [_c("router-view")],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-footer",
-                [
-                  _c(
-                    "el-row",
-                    { attrs: { gutter: 20 } },
-                    [
-                      _c("el-col", { attrs: { span: 8 } }, [
-                        _c("h5", [_vm._v("informacion")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _c("ul", [
-                            _c("li", [
-                              _vm._v(
-                                "\n                ubicacion: calle serrudo casi esquina civica\n              "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _vm._v(
-                                "\n                telefono:\n              "
-                              )
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("el-col", { attrs: { span: 8 } }, [
-                        _c("h5", [_vm._v("universidad autonoma tomas frias")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _c("ul", [
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "http://academico.uatf.edu.bo/"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  paginal principal\n                "
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "https://mail.uatf.edu.bo/" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                  correo institucional\n                "
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("el-col", { attrs: { span: 8 } }, [
-                        _c("h5", [_vm._v("otros enlaces de interes")]),
-                        _vm._v(" "),
-                        _c("ul", [
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "https://www.economiayfinanzas.gob.bo"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  ministerio de economía y finanzas bolivia\n                "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "https://adsib.gob.bo/portal_frontend/"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  adsib bolivia\n                "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "https://www.contraloria.gob.bo/portal/"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  Contraloría General del Estado - Bolivia\n                "
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ])
-                    ],
-                    1
-                  ),
+                  _c("span", [_vm._v("Publicaciones")])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "el-menu-item",
+                  { attrs: { index: "2.1" } },
+                  [
+                    _c("i", { staticClass: "el-icon-document" }),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: { name: "financialstatements" },
+                          tag: "span"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        ESTADOS FINANCIEROS\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-menu-item",
+                  { attrs: { index: "2.2", tag: "span" } },
+                  [
+                    _c("i", { staticClass: "el-icon-document" }),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      { attrs: { to: { name: "layout" }, tag: "span" } },
+                      [
+                        _vm._v(
+                          "\n                        CIRCULARES\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "el-menu-item",
+              { attrs: { index: "3" } },
+              [
+                _c("i", { staticClass: "el-icon-s-platform" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "login" }, tag: "span" } },
+                  [
+                    _vm._v(
+                      "\n                    pagos en linea\n                "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "el-submenu",
+              { attrs: { index: "4" } },
+              [
+                _c("template", { slot: "title" }, [
+                  _c("i", { staticClass: "el-icon-document" }),
                   _vm._v(" "),
-                  _c("el-divider"),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("© UATF. Todos los derechos reservados.")])
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                  _c("span", [_vm._v("tramites")])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "el-menu-item",
+                  { attrs: { index: "4.1" } },
+                  [
+                    _c("i", { staticClass: "el-icon-document" }),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      { attrs: { to: { name: "login" }, tag: "span" } },
+                      [
+                        _vm._v(
+                          "\n                        SOLVENCIA UNIVERSITARIA\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("el-menu-item", { attrs: { index: "5" } }, [_vm._v("Contacto")])
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "body" }, [_c("router-view")], 1),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footer" }, [
+      _c("div", { staticClass: "links" }, [
+        _c("div", [
+          _c("h3", [_vm._v("INFORMACIÓN")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Ubicación: Calle Serrudo casi esquina Cívica")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Teléfono:")])
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("h3", [_vm._v("UNIVERSIDAD AUTÓNOMA TOMÁS FRÍAS")]),
+          _vm._v(" "),
+          _c("p", [
+            _c("a", { attrs: { href: "http://uatf.edu.bo/" } }, [
+              _vm._v("Página Principal")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _c("a", { attrs: { href: "https://mail.uatf.edu.bo/" } }, [
+              _vm._v("Correo Institucional")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("h3", [_vm._v("OTROS ENLACES DE INTERÉS")]),
+          _vm._v(" "),
+          _c("p", [
+            _c(
+              "a",
+              { attrs: { href: " https://www.economiayfinanzas.gob.bo" } },
+              [_vm._v("Ministerio de Economía y Finanzas Bolivia")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _c(
+              "a",
+              { attrs: { href: "https://adsib.gob.bo/portal_frontend/" } },
+              [_vm._v("ADSIB Bolivia")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _c(
+              "a",
+              { attrs: { href: "https://www.contraloria.gob.bo/portal/" } },
+              [_vm._v("Contraloría General del Estado - Bolivia")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "info" }, [
+        _vm._v(
+          "\n            © 2025 Dirección Administrativa y Financiera\n        "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -88642,56 +88426,45 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "el-card",
-        { staticClass: "box-card", staticStyle: { "text-align": "justify" } },
-        [
-          _c(
-            "div",
-            { staticClass: "block" },
-            [
-              _c(
-                "el-carousel",
-                { attrs: { height: "350px" } },
-                _vm._l(4, function(item) {
-                  return _c("el-carousel-item", { key: item }, [
-                    _c("h3", { staticClass: "small" }, [
-                      _vm._v(_vm._s("imagen " + item))
-                    ])
-                  ])
-                }),
-                1
-              )
-            ],
-            1
-          ),
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          { staticClass: "carousel-container" },
+          [
+            _c(
+              "el-carousel",
+              { attrs: { type: "card", height: "200px" } },
+              _vm._l(3, function(item) {
+                return _c("el-carousel-item", { key: item }, [
+                  _vm._v("Imagen " + _vm._s(item))
+                ])
+              }),
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", [
+          _c("h1", [_vm._v("Bienvenidos!")]),
           _vm._v(" "),
-          _c("div", [
-            _c("h1", [_vm._v("Bienvenidos!")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "\n        Como parte del compromiso de una mejora continua, tenemos el placer de\n        compartir con ustedes la actualización de nuestra página web.\n        "
-              ),
-              _c("br"),
-              _c("br"),
-              _vm._v(
-                "La migración a la nueva plataforma otorga nueva tecnología\n        que nos ayuda a mejorar la experiencia de nuestros visitantes. Durante\n        los próximos meses, comenzará a ver cambios sutiles en el diseño del\n        sitio entre los que se incluyen modificaciones en la navegación, para\n        que se simplifique aún más la búsqueda de la información y el\n        lanzamiento de nuevas herramientas para asistirlos en sus necesidades\n        comerciales.\n        "
-              ),
-              _c("br"),
-              _c("br"),
-              _vm._v(
-                "Nuestro objetivo es mejorar su experiencia como\n        visitante y continuar facilitando la realización de sus tramites.\n        "
-              ),
-              _c("br"),
-              _c("br"),
-              _vm._v(
-                "\n        Agradecemos sus sugerencias, y les pedimos que las compartan con\n        nosotros para seguir mejorando. Agradecemos su apoyo constante.\n      "
-              )
-            ])
+          _c("p", [
+            _vm._v(
+              "\n        Como parte del compromiso de una mejora continua, tenemos el placer de\n        compartir con ustedes la actualización de nuestra página web.\n        "
+            ),
+            _c("br"),
+            _c("br"),
+            _vm._v(
+              "Nuestro objetivo es mejorar su experiencia como\n        visitante y continuar facilitando la realización de sus tramites.\n        "
+            ),
+            _c("br"),
+            _c("br"),
+            _vm._v(
+              "\n        Agradecemos sus sugerencias, y les pedimos que las compartan con\n        nosotros para seguir mejorando. Agradecemos su apoyo constante.\n      "
+            )
           ])
-        ]
-      )
+        ])
+      ])
     ],
     1
   )

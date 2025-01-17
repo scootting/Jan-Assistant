@@ -1,250 +1,196 @@
 <template>
-  <div>
-    <el-container>
-      <el-header>
-        <el-row :gutter="12">
-          <el-col :span="6">
-            <span>DIRECCION ADMINISTRATIVA Y FINANCIERA</span>
-          </el-col>
-          <el-col :span="18">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#010e1f"
-              text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0 !important">
-              <el-menu-item index="1">
-                <i class="el-icon-setting"></i>
-                <router-link :to="{ name: 'layout' }" tag="span">
-                  Inicio
-                </router-link>
-              </el-menu-item>
-              <el-submenu index="2">
-                <template slot="title">
-                  <i class="el-icon-notebook-2"></i>
-                  <span>Publicaciones</span>
-                </template>
-                <el-menu-item index="2.1">
-                  <i class="el-icon-document"></i>
-                  <router-link :to="{ name: 'financialstatements' }" tag="span">
-                    estados financieros
-                  </router-link>
+    <div id="app">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">DIRECCIÓN ADMINISTRATIVA Y FINANCIERA</div>
+            <el-menu mode="horizontal" class="menu" :default-active="'1'" background-color="#001f3f"
+                text-color="#ffffff" active-text-color="#FFD700" style="border-bottom: 0 !important">
+                <el-menu-item index="1">
+                    <i class="el-icon-setting"></i>
+                    <router-link :to="{ name: 'layout' }" tag="span">
+                        Inicio
+                    </router-link>
                 </el-menu-item>
-                <el-menu-item index="2.2" tag="span">
-                  <i class="el-icon-document"></i>
-                  <router-link :to="{ name: 'layout' }" tag="span">
-                    CIRCULARES
-                  </router-link>
+                <el-submenu index="2">
+                    <template slot="title">
+                        <i class="el-icon-notebook-2"></i>
+                        <span>Publicaciones</span>
+                    </template>
+                    <el-menu-item index="2.1">
+                        <i class="el-icon-document"></i>
+                        <router-link :to="{ name: 'financialstatements' }" tag="span">
+                            ESTADOS FINANCIEROS
+                        </router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2.2" tag="span">
+                        <i class="el-icon-document"></i>
+                        <router-link :to="{ name: 'layout' }" tag="span">
+                            CIRCULARES
+                        </router-link>
+                    </el-menu-item>
+                </el-submenu>
+                <el-menu-item index="3">
+                    <i class="el-icon-s-platform"></i>
+                    <router-link :to="{ name: 'login' }" tag="span">
+                        pagos en linea
+                    </router-link>
                 </el-menu-item>
-              </el-submenu>
-              <el-menu-item index="3">
-                <i class="el-icon-s-platform"></i>
-                <router-link :to="{ name: 'login' }" tag="span">
-                  pagos en linea
-                </router-link>
-              </el-menu-item>
-              <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-document"></i>
-                  <span>tramites</span>
-                </template>
-                <el-menu-item index="4.1">
-                  <i class="el-icon-document"></i>
-                  <router-link :to="{ name: 'login' }" tag="span">
-                    solvencia universitaria
-                  </router-link>
-                </el-menu-item>
-              </el-submenu>
+                <el-submenu index="4">
+                    <template slot="title">
+                        <i class="el-icon-document"></i>
+                        <span>tramites</span>
+                    </template>
+                    <el-menu-item index="4.1">
+                        <i class="el-icon-document"></i>
+                        <router-link :to="{ name: 'login' }" tag="span">
+                            SOLVENCIA UNIVERSITARIA
+                        </router-link>
+                    </el-menu-item>
+                </el-submenu>
+                <el-menu-item index="5">Contacto</el-menu-item>
             </el-menu>
-          </el-col>
-        </el-row>
-      </el-header>
-      <el-container>
-        <el-main>
-          <el-row :gutter="20">
-            <el-col :span="16" :offset="4">
-              <router-view></router-view>
-            </el-col>
-          </el-row>
-        </el-main>
-        <el-footer>
-          <el-row :gutter="20">
-            <el-col :span="8">
-              <h5>informacion</h5>
-              <p>
-              <ul>
-                <li>
-                  ubicacion: calle serrudo casi esquina civica
-                </li>
-                <li>
-                  telefono:
-                </li>
-              </ul>
-              </p>
-            </el-col>
-            <el-col :span="8">
-              <h5>universidad autonoma tomas frias</h5>
-              <p>
-              <ul>
-                <li>
-                  <a href="http://academico.uatf.edu.bo/">
-                    paginal principal
-                  </a>
-                </li>
-                <li>
-                  <a href="https://mail.uatf.edu.bo/">
-                    correo institucional
-                  </a>
-                </li>
-              </ul>
-              </p>
-            </el-col>
-            <el-col :span="8">
-              <h5>otros enlaces de interes</h5>
-              <ul>
-                <li>
-                  <a href="https://www.economiayfinanzas.gob.bo">
-                    ministerio de economía y finanzas bolivia
-                  </a>
-                </li>
-                <li>
-                  <a href="https://adsib.gob.bo/portal_frontend/">
-                    adsib bolivia
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.contraloria.gob.bo/portal/">
-                    Contraloría General del Estado - Bolivia
-                  </a>
-                </li>
-              </ul>
-            </el-col>
-          </el-row>
-          <el-divider></el-divider>
-          <span>© UATF. Todos los derechos reservados.</span>
-        </el-footer>
-      </el-container>
-    </el-container>
-  </div>
+        </div>
+        <div class="body">
+            <router-view></router-view>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <!-- Links -->
+            <div class="links">
+                <div>
+                    <h3>INFORMACIÓN</h3>
+                    <p>Ubicación: Calle Serrudo casi esquina Cívica</p>
+                    <p>Teléfono:</p>
+                </div>
+                <div>
+                    <h3>UNIVERSIDAD AUTÓNOMA TOMÁS FRÍAS</h3>
+                    <p><a href="http://uatf.edu.bo/">Página Principal</a></p>
+                    <p><a href="https://mail.uatf.edu.bo/"">Correo Institucional</a></p>
+                </div>
+                <div>
+                    <h3>OTROS ENLACES DE INTERÉS</h3>
+                    <p><a href=" https://www.economiayfinanzas.gob.bo">Ministerio de Economía y Finanzas Bolivia</a>
+                    </p>
+                    <p><a href="https://adsib.gob.bo/portal_frontend/">ADSIB Bolivia</a></p>
+                    <p><a href="https://www.contraloria.gob.bo/portal/">Contraloría General del Estado - Bolivia</a></p>
+                </div>
+            </div>
+            <div class="info">
+                © 2025 Dirección Administrativa y Financiera
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 
 export default {
-  name: "Bienvenido",
-  data() {
-    return {
-      messages: {},
-      data: {},
-      activeIndex: '1',
-    };
-  },
-  mounted() { },
-  methods: {
-    test() {
-      alert("bienvenido al modulo");
+    name: "Bienvenido",
+    data() {
+        return {
+            messages: {},
+            data: {},
+            activeIndex: '1',
+        };
     },
-    initLogin() {
-      this.$router.push({ name: "login" });
-    },
+    mounted() { },
+    methods: {
+        test() {
+            alert("bienvenido al modulo");
+        },
+        initLogin() {
+            this.$router.push({ name: "login" });
+        },
 
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
-  },
+        handleSelect(key, keyPath) {
+            console.log(key, keyPath);
+        }
+    },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
+.header {
+    background-color: #001f3f;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
 }
 
-
-.el-header {
-  background: #010e1f;
-  color: #fff;
-  /*line-height: 120px;*/
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.el-header .el-button {
-  line-height: 5px;
-  margin-top: 15px;
-  color: #000;
-  float: right;
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.el-footer {
-  height: auto !important;
-  background-color: #010e1f;
-  color: #fff;
-  float: left;
+.menu>* {
+    margin: 5px;
 }
 
-
-.el-footer ul {
-  list-style-type: none;
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
-.el-footer li {
-  padding: 5px 0;
-  box-sizing: border-box;
-  display: flex;
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0px 20px;
+    gap: 10px;
 }
 
-.el-footer a {
-  color: cadetblue;
-  outline: none;
-  text-decoration: none;
-  padding: 5px 5px 0;
+.links div {
+    flex: 1 1 30%;
+    min-width: 200px;
 }
 
+@media (max-width: 768px) {
+    .links {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-/*
-.el-aside {
-  color: #010e1f;
+    .links div {
+        flex: 1 1 auto;
+    }
 }
 
-
-.el-header span {
-  float: left;
+.body{
+    margin: 20px;
 }
 
-
-
-.el-row {
-  margin-bottom: 20px;
+.footer {
+    color: white;
+    background-color: #001f3f;
 }
 
-.el-card .el-button {
-  font-size: 5rem;
-  color: #d02431;
-  display: block;
-  margin: 0 auto;
+.info {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
 }
 
-
-
-
-.el-card h4 {
-  font-size: 2rem;
-  margin: 10px;
-  display: block;
-  text-align: center;
+a {
+    color: #FFD700;
+    text-decoration: none;
 }
 
-.el-card p {
-  font-size: 15px;
+a:hover {
+    text-decoration: underline;
 }
-
-*/
 </style>
