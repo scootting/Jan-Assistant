@@ -4660,31 +4660,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
   data: function data() {
@@ -10190,7 +10165,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.login .el-card[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\n}\n.clearfix[data-v-12f5395a]:before,\r\n.clearfix[data-v-12f5395a]:after {\r\n  display: table;\r\n  content: \"\";\n}\n.clearfix[data-v-12f5395a]:after {\r\n  clear: both;\n}\r\n\r\n/*estilo aprobado para su uso*/\n.login-button[data-v-12f5395a] {\r\n  width: 100%;\r\n  margin-top: 20px;\n}\n.header[data-v-12f5395a],\r\n.footer[data-v-12f5395a] {\r\n  padding: 20px 20px;\r\n  color: #f0f4f8;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.footer .version[data-v-12f5395a] {\r\n  font-family: \"Open Sans\";\r\n  padding: 0 10px;\r\n  color: #9fb3c8;\r\n  font-size: 15px;\r\n  margin-top: 5px;\n}\r\n", ""]);
+exports.push([module.i, "\nbody[data-v-12f5395a] {\r\n  margin: 0;\r\n  background-color: #d9dbd4;\r\n  font-family: Arial, sans-serif;\n}\n.container[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  height: 100vh;\r\n  flex-direction: column;\n}\n.logo-container[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\r\n  margin-bottom: 20px;\n}\n.logo[data-v-12f5395a] {\r\n  width: 250px;\r\n  height: 250px;\n}\n.login-container[data-v-12f5395a] {\r\n  width: 100%;\r\n  max-width: 800px;\r\n  /* Adjusted width for alignment */\r\n  padding: 20px;\r\n  background: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n}\n.login-header[data-v-12f5395a] {\r\n  text-align: center;\r\n  font-size: 16px;\r\n  font-weight: bold;\r\n  margin-bottom: 15px;\n}\n.mobile-header[data-v-12f5395a] {\r\n  display: none;\r\n  font-size: 20px;\r\n  font-weight: bold;\r\n  color: #001f3f;\r\n  text-align: center;\r\n  margin: 50px 0px;\n}\n.horizontal-layout[data-v-12f5395a] {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 50px;\r\n  margin-bottom: 10px;\r\n  width: calc(600px + 200px);\r\n  /* Dynamic width based on instructions */\n}\n.footer-text[data-v-12f5395a] {\r\n  text-align: center;\r\n  margin-top: 10px;\n}\n.instructions[data-v-12f5395a] {\r\n  background-color: #fce4e4;\r\n  color: #d32f2f;\r\n  padding: 10px;\r\n  width: 100%;\r\n  max-width: 600px;\r\n  margin-bottom: 20px;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  box-sizing: border-box;\n}\n@media (min-width: 601px) {\n.login-container[data-v-12f5395a] {\r\n    max-width: 800px;\r\n    /* Matching width with adjusted layout */\n}\n.horizontal-layout[data-v-12f5395a] {\r\n    width: calc(600px + 200px);\r\n    /* Ensures width includes instructions width + 200px */\n}\n}\n@media (max-width: 600px) {\n.logo-container[data-v-12f5395a] {\r\n    display: none;\n}\n.horizontal-layout[data-v-12f5395a] {\r\n    flex-direction: column;\r\n    width: 88%;\n}\n.mobile-header[data-v-12f5395a] {\r\n    display: block;\n}\n.login-container[data-v-12f5395a] {\r\n    margin: 5px;\r\n    /* 5px above, below, and on the sides */\r\n    width: calc(100% - 10px);\r\n    /* Full width minus margins */\n}\n}\r\n", ""]);
 
 // exports
 
@@ -88491,298 +88466,153 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "el-main",
-        [
-          _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 20, offset: 2 } }),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                {
-                  staticStyle: { "padding-top": "10px" },
-                  attrs: { span: 20, offset: 2 }
-                },
-                [
-                  _c("el-alert", {
-                    attrs: {
-                      title: "Como puede ingresar?",
-                      type: "error",
-                      description:
-                        "Para ingresar por primera vez, debe colocar como usuario su numero de identidad, y la contraseña es su fecha de nacimiento sin ningun tipo de caracteres, ejemplo 01/01/1990 deberia colocar 01011990."
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            { staticStyle: { "padding-top": "50px" }, attrs: { gutter: 20 } },
-            [
-              _c("el-col", { attrs: { span: 4, offset: 7 } }, [
+  return _c("div", { attrs: { id: "app" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "instructions" }, [
+        _vm._v(
+          "\n      PARA INGRESAR POR PRIMERA VEZ, DEBE COLOCAR COMO USUARIO SU NÚMERO DE IDENTIDAD, Y LA CONTRASEÑA ES SU FECHA DE\n      NACIMIENTO SIN NINGÚN TIPO DE CARACTERES. EJEMPLO: 01/01/1990 DEBERÍA COLOCAR 01011990.\n    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mobile-header" }, [
+        _vm._v("DIRECCIÓN ADMINISTRATIVA Y FINANCIERA")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "horizontal-layout" }, [
+        _c(
+          "div",
+          { staticClass: "logo-container" },
+          [
+            _c("el-image", {
+              staticClass: "logo",
+              staticStyle: {
+                width: "90%",
+                height: "90%",
+                "margin-top": "20px"
+              },
+              attrs: { src: _vm.url_image, alt: "Logo" }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "login-container" },
+          [
+            _c("div", { staticClass: "login-header" }, [_vm._v("LOGIN")]),
+            _vm._v(" "),
+            _c(
+              "el-form",
+              {
+                attrs: { model: _vm.model, rules: _vm.rules },
+                nativeOn: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.login($event)
+                  }
+                }
+              },
+              [
                 _c(
-                  "div",
-                  { staticClass: "header" },
+                  "el-form-item",
                   [
                     _c(
-                      "el-image",
+                      "el-input",
                       {
-                        staticStyle: { width: "90%", height: "90%" },
-                        attrs: { src: _vm.url_image }
+                        attrs: { placeholder: "Usuario" },
+                        model: {
+                          value: _vm.model.username,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "username", $$v)
+                          },
+                          expression: "model.username"
+                        }
                       },
                       [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "image-slot",
-                            attrs: { slot: "placeholder" },
-                            slot: "placeholder"
-                          },
-                          [
-                            _vm._v("\n              Loading"),
-                            _c("span", { staticClass: "dot" }, [_vm._v("...")])
-                          ]
-                        )
+                        _c("i", {
+                          staticClass: "el-input__icon el-icon-user",
+                          attrs: { slot: "prefix" },
+                          slot: "prefix"
+                        })
                       ]
                     )
                   ],
                   1
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 6 } },
-                [
-                  _c("el-card", { staticClass: "box-card" }, [
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-form-item",
+                  [
                     _c(
-                      "div",
+                      "el-input",
                       {
-                        staticClass: "clearfix",
-                        attrs: { slot: "header" },
-                        slot: "header"
+                        attrs: { type: "password", placeholder: "Contraseña" },
+                        model: {
+                          value: _vm.model.password,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "password", $$v)
+                          },
+                          expression: "model.password"
+                        }
                       },
                       [
-                        _c("span", [_vm._v("login")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-button",
-                          {
-                            staticStyle: { float: "right", padding: "3px 0" },
-                            attrs: { type: "text" },
-                            nativeOn: {
-                              click: function($event) {
-                                _vm.dialogVisible = true
-                              }
-                            }
-                          },
-                          [_vm._v("ayuda\n            ")]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      [
-                        _c(
-                          "el-form",
-                          {
-                            ref: "form",
-                            staticClass: "login-form",
-                            attrs: { model: _vm.model, rules: _vm.rules },
-                            nativeOn: {
-                              submit: function($event) {
-                                $event.preventDefault()
-                                return _vm.login($event)
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "el-form-item",
-                              { attrs: { prop: "username" } },
-                              [
-                                _c(
-                                  "el-input",
-                                  {
-                                    attrs: { placeholder: "Usuario" },
-                                    model: {
-                                      value: _vm.model.username,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.model, "username", $$v)
-                                      },
-                                      expression: "model.username"
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "el-input__icon el-icon-user",
-                                      attrs: { slot: "prefix" },
-                                      slot: "prefix"
-                                    })
-                                  ]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-form-item",
-                              { attrs: { prop: "password" } },
-                              [
-                                _c(
-                                  "el-input",
-                                  {
-                                    attrs: {
-                                      placeholder: "Contraseña",
-                                      type: "password"
-                                    },
-                                    model: {
-                                      value: _vm.model.password,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.model, "password", $$v)
-                                      },
-                                      expression: "model.password"
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "el-input__icon el-icon-lock",
-                                      attrs: { slot: "prefix" },
-                                      slot: "prefix"
-                                    })
-                                  ]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-form-item",
-                              [
-                                _c(
-                                  "el-button",
-                                  {
-                                    staticClass: "login-button",
-                                    attrs: {
-                                      loading: _vm.loading,
-                                      type: "primary",
-                                      "native-type": "submit",
-                                      block: ""
-                                    }
-                                  },
-                                  [_vm._v("acceder\n                ")]
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
+                        _c("i", {
+                          staticClass: "el-input__icon el-icon-lock",
+                          attrs: { slot: "prefix" },
+                          slot: "prefix"
+                        })
+                      ]
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "footer" },
-                    [
-                      _c(
-                        "el-button",
-                        {
-                          staticStyle: { float: "right", padding: "3px 0" },
-                          attrs: { type: "text" },
-                          nativeOn: {
-                            click: function($event) {
-                              return _vm.initRegisterPerson($event)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "Verifique si\n            está\n            registrado"
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "version" }, [
-                        _vm._v("Version 1.01.01")
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-button",
+                  {
+                    attrs: {
+                      type: "primary",
+                      "native-type": "submit",
+                      block: ""
+                    }
+                  },
+                  [_vm._v("Acceder")]
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "footer-text" },
+        [
           _c(
-            "el-dialog",
+            "el-button",
             {
-              attrs: {
-                title: "Soporte",
-                visible: _vm.dialogVisible,
-                width: "30%"
-              },
-              on: {
-                "update:visible": function($event) {
-                  _vm.dialogVisible = $event
+              staticStyle: { float: "right", padding: "3px 0" },
+              attrs: { type: "text" },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.initRegisterPerson($event)
                 }
               }
             },
-            [
-              _c("span", [
-                _vm._v(
-                  "Puede ponerse en contacto con el siguiente numero si tiene problemas para ingresar, 74246032."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticClass: "dialog-footer",
-                  attrs: { slot: "footer" },
-                  slot: "footer"
-                },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { size: "medium" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialogVisible = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cerrar")]
-                  )
-                ],
-                1
-              )
-            ]
-          )
+            [_vm._v("Verifique si\n        está\n        registrado")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticStyle: { color: "gray", "font-size": "12px" } }, [
+            _vm._v("Versión 2.02.02")
+          ])
         ],
         1
       )
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
