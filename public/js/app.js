@@ -4382,18 +4382,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
     return {
       error: "",
+      isMenuOpen: false,
       client: this.$store.state.user,
       yearSelected: 1999
     };
@@ -4404,6 +4398,9 @@ __webpack_require__.r(__webpack_exports__);
     console.log(app.client);
   },
   methods: {
+    toggleMenu: function toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
     logoutClient: function logoutClient() {
       this.$router.push({
         name: "logout"
@@ -7122,13 +7119,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7138,14 +7128,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       requests: [],
       pagination: {
         page: 1
-      }
+      },
+      isSmallDevice: window.innerWidth <= 768
     };
   },
   mounted: function mounted() {
     var app = this;
     this.getRequests(app.pagination.page);
+    window.addEventListener("resize", this.updateDeviceSize);
   },
+  destroyed: function destroyed() {
+    window.removeEventListener("resize", this.updateDeviceSize);
+  },
+
+  /*
+  computed: {
+      isSmallDevice() {
+          return window.innerWidth <= 768;
+      },
+  },*/
   methods: {
+    updateDeviceSize: function updateDeviceSize() {
+      this.isSmallDevice = window.innerWidth <= 768;
+    },
+    tagType: function tagType(estado) {
+      if (estado === "EN PROCESO") return "info";
+      if (estado === "CREADO") return "success";
+      return "warning";
+    },
+    responsiveRowClass: function responsiveRowClass(_ref) {
+      var rowIndex = _ref.rowIndex;
+      return rowIndex % 2 === 0 ? "row-even" : "row-odd";
+    },
     test: function test() {
       alert("en proceso de desarrollo");
     },
@@ -7192,20 +7206,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 11]]);
       }))();
     },
-    //  *  Route. Iniciar el registro de comprobantesde pago para la venta en linea de valores
-
-    /*
-    initSaleBoucher(idx, row) {
-        console.log(idx, row);
-        let id = row.id;
-        this.$router.push({
-            name: "boucherofrequest",
-            params: {
-                id: id,
-            },
-        });
-    },
-    */
     //  *  Route. Iniciar una nueva solicitud para la venta en linea de valores
     initAddRequestInLine: function initAddRequestInLine() {
       this.$router.push({
@@ -10108,7 +10108,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\n}\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\n}\n.el-aside {\r\n  color: #212120;\n}\r\n\r\n/* estilos revisados y aprobados*/\n.el-header {\r\n  color: #fff;\r\n  line-height: 60px;\r\n  padding-left: 224px;\n}\n.el-dropdown {\r\n  color: #000a;\r\n  padding: 0px 18px;\n}\n.el-dropdown-link {\r\n  cursor: pointer;\r\n  margin-bottom: 20px;\n}\n.el-icon-arrow-down {\r\n  font-size: 12px;\n}\n.logo {\r\n  padding: 42px 5px;\r\n  align-content: center;\r\n  text-align: center;\r\n  color: #faebd7;\n}\r\n\r\n/* estilos revisados y aprobados para el card */\n#level {\r\n  display: flex !important;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.el-breadcrumb {\r\n  align-items: center;\r\n  justify-content: flex-start;\r\n  font-size: 20px !important;\n}\n#right-button {\r\n  align-items: right;\r\n  justify-content: flex-end;\n}\r\n", ""]);
+exports.push([module.i, "\nbody {\r\n  margin: 0;\r\n  font-family: Arial, sans-serif;\r\n  background-color: #e5e5dc;\n}\n#app {\r\n  display: flex;\r\n  flex-direction: column;\r\n  height: 100vh;\n}\n.header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f3f3f3;\r\n  padding: 10px 20px;\r\n  border-bottom: 1px solid #ddd;\n}\n.header .name {\r\n  text-align: center;\n}\n.sidebar {\r\n  width: 250px;\r\n  background-color: #2c3e50;\r\n  color: white;\r\n  display: flex;\r\n  flex-direction: column;\r\n  overflow: hidden;\r\n  transition: max-height 0.3s ease-in-out;\n}\n.sidebar .logo {\r\n  text-align: center;\r\n  padding: 20px;\r\n  font-weight: bold;\r\n  font-size: 18px;\r\n  background-color: #34495e;\n}\n.menu {\r\n  flex: 1;\r\n  overflow-y: auto;\n}\n.menu-item {\r\n  padding: 15px;\r\n  cursor: pointer;\n}\n.menu-item:hover {\r\n  background-color: #3a506b;\n}\n.toggle-menu {\r\n  display: none;\r\n  cursor: pointer;\r\n  padding: 10px;\r\n  background-color: #34495e;\r\n  color: white;\r\n  text-align: center;\n}\n.main {\r\n  display: flex;\r\n  flex: 1;\r\n  overflow: hidden;\n}\n.content {\r\n  flex: 1;\r\n  padding: 20px;\r\n  overflow-y: auto;\n}\n@media (max-width: 768px) {\n.header {\r\n    flex-direction: column;\r\n    align-items: center;\n}\n.header .name {\r\n    margin-bottom: 10px;\n}\n.sidebar {\r\n    max-height: 0;\r\n    width: 100%;\n}\n.sidebar.open {\r\n    max-height: 400px;\n}\n.toggle-menu {\r\n    display: block;\n}\n.main {\r\n    flex-direction: column;\n}\n.menu {\r\n    overflow-y: hidden;\r\n    /* Previene la barra de desplazamiento */\n}\n}\r\n", ""]);
 
 // exports
 
@@ -10355,7 +10355,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-input .el-select[data-v-037f612e] {\r\n    width: 180px;\n}\r\n", ""]);
+exports.push([module.i, "\n.alert-space[data-v-037f612e] {\r\n    margin-bottom: 15px;\n}\n.header-container[data-v-037f612e] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.add-request-btn[data-v-037f612e] {\r\n    align-self: center;\n}\n.alerts-container[data-v-037f612e] {\r\n    margin-bottom: 20px;\n}\n.responsive-container[data-v-037f612e] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 15px;\r\n    /* Espacio entre las filas */\n}\n.responsive-row[data-v-037f612e] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 15px;\r\n    border: 1px solid #ddd;\r\n    border-radius: 5px;\r\n    background-color: white;\r\n    gap: 10px;\r\n    /* Espacio entre los elementos */\n}\n.responsive-item[data-v-037f612e] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin-bottom: 5px;\n}\n.item-title[data-v-037f612e] {\r\n    font-weight: bold;\r\n    color: #555;\r\n    flex: 1;\n}\n.item-content[data-v-037f612e] {\r\n    flex: 2;\n}\n.pagination[data-v-037f612e] {\r\n    margin-top: 15px;\r\n    text-align: right;\n}\n@media (max-width: 768px) {\n.header-container[data-v-037f612e] {\r\n        flex-direction: column;\r\n        align-items: flex-start;\r\n        gap: 10px;\n}\n.responsive-row[data-v-037f612e] {\r\n        margin-bottom: 10px;\n}\n.responsive-item[data-v-037f612e] {\r\n        flex-direction: row;\r\n        gap: 10px;\n}\n.alerts-container[data-v-037f612e] {\r\n        margin-bottom: 30px;\r\n        /* Espacio extra para dispositivos pequeños */\n}\n.header[data-v-037f612e] {\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        text-align: center;\n}\n.card-title[data-v-037f612e] {\r\n        margin-bottom: 10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -87826,295 +87826,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
+  return _c("div", { attrs: { id: "app" } }, [
+    _c("div", { staticClass: "header" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
-        "el-container",
+        "div",
+        { staticClass: "name" },
         [
           _c(
-            "el-aside",
-            {
-              staticStyle: {
-                "background-color": "#08596a",
-                "min-height": "100vh"
-              },
-              attrs: { width: "260px" }
-            },
+            "el-dropdown",
             [
-              _c("div", { staticClass: "logo" }, [
-                _c("p", [
-                  _vm._v("SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA")
-                ])
+              _c("span", { staticClass: "el-dropdown-link" }, [
+                _c("span", [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.client.descripcion) +
+                      "\n            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
               ]),
               _vm._v(" "),
               _c(
-                "el-menu",
-                {
-                  staticClass: "el-menu-vertical-demo",
-                  staticStyle: { "border-right": "0 !important" },
-                  attrs: {
-                    "default-active": "2",
-                    "background-color": "#08596a",
-                    "text-color": "#faebd7",
-                    "active-text-color": "#faebd7"
-                  }
-                },
+                "el-dropdown-menu",
+                { attrs: { slot: "dropdown" }, slot: "dropdown" },
                 [
                   _c(
-                    "el-menu-item",
-                    { attrs: { index: "1" } },
-                    [
-                      _c("i", { staticClass: "el-icon-document" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        { attrs: { to: { name: "welcome" }, tag: "span" } },
-                        [_vm._v("\n            inicio\n          ")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { index: "2" } },
-                    [
-                      _c("i", { staticClass: "el-icon-menu" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        { attrs: { to: { name: "information" }, tag: "span" } },
-                        [
-                          _vm._v(
-                            "\n            informacion personal\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { index: "3" } },
-                    [
-                      _c("i", { staticClass: "el-icon-shopping-bag-1" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        { attrs: { to: { name: "requests" }, tag: "span" } },
-                        [
-                          _vm._v(
-                            "\n            venta de valores en linea\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { index: "4", disabled: "" } },
-                    [
-                      _c("i", { staticClass: "el-icon-star-off" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          attrs: { to: { name: "salestudents" }, tag: "span" }
-                        },
-                        [
-                          _vm._v(
-                            "\n            venta de matriculas en linea\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { index: "5", disabled: "" } },
-                    [
-                      _c("i", { staticClass: "el-icon-setting" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: { name: "requestmemorial" },
-                            tag: "span"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            memorial universitario\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { index: "6" } },
-                    [
-                      _c("i", { staticClass: "el-icon-menu" }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: { name: "requestsolvencies" },
-                            tag: "span"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            Solvencia Universitaria\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-container",
-            [
-              _c(
-                "el-header",
-                {
-                  staticStyle: {
-                    "text-align": "right",
-                    "background-color": "#d7d9ce"
-                  }
-                },
-                [
-                  _c(
-                    "el-dropdown",
-                    { attrs: { size: "medium" } },
-                    [
-                      _c("span", { staticClass: "el-dropdown-link" }, [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(_vm.client.descripcion) +
-                            "\n            "
-                        ),
-                        _c("i", {
-                          staticClass: "el-icon-arrow-down el-icon--right"
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-menu",
-                        { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                        [
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-user" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.initToShowClient($event)
-                                }
-                              }
-                            },
-                            [_vm._v("mi perfil")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-chat-dot-square" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.NoDeveloped($event)
-                                }
-                              }
-                            },
-                            [_vm._v("mis mensajes\n            ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              attrs: { icon: "el-icon-right" },
-                              nativeOn: {
-                                click: function($event) {
-                                  return _vm.logoutClient($event)
-                                }
-                              }
-                            },
-                            [_vm._v("cerrar sesion")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-main",
-                { staticStyle: { padding: "40px", background: "fff" } },
-                [
-                  _c(
-                    "el-row",
+                    "el-dropdown-item",
                     {
-                      staticClass: "row-bg",
-                      attrs: { type: "flex", justify: "center" }
+                      attrs: { icon: "el-icon-user" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.initToShowClient($event)
+                        }
+                      }
                     },
-                    [
-                      _c(
-                        "el-col",
-                        { attrs: { span: 22 } },
-                        [
-                          _c("div", { attrs: { id: "level" } }, [
-                            _c("p"),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { attrs: { id: "right-button" } },
-                              [
-                                _c("el-button", {
-                                  attrs: {
-                                    icon: "el-icon-back",
-                                    circle: "",
-                                    warning: ""
-                                  },
-                                  nativeOn: {
-                                    click: function($event) {
-                                      return _vm.initToWelcomePage($event)
-                                    }
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("router-view")
-                        ],
-                        1
-                      )
-                    ],
-                    1
+                    [_vm._v("Perfil")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-dropdown-item",
+                    {
+                      attrs: { icon: "el-icon-right" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.logoutClient($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Cerrar sesión")]
                   )
                 ],
                 1
@@ -88125,11 +87887,115 @@ var render = function() {
         ],
         1
       )
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "toggle-menu", on: { click: _vm.toggleMenu } }, [
+      _vm._v("Menú")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "main" }, [
+      _c(
+        "div",
+        { staticClass: "sidebar", class: { open: _vm.isMenuOpen } },
+        [
+          _c("div", { staticClass: "logo" }, [
+            _vm._v("universidad autonoma tomas frias ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-menu",
+            { staticClass: "menu" },
+            [
+              _c(
+                "el-menu-item",
+                { attrs: { index: "1" } },
+                [
+                  _c("i", { staticClass: "el-icon-document" }),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "welcome" }, tag: "span" } },
+                    [_vm._v("\n            inicio\n          ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-menu-item",
+                { attrs: { index: "2" } },
+                [
+                  _c("i", { staticClass: "el-icon-menu" }),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "information" }, tag: "span" } },
+                    [_vm._v("\n            informacion personal\n          ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-menu-item",
+                { attrs: { index: "3" } },
+                [
+                  _c("i", { staticClass: "el-icon-shopping-bag-1" }),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "requests" }, tag: "span" } },
+                    [
+                      _vm._v(
+                        "\n            venta de valores en linea\n          "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-menu-item",
+                { attrs: { index: "4" } },
+                [
+                  _c("i", { staticClass: "el-icon-menu" }),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: { to: { name: "requestsolvencies" }, tag: "span" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            Solvencia Universitaria\n          "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "content" }, [_c("router-view")], 1)
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", [_vm._v("Sistema de Información Administrativa y Financiera")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -92069,347 +91935,260 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [
-            _c("span", [
-              _vm._v("lista de solicitudes para la venta de valores en linea")
-            ]),
-            _vm._v(" "),
-            _c(
-              "el-button",
-              {
-                staticStyle: { "text-align": "right", float: "right" },
-                attrs: { size: "small", type: "primary", icon: "el-icon-plus" },
-                on: { click: _vm.initAddRequestInLine }
-              },
-              [
-                _vm._v(
-                  "\n                nueva solicitud para la venta de valores en linea"
-                )
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c(
-          "div",
-          [
-            _c("el-alert", {
-              attrs: {
-                title: "Que debo hacer?",
-                type: "error",
-                description:
-                  "Seleccione la opcion de nueva solicitud para la compra de los valores que desea adquirir."
+      _c(
+        "el-card",
+        { staticStyle: { "margin-bottom": "50px" } },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "header",
+              staticStyle: {
+                display: "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
               }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("el-alert", {
-              attrs: {
-                title: "Como se que ya se proceso mi solicitud?",
-                type: "success",
-                description:
-                  "Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automatico) el estado de su solicitud estara en proceso, si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud."
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "el-table",
-              {
-                directives: [
-                  {
-                    name: "loading",
-                    rawName: "v-loading",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticStyle: { width: "100%" },
-                attrs: { data: _vm.requests }
-              },
-              [
-                _c("el-table-column", {
-                  attrs: { label: "numero", width: "150" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "name-wrapper",
-                              attrs: { slot: "reference" },
-                              slot: "reference"
-                            },
-                            [
+            },
+            [
+              _c(
+                "h3",
+                {
+                  staticClass: "card-title",
+                  staticStyle: { margin: "10", "font-weight": "bold" }
+                },
+                [
+                  _vm._v(
+                    "\n                Lista de Solicitudes para la Compra de Valores en Línea\n            "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  staticStyle: {
+                    "background-color": "#ff5722",
+                    "border-color": "#ff5722",
+                    color: "white",
+                    "font-weight": "bold"
+                  },
+                  attrs: {
+                    type: "primary",
+                    size: "medium",
+                    icon: "el-icon-plus"
+                  },
+                  on: { click: _vm.onCreateRequest }
+                },
+                [_vm._v("\n                Nueva Solicitud\n            ")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "alerts-container" },
+            [
+              _c("el-alert", {
+                staticClass: "alert-space",
+                attrs: {
+                  title:
+                    "Seleccione la opción de nueva solicitud para la compra de los valores que desea adquirir.",
+                  type: "error",
+                  "show-icon": ""
+                }
+              }),
+              _vm._v(" "),
+              _c("el-alert", {
+                attrs: {
+                  title:
+                    "Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud.",
+                  type: "success",
+                  "show-icon": ""
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          !_vm.isSmallDevice
+            ? _c(
+                "el-table",
+                {
+                  staticStyle: { width: "100%", "margin-top": "15px" },
+                  attrs: { data: _vm.requests, border: "" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "numero", label: "Número" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "fecha", label: "Fecha" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "importe", label: "Importe" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "estado", label: "Estado" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
                               _c(
                                 "el-tag",
-                                { attrs: { size: "medium", effect: "dark" } },
-                                [_vm._v(_vm._s(scope.row.idc))]
-                              )
-                            ],
-                            1
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { prop: "fecha", label: "fecha", width: "150" }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "importe",
-                    label: "importe",
-                    width: "100",
-                    align: "right"
-                  }
-                }),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: {
-                    prop: "estado",
-                    label: "estado",
-                    width: "150",
-                    align: "center"
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          scope.row.estado === "PROCESADO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      {
-                                        attrs: {
-                                          size: "medium",
-                                          effect: "dark",
-                                          type: "success"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          scope.row.estado === "CREADO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      { attrs: { size: "medium" } },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          scope.row.estado === "EXPIRADO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      {
-                                        attrs: {
-                                          size: "medium",
-                                          effect: "dark",
-                                          type: "warning"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          scope.row.estado === "EN PROCESO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      {
-                                        attrs: {
-                                          size: "medium",
-                                          effect: "dark",
-                                          type: "primary"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          scope.row.estado === "FALLIDO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      {
-                                        attrs: {
-                                          size: "medium",
-                                          effect: "dark",
-                                          type: "danger"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          scope.row.estado === "ANULADO"
-                            ? _c("div", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "name-wrapper",
-                                    attrs: { slot: "reference" },
-                                    slot: "reference"
-                                  },
-                                  [
-                                    _c(
-                                      "el-tag",
-                                      {
-                                        attrs: {
-                                          size: "medium",
-                                          effect: "dark",
-                                          type: "danger"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(scope.row.estado))]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e()
-                        ]
-                      }
-                    }
-                  ])
-                }),
-                _vm._v(" "),
-                _c(
-                  "el-table-column",
-                  { attrs: { label: "detalle", align: "right" } },
-                  [_c("p", [_vm._v("por la venta de valores universitarios")])]
-                ),
-                _vm._v(" "),
-                _c("el-table-column", {
-                  attrs: { align: "right", fixed: "right" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _c(
-                            "el-button",
-                            {
-                              attrs: { type: "primary", size: "small" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.initPrintRequestReport(
-                                    scope.$index,
-                                    scope.row
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            imprimir comprobante"
+                                {
+                                  attrs: { type: _vm.tagType(scope.row.estado) }
+                                },
+                                [_vm._v(_vm._s(scope.row.estado))]
                               )
                             ]
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("el-pagination", {
-              attrs: {
-                "page-size": _vm.pagination.per_page,
-                layout: "prev, pager, next",
-                "current-page": _vm.pagination.current_page,
-                total: _vm.pagination.total
-              },
-              on: { "current-change": _vm.getRequests }
-            })
-          ],
-          1
-        )
-      ])
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      527181763
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "detalle", label: "Detalle" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "Acciones" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              _c(
+                                "el-button",
+                                { attrs: { type: "primary", size: "mini" } },
+                                [_vm._v("Imprimir Comprobante")]
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      3553360404
+                    )
+                  })
+                ],
+                1
+              )
+            : _c(
+                "div",
+                { staticClass: "responsive-container" },
+                _vm._l(_vm.requests, function(row, index) {
+                  return _c(
+                    "div",
+                    { key: index, staticClass: "responsive-row" },
+                    [
+                      _c("div", { staticClass: "responsive-item" }, [
+                        _c("div", { staticClass: "item-title" }, [
+                          _vm._v("Número")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-content" }, [
+                          _vm._v(_vm._s(row.numero))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "responsive-item" }, [
+                        _c("div", { staticClass: "item-title" }, [
+                          _vm._v("Fecha")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-content" }, [
+                          _vm._v(_vm._s(row.fecha))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "responsive-item" }, [
+                        _c("div", { staticClass: "item-title" }, [
+                          _vm._v("Importe")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-content" }, [
+                          _vm._v(_vm._s(row.importe))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "responsive-item" }, [
+                        _c("div", { staticClass: "item-title" }, [
+                          _vm._v("Estado")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "item-content" },
+                          [
+                            _c(
+                              "el-tag",
+                              { attrs: { type: _vm.tagType(row.estado) } },
+                              [_vm._v(_vm._s(row.estado))]
+                            )
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      row.detalle
+                        ? _c("div", { staticClass: "responsive-item" }, [
+                            _c("div", { staticClass: "item-title" }, [
+                              _vm._v("Detalle")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "item-content" }, [
+                              _vm._v(_vm._s(row.detalle))
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "responsive-item" }, [
+                        _c("div", { staticClass: "item-title" }, [
+                          _vm._v("Acciones")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "item-content" },
+                          [
+                            _c(
+                              "el-button",
+                              { attrs: { type: "primary", size: "mini" } },
+                              [_vm._v("Imprimir Comprobante")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              ),
+          _vm._v(" "),
+          _c("el-pagination", {
+            staticClass: "pagination",
+            attrs: {
+              background: "",
+              layout: "prev, pager, next",
+              total: _vm.requests.length
+            }
+          })
+        ],
+        1
+      )
     ],
     1
   )

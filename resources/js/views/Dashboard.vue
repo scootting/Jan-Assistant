@@ -1,13 +1,41 @@
 <template>
-  <div>
-    <el-container>
-      <el-aside width="260px" style="background-color: #08596a; min-height: 100vh">
-        <div class="logo">
-          <p>SISTEMA DE INFORMACION ADMINISTRATIVA Y FINANCIERA</p>
-        </div>
-        <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#08596a" text-color="#faebd7"
-          active-text-color="#faebd7" style="border-right: 0 !important">
-          <el-menu-item index="1">
+  <div id="app">
+    <div class="header">
+      <div>
+        <span>Sistema de Información Administrativa y Financiera</span>
+      </div>
+      <div class="name">
+        <!--
+        <span>CALLIZAYA COSSIO, REMY LIONEL</span>
+        -->
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <span>
+              {{ client.descripcion }}
+              <!--
+              <i class="el-icon-arrow-down el-icon--right"></i>
+              -->
+            </span>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-user" @click.native="initToShowClient">Perfil</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-right" @click.native="logoutClient">Cerrar sesión</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    </div>
+
+    <div class="toggle-menu" @click="toggleMenu">Menú</div>
+
+    <div class="main">
+      <div class="sidebar" :class="{ open: isMenuOpen }">
+        <div class="logo">universidad autonoma tomas frias </div>
+        <el-menu class="menu">
+          <!--
+          <el-menu class="menu" router>
+          -->
+            <el-menu-item index="1">
             <i class="el-icon-document"></i>
             <router-link :to="{ name: 'welcome' }" tag="span">
               inicio
@@ -25,59 +53,24 @@
               venta de valores en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4" disabled>
-            <i class="el-icon-star-off"></i>
-            <router-link :to="{ name: 'salestudents' }" tag="span">
-              venta de matriculas en linea
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="5" disabled>
-            <i class="el-icon-setting"></i>
-            <router-link :to="{ name: 'requestmemorial' }" tag="span">
-              memorial universitario
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="4">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" tag="span">
               Solvencia Universitaria
             </router-link>
           </el-menu-item>
+          <!--
+          <el-menu-item index="4">Venta de Matrículas en Línea</el-menu-item>
+          <el-menu-item index="5">Memorial Universitario</el-menu-item>
+          -->
         </el-menu>
-      </el-aside>
-
-      <el-container>
-        <el-header style="text-align: right; background-color: #d7d9ce">
-          <el-dropdown size="medium">
-            <span class="el-dropdown-link">
-              {{ client.descripcion }}
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-user" @click.native="initToShowClient">mi perfil</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-chat-dot-square" @click.native="NoDeveloped">mis mensajes
-              </el-dropdown-item>
-              <el-dropdown-item icon="el-icon-right" @click.native="logoutClient">cerrar sesion</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-header>
-        <el-main style="padding: 40px; background: fff">
-          <el-row type="flex" class="row-bg" justify="center">
-            <el-col :span="22">
-              <div id="level">
-                <p></p>
-                <div id="right-button">
-                  <el-button icon="el-icon-back" circle @click.native="initToWelcomePage" warning></el-button>
-                </div>
-              </div>
-              <br />
-              <router-view></router-view>
-            </el-col>
-          </el-row>
-        </el-main>
-      </el-container>
-    </el-container>
+      </div>
+      <div class="content">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -86,6 +79,7 @@ export default {
   data() {
     return {
       error: "",
+      isMenuOpen: false,
       client: this.$store.state.user,
       yearSelected: 1999,
     };
@@ -97,6 +91,10 @@ export default {
   },
 
   methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+
     logoutClient() {
       this.$router.push({
         name: "logout",
@@ -122,69 +120,114 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e5e5dc;
+}
+
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-}
-
-.el-aside {
-  color: #212120;
-}
-
-/* estilos revisados y aprobados*/
-.el-header {
-  color: #fff;
-  line-height: 60px;
-  padding-left: 224px;
-}
-
-.el-dropdown {
-  color: #000a;
-  padding: 0px 18px;
-}
-
-.el-dropdown-link {
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.el-icon-arrow-down {
-  font-size: 12px;
-}
-
-.logo {
-  padding: 42px 5px;
-  align-content: center;
-  text-align: center;
-  color: #faebd7;
-}
-
-/* estilos revisados y aprobados para el card */
-#level {
-  display: flex !important;
-  align-items: center;
+.header {
+  display: flex;
   justify-content: space-between;
-}
-
-.el-breadcrumb {
   align-items: center;
-  justify-content: flex-start;
-  font-size: 20px !important;
+  background-color: #f3f3f3;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
 }
 
-#right-button {
-  align-items: right;
-  justify-content: flex-end;
+.header .name {
+  text-align: center;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.sidebar .logo {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #34495e;
+}
+
+.menu {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.menu-item {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #3a506b;
+}
+
+.toggle-menu {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header .name {
+    margin-bottom: 10px;
+  }
+
+  .sidebar {
+    max-height: 0;
+    width: 100%;
+  }
+
+  .sidebar.open {
+    max-height: 400px;
+  }
+
+  .toggle-menu {
+    display: block;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .menu {
+    overflow-y: hidden;
+    /* Previene la barra de desplazamiento */
+  }
 }
 </style>
