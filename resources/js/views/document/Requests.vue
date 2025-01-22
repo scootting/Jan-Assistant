@@ -3,11 +3,11 @@
         <el-card style="margin-bottom: 50px;">
             <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="card-title" style="margin: 10; font-weight: bold;">
-                    Lista de Solicitudes para la Compra de Valores en Línea
+                    Compra de Valores en Línea
                 </h3>
                 <el-button type="primary" size="medium" icon="el-icon-plus" @click="onCreateRequest"
                     style="background-color: #ff5722; border-color: #ff5722; color: white; font-weight: bold;">
-                    Nueva Solicitud
+                    Realice su Solicitud de Compra de Valores
                 </el-button>
             </div>
             <!-- Mensajes -->

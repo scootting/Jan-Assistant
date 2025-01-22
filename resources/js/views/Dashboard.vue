@@ -50,7 +50,7 @@
           <el-menu-item index="3">
             <i class="el-icon-shopping-bag-1"></i>
             <router-link :to="{ name: 'requests' }" tag="span">
-              venta de valores en linea
+              compra de valores en linea
             </router-link>
           </el-menu-item>
           <el-menu-item index="4">

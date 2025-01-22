@@ -87947,7 +87947,7 @@ var render = function() {
                     { attrs: { to: { name: "requests" }, tag: "span" } },
                     [
                       _vm._v(
-                        "\n            venta de valores en linea\n          "
+                        "\n            compra de valores en linea\n          "
                       )
                     ]
                   )
@@ -91958,7 +91958,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                Lista de Solicitudes para la Compra de Valores en Línea\n            "
+                    "\n                Compra de Valores en Línea\n            "
                   )
                 ]
               ),
@@ -91979,7 +91979,11 @@ var render = function() {
                   },
                   on: { click: _vm.onCreateRequest }
                 },
-                [_vm._v("\n                Nueva Solicitud\n            ")]
+                [
+                  _vm._v(
+                    "\n                Realice su Solicitud de Compra de Valores\n            "
+                  )
+                ]
               )
             ],
             1
