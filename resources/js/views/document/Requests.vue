@@ -5,35 +5,43 @@
                 <h3 class="card-title" style="margin: 10; font-weight: bold;">
                     Compra de Valores en Línea
                 </h3>
-                <el-button type="primary" size="medium" icon="el-icon-plus" @click="onCreateRequest"
+                <el-button type="primary" size="medium" icon="el-icon-plus" @click="initAddRequestInLine"
                     style="background-color: #ff5722; border-color: #ff5722; color: white; font-weight: bold;">
                     Realice su Solicitud de Compra de Valores
                 </el-button>
             </div>
             <!-- Mensajes -->
             <div class="alerts-container">
+                <el-alert title="Seleccione el boton de color naranja si desea comprar valores en linea." type="error"
+                    show-icon class="alert-space" />
                 <el-alert
-                    title="Seleccione la opción de nueva solicitud para la compra de los valores que desea adquirir."
-                    type="error" show-icon class="alert-space" />
-                <el-alert
-                    title="Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud."
+                    title="Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante."
                     type="success" show-icon />
             </div>
 
             <!-- Tabla para dispositivos grandes -->
             <el-table v-if="!isSmallDevice" :data="requests" border style="width: 100%; margin-top: 15px">
+                <el-table-column label="numero">
+                    <template slot-scope="scope">
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.idc }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <!--
                 <el-table-column prop="numero" label="Número" />
+                    -->
                 <el-table-column prop="fecha" label="Fecha" />
                 <el-table-column prop="importe" label="Importe" />
                 <el-table-column prop="estado" label="Estado">
                     <template slot-scope="scope">
-                        <el-tag :type="tagType(scope.row.estado)">{{ scope.row.estado }}</el-tag>
+                        <el-tag :type="tagType(scope.row.estado)" effect="dark">{{ scope.row.estado }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="detalle" label="Detalle" />
                 <el-table-column label="Acciones">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="mini">Imprimir Comprobante</el-button>
+                        <el-button type="primary" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Imprimir Comprobante</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -43,7 +51,9 @@
                 <div v-for="(row, index) in requests" :key="index" class="responsive-row">
                     <div class="responsive-item">
                         <div class="item-title">Número</div>
-                        <div class="item-content">{{ row.numero }}</div>
+                        <div class="item-content">
+                            <el-tag>{{ row.idc }}</el-tag>
+                        </div>
                     </div>
                     <div class="responsive-item">
                         <div class="item-title">Fecha</div>
@@ -56,7 +66,7 @@
                     <div class="responsive-item">
                         <div class="item-title">Estado</div>
                         <div class="item-content">
-                            <el-tag :type="tagType(row.estado)">{{ row.estado }}</el-tag>
+                            <el-tag :type="tagType(row.estado)" effect="dark">{{ row.estado }}</el-tag>
                         </div>
                     </div>
                     <div class="responsive-item" v-if="row.detalle">
@@ -66,14 +76,16 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content">
-                            <el-button type="primary" size="mini">Imprimir Comprobante</el-button>
+                            <el-button type="primary" size="mini" @click="initPrintRequestReport(row.index, row)">Imprimir Comprobante</el-button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Paginación -->
-            <el-pagination background layout="prev, pager, next" :total="requests.length" class="pagination" />
+            <el-pagination background layout="prev, pager, next" :page-size="pagination.per_page"
+                :current-page="pagination.current_page" :total="pagination.total" @current-change="getRequests"
+                class="pagination" />
         </el-card>
     </div>
 </template>
@@ -112,8 +124,12 @@ export default {
             this.isSmallDevice = window.innerWidth <= 768;
         },
         tagType(estado) {
-            if (estado === "EN PROCESO") return "info";
-            if (estado === "CREADO") return "success";
+            if (estado === "PROCESADO") return "success";
+            if (estado === "EN PROCESO") return "primary";
+            if (estado === "CREADO") return "info";
+            if (estado === "EXPIRADO") return "info";
+            if (estado === "FALLIDO") return "danger";
+            if (estado === "ANULADO") return "danger";
             return "warning";
         },
         responsiveRowClass({ rowIndex }) {

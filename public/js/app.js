@@ -7119,6 +7119,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7152,8 +7164,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.isSmallDevice = window.innerWidth <= 768;
     },
     tagType: function tagType(estado) {
-      if (estado === "EN PROCESO") return "info";
-      if (estado === "CREADO") return "success";
+      if (estado === "PROCESADO") return "success";
+      if (estado === "EN PROCESO") return "primary";
+      if (estado === "CREADO") return "info";
+      if (estado === "EXPIRADO") return "info";
+      if (estado === "FALLIDO") return "danger";
+      if (estado === "ANULADO") return "danger";
       return "warning";
     },
     responsiveRowClass: function responsiveRowClass(_ref) {
@@ -91977,7 +91993,7 @@ var render = function() {
                     size: "medium",
                     icon: "el-icon-plus"
                   },
-                  on: { click: _vm.onCreateRequest }
+                  on: { click: _vm.initAddRequestInLine }
                 },
                 [
                   _vm._v(
@@ -91997,7 +92013,7 @@ var render = function() {
                 staticClass: "alert-space",
                 attrs: {
                   title:
-                    "Seleccione la opción de nueva solicitud para la compra de los valores que desea adquirir.",
+                    "Seleccione el boton de color naranja si desea comprar valores en linea.",
                   type: "error",
                   "show-icon": ""
                 }
@@ -92006,7 +92022,7 @@ var render = function() {
               _c("el-alert", {
                 attrs: {
                   title:
-                    "Mientras no realice el pago o no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en ver detalles de la solicitud.",
+                    "Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante.",
                   type: "success",
                   "show-icon": ""
                 }
@@ -92024,7 +92040,35 @@ var render = function() {
                 },
                 [
                   _c("el-table-column", {
-                    attrs: { prop: "numero", label: "Número" }
+                    attrs: { label: "numero" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "name-wrapper",
+                                  attrs: { slot: "reference" },
+                                  slot: "reference"
+                                },
+                                [
+                                  _c("el-tag", { attrs: { size: "medium" } }, [
+                                    _vm._v(_vm._s(scope.row.idc))
+                                  ])
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      2365797428
+                    )
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -92046,7 +92090,10 @@ var render = function() {
                               _c(
                                 "el-tag",
                                 {
-                                  attrs: { type: _vm.tagType(scope.row.estado) }
+                                  attrs: {
+                                    type: _vm.tagType(scope.row.estado),
+                                    effect: "dark"
+                                  }
                                 },
                                 [_vm._v(_vm._s(scope.row.estado))]
                               )
@@ -92056,7 +92103,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      527181763
+                      1362831614
                     )
                   }),
                   _vm._v(" "),
@@ -92074,7 +92121,17 @@ var render = function() {
                             return [
                               _c(
                                 "el-button",
-                                { attrs: { type: "primary", size: "mini" } },
+                                {
+                                  attrs: { type: "primary", size: "mini" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initPrintRequestReport(
+                                        scope.$index,
+                                        scope.row
+                                      )
+                                    }
+                                  }
+                                },
                                 [_vm._v("Imprimir Comprobante")]
                               )
                             ]
@@ -92083,7 +92140,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      3553360404
+                      1464898111
                     )
                   })
                 ],
@@ -92102,9 +92159,12 @@ var render = function() {
                           _vm._v("Número")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "item-content" }, [
-                          _vm._v(_vm._s(row.numero))
-                        ])
+                        _c(
+                          "div",
+                          { staticClass: "item-content" },
+                          [_c("el-tag", [_vm._v(_vm._s(row.idc))])],
+                          1
+                        )
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "responsive-item" }, [
@@ -92138,7 +92198,12 @@ var render = function() {
                           [
                             _c(
                               "el-tag",
-                              { attrs: { type: _vm.tagType(row.estado) } },
+                              {
+                                attrs: {
+                                  type: _vm.tagType(row.estado),
+                                  effect: "dark"
+                                }
+                              },
                               [_vm._v(_vm._s(row.estado))]
                             )
                           ],
@@ -92169,7 +92234,17 @@ var render = function() {
                           [
                             _c(
                               "el-button",
-                              { attrs: { type: "primary", size: "mini" } },
+                              {
+                                attrs: { type: "primary", size: "mini" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.initPrintRequestReport(
+                                      row.index,
+                                      row
+                                    )
+                                  }
+                                }
+                              },
                               [_vm._v("Imprimir Comprobante")]
                             )
                           ],
@@ -92187,8 +92262,11 @@ var render = function() {
             attrs: {
               background: "",
               layout: "prev, pager, next",
-              total: _vm.requests.length
-            }
+              "page-size": _vm.pagination.per_page,
+              "current-page": _vm.pagination.current_page,
+              total: _vm.pagination.total
+            },
+            on: { "current-change": _vm.getRequests }
           })
         ],
         1

@@ -53,7 +53,7 @@ class DocumentController extends Controller
 
         $data = Document::GetRequests($id, $gestion);
         $page = ($request->get('page') ? $request->get('page') : 1);
-        $perPage = 10;
+        $perPage = 5;
         $paginate = new LengthAwarePaginator(
             $data->forPage($page, $perPage),
             $data->count(),
