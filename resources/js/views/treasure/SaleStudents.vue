@@ -1,67 +1,83 @@
 <template>
   <div>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>venta de valores en linea</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
-      </div>
-      <el-row :gutter="20">
-          <el-alert title="Que debo hacer?" type="error"
-            description="Seleccione los valores que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad de valores que solicita ya que estos estaran a su nombre y no de terceros.">
-          </el-alert>
-          <br>
-          <el-alert title="Cuales son los metodos de pago?" type="success"
-            description="Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado.">
-          </el-alert>
-          <br>
-          <el-alert title="Que precauciones tomar?" type="warning"
-            description="Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona.">
-          </el-alert>
-          <br>
-          <el-alert title="cuanto tiempo tengo para pagar?" type="error"
-            description="el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe.">
-          </el-alert>
-          <br>
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <p>valores en linea que puede adquirir</p>
-            <el-table v-loading="loading" :data="offered" style="width: 100%">
-              <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
-              <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
-              <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
-              <el-table-column align="right" width="100" fixed="right">
+    <el-card>
+      <div id="app" class="container">
+        <div class="header">
+          <h1>Venta de Valores en Línea</h1>
+          <el-button type="primary">Ayuda</el-button>
+        </div>
+
+        <div class="messages">
+          <el-alert title="¿Qué debo hacer? Seleccione los valores que desea adquirir usando la opción agregar..."
+            type="error" show-icon></el-alert>
+          <el-alert title="¿Cuáles son los métodos de pago? Puede pagar mediante..." type="success"
+            show-icon></el-alert>
+          <el-alert title="¿Qué precauciones tomar? Guarde siempre su código QR..." type="warning" show-icon></el-alert>
+          <el-alert title="¿Cuánto tiempo tengo para pagar? El código tiene una validez de 7 días..." type="error"
+            show-icon></el-alert>
+        </div>
+
+        <div class="section">
+          <h2>Valores en Línea que Puede Adquirir</h2>
+          <div class="desktop-view">
+            <el-table :data="offered" border style="width: 100%">
+              <el-table-column prop="descripcion" label="Descripción" width="50%"></el-table-column>
+              <el-table-column prop="cantidad" label="Cantidad" width="15%"></el-table-column>
+              <el-table-column prop="precio" label="Precio" width="15%"></el-table-column>
+              <el-table-column label="Acción" width="20%">
                 <template slot-scope="scope">
-                  <el-button @click="initAddValues(scope.$index, scope.row)" type="primary" size="mini" plain>Agregar
-                  </el-button>
+                  <el-button type="success" size="small" @click="agregarValor(scope.row)">Agregar</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <p>valores en linea solicitados para su compra</p>
-            <el-table :data="acquired" style="width: 100%" show-summary sum-text="importe total a cancelar">
-              <el-table-column prop="des_val" label="descripcion" width="300"></el-table-column>
-              <el-table-column prop="cantidad" label="cantidad" width="90" align="right"></el-table-column>
-              <el-table-column prop="pre_uni" label="precio" width="90" align="right"></el-table-column>
-              <el-table-column align="right" width="100" fixed="right">
-                <template slot-scope="scope" v-if="scope.row.compuesto === 'U'">
-                  <el-button @click="initRemoveValues(scope.$index, scope.row)" type="primary" size="mini" plain>Quitar
-                  </el-button>
+
+          <div class="mobile-view">
+            <div v-for="valor in offered" :key="valor.id" class="mobile-card">
+              <div class="mobile-card-header">{{ valor.descripcion }}</div>
+              <div class="mobile-card-content">
+                <div><strong>Cantidad:</strong> {{ valor.cantidad }}</div>
+                <div><strong>Precio:</strong> {{ valor.precio }}</div>
+              </div>
+              <div class="mobile-card-actions">
+                <el-button type="success" size="small" @click="agregarValor(valor)">Agregar</el-button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Valores en Línea Solicitados para su Compra</h2>
+          <div class="desktop-view">
+            <el-table :data="offered" border style="width: 100%">
+              <el-table-column prop="descripcion" label="Descripción" width="50%"></el-table-column>
+              <el-table-column prop="cantidad" label="Cantidad" width="15%"></el-table-column>
+              <el-table-column prop="precio" label="Precio" width="15%"></el-table-column>
+              <el-table-column label="Acción" width="20%">
+                <template slot-scope="scope">
+                  <el-button type="danger" size="small" @click="quitarValor(scope.row)">Quitar</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
-          <br>
-          <div style="text-align: right; float: right">
-            <el-tag type="success" effect="dark">EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</el-tag>
-            <el-button type="primary" size="small" @click="setValuesAcquired()">guardar la solicitud de valores en linea
-            </el-button>
+
+          <div class="mobile-view">
+            <div v-for="valor in offered" :key="valor.id" class="mobile-card">
+              <div class="mobile-card-header">{{ valor.descripcion }}</div>
+              <div class="mobile-card-content">
+                <div><strong>Cantidad:</strong> {{ valor.cantidad }}</div>
+                <div><strong>Precio:</strong> {{ valor.precio }}</div>
+              </div>
+              <div class="mobile-card-actions">
+                <el-button type="danger" size="small" @click="quitarValor(valor)">Quitar</el-button>
+              </div>
+            </div>
           </div>
-        </el-col>
-      </el-row>
-      <el-row> </el-row>
+        </div>
+
+        <el-button type="primary" size="large" @click="guardarSolicitud">Guardar la Solicitud de Valores en
+          Línea</el-button>
+      </div>
     </el-card>
   </div>
 </template>
@@ -79,7 +95,7 @@ export default {
       acquired: [],
       total: 1.00,
       dataRequest: {},
-      message:'',
+      message: '',
     };
   },
   mounted() {
@@ -141,23 +157,23 @@ export default {
     initAddValues(index, row) {
       this.total += parseFloat(row.pre_uni);
       console.log(row);
-      if(row.cod_val == '9365'){
+      if (row.cod_val == '9365') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
       }
-      if(row.cod_val == '9366'){
+      if (row.cod_val == '9366') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
-      if(row.cod_val == '9367'){
+      if (row.cod_val == '9367') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
       }
-      if(row.cod_val == '9368'){
+      if (row.cod_val == '9368') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
 
-      if(this.message == ''){
+      if (this.message == '') {
         this.acquired.push(row);
       }
-      else{
+      else {
         this.$confirm(this.message, 'Alerta', {
           confirmButtonText: 'Agregar',
           cancelButtonText: 'Cancelar',
@@ -181,34 +197,61 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-row {
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.el-col {
-  border-radius: 4px;
+.messages {
+  margin-bottom: 20px;
 }
 
-.bg-purple-dark {
-  background: #99a9bf;
+.messages .el-alert {
+  margin-bottom: 10px;
 }
 
-.bg-purple {
-  background: #d3dce6;
+.section {
+  margin-bottom: 20px;
 }
 
-.bg-purple-light {
-  background: #e5e9f2;
+.mobile-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.grid-content {
-  border-radius: 4px;
-  padding: 15px;
-  min-height: 36px;
+.mobile-card-header {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
+.mobile-card-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mobile-card-actions {
+  text-align: right;
+}
+
+/* Responsive Styles */
+@media (min-width: 769px) {
+  .mobile-view {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-view {
+    display: none;
+  }
 }
 </style>

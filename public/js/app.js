@@ -7883,6 +7883,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
@@ -10466,7 +10482,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-1eb5c790] {\r\n  margin-bottom: 20px;\n}\n.el-col[data-v-1eb5c790] {\r\n  border-radius: 4px;\n}\n.bg-purple-dark[data-v-1eb5c790] {\r\n  background: #99a9bf;\n}\n.bg-purple[data-v-1eb5c790] {\r\n  background: #d3dce6;\n}\n.bg-purple-light[data-v-1eb5c790] {\r\n  background: #e5e9f2;\n}\n.grid-content[data-v-1eb5c790] {\r\n  border-radius: 4px;\r\n  padding: 15px;\r\n  min-height: 36px;\n}\n.row-bg[data-v-1eb5c790] {\r\n  padding: 10px 0;\r\n  background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n.container[data-v-1eb5c790] {\r\n  padding: 20px;\n}\n.header[data-v-1eb5c790] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 20px;\n}\n.messages[data-v-1eb5c790] {\r\n  margin-bottom: 20px;\n}\n.messages .el-alert[data-v-1eb5c790] {\r\n  margin-bottom: 10px;\n}\n.section[data-v-1eb5c790] {\r\n  margin-bottom: 20px;\n}\n.mobile-card[data-v-1eb5c790] {\r\n  border: 1px solid #ddd;\r\n  border-radius: 8px;\r\n  padding: 10px;\r\n  margin-bottom: 10px;\n}\n.mobile-card-header[data-v-1eb5c790] {\r\n  font-weight: bold;\r\n  margin-bottom: 10px;\n}\n.mobile-card-content[data-v-1eb5c790] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  margin-bottom: 10px;\n}\n.mobile-card-actions[data-v-1eb5c790] {\r\n  text-align: right;\n}\r\n\r\n/* Responsive Styles */\n@media (min-width: 769px) {\n.mobile-view[data-v-1eb5c790] {\r\n    display: none;\n}\n}\n@media (max-width: 768px) {\n.desktop-view[data-v-1eb5c790] {\r\n    display: none;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -93160,311 +93176,309 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "el-card",
-        { staticClass: "box-card" },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "clearfix",
-              attrs: { slot: "header" },
-              slot: "header"
-            },
-            [
-              _c("span", [_vm._v("venta de valores en linea")]),
+      _c("el-card", [
+        _c(
+          "div",
+          { staticClass: "container", attrs: { id: "app" } },
+          [
+            _c(
+              "div",
+              { staticClass: "header" },
+              [
+                _c("h1", [_vm._v("Venta de Valores en Línea")]),
+                _vm._v(" "),
+                _c("el-button", { attrs: { type: "primary" } }, [
+                  _vm._v("Ayuda")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "messages" },
+              [
+                _c("el-alert", {
+                  attrs: {
+                    title:
+                      "¿Qué debo hacer? Seleccione los valores que desea adquirir usando la opción agregar...",
+                    type: "error",
+                    "show-icon": ""
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-alert", {
+                  attrs: {
+                    title:
+                      "¿Cuáles son los métodos de pago? Puede pagar mediante...",
+                    type: "success",
+                    "show-icon": ""
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-alert", {
+                  attrs: {
+                    title:
+                      "¿Qué precauciones tomar? Guarde siempre su código QR...",
+                    type: "warning",
+                    "show-icon": ""
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-alert", {
+                  attrs: {
+                    title:
+                      "¿Cuánto tiempo tengo para pagar? El código tiene una validez de 7 días...",
+                    type: "error",
+                    "show-icon": ""
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "section" }, [
+              _c("h2", [_vm._v("Valores en Línea que Puede Adquirir")]),
               _vm._v(" "),
               _c(
-                "el-button",
-                {
-                  staticStyle: { float: "right", padding: "3px 0" },
-                  attrs: { type: "text" },
-                  on: { click: _vm.test }
-                },
-                [_vm._v("ayuda")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
-            [
-              _c("el-alert", {
-                attrs: {
-                  title: "Que debo hacer?",
-                  type: "error",
-                  description:
-                    "Seleccione los valores que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad de valores que solicita ya que estos estaran a su nombre y no de terceros."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                attrs: {
-                  title: "Cuales son los metodos de pago?",
-                  type: "success",
-                  description:
-                    "Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                attrs: {
-                  title: "Que precauciones tomar?",
-                  type: "warning",
-                  description:
-                    "Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                attrs: {
-                  title: "cuanto tiempo tengo para pagar?",
-                  type: "error",
-                  description:
-                    "el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [_vm._v("valores en linea que puede adquirir")]),
-                    _vm._v(" "),
-                    _c(
-                      "el-table",
-                      {
-                        directives: [
-                          {
-                            name: "loading",
-                            rawName: "v-loading",
-                            value: _vm.loading,
-                            expression: "loading"
-                          }
-                        ],
-                        staticStyle: { width: "100%" },
-                        attrs: { data: _vm.offered }
-                      },
-                      [
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "des_val",
-                            label: "descripcion",
-                            width: "300"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "cantidad",
-                            label: "cantidad",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "pre_uni",
-                            label: "precio",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            align: "right",
-                            width: "100",
-                            fixed: "right"
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "default",
-                              fn: function(scope) {
-                                return [
-                                  _c(
-                                    "el-button",
-                                    {
-                                      attrs: {
-                                        type: "primary",
-                                        size: "mini",
-                                        plain: ""
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.initAddValues(
-                                            scope.$index,
-                                            scope.row
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Agregar\n                ")]
-                                  )
-                                ]
-                              }
-                            }
-                          ])
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 12 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [
-                      _vm._v("valores en linea solicitados para su compra")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-table",
-                      {
-                        staticStyle: { width: "100%" },
+                "div",
+                { staticClass: "desktop-view" },
+                [
+                  _c(
+                    "el-table",
+                    {
+                      staticStyle: { width: "100%" },
+                      attrs: { data: _vm.offered, border: "" }
+                    },
+                    [
+                      _c("el-table-column", {
                         attrs: {
-                          data: _vm.acquired,
-                          "show-summary": "",
-                          "sum-text": "importe total a cancelar"
+                          prop: "descripcion",
+                          label: "Descripción",
+                          width: "50%"
                         }
-                      },
-                      [
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "des_val",
-                            label: "descripcion",
-                            width: "300"
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "cantidad",
+                          label: "Cantidad",
+                          width: "15%"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "precio", label: "Precio", width: "15%" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "Acción", width: "20%" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "success", size: "small" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.agregarValor(scope.row)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Agregar")]
+                                )
+                              ]
+                            }
                           }
-                        }),
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mobile-view" },
+                _vm._l(_vm.offered, function(valor) {
+                  return _c(
+                    "div",
+                    { key: valor.id, staticClass: "mobile-card" },
+                    [
+                      _c("div", { staticClass: "mobile-card-header" }, [
+                        _vm._v(_vm._s(valor.descripcion))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mobile-card-content" }, [
+                        _c("div", [
+                          _c("strong", [_vm._v("Cantidad:")]),
+                          _vm._v(" " + _vm._s(valor.cantidad))
+                        ]),
                         _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "cantidad",
-                            label: "cantidad",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "pre_uni",
-                            label: "precio",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            align: "right",
-                            width: "100",
-                            fixed: "right"
-                          },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "default",
-                                fn: function(scope) {
-                                  return scope.row.compuesto === "U"
-                                    ? [
-                                        _c(
-                                          "el-button",
-                                          {
-                                            attrs: {
-                                              type: "primary",
-                                              size: "mini",
-                                              plain: ""
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.initRemoveValues(
-                                                  scope.$index,
-                                                  scope.row
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("Quitar\n                ")]
-                                        )
-                                      ]
-                                    : undefined
+                        _c("div", [
+                          _c("strong", [_vm._v("Precio:")]),
+                          _vm._v(" " + _vm._s(valor.precio))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mobile-card-actions" },
+                        [
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "success", size: "small" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.agregarValor(valor)
                                 }
                               }
-                            ],
-                            null,
-                            true
+                            },
+                            [_vm._v("Agregar")]
                           )
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticStyle: { "text-align": "right", float: "right" } },
-                  [
-                    _c(
-                      "el-tag",
-                      { attrs: { type: "success", effect: "dark" } },
-                      [
-                        _vm._v(
-                          "EL IMPORTE TOTAL QUE DEBE CANCELAR ES: " +
-                            _vm._s(_vm.total)
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setValuesAcquired()
-                          }
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "section" }, [
+              _c("h2", [_vm._v("Valores en Línea Solicitados para su Compra")]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "desktop-view" },
+                [
+                  _c(
+                    "el-table",
+                    {
+                      staticStyle: { width: "100%" },
+                      attrs: { data: _vm.offered, border: "" }
+                    },
+                    [
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "descripcion",
+                          label: "Descripción",
+                          width: "50%"
                         }
-                      },
-                      [
-                        _vm._v(
-                          "guardar la solicitud de valores en linea\n          "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-row")
-        ],
-        1
-      )
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: {
+                          prop: "cantidad",
+                          label: "Cantidad",
+                          width: "15%"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { prop: "precio", label: "Precio", width: "15%" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-table-column", {
+                        attrs: { label: "Acción", width: "20%" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "danger", size: "small" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.quitarValor(scope.row)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Quitar")]
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mobile-view" },
+                _vm._l(_vm.offered, function(valor) {
+                  return _c(
+                    "div",
+                    { key: valor.id, staticClass: "mobile-card" },
+                    [
+                      _c("div", { staticClass: "mobile-card-header" }, [
+                        _vm._v(_vm._s(valor.descripcion))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mobile-card-content" }, [
+                        _c("div", [
+                          _c("strong", [_vm._v("Cantidad:")]),
+                          _vm._v(" " + _vm._s(valor.cantidad))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c("strong", [_vm._v("Precio:")]),
+                          _vm._v(" " + _vm._s(valor.precio))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mobile-card-actions" },
+                        [
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "danger", size: "small" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.quitarValor(valor)
+                                }
+                              }
+                            },
+                            [_vm._v("Quitar")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                attrs: { type: "primary", size: "large" },
+                on: { click: _vm.guardarSolicitud }
+              },
+              [_vm._v("Guardar la Solicitud de Valores en\n        Línea")]
+            )
+          ],
+          1
+        )
+      ])
     ],
     1
   )
