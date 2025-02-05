@@ -27,7 +27,7 @@ class TreasureController extends Controller
                 $typed = 'A';
         }
         $valuesOffered  = Treasure::getValuesOffered($year, $typed);
-        $typed = 'T';
+        $typed          = 'T';
         $valuesAcquired = Treasure::getValuesOffered($year, $typed);
         \Log::info($valuesOffered);
         \Log::info($valuesAcquired);
@@ -43,6 +43,8 @@ class TreasureController extends Controller
     public function setValuesAcquired(Request $request)
     {
         $id_tran  = 0;
+        $typea    = '';
+        $typeb    = '';
         $client   = $request->get('client');
         $acquired = $request->get('acquired');
         $total    = $request->get('total');
@@ -66,6 +68,19 @@ class TreasureController extends Controller
         \Log::info($client);
         $tip_tra = '10';
 
+        switch ($marker) {
+            case "Course":
+                $typea = 'B';
+                $typeb = 'BU';
+                break;
+            case "Sale":
+                $typea = 'V';
+                $typeb = 'VU';
+                break;
+            default:
+                $typea = 'A';
+                $typeb = 'AU';
+        }
         $array_products = [];
         foreach ($acquired as $item) {
             # code...
@@ -75,27 +90,27 @@ class TreasureController extends Controller
             $pre_uni = $item['pre_uni'];
             $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
             array_push($array_products, ['actividadEconomica' => "1",
-                'codigo'                                               => $cod_val,
-                'descripcion'                                          => $des_val,
-                'precioUnitario'                                       => (float) $pre_uni,
-                'unidadMedida'                                         => 1,
-                'cantidad'                                             => $can_val]);
+                'codigo'                                          => $cod_val,
+                'descripcion'                                     => $des_val,
+                'precioUnitario'                                  => (float) $pre_uni,
+                'unidadMedida'                                    => 1,
+                'cantidad'                                        => $can_val]);
         }
 
-        $array_b = ['descripcion' => 'VU - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
-            'codigoOrden'                  => 'V' . $id_sol,
-            'datosPago'                    => ['nombresCliente' => $nombres,
-                'apellidosCliente'                                       => $apellidos,
-                'numeroDocumentoCliente'                                 => $no_dip,
-                'fechaNacimientoCliente'                                 => '2000-01-01',
+        $array_b = ['descripcion' => $typeb . ' - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
+            'codigoOrden'             => $typea . $id_sol,
+            'datosPago'               => ['nombresCliente' => $nombres,
+                'apellidosCliente'                             => $apellidos,
+                'numeroDocumentoCliente'                       => $no_dip,
+                'fechaNacimientoCliente'                       => '2000-01-01',
                 //'cuentaBancaria' => '1000005678', /* pruebas */
                 //'cuentaBancaria' => '10000006023167',/* preproduccion */
-                'cuentaBancaria'                                         => '10000006714592', /* produccion */
-                'montoTotal'                                             => $total,
-                'moneda'                                                 => 'BOB',
-                'tipoCambioMoneda'                                       => 1,
+                'cuentaBancaria'                               => '10000006714592', /* produccion */
+                'montoTotal'                                   => $total,
+                'moneda'                                       => 'BOB',
+                'tipoCambioMoneda'                             => 1,
             ],
-            "productos"                    => $array_products,
+            "productos"               => $array_products,
         ];
         \Log::info($array_b);
 
