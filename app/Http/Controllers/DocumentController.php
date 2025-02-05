@@ -50,8 +50,9 @@ class DocumentController extends Controller
         $persona = $request->get('client');
         $id = strtoupper($persona['nodip']);
         $gestion = $request->get('year');
+        $typea = $request->get('typea');
 
-        $data = Document::GetRequests($id, $gestion);
+        $data = Document::GetRequests($id, $gestion, $typea);
         $page = ($request->get('page') ? $request->get('page') : 1);
         $perPage = 7;
         $paginate = new LengthAwarePaginator(

@@ -3,7 +3,7 @@
     <el-card style="margin-bottom: 50px;">
       <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
         <h3 class="card-title" style="margin: 10; font-weight: bold;">
-          Venta de valores en linea
+          Becas
         </h3>
         <el-button type="primary" size="small" @click="test">
           ayuda
@@ -30,7 +30,7 @@
 
       <!-- Tabla para dispositivos grandes -->
       <h2 v-if="!isSmallDevice">
-        <p>valores universitarios disponibles</p>
+        <p>becas o cursos disponibles</p>
       </h2>
       <el-table v-if="!isSmallDevice" :data="offered" border style="width: 100%; margin-top: 15px">
         <el-table-column prop="des_val" label="descripcion" width="950"></el-table-column>
@@ -44,7 +44,7 @@
         </el-table-column>
       </el-table>
       <h2 v-if="!isSmallDevice">
-        <p>valores universitarios seleccionados</p>
+        <p>becas o cursos seleccionados</p>
       </h2>
       <el-table v-if="!isSmallDevice" :data="acquired" border style="width: 100%; margin-top: 15px">
         <el-table-column prop="des_val" label="descripcion" width="950"></el-table-column>
@@ -61,14 +61,14 @@
         <h4></h4>
         <el-tag type="primary">EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</el-tag>
         <h4></h4>
-        <el-button type="primary" size="medium" @click="setValuesAcquired()">guardar la solicitud de valores
+        <el-button type="primary" size="medium" @click="setValuesAcquired()">guardar la solicitud
         </el-button>
         <h4></h4>
       </div>
 
       <!-- Diseño responsivo para dispositivos pequeños -->
       <div v-else class="responsive-container">
-        <h4>valores universitarios disponibles</h4>
+        <h4>becas o cursos disponibles</h4>
         <div v-for="(row, index) in offered" :key="`uno-${index}`" class="responsive-row">
           <div class="responsive-item">
             <div class="item-title">Descripcion</div>
@@ -89,7 +89,7 @@
             </div>
           </div>
         </div>
-        <h4>valores universitarios seleccionados</h4>
+        <h4>becas o cursos seleccionados</h4>
         <div v-for="(row, index) in acquired" :key="`dos-${index}`" class="responsive-row">
           <div class="responsive-item">
             <div class="item-title">Descripcion</div>
@@ -111,7 +111,7 @@
           </div>
         </div>
         <h4>EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</h4>
-        <el-button type="primary" size="medium" @click="setValuesAcquired()">guardar la solicitud de valores en linea
+        <el-button type="primary" size="medium" @click="setValuesAcquired()">guardar la solicitud
         </el-button>
       </div>
     </el-card>
@@ -155,7 +155,7 @@ export default {
       try {
         let response = await axios.post("/api/getValuesOffered", {
           year: app.client.gestion,
-          typea: 'Sale'
+          typea: 'Course'
         });
         app.loading = false;
         app.offered = response.data.valuesOffered;
@@ -175,7 +175,7 @@ export default {
       console.log(app.acquired);
       try {
         if (app.acquired.length <= 1) {
-          this.$alert('DEBE SELECCIONAR POR LO MENOS UN VALOR PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
+          this.$alert('DEBE SELECCIONAR POR LO MENOS UNA BECA O CURSO PARA CREAR LA SOLICITUD', 'HA OCURRIDO UN ERROR', {
             confirmButtonText: 'BUENO',
           });
         } else {
@@ -183,7 +183,7 @@ export default {
             client: app.client,
             total: app.total,
             acquired: app.acquired,
-            marker: "Sale",
+            marker: "Course",
           });
           console.log(response);
           this.dataRequest = response.data.datos;

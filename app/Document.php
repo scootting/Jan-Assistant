@@ -38,9 +38,9 @@ class Document extends Model
 
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
-    public static function GetRequests($id, $year)
+    public static function GetRequests($id, $year, $typea)
     {
-        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' order by fec_cre desc";
+        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' and s.tipo = '" . $typea . "' order by fec_cre desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

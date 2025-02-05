@@ -53,6 +53,12 @@
               compra de valores en linea
             </router-link>
           </el-menu-item>
+          <el-menu-item index="3">
+            <i class="el-icon-shopping-bag-2"></i>
+            <router-link :to="{ name: 'courses' }" tag="span">
+              becas
+            </router-link>
+          </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" tag="span">

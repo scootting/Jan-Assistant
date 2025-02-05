@@ -3,11 +3,11 @@
         <el-card style="margin-bottom: 50px;">
             <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="card-title" style="margin: 10; font-weight: bold;">
-                    Compra de Valores en Línea
+                    Becas Universitarias
                 </h3>
                 <el-button type="primary" size="medium" icon="el-icon-plus" @click="initAddRequestInLine"
                     style="background-color: #ff5722; border-color: #ff5722; color: white; font-weight: bold;">
-                    Realice su Solicitud de Compra de Valores
+                    Realice su Solicitud
                 </el-button>
             </div>
             <!-- Mensajes -->
@@ -146,7 +146,7 @@ export default {
                 let response = await axios.post("/api/request", {
                     client: app.user,
                     year: app.user.gestion,
-                    typea: 'Sale',
+                    typea: 'Course',  
                     page: page,
                 });
                 app.loading = false;
@@ -163,7 +163,7 @@ export default {
         //  *  Route. Iniciar una nueva solicitud para la venta en linea de valores
         initAddRequestInLine() {
             this.$router.push({
-                name: "salestudents",
+                name: "coursestudents",
             });
         },
         initPrintRequestReport(idx, row) {

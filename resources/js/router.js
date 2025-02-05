@@ -25,11 +25,14 @@ import FinancialStatements from './views/application/FinancialStatements'
 
 //Tesoro: Modulo para seleccionar los valores en linea
 import SaleStudents from './views/treasure/SaleStudents'
+import CourseStudents from './views/treasure/CourseStudents'
 //Documento: Modulo para imprimir los comprobantes de pago por solicitud
 import SaleValuesDetails from './views/treasure/SaleValuesDetails'
 import InformationSaleDetails from './views/treasure/InformationSaleDetails'
 //Documento: Modulo para gestionar las solicitudes
 import Requests from './views/document/Requests'
+//Documento: Modulo para gestionar las solicitudes
+import Courses from './views/document/Courses'
 
 //Documento: Modulo para crear una nueva solicitud 
 //  |--------------------------------------------------------------------------
@@ -126,7 +129,9 @@ const router = new VueRouter({
                 //  | Rutas API para el Sistema de venta de valores en linea
                 //  |--------------------------------------------------------------------------    
                 { path: '/requests', name: 'requests', component: Requests },
+                { path: '/courses', name: 'courses', component: Courses },
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
+                { path: '/coursestudents', name: 'coursestudents', component: CourseStudents },
                 { path: '/salevaluesdetails/:id', name: 'salevaluesdetails', component: SaleValuesDetails },
                 //{ path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
 

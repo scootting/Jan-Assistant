@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Document;
@@ -14,11 +13,25 @@ class TreasureController extends Controller
     //  * {gestion: gestion de los valores disponibles}
     public function getValuesOffered(Request $request)
     {
-        $year = $request->get('year');
-        $typed = 'U';
-        $valuesOffered = Treasure::getValuesOffered($year, $typed);
+        $year  = $request->get('year');
+        $typea = $request->get('typea');
+
+        switch ($typea) {
+            case "Course":
+                $typed = 'B';
+                break;
+            case "Sale":
+                $typed = 'U';
+                break;
+            default:
+                $typed = 'A';
+        }
+        $valuesOffered  = Treasure::getValuesOffered($year, $typed);
         $typed = 'T';
         $valuesAcquired = Treasure::getValuesOffered($year, $typed);
+        \Log::info($valuesOffered);
+        \Log::info($valuesAcquired);
+
         return json_encode(['valuesOffered' => $valuesOffered, 'valuesAcquired' => $valuesAcquired]);
 
         return json_encode($data);
@@ -29,11 +42,11 @@ class TreasureController extends Controller
     //  * {valores: valores seleccionados}
     public function setValuesAcquired(Request $request)
     {
-        $id_tran = 0;
-        $client = $request->get('client');
+        $id_tran  = 0;
+        $client   = $request->get('client');
         $acquired = $request->get('acquired');
-        $total = $request->get('total');
-        $marker = $request->get('marker');
+        $total    = $request->get('total');
+        $marker   = $request->get('marker');
 
         $descripcion = $client['descripcion'];
         if ($client['paterno'] == "") {
@@ -43,47 +56,47 @@ class TreasureController extends Controller
         }
 
         $nombres = $client['nombres'];
-        $no_dip = $client['nodip'];
+        $no_dip  = $client['nodip'];
         $gestion = $client['gestion'];
 
-        $id = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total);
+        $id     = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total);
         $id_sol = $id[0]->{'ff_nueva_solicitud'};
 
         \Log::info("este es el id de la nueva solicitud" . $id);
         \Log::info($client);
         $tip_tra = '10';
 
-        $array_products = array();
+        $array_products = [];
         foreach ($acquired as $item) {
             # code...
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
             $pre_uni = $item['pre_uni'];
-            $data = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
-            array_push($array_products, array('actividadEconomica' => "1",
-                'codigo' => $cod_val,
-                'descripcion' => $des_val,
-                'precioUnitario' => (float) $pre_uni,
-                'unidadMedida' => 1,
-                'cantidad' => $can_val));
+            $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
+            array_push($array_products, ['actividadEconomica' => "1",
+                'codigo'                                               => $cod_val,
+                'descripcion'                                          => $des_val,
+                'precioUnitario'                                       => (float) $pre_uni,
+                'unidadMedida'                                         => 1,
+                'cantidad'                                             => $can_val]);
         }
 
-        $array_b = array('descripcion' => 'VU - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
-            'codigoOrden' => 'V' . $id_sol,
-            'datosPago' => array('nombresCliente' => $nombres,
-                'apellidosCliente' => $apellidos,
-                'numeroDocumentoCliente' => $no_dip,
-                'fechaNacimientoCliente' => '2000-01-01',
+        $array_b = ['descripcion' => 'VU - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
+            'codigoOrden'                  => 'V' . $id_sol,
+            'datosPago'                    => ['nombresCliente' => $nombres,
+                'apellidosCliente'                                       => $apellidos,
+                'numeroDocumentoCliente'                                 => $no_dip,
+                'fechaNacimientoCliente'                                 => '2000-01-01',
                 //'cuentaBancaria' => '1000005678', /* pruebas */
                 //'cuentaBancaria' => '10000006023167',/* preproduccion */
-                'cuentaBancaria' => '10000006714592', /* produccion */
-                'montoTotal' => $total,
-                'moneda' => 'BOB',
-                'tipoCambioMoneda' => 1,
-            ),
-            "productos" => $array_products,
-        );
+                'cuentaBancaria'                                         => '10000006714592', /* produccion */
+                'montoTotal'                                             => $total,
+                'moneda'                                                 => 'BOB',
+                'tipoCambioMoneda'                                       => 1,
+            ],
+            "productos"                    => $array_products,
+        ];
         \Log::info($array_b);
 
         //$apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
@@ -103,17 +116,17 @@ class TreasureController extends Controller
             //produccion valores
             //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM
             'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
-            'Content-Type' => 'application/json',
+            'Content-Type'        => 'application/json',
             //pruebas
             //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
             //produccion
-            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
+            'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
 
         ];
 
         $response = Http::withHeaders($headers)->post($apiURL, $array_b);
 
-        $statusCode = $response->status();
+        $statusCode   = $response->status();
         $responseBody = json_decode($response->getBody(), true);
         \Log::info($response);
         \Log::info($statusCode);
@@ -133,7 +146,7 @@ class TreasureController extends Controller
     public function getDataTransactionById(Request $request)
     {
         $id_transaction = $request->get('id');
-        $data = treasure::GetDataTransactionById($id_transaction);
+        $data           = treasure::GetDataTransactionById($id_transaction);
         return json_encode($data);
     }
 
@@ -141,7 +154,7 @@ class TreasureController extends Controller
     //  * {id: id de la transaccion }
     public function getDataRequestById(Request $request)
     {
-        $id = $request->get('id');
+        $id          = $request->get('id');
         $dataRequest = Treasure::getDataRequestById($id);
         \Log::info($dataRequest[0]->estado);
         if ($dataRequest[0]->estado != 'PROCESADO') {
@@ -155,7 +168,7 @@ class TreasureController extends Controller
 
     public function printComprobate(Request $request)
     {
-        $id = $request->get('id');
+        $id      = $request->get('id');
         $cod_val = $request->get('cod');
         if ($cod_val == '9351') {
             $nreport = 'Treasure_Values_Physical';
@@ -163,9 +176,9 @@ class TreasureController extends Controller
             $nreport = 'Treasure_Values';
         }
 
-        $controls = array(
+        $controls = [
             'id_tran' => $id,
-        );
+        ];
         $report = JSRClient::GetReportWithParameters($nreport, $controls);
         return $report;
     }

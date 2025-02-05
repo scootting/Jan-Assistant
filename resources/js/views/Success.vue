@@ -74,7 +74,7 @@ export default {
       window.location.href = 'https://estudiantes.uatf.edu.bo/home';
     },
     initSecondPage() {
-      window.location.href = 'https://asistente.uatf.edu.bo/requests';
+      window.location.href = 'https://daf.uatf.edu.bo/api/';
     },
     initThirdPage() {
       window.location.href = 'https://postulaciones.uatf.edu.bo';
