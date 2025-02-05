@@ -35,33 +35,33 @@
           <!--
           <el-menu class="menu" router>
           -->
-            <el-menu-item index="1">
+          <el-menu-item index="1">
             <i class="el-icon-document"></i>
-            <router-link :to="{ name: 'welcome' }" tag="span">
+            <router-link :to="{ name: 'welcome' }" @click="toggleMenu" tag="span">
               inicio
             </router-link>
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'information' }" tag="span">
+            <router-link :to="{ name: 'information' }" @click="toggleMenu" tag="span">
               informacion personal
             </router-link>
           </el-menu-item>
           <el-menu-item index="3">
             <i class="el-icon-shopping-bag-1"></i>
-            <router-link :to="{ name: 'requests' }" tag="span">
+            <router-link :to="{ name: 'requests' }" @click="toggleMenu" tag="span">
               compra de valores en linea
             </router-link>
           </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-shopping-bag-2"></i>
-            <router-link :to="{ name: 'courses' }" tag="span">
+          <el-menu-item index="4">
+            <i class="el-icon-postcard"></i>
+            <router-link :to="{ name: 'courses' }" @click="toggleMenu" tag="span">
               becas
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="5">
             <i class="el-icon-menu"></i>
-            <router-link :to="{ name: 'requestsolvencies' }" tag="span">
+            <router-link :to="{ name: 'requestsolvencies' }" @click="toggleMenu" tag="span">
               Solvencia Universitaria
             </router-link>
           </el-menu-item>
@@ -88,6 +88,7 @@ export default {
       isMenuOpen: false,
       client: this.$store.state.user,
       yearSelected: 1999,
+      routesToCloseMenu: ['welcome', 'information', 'requests', 'courses', 'requestsolvencies'], // Rutas que deben cerrar el menú
     };
   },
   mounted() {
@@ -96,6 +97,13 @@ export default {
     console.log(app.client);
   },
 
+  watch: {
+    $route(to) {
+      if (this.routesToCloseMenu.includes(to.name)) {
+        this.isMenuOpen = !this.isMenuOpen;
+      }
+    },
+  },
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;

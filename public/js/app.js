@@ -4395,13 +4395,22 @@ __webpack_require__.r(__webpack_exports__);
       error: "",
       isMenuOpen: false,
       client: this.$store.state.user,
-      yearSelected: 1999
+      yearSelected: 1999,
+      routesToCloseMenu: ['welcome', 'information', 'requests', 'courses', 'requestsolvencies'] // Rutas que deben cerrar el menú
+
     };
   },
   mounted: function mounted() {
     var app = this;
     app.yearSelected = app.client.gestion;
     console.log(app.client);
+  },
+  watch: {
+    $route: function $route(to) {
+      if (this.routesToCloseMenu.includes(to.name)) {
+        this.isMenuOpen = !this.isMenuOpen;
+      }
+    }
   },
   methods: {
     toggleMenu: function toggleMenu() {
@@ -88635,7 +88644,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "router-link",
-                    { attrs: { to: { name: "welcome" }, tag: "span" } },
+                    {
+                      attrs: { to: { name: "welcome" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
+                    },
                     [_vm._v("\n            inicio\n          ")]
                   )
                 ],
@@ -88650,7 +88662,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "router-link",
-                    { attrs: { to: { name: "information" }, tag: "span" } },
+                    {
+                      attrs: { to: { name: "information" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
+                    },
                     [_vm._v("\n            informacion personal\n          ")]
                   )
                 ],
@@ -88665,7 +88680,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "router-link",
-                    { attrs: { to: { name: "requests" }, tag: "span" } },
+                    {
+                      attrs: { to: { name: "requests" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
+                    },
                     [
                       _vm._v(
                         "\n            compra de valores en linea\n          "
@@ -88678,13 +88696,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-menu-item",
-                { attrs: { index: "3" } },
+                { attrs: { index: "4" } },
                 [
-                  _c("i", { staticClass: "el-icon-shopping-bag-2" }),
+                  _c("i", { staticClass: "el-icon-postcard" }),
                   _vm._v(" "),
                   _c(
                     "router-link",
-                    { attrs: { to: { name: "courses" }, tag: "span" } },
+                    {
+                      attrs: { to: { name: "courses" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
+                    },
                     [_vm._v("\n            becas\n          ")]
                   )
                 ],
@@ -88693,14 +88714,15 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-menu-item",
-                { attrs: { index: "4" } },
+                { attrs: { index: "5" } },
                 [
                   _c("i", { staticClass: "el-icon-menu" }),
                   _vm._v(" "),
                   _c(
                     "router-link",
                     {
-                      attrs: { to: { name: "requestsolvencies" }, tag: "span" }
+                      attrs: { to: { name: "requestsolvencies" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
                     },
                     [
                       _vm._v(
