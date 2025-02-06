@@ -8682,8 +8682,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! process */ "./node_modules/process/browser.js");
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8760,7 +8758,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -8772,15 +8807,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       acquired: [],
       total: 1.00,
       dataRequest: {},
-      dataRequestDetails: []
+      dataRequestDetails: [],
+      isSmallDevice: window.innerWidth <= 768
     };
   },
   mounted: function mounted() {
     this.getDataRequestById();
+    window.addEventListener("resize", this.updateDeviceSize);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener("resize", this.updateDeviceSize);
   },
   methods: {
     test: function test() {
       alert("llamar al 74246032 para asistencia tecnica");
+    },
+    updateDeviceSize: function updateDeviceSize() {
+      this.isSmallDevice = window.innerWidth <= 768;
+    },
+    tagType: function tagType(estado) {
+      if (estado === "PROCESADO") return "success";
+      if (estado === "EN PROCESO") return "primary";
+      if (estado === "CREADO") return "info";
+      if (estado === "EXPIRADO") return "info";
+      if (estado === "FALLIDO") return "danger";
+      if (estado === "ANULADO") return "danger";
+      return "warning";
+    },
+    responsiveRowClass: function responsiveRowClass(_ref) {
+      var rowIndex = _ref.rowIndex;
+      return rowIndex % 2 === 0 ? "row-even" : "row-odd";
     },
     //  *  D3. Obtener la informacion por cada solicitud
     //  * {id: id de la solicitud }
@@ -11139,7 +11195,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.el-row[data-v-47ce5410] {\r\n    margin-bottom: 20px;\n}\n.el-col[data-v-47ce5410] {\r\n    border-radius: 4px;\n}\n.bg-purple-dark[data-v-47ce5410] {\r\n    background: #99a9bf;\n}\n.bg-purple[data-v-47ce5410] {\r\n    background: #d3dce6;\n}\n.bg-purple-light[data-v-47ce5410] {\r\n    background: #e5e9f2;\n}\n.grid-content[data-v-47ce5410] {\r\n    border-radius: 4px;\r\n    padding: 15px;\r\n    min-height: 36px;\n}\n.row-bg[data-v-47ce5410] {\r\n    padding: 10px 0;\r\n    background-color: #f9fafc;\n}\r\n", ""]);
+exports.push([module.i, "\n.alert-space[data-v-47ce5410] {\r\n    margin-bottom: 15px;\n}\n.header-container[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.add-request-btn[data-v-47ce5410] {\r\n    align-self: center;\n}\n.alerts-container[data-v-47ce5410] {\r\n    margin-bottom: 20px;\n}\n.responsive-container[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 15px;\r\n    /* Espacio entre las filas */\n}\n.responsive-row[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 15px;\r\n    border: 1px solid #ddd;\r\n    border-radius: 5px;\r\n    background-color: white;\r\n    gap: 10px;\r\n    /* Espacio entre los elementos */\n}\n.responsive-item[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin-bottom: 5px;\n}\n.item-title[data-v-47ce5410] {\r\n    font-weight: bold;\r\n    color: #555;\r\n    flex: 1;\n}\n.item-content[data-v-47ce5410] {\r\n    flex: 2;\n}\n.pagination[data-v-47ce5410] {\r\n    margin-top: 15px;\r\n    text-align: right;\n}\n@media (max-width: 768px) {\n.header-container[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        align-items: flex-start;\r\n        gap: 10px;\n}\n.responsive-row[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n.responsive-item[data-v-47ce5410] {\r\n        flex-direction: row;\r\n        gap: 10px;\n}\n.alerts-container[data-v-47ce5410] {\r\n        margin-bottom: 30px;\r\n        /* Espacio extra para dispositivos pequeños */\n}\n.header[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        text-align: center;\n}\n.card-title[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -95187,251 +95243,399 @@ var render = function() {
     [
       _c(
         "el-card",
-        { staticClass: "box-card" },
+        { staticStyle: { "margin-bottom": "50px" } },
         [
           _c(
             "div",
             {
-              staticClass: "clearfix",
-              attrs: { slot: "header" },
-              slot: "header"
+              staticClass: "header",
+              staticStyle: {
+                display: "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              }
             },
             [
-              _c("span", [_vm._v("venta de valores en linea")]),
+              _c(
+                "h3",
+                {
+                  staticClass: "card-title",
+                  staticStyle: { margin: "10", "font-weight": "bold" }
+                },
+                [
+                  _vm._v(
+                    "\n                datos del comprobante de pago\n            "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "el-button",
                 {
-                  staticStyle: { float: "right", padding: "3px 0" },
-                  attrs: { type: "text" },
+                  attrs: { type: "primary", size: "small" },
                   on: { click: _vm.test }
                 },
-                [_vm._v("ayuda")]
+                [_vm._v("\n                ayuda\n            ")]
               )
             ],
             1
           ),
           _vm._v(" "),
-          _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
-            [
-              _c(
-                "p",
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Cuanto tiempo dura verificar su pago?",
+              type: "error",
+              "show-icon": "",
+              description:
+                "Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago"
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Como saber si todo esta correcto?",
+              type: "success",
+              "show-icon": "",
+              description:
+                "El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas."
+            }
+          }),
+          _vm._v(" "),
+          !_vm.isSmallDevice
+            ? _c("h2", [_c("p", [_vm._v("datos de la solicitud")])])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isSmallDevice
+            ? _c(
+                "el-form",
+                {
+                  ref: "form",
+                  attrs: {
+                    model: this.dataRequest,
+                    "label-width": "200px",
+                    size: "mini"
+                  }
+                },
                 [
-                  _c("el-alert", {
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "numero de solicitud" } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.dataRequest.idc) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "fecha en la que se realizo" } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.dataRequest.fecha) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "apellidos y nombres" } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.dataRequest.des_per) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("el-form-item", { attrs: { label: "importe" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.dataRequest.importe) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "estado" } },
+                    [
+                      _c(
+                        "el-tag",
+                        {
+                          attrs: {
+                            type: _vm.tagType(_vm.dataRequest.estado),
+                            effect: "dark"
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.dataRequest.estado))]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isSmallDevice
+            ? _c("h2", [_c("p", [_vm._v("valores adquiridos")])])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isSmallDevice
+            ? _c(
+                "el-table",
+                {
+                  staticStyle: { width: "100%", "margin-top": "15px" },
+                  attrs: {
+                    data: _vm.dataRequestDetails,
+                    border: "",
+                    "show-summary": "",
+                    "sum-text": "importe total"
+                  }
+                },
+                [
+                  _c("el-table-column", {
+                    staticStyle: { "text-align": "center !important" },
                     attrs: {
-                      title: "Cuanto tiempo dura verificar su pago?",
-                      type: "error",
-                      description:
-                        "Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago"
+                      prop: "des_val",
+                      label: "descripcion",
+                      width: "950"
                     }
                   }),
                   _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("el-alert", {
+                  _c("el-table-column", {
                     attrs: {
-                      title: "Como saber si todo esta correcto?",
-                      type: "success",
-                      description:
-                        "El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas."
+                      prop: "can_val",
+                      label: "cantidad",
+                      width: "90",
+                      align: "right"
                     }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "imp_val",
+                      label: "precio",
+                      width: "90",
+                      align: "right"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { align: "right", width: "200", fixed: "right" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return scope.row.cod_val !== "9999"
+                              ? [
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        type: "primary",
+                                        size: "mini",
+                                        disabled: scope.row.id_tran === 0
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initPrintComprobate(
+                                            scope.$index,
+                                            scope.row
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "imprimir comprobante\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              : undefined
+                          }
+                        }
+                      ],
+                      null,
+                      true
+                    )
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 9 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [_vm._v("datos de la solicitud")]),
-                    _vm._v(" "),
-                    _c(
-                      "el-form",
-                      {
-                        ref: "form",
-                        attrs: {
-                          model: this.dataRequest,
-                          "label-width": "200px",
-                          size: "mini"
-                        }
-                      },
-                      [
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "numero de solicitud" } },
-                          [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.dataRequest.idc) +
-                                "\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "fecha en la que se realizo" } },
-                          [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.dataRequest.fecha) +
-                                "\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "apellidos y nombres" } },
-                          [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.dataRequest.des_per) +
-                                "\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("el-form-item", { attrs: { label: "importe" } }, [
+              )
+            : _c(
+                "div",
+                { staticClass: "responsive-container" },
+                [
+                  _c(
+                    "el-form",
+                    {
+                      ref: "form",
+                      attrs: {
+                        model: this.dataRequest,
+                        "label-width": "200px",
+                        size: "mini"
+                      }
+                    },
+                    [
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "numero de solicitud" } },
+                        [
                           _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.dataRequest.importe) +
-                              "\n                        "
+                            "\n                    " +
+                              _vm._s(_vm.dataRequest.idc) +
+                              "\n                "
                           )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "fecha en la que se realizo" } },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.dataRequest.fecha) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "apellidos y nombres" } },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.dataRequest.des_per) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("el-form-item", { attrs: { label: "importe" } }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.dataRequest.importe) +
+                            "\n                "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-form-item",
+                        { attrs: { label: "estado" } },
+                        [
+                          _c(
+                            "el-tag",
+                            {
+                              attrs: {
+                                effect: "dark",
+                                type: _vm.tagType(_vm.dataRequest.estado)
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.dataRequest.estado))]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("h4", [_vm._v("valores adquiridos")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.dataRequestDetails, function(row, index) {
+                    return _c(
+                      "div",
+                      { key: index, staticClass: "responsive-row" },
+                      [
+                        _c("div", { staticClass: "responsive-item" }, [
+                          _c("div", { staticClass: "item-title" }, [
+                            _vm._v("Descripcion")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "item-content" }, [
+                            _vm._v(_vm._s(row.des_val))
+                          ])
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: "estado" } },
-                          [
-                            _c(
-                              "el-tag",
-                              { attrs: { type: "success", effect: "dark" } },
-                              [_vm._v(_vm._s(_vm.dataRequest.estado))]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
+                        _c("div", { staticClass: "responsive-item" }, [
+                          _c("div", { staticClass: "item-title" }, [
+                            _vm._v("cantidad")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "item-content" }, [
+                            _vm._v(_vm._s(row.can_val))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "responsive-item" }, [
+                          _c("div", { staticClass: "item-title" }, [
+                            _vm._v("Importe")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "item-content" }, [
+                            _vm._v(_vm._s(row.imp_val))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "responsive-item" }, [
+                          _c("div", { staticClass: "item-title" }, [
+                            _vm._v("Acciones")
+                          ]),
+                          _vm._v(" "),
+                          row.cod_val !== "9999"
+                            ? _c(
+                                "div",
+                                { staticClass: "item-content" },
+                                [
+                                  _c(
+                                    "el-button",
+                                    {
+                                      attrs: {
+                                        type: "primary",
+                                        size: "mini",
+                                        disabled: row.id_tran === 0
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initPrintComprobate(
+                                            index,
+                                            row
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "imprimir comprobante\n                        "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ])
+                      ]
                     )
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("el-col", { attrs: { span: 15 } }, [
-                _c(
-                  "div",
-                  { staticClass: "grid-content bg-purple" },
-                  [
-                    _c("p", [_vm._v("valores en linea adquiridos")]),
-                    _vm._v(" "),
-                    _c(
-                      "el-table",
-                      {
-                        staticStyle: { width: "100%" },
-                        attrs: {
-                          data: _vm.dataRequestDetails,
-                          "show-summary": "",
-                          "sum-text": "importe total"
-                        }
-                      },
-                      [
-                        _c("el-table-column", {
-                          staticStyle: { "text-align": "center !important" },
-                          attrs: {
-                            prop: "des_val",
-                            label: "descripcion",
-                            width: "350"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "can_val",
-                            label: "cantidad",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            prop: "imp_val",
-                            label: "precio",
-                            width: "90",
-                            align: "right"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("el-table-column", {
-                          attrs: {
-                            align: "right",
-                            width: "200",
-                            fixed: "right"
-                          },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "default",
-                                fn: function(scope) {
-                                  return scope.row.cod_val !== "9999"
-                                    ? [
-                                        _c(
-                                          "el-button",
-                                          {
-                                            attrs: {
-                                              type: "primary",
-                                              size: "mini",
-                                              disabled: scope.row.id_tran === 0
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.initPrintComprobate(
-                                                  scope.$index,
-                                                  scope.row
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "imprimir comprobante\n                                "
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    : undefined
-                                }
-                              }
-                            ],
-                            null,
-                            true
-                          )
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", {
-                  staticStyle: { "text-align": "right", float: "right" }
-                })
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-row")
+                  })
+                ],
+                2
+              )
         ],
         1
       )
