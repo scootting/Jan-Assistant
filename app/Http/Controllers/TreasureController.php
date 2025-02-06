@@ -15,10 +15,18 @@ class TreasureController extends Controller
     {
         $year  = $request->get('year');
         $typea = $request->get('typea');
+        $client = $request->get('client');
+        $nodip = $client['nodip'];
 
         switch ($typea) {
             case "Course":
-                $typed = 'B';
+                if(trim($nodip) == '8623347' or trim($nodip) == '10475961'  or trim($nodip) == '8655639'  or trim($nodip) == '8598295'  or trim($nodip) == '13165699' or
+                   trim($nodip) == '8653318' or trim($nodip) == '8598916'  or trim($nodip) == '8554569'  or trim($nodip) == '12653174'  or trim($nodip) == '8523607' or                
+                   trim($nodip) == '8645699'
+                  )
+                    $typed = 'X';
+                else
+                    $typed = 'B';
                 break;
             case "Sale":
                 $typed = 'U';

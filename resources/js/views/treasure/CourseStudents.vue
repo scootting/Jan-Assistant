@@ -155,7 +155,8 @@ export default {
       try {
         let response = await axios.post("/api/getValuesOffered", {
           year: app.client.gestion,
-          typea: 'Course'
+          typea: 'Course',
+          client: app.client,
         });
         app.loading = false;
         app.offered = response.data.valuesOffered;
