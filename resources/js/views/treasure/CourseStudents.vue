@@ -12,7 +12,7 @@
       <!-- Mensajes -->
       <div class="alerts-container">
         <el-alert title="Que debo hacer?" type="error" show-icon class="alert-space"
-          description="Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad que solicita ya que estos estaran a su nombre y no de terceros.">
+          description="Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar.">
         </el-alert>
         <br>
         <el-alert title="Cuales son los metodos de pago?" type="success" show-icon class="alert-space"
