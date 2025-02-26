@@ -8536,7 +8536,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 5;
                 return axios.post("/api/getValuesOffered", {
                   year: app.client.gestion,
-                  typea: 'Sale'
+                  typea: 'Sale',
+                  client: app.client
                 });
 
               case 5:
