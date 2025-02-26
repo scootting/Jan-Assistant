@@ -88763,7 +88763,7 @@ var render = function() {
                       attrs: { to: { name: "courses" }, tag: "span" },
                       on: { click: _vm.toggleMenu }
                     },
-                    [_vm._v("\n            becas\n          ")]
+                    [_vm._v("\n            becas Universitarias\n          ")]
                   )
                 ],
                 1
@@ -94176,7 +94176,7 @@ var render = function() {
                   type: "error",
                   "show-icon": "",
                   description:
-                    "Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad que solicita ya que estos estaran a su nombre y no de terceros."
+                    "Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar."
                 }
               }),
               _vm._v(" "),

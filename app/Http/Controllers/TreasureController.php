@@ -158,6 +158,7 @@ class TreasureController extends Controller
             # Satisfactorio...
             $codigoTransaccion = $responseBody['datos']['codigoTransaccion'];
             \Log::info($responseBody['datos']['codigoTransaccion']);
+            \Log::info($responseBody);
             $id = treasure::setIdCptRequest($codigoTransaccion, $id_sol);
         }
         return json_encode($responseBody);
