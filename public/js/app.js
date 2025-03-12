@@ -4388,6 +4388,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
   data: function data() {
@@ -88773,6 +88779,24 @@ var render = function() {
               _c(
                 "el-menu-item",
                 { attrs: { index: "5" } },
+                [
+                  _c("i", { staticClass: "el-icon-set-up" }),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: { to: { name: "laboratory" }, tag: "span" },
+                      on: { click: _vm.toggleMenu }
+                    },
+                    [_vm._v("\n            Laboratorios\n          ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-menu-item",
+                { attrs: { index: "6" } },
                 [
                   _c("i", { staticClass: "el-icon-menu" }),
                   _vm._v(" "),

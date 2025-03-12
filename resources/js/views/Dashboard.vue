@@ -59,7 +59,15 @@
               becas Universitarias
             </router-link>
           </el-menu-item>
+          <!--
           <el-menu-item index="5">
+            <i class="el-icon-set-up"></i>
+            <router-link :to="{ name: 'laboratory' }" @click="toggleMenu" tag="span">
+              Laboratorios
+            </router-link>
+          </el-menu-item>
+          -->
+          <el-menu-item index="6">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" @click="toggleMenu" tag="span">
               Solvencia Universitaria
