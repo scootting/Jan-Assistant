@@ -70,7 +70,7 @@
           <el-menu-item index="6">
             <i class="el-icon-menu"></i>
             <router-link :to="{ name: 'requestsolvencies' }" @click="toggleMenu" tag="span">
-              Solvencia Universitaria
+              Formulario Solvencia Universitaria
             </router-link>
           </el-menu-item>
           <!--
