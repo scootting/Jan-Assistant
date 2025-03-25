@@ -2,7 +2,7 @@
     <div>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span>detalle de la transaccion</span>
+                <span>SISTEMA de activos fijos</span>
                 <el-button style="float: right; padding: 3px 0" type="text" @click="test">ayuda</el-button>
             </div>
             <el-row :gutter="20">
