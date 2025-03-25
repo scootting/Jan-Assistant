@@ -180,6 +180,7 @@ class TreasureController extends Controller
     public function getDataTransactionById4(Request $request)
     {
         $id_transaction = $request->get('id');
+        \Log::info($id_transaction);
         $data           = treasure::GetDataTransactionById4($id_transaction);
         return json_encode($data);
     }
