@@ -29,6 +29,8 @@ import CourseStudents from './views/treasure/CourseStudents'
 //Documento: Modulo para imprimir los comprobantes de pago por solicitud
 import SaleValuesDetails from './views/treasure/SaleValuesDetails'
 import InformationSaleDetails from './views/treasure/InformationSaleDetails'
+//ACTIVOS fijos
+import AssignmentDetails from './views/fixedasset/AssignmentDetails'
 //Documento: Modulo para gestionar las solicitudes
 import Requests from './views/document/Requests'
 //Documento: Modulo para gestionar las solicitudes
