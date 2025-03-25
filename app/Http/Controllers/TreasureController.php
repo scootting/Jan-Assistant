@@ -174,6 +174,17 @@ class TreasureController extends Controller
         return json_encode($data);
     }
 
+
+    //  *  T3. obtiene la informacion del comprobante de pago
+    //  * {id: id de la transaccion }
+    public function getDataTransactionById4(Request $request)
+    {
+        $id_transaction = $request->get('id');
+        $data           = treasure::GetDataTransactionById4($id_transaction);
+        return json_encode($data);
+    }
+
+
     //  *  T4. obtiene el estado de los valores solicitados para la impresion del comprobante
     //  * {id: id de la transaccion }
     public function getDataRequestById(Request $request)

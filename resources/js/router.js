@@ -104,6 +104,11 @@ const router = new VueRouter({
             component: InformationSaleDetails,
         },
         {
+            path: '/assignment/:id', //path: '/login',
+            name: 'assignmentdetails',
+            component: AssignmentDetails,
+        },
+        {
             path: '/register', //path: '/login',
             name: 'register',
             component: Register,

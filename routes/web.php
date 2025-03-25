@@ -51,6 +51,7 @@ Route::get('reportInformationPerson', 'ElectionController@reportInformationPerso
 //  |--------------------------------------------------------------------------
 
 Route::post('getDataTransactionById', 'TreasureController@getDataTransactionById');
+Route::post('getDataTransactionById4', 'TreasureController@getDataTransactionById4');
 
 //  |--------------------------------------------------------------------------
 //  | Rutas API para el Sistema de Estados Financieros
