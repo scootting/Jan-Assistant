@@ -66,7 +66,7 @@ class Treasure extends Model
         return $data;
     }
 
-    public static function getDataValuesRequestById4($id){
+    public static function GetDataValuesRequestById4($id){
         $query = "select * from actx.activosx a where a.codigo ='" . $id . "'";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
