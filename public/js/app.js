@@ -6241,6 +6241,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -6372,35 +6373,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           break;
       }
     },
-    querySearch: function querySearch(queryString, cb) {
-      var links = this.dataCareer;
-      var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-      cb(results);
+
+    /*
+    querySearch(queryString, cb) {
+        var links = this.dataCareer;
+        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+        cb(results);
     },
-    querySearch3: function querySearch3(queryString, cb) {
-      var links = this.dataUniversity;
-      var results = queryString ? links.filter(this.createFilter(queryString)) : links;
-      cb(results);
+      querySearch3(queryString, cb) {
+        var links = this.dataUniversity;
+        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+        cb(results);
     },
-    createFilter: function createFilter(queryString) {
-      return function (link) {
-        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-      };
+      createFilter(queryString) {
+        return (link) => {
+            return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
     },
-    handleSelect: function handleSelect(item) {
-      this.aditional.cod_prg = item.cod_prg;
-      this.aditional.des_prg = item.cat_des;
-      console.log('Consola');
-      console.log(this.aditional);
+    handleSelect(item) {
+        this.aditional.cod_prg = item.cod_prg;
+        this.aditional.des_prg = item.cat_des;
+        console.log('Consola');
     },
+      */
     OnchangeProgram: function OnchangeProgram(idx) {
+      var app = this;
       console.log(idx);
       var resultado;
 
       switch (app.selected) {
         case 1:
-          resultado = this.dataCareer.find(function (tipo) {
-            return tipo.value == idx;
+          resultado = app.dataCareer.find(function (tipo) {
+            return tipo.cod_prg == idx;
           });
           break;
 
@@ -6408,8 +6412,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           break;
 
         case 3:
-          resultado = this.dataUniversity.find(function (tipo) {
-            return tipo.value == idx;
+          resultado = app.dataUniversity.find(function (tipo) {
+            return tipo.cod_prg == idx;
           });
           break;
 
@@ -6417,36 +6421,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           break;
       }
 
+      console.log(resultado);
       this.aditional.cod_prg = resultado.cod_prg;
       this.aditional.des_prg = resultado.value;
-    },
-    setValuesAcquired: function setValuesAcquired() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
+      console.log(this.aditional);
     },
     //  *  M5. Guardar la solvencia escogida en linea
     initStoreSolvency: function initStoreSolvency() {
       var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var app, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 _this3.dialogFormVisible = false;
                 app = _this3;
-                _context4.prev = 2;
-                _context4.next = 5;
+                _context3.prev = 2;
+                _context3.next = 5;
                 return axios.post("/api/storeDataSolvency", {
                   cliente: app.client,
                   solvencia: app.solvency,
@@ -6455,31 +6448,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 5:
-                response = _context4.sent;
+                response = _context3.sent;
                 console.log(response);
 
                 _this3.$router.push({
                   name: "requestsolvencies"
                 });
 
-                _context4.next = 15;
+                _context3.next = 15;
                 break;
 
               case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](2);
-                _this3.error = _context4.t0.response.data;
-                console.log(_context4.t0.response);
+                _context3.prev = 10;
+                _context3.t0 = _context3["catch"](2);
+                _this3.error = _context3.t0.response.data;
+                console.log(_context3.t0.response);
                 app.$alert(_this3.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
               case 15:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, null, [[2, 10]]);
+        }, _callee3, null, [[2, 10]]);
       }))();
     },
     initCancelSolvency: function initCancelSolvency() {
@@ -91776,7 +91769,7 @@ var render = function() {
                     _vm._l(_vm.dataCareer, function(item) {
                       return _c("el-option", {
                         key: item.cod_prg,
-                        attrs: { label: item.value, value: item.value }
+                        attrs: { label: item.value, value: item.cod_prg }
                       })
                     }),
                     1
@@ -92067,6 +92060,8 @@ var render = function() {
             }
           }),
           _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
           _c(
             "el-form",
             {
@@ -92127,7 +92122,7 @@ var render = function() {
                     _vm._l(_vm.dataUniversity, function(item) {
                       return _c("el-option", {
                         key: item.cod_prg,
-                        attrs: { label: item.value, value: item.value }
+                        attrs: { label: item.value, value: item.cod_prg }
                       })
                     }),
                     1

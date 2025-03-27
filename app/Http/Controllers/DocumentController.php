@@ -196,7 +196,9 @@ class DocumentController extends Controller
                 $cliente = $request->get('cliente');
                 $adicional = $request->get('adicional');
                 $solvencia = $request->get('solvencia');
-        
+
+                \Log::info($adicional);
+                \Log::info($solvencia);
                 $id_tipo = $solvencia['id'];
                 $fecha = $adicional['fecha'];
                 $cod_prg = $adicional['cod_prg'];

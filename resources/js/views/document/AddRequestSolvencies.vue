@@ -55,7 +55,7 @@
                     <el-select v-model="aditional.des_prg" size="small" style="width: 100%"
                         placeholder="seleccione la unidad academica" @change="OnchangeProgram">
                         <el-option v-for="item in dataCareer" :key="item.cod_prg" :label="item.value"
-                            :value="item.value">
+                            :value="item.cod_prg">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -113,6 +113,7 @@
                 description="antes de realizar la solicitud de solvencia universitaria debe estar seguro que su informacion personal se encuentra actualizada, puede verificarlo en la opcion innformacion personal del menu."
                 show-icon>
             </el-alert>
+            <br>
             <el-form :model="aditional" label-width="250px" size="mini">
                 <el-form-item label="fecha del registro">
                     <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
@@ -122,7 +123,7 @@
                     <el-select v-model="aditional.des_prg" value-key="cod_prg" size="small" style="width: 100%"
                         placeholder="seleccione la unidad academica o administrativa" @change="OnchangeProgram">
                         <el-option v-for="item in dataUniversity" :key="item.cod_prg" :label="item.value"
-                            :value="item.value">
+                            :value="item.cod_prg">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -227,6 +228,7 @@ export default {
                     break;
             }
         },
+        /*
         querySearch(queryString, cb) {
             var links = this.dataCareer;
             var results = queryString ? links.filter(this.createFilter(queryString)) : links;
@@ -248,32 +250,32 @@ export default {
             this.aditional.cod_prg = item.cod_prg;
             this.aditional.des_prg = item.cat_des;
             console.log('Consola');
-            console.log(this.aditional);
         },
 
+        */
         OnchangeProgram(idx) {
+            let app = this;
             console.log(idx);
             let resultado;
             switch (app.selected) {
                 case 1:
-                    resultado = this.dataCareer.find(tipo => tipo.value == idx);
+                    resultado = app.dataCareer.find(tipo => tipo.cod_prg == idx);
                     break;
                 case 2:
                     break;
                 case 3:
-                    resultado = this.dataUniversity.find(tipo => tipo.value == idx);
+                    resultado = app.dataUniversity.find(tipo => tipo.cod_prg == idx);
                     break;
                 default:
                     break;
             }
+            console.log(resultado);
 
             this.aditional.cod_prg = resultado.cod_prg;
             this.aditional.des_prg = resultado.value;
+            console.log(this.aditional);
         },
 
-
-        async setValuesAcquired() {
-        },
 
         //  *  M5. Guardar la solvencia escogida en linea
         async initStoreSolvency() {
