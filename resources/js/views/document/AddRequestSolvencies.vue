@@ -16,7 +16,7 @@
                     <el-col :span="24">
                         <div>
                             <el-table :data="dataSolvencies" style="width: 100%" size="small" fixed border>
-                                <el-table-column prop="descr" label="documento" >
+                                <el-table-column prop="descr" label="documento">
                                     <template slot-scope="scope">
                                         <el-tag size="medium">{{ scope.row.sub }}</el-tag>
                                     </template>
@@ -49,10 +49,15 @@
                     <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
                         style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="Unidad academica">
-                    <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch"
-                        style="width: 100%;" placeholder="ingrese: la descripcion de la carrera y seleccione" :trigger-on-focus="false"
-                        @select="handleSelect"></el-autocomplete>
+                <!-- Cambio aca
+                -->
+                <el-form-item label="unidad academica">
+                    <el-select v-model="aditional.des_prg" size="small" style="width: 100%"
+                        placeholder="seleccione la unidad academica" @change="OnchangeProgram">
+                        <el-option v-for="item in dataCareer" :key="item.cod_prg" :label="item.value"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <el-form ref="form" :model="this.client" label-width="200px" size="mini">
@@ -113,10 +118,13 @@
                     <el-date-picker type="date" v-model="aditional.fecha" placeholder="seleccione una fecha"
                         style="width: 100%" format="yyyy/MM/dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="Unidad academica o administrativa">
-                    <el-autocomplete class="inline-input" v-model="aditional.des_prg" :fetch-suggestions="querySearch3"
-                        style="width: 100%;" placeholder="ingrese: la descripcion inicial y seleccione.." :trigger-on-focus="false"
-                        @select="handleSelect"></el-autocomplete>
+                <el-form-item label="unidad academica o administrativa">
+                    <el-select v-model="aditional.des_prg" value-key="cod_prg" size="small" style="width: 100%"
+                        placeholder="seleccione la unidad academica o administrativa" @change="OnchangeProgram">
+                        <el-option v-for="item in dataUniversity" :key="item.cod_prg" :label="item.value"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <el-form ref="form" :model="this.client" label-width="250px" size="mini">
@@ -155,6 +163,7 @@ export default {
             dataCareer: [],
             solvency: {},
             aditional: {},
+            selected: 0,
         };
     },
     mounted() {
@@ -191,7 +200,8 @@ export default {
                 app.loading = false;
                 app.dataCareer = response.data.dataCareer;
                 app.dataUniversity = response.data.dataUniversity;
-                //console.log(app.dataCareer);
+                console.log(app.dataCareer);
+                console.log(app.dataUniversity);
             } catch (error) {
                 this.error = error.response.data;
                 app.$alert(this.error.message, "Gestor de errores", {
@@ -202,7 +212,8 @@ export default {
         initAddInformationAditional(index, row) {
             let app = this;
             app.solvency = row;
-            switch (row.adicional) {
+            app.selected = row.adicional;
+            switch (app.selected) {
                 case 1:
                     app.dialogFormVisible = true;
                     break;
@@ -240,6 +251,26 @@ export default {
             console.log(this.aditional);
         },
 
+        OnchangeProgram(idx) {
+            console.log(idx);
+            let resultado;
+            switch (app.selected) {
+                case 1:
+                    resultado = this.dataCareer.find(tipo => tipo.value == idx);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    resultado = this.dataUniversity.find(tipo => tipo.value == idx);
+                    break;
+                default:
+                    break;
+            }
+
+            this.aditional.cod_prg = resultado.cod_prg;
+            this.aditional.des_prg = resultado.value;
+        },
+
 
         async setValuesAcquired() {
         },
@@ -257,8 +288,8 @@ export default {
                 });
                 console.log(response);
                 this.$router.push({
-                name: "requestsolvencies",
-            });
+                    name: "requestsolvencies",
+                });
             } catch (error) {
                 this.error = error.response.data;
                 console.log(error.response);
