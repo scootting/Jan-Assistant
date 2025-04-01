@@ -50,6 +50,7 @@ class TreasureController extends Controller
     //  * {valores: valores seleccionados}
     public function setValuesAcquired(Request $request)
     {
+        return 0;
         $id_tran  = 0;
         $typea    = '';
         $typeb    = '';
