@@ -26,8 +26,9 @@ class Treasure extends Model
         //insert into linea.valores_solicitud( ... ) values ( ... )
         $query = "INSERT INTO linea.valores_solicitud(id_sol, cod_val, des_val, can_val, imp_val) VALUES " .
             "('" . $id_sol . "','" . $cod_val . "','" . $des_val . "','" . $can_val . "','" . $pre_uni . "')";
-        $data = collect(DB::select(DB::raw($query)));
-        return $data;
+        return 0;
+        //$data = collect(DB::select(DB::raw($query)));
+        //return $data;
     }
 
     //  *  T2. Actualiza el codigo cpt de una solicitud de venta de valores en linea
