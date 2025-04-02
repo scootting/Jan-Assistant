@@ -10,6 +10,7 @@
         </el-button>
       </div>
       <!-- Mensajes -->
+      <!--
       <div class="alerts-container">
         <el-alert title="Que debo hacer?" type="error" show-icon class="alert-space"
           description="Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad que solicita ya que estos estaran a su nombre y no de terceros.">
@@ -27,8 +28,22 @@
           description="el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe.">
         </el-alert>
       </div>
+      -->
+      <el-alert title="Cuales son los metodos de pago?" type="success" show-icon class="alert-space"
+        description="Codigo Qr, si cuenta con banca movil, el cargo adicional por el servicio es de 1bs; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado, el cargo adicional por el servicio es de 3bs.">
+      </el-alert>
+      <br>
 
       <!-- Tabla para dispositivos grandes -->
+      <h2>seleccione metodo de pago</h2>
+      <el-alert title="Importante" type="error" show-icon class="alert-space"
+        description="Por el momento solo se encuentra habilitado el pago mediante Qr, debido a un mantenimiento programado para el pago por CPT.">
+      </el-alert>
+      <el-radio-group v-model="pago" size="medium" @change="handleChange" disabled="true">
+        <el-radio-button label="1">pago mediante qr</el-radio-button>
+        <el-radio-button label="3">pago mediante cpt</el-radio-button>
+      </el-radio-group>
+
       <h2 v-if="!isSmallDevice">
         <p>valores universitarios disponibles</p>
       </h2>
@@ -68,7 +83,7 @@
 
       <!-- Diseño responsivo para dispositivos pequeños -->
       <div v-else class="responsive-container">
-        <h4>valores universitarios disponibles</h4>
+        <h2>valores universitarios disponibles</h2>
         <div v-for="(row, index) in offered" :key="`uno-${index}`" class="responsive-row">
           <div class="responsive-item">
             <div class="item-title">Descripcion</div>
@@ -89,7 +104,7 @@
             </div>
           </div>
         </div>
-        <h4>valores universitarios seleccionados</h4>
+        <h2>valores universitarios seleccionados</h2>
         <div v-for="(row, index) in acquired" :key="`dos-${index}`" class="responsive-row">
           <div class="responsive-item">
             <div class="item-title">Descripcion</div>
@@ -110,7 +125,7 @@
             </div>
           </div>
         </div>
-        <h4>EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</h4>
+        <h2>EL IMPORTE TOTAL QUE DEBE CANCELAR ES: {{ total }}</h2>
         <el-button type="primary" size="medium" @click="setValuesAcquired()">guardar la solicitud de valores en linea
         </el-button>
       </div>
@@ -125,6 +140,7 @@ export default {
   data() {
     return {
       client: this.$store.state.user,
+      pago: 1,
       loading: true,
       offered: [],
       acquired: [],
@@ -170,9 +186,15 @@ export default {
       }
     },
 
+    handleChange(newValue) {
+      console.log("Nuevo valor seleccionado:", newValue);
+      this.total -= parseFloat(this.acquired[0].pre_uni);
+      this.acquired[0].pre_uni = newValue;
+      this.total += parseFloat(newValue);
+    },
     //  *  T2. Guardar los valores para la venta en linea
     async setValuesAcquired() {
-      var app = this;
+      var app = this; s
       console.log(app.acquired);
       try {
         if (app.acquired.length <= 1) {
@@ -184,6 +206,7 @@ export default {
             client: app.client,
             total: app.total,
             acquired: app.acquired,
+            pago: app.pago,
             marker: "Sale",
           });
           console.log(response);
@@ -199,6 +222,7 @@ export default {
       }
     },
     // * FUNLOCAL. agregar valores que se van a comprar
+
     initAddValues(index, row) {
       this.total += parseFloat(row.pre_uni);
       console.log(row);

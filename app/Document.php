@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -29,19 +28,18 @@ class Document extends Model
     public static function getDigitalFinancialDocument($id, $year)
     {
         $query = "SELECT digitalizado as pdf_data FROM efe.estado_detalle d WHERE d.id = ?";
-        \Log::info($id);        
-        \Log::info($query);        
+        \Log::info($id);
+        \Log::info($query);
         $data = DB::select($query, [$id]);
         return $data;
     }
-
 
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     public static function GetRequests($id, $year, $typea)
     {
         $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' and s.tipo = '" . $typea . "' order by fec_cre desc";
-        $data = collect(DB::select(DB::raw($query)));
+        $data  = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
@@ -62,9 +60,9 @@ class Document extends Model
     //  * {marker: tipo de solicitud }
     //  * {nodip: carnet de identidad de la persona }
     //  * {descripcion: detalle de la persona }
-    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total)
+    public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total, $tipo_pago)
     {
-        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "')";
+        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "', " . $tipo_pago . ")";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
@@ -105,7 +103,7 @@ class Document extends Model
     public static function StoreChangeStateRequest($id_request, $state)
     {
         $query = "UPDATE linea.solicitudes set estado = '" . $state . "' where id = '" . $id_request . "'";
-        $data = collect(DB::select(DB::raw($query)));
+        $data  = collect(DB::select(DB::raw($query)));
         return $data;
 
     }
@@ -114,9 +112,9 @@ class Document extends Model
     //  * {id: carnet de identidad de la persona}
     public static function GetDataDocument($id, $tipo)
     {
-        $query = "select *, s.id as id_solvencia from bdoc.documentos s inner join bdoc.tipos t on s.id_tipo = t.id ".
-                 "where s.ci_per ='" . $id . 
-                 "' and s.id_tipo in (select id from bdoc.tipos where abrv = '" . $tipo . "') order by fecha desc";
+        $query = "select *, s.id as id_solvencia from bdoc.documentos s inner join bdoc.tipos t on s.id_tipo = t.id " .
+            "where s.ci_per ='" . $id .
+            "' and s.id_tipo in (select id from bdoc.tipos where abrv = '" . $tipo . "') order by fecha desc";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
@@ -127,7 +125,7 @@ class Document extends Model
     public static function GetTypesOfDocuments($gestion, $tipo)
     {
         $query = "select * from bdoc.tipos s where s.gestion ='" . $gestion . "' and s.abrv = '" . $tipo . "' order by s.sub asc";
-        $data = collect(DB::select(DB::raw($query)));
+        $data  = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
@@ -155,7 +153,7 @@ class Document extends Model
     public static function getDescriptionByAbr($abr)
     {
         $query = "SELECT * FROM bdoc.des_doc dd WHERE dd.id_abr ='" . $abr . "' AND dd.estado = 'TRUE'";
-        $data = collect(DB::select(DB::raw($query)));
+        $data  = collect(DB::select(DB::raw($query)));
         return $data;
     }
 
@@ -216,5 +214,5 @@ class Document extends Model
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
-    
+
 }

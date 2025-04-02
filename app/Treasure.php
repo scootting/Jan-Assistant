@@ -13,7 +13,6 @@ class Treasure extends Model
     {
         //select * from cluster.f_nuevos_datacenter('10547123', '2019', '2')
         $query = "select * from ppe.ff_valores_habilitados('" . $year . "','" . $typed . "')";
-        \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }

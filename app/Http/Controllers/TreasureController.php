@@ -50,14 +50,20 @@ class TreasureController extends Controller
     //  * {valores: valores seleccionados}
     public function setValuesAcquired(Request $request)
     {
-        return 0;
         $id_tran  = 0;
         $typea    = '';
         $typeb    = '';
         $client   = $request->get('client');
         $acquired = $request->get('acquired');
         $total    = $request->get('total');
+        $pago    = $request->get('pago');
         $marker   = $request->get('marker');
+
+        if ($pago == 1) {
+            $tipo_pago = 'QR';
+        } else {
+            $tipo_pago = 'CPT';
+        }
 
         $descripcion = $client['descripcion'];
         if ($client['paterno'] == "") {
@@ -70,7 +76,7 @@ class TreasureController extends Controller
         $no_dip  = $client['nodip'];
         $gestion = $client['gestion'];
 
-        $id     = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total);
+        $id     = Document::setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total, $tipo_pago);
         $id_sol = $id[0]->{'ff_nueva_solicitud'};
 
         \Log::info("este es el id de la nueva solicitud" . $id);

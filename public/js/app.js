@@ -8216,11 +8216,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
+      pago: 1,
       loading: true,
       offered: [],
       acquired: [],
@@ -8289,6 +8306,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[2, 12]]);
       }))();
     },
+    handleChange: function handleChange(newValue) {
+      console.log("Nuevo valor seleccionado:", newValue);
+      this.total -= parseFloat(this.acquired[0].pre_uni);
+      this.acquired[0].pre_uni = newValue;
+      this.total += parseFloat(newValue);
+    },
     //  *  T2. Guardar los valores para la venta en linea
     setValuesAcquired: function setValuesAcquired() {
       var _this2 = this;
@@ -8321,6 +8344,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   client: app.client,
                   total: app.total,
                   acquired: app.acquired,
+                  pago: app.pago,
                   marker: "Course"
                 });
 
@@ -8654,11 +8678,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
     return {
       client: this.$store.state.user,
+      pago: 1,
       loading: true,
       offered: [],
       acquired: [],
@@ -8727,6 +8767,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[2, 12]]);
       }))();
     },
+    handleChange: function handleChange(newValue) {
+      console.log("Nuevo valor seleccionado:", newValue);
+      this.total -= parseFloat(this.acquired[0].pre_uni);
+      this.acquired[0].pre_uni = newValue;
+      this.total += parseFloat(newValue);
+    },
     //  *  T2. Guardar los valores para la venta en linea
     setValuesAcquired: function setValuesAcquired() {
       var _this2 = this;
@@ -8738,11 +8784,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 app = _this2;
+                s;
                 console.log(app.acquired);
-                _context2.prev = 2;
+                _context2.prev = 3;
 
                 if (!(app.acquired.length <= 1)) {
-                  _context2.next = 7;
+                  _context2.next = 8;
                   break;
                 }
 
@@ -8750,43 +8797,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   confirmButtonText: 'BUENO'
                 });
 
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
-              case 7:
-                _context2.next = 9;
+              case 8:
+                _context2.next = 10;
                 return axios.post("/api/setValuesAcquired", {
                   client: app.client,
                   total: app.total,
                   acquired: app.acquired,
+                  pago: app.pago,
                   marker: "Sale"
                 });
 
-              case 9:
+              case 10:
                 response = _context2.sent;
                 console.log(response);
                 _this2.dataRequest = response.data.datos;
                 console.log(_this2.dataRequest.urlRedireccion);
                 window.location.href = _this2.dataRequest.urlRedireccion;
 
-              case 14:
-                _context2.next = 20;
+              case 15:
+                _context2.next = 21;
                 break;
 
-              case 16:
-                _context2.prev = 16;
-                _context2.t0 = _context2["catch"](2);
+              case 17:
+                _context2.prev = 17;
+                _context2.t0 = _context2["catch"](3);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 20:
+              case 21:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 16]]);
+        }, _callee2, null, [[3, 17]]);
       }))();
     },
     // * FUNLOCAL. agregar valores que se van a comprar
@@ -94559,59 +94607,53 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Cuales son los metodos de pago?",
+              type: "success",
+              "show-icon": "",
+              description:
+                "Codigo Qr, si cuenta con banca movil, el cargo adicional por el servicio es de 1bs; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado, el cargo adicional por el servicio es de 3bs."
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("h2", [_vm._v("seleccione metodo de pago")]),
+          _vm._v(" "),
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Importante",
+              type: "error",
+              "show-icon": "",
+              description:
+                "Por el momento solo se encuentra habilitado el pago mediante Qr, debido a un mantenimiento programado para el pago por CPT."
+            }
+          }),
+          _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "alerts-container" },
+            "el-radio-group",
+            {
+              attrs: { size: "medium", disabled: "true" },
+              on: { change: _vm.handleChange },
+              model: {
+                value: _vm.pago,
+                callback: function($$v) {
+                  _vm.pago = $$v
+                },
+                expression: "pago"
+              }
+            },
             [
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Que debo hacer?",
-                  type: "error",
-                  "show-icon": "",
-                  description:
-                    "Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar."
-                }
-              }),
+              _c("el-radio-button", { attrs: { label: "1" } }, [
+                _vm._v("pago mediante qr")
+              ]),
               _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Cuales son los metodos de pago?",
-                  type: "success",
-                  "show-icon": "",
-                  description:
-                    "Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Que precauciones tomar?",
-                  type: "warning",
-                  "show-icon": "",
-                  description:
-                    "Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "cuanto tiempo tengo para pagar?",
-                  type: "error",
-                  "show-icon": "",
-                  description:
-                    "el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe."
-                }
-              })
+              _c("el-radio-button", { attrs: { label: "3" } }, [
+                _vm._v("pago mediante cpt")
+              ])
             ],
             1
           ),
@@ -94773,7 +94815,7 @@ var render = function() {
                 "div",
                 { staticStyle: { "text-align": "right", float: "right" } },
                 [
-                  _c("h4"),
+                  _c("h2"),
                   _vm._v(" "),
                   _c("el-tag", { attrs: { type: "primary" } }, [
                     _vm._v(
@@ -94782,7 +94824,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("h4"),
+                  _c("h2"),
                   _vm._v(" "),
                   _c(
                     "el-button",
@@ -94805,7 +94847,7 @@ var render = function() {
                 "div",
                 { staticClass: "responsive-container" },
                 [
-                  _c("h4", [_vm._v("becas o cursos disponibles")]),
+                  _c("h2", [_vm._v("becas o cursos disponibles")]),
                   _vm._v(" "),
                   _vm._l(_vm.offered, function(row, index) {
                     return _c(
@@ -94871,7 +94913,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _c("h4", [_vm._v("becas o cursos seleccionados")]),
+                  _c("h2", [_vm._v("becas o cursos seleccionados")]),
                   _vm._v(" "),
                   _vm._l(_vm.acquired, function(row, index) {
                     return _c(
@@ -94942,7 +94984,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _c("h4", [
+                  _c("h2", [
                     _vm._v(
                       "EL IMPORTE TOTAL QUE DEBE CANCELAR ES: " +
                         _vm._s(_vm.total)
@@ -95195,59 +95237,53 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Cuales son los metodos de pago?",
+              type: "success",
+              "show-icon": "",
+              description:
+                "Codigo Qr, si cuenta con banca movil, el cargo adicional por el servicio es de 1bs; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado, el cargo adicional por el servicio es de 3bs."
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("h2", [_vm._v("seleccione metodo de pago")]),
+          _vm._v(" "),
+          _c("el-alert", {
+            staticClass: "alert-space",
+            attrs: {
+              title: "Importante",
+              type: "error",
+              "show-icon": "",
+              description:
+                "Por el momento solo se encuentra habilitado el pago mediante Qr, debido a un mantenimiento programado para el pago por CPT."
+            }
+          }),
+          _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "alerts-container" },
+            "el-radio-group",
+            {
+              attrs: { size: "medium", disabled: "true" },
+              on: { change: _vm.handleChange },
+              model: {
+                value: _vm.pago,
+                callback: function($$v) {
+                  _vm.pago = $$v
+                },
+                expression: "pago"
+              }
+            },
             [
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Que debo hacer?",
-                  type: "error",
-                  "show-icon": "",
-                  description:
-                    "Seleccione lo que desea adquirir usando la opcion agregar, para retirar solo presione el boton quitar, siempre este atento a la cantidad que solicita ya que estos estaran a su nombre y no de terceros."
-                }
-              }),
+              _c("el-radio-button", { attrs: { label: "1" } }, [
+                _vm._v("pago mediante qr")
+              ]),
               _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Cuales son los metodos de pago?",
-                  type: "success",
-                  "show-icon": "",
-                  description:
-                    "Codigo Qr, si cuenta con banca movil; o Codigo CPT, que le permite pagar en cualquier agencia del banco union, o a traves de uninet movil o uninet plus a traves de la opcion pago del estado."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "Que precauciones tomar?",
-                  type: "warning",
-                  "show-icon": "",
-                  description:
-                    "Guarde siempre su codigo Qr o codigo CPT ante cualquier eventualidad y no comparta esta informacion ya que cada codigo es unico para cada persona."
-                }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title: "cuanto tiempo tengo para pagar?",
-                  type: "error",
-                  "show-icon": "",
-                  description:
-                    "el codigo qr o codigo cpt tienen una validez de 7 dias calendario, durante ese periodo debe realizar la cancelacion del importe."
-                }
-              })
+              _c("el-radio-button", { attrs: { label: "3" } }, [
+                _vm._v("pago mediante cpt")
+              ])
             ],
             1
           ),
@@ -95445,7 +95481,7 @@ var render = function() {
                 "div",
                 { staticClass: "responsive-container" },
                 [
-                  _c("h4", [_vm._v("valores universitarios disponibles")]),
+                  _c("h2", [_vm._v("valores universitarios disponibles")]),
                   _vm._v(" "),
                   _vm._l(_vm.offered, function(row, index) {
                     return _c(
@@ -95511,7 +95547,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _c("h4", [_vm._v("valores universitarios seleccionados")]),
+                  _c("h2", [_vm._v("valores universitarios seleccionados")]),
                   _vm._v(" "),
                   _vm._l(_vm.acquired, function(row, index) {
                     return _c(
@@ -95582,7 +95618,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _c("h4", [
+                  _c("h2", [
                     _vm._v(
                       "EL IMPORTE TOTAL QUE DEBE CANCELAR ES: " +
                         _vm._s(_vm.total)
