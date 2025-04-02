@@ -8784,12 +8784,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 app = _this2;
-                s;
                 console.log(app.acquired);
-                _context2.prev = 3;
+                _context2.prev = 2;
 
                 if (!(app.acquired.length <= 1)) {
-                  _context2.next = 8;
+                  _context2.next = 7;
                   break;
                 }
 
@@ -8797,11 +8796,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   confirmButtonText: 'BUENO'
                 });
 
-                _context2.next = 15;
+                _context2.next = 14;
                 break;
 
-              case 8:
-                _context2.next = 10;
+              case 7:
+                _context2.next = 9;
                 return axios.post("/api/setValuesAcquired", {
                   client: app.client,
                   total: app.total,
@@ -8810,31 +8809,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   marker: "Sale"
                 });
 
-              case 10:
+              case 9:
                 response = _context2.sent;
                 console.log(response);
                 _this2.dataRequest = response.data.datos;
                 console.log(_this2.dataRequest.urlRedireccion);
                 window.location.href = _this2.dataRequest.urlRedireccion;
 
-              case 15:
-                _context2.next = 21;
+              case 14:
+                _context2.next = 20;
                 break;
 
-              case 17:
-                _context2.prev = 17;
-                _context2.t0 = _context2["catch"](3);
+              case 16:
+                _context2.prev = 16;
+                _context2.t0 = _context2["catch"](2);
                 _this2.error = _context2.t0.response.data;
                 app.$alert(_this2.error.message, "Gestor de errores", {
                   dangerouslyUseHTMLString: true
                 });
 
-              case 21:
+              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[3, 17]]);
+        }, _callee2, null, [[2, 16]]);
       }))();
     },
     // * FUNLOCAL. agregar valores que se van a comprar
@@ -95266,7 +95265,7 @@ var render = function() {
           _c(
             "el-radio-group",
             {
-              attrs: { size: "medium", disabled: "true" },
+              attrs: { size: "medium", disabled: "" },
               on: { change: _vm.handleChange },
               model: {
                 value: _vm.pago,

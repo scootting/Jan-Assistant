@@ -39,7 +39,7 @@
       <el-alert title="Importante" type="error" show-icon class="alert-space"
         description="Por el momento solo se encuentra habilitado el pago mediante Qr, debido a un mantenimiento programado para el pago por CPT.">
       </el-alert>
-      <el-radio-group v-model="pago" size="medium" @change="handleChange" disabled="true">
+      <el-radio-group v-model="pago" size="medium" @change="handleChange" disabled>
         <el-radio-button label="1">pago mediante qr</el-radio-button>
         <el-radio-button label="3">pago mediante cpt</el-radio-button>
       </el-radio-group>
@@ -194,7 +194,7 @@ export default {
     },
     //  *  T2. Guardar los valores para la venta en linea
     async setValuesAcquired() {
-      var app = this; s
+      var app = this; 
       console.log(app.acquired);
       try {
         if (app.acquired.length <= 1) {
