@@ -62,7 +62,7 @@ class Document extends Model
     //  * {descripcion: detalle de la persona }
     public static function setRequestByYear($gestion, $marker, $no_dip, $descripcion, $total, $tipo_pago)
     {
-        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "', " . $tipo_pago . ")";
+        $query = "select * from linea.ff_nueva_solicitud('" . $gestion . "','" . $marker . "','" . $no_dip . "','" . $descripcion . "','" . $total . "', '" . $tipo_pago . "')";
         \Log::info($query);
         $data = collect(DB::select(DB::raw($query)));
         return $data;
