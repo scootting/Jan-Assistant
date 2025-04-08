@@ -112,6 +112,18 @@ class GeneralController extends Controller
         return response()->json('Successfully', 200);
     }
 
+
+    //  *  A8 Obtiene las notificaciones efectuadas por la AGETIC a traves de PPE
+    public function TitlesNotification2(Request $request){
+        /*
+        \Log::info($request->get('codigoSeguimiento'));
+        \Log::info($request->get('estado'));
+        */
+        \Log::info($request);
+        return response()->json('Successfully', 200);
+    }
+
+
     //  * Registrar un usuario en el recurso.    
     public function storeUser(Request $request)
     {
