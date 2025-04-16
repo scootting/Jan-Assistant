@@ -61,8 +61,19 @@ class TreasureController extends Controller
 
         if ($pago == 1) {
             $tipo_pago = 'QR';
+            $headers = [
+                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+                'Content-Type'        => 'application/json',
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',    
+            ];
+    
         } else {
             $tipo_pago = 'CPT';
+            $headers = [
+                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
+                'Content-Type'        => 'application/json',
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTc3NTE4ODc5OSwiaXNzIjoieG8xNDFYTUR5ZnVxQjd0anZidktkc214TzQ2TkFqblYifQ.arz3HIQx2hqmruQzcbUA1JcnKASFjYJuRkftQ75Zs1I',    
+            ];
         }
 
         $descripcion = $client['descripcion'];
@@ -97,12 +108,20 @@ class TreasureController extends Controller
                 $typeb = 'AU';
         }
         $array_products = [];
+        $total_b = 0;
         foreach ($acquired as $item) {
             # code...
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
-            $pre_uni = $item['pre_uni'];
+            if( $cod_val == '9999' and $tipo_pago = 'QR'){
+                $pre_uni = 1; //$item['pre_uni'];
+            }
+            if( $cod_val == '9999' and $tipo_pago = 'CPT'){
+                $pre_uni = 3;//$item['pre_uni'];                
+            }
+            $total_b = $total_b + $pre_uni;
+            
             $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
             array_push($array_products, ['actividadEconomica' => "1",
                 'codigo'                                          => $cod_val,
@@ -121,7 +140,7 @@ class TreasureController extends Controller
                 //'cuentaBancaria' => '1000005678', /* pruebas */
                 //'cuentaBancaria' => '10000006023167',/* preproduccion */
                 'cuentaBancaria'                               => '10000006714592', /* produccion */
-                'montoTotal'                                   => $total,
+                'montoTotal'                                   => $total_b,
                 'moneda'                                       => 'BOB',
                 'tipoCambioMoneda'                             => 1,
             ],
@@ -132,7 +151,7 @@ class TreasureController extends Controller
         //$apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
         $apiURL = 'https://ppe.agetic.gob.bo/transaccion/deuda';
 
-        $headers = [
+            // ----- LIONEL $headers = [
             //pruebas
             //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgxODYyNTgsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTcifQ.xBwL9mzzV9o2EA3xXMo-xvd2TW5NmFiGsE9ijRjj_BY',
             //preproduccion matricula
@@ -145,14 +164,13 @@ class TreasureController extends Controller
             //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM',
             //produccion valores
             //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM
-            'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
-            'Content-Type'        => 'application/json',
+            // ----- LIONEL 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+            // ----- LIONEL 'Content-Type'        => 'application/json',
             //pruebas
             //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
             //produccion
-            'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
-
-        ];
+            // ----- LIONEL 'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
+            // ----- LIONEL ];
 
         $response = Http::withHeaders($headers)->post($apiURL, $array_b);
 
