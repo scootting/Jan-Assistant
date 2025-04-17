@@ -114,6 +114,7 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
+            $pre_uni = $item['pre_uni'];
             /*
             if( $cod_val == '9999' and $tipo_pago = 'QR'){
                 $pre_uni = 1; //$item['pre_uni'];
