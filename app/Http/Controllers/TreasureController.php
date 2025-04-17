@@ -114,6 +114,7 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
+            /*
             if( $cod_val == '9999' and $tipo_pago = 'QR'){
                 $pre_uni = 1; //$item['pre_uni'];
             }
@@ -121,7 +122,8 @@ class TreasureController extends Controller
                 $pre_uni = 3;//$item['pre_uni'];                
             }
             $total_b = $total_b + $pre_uni;
-            
+            */
+
             $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
             array_push($array_products, ['actividadEconomica' => "1",
                 'codigo'                                          => $cod_val,
@@ -140,7 +142,7 @@ class TreasureController extends Controller
                 //'cuentaBancaria' => '1000005678', /* pruebas */
                 //'cuentaBancaria' => '10000006023167',/* preproduccion */
                 'cuentaBancaria'                               => '10000006714592', /* produccion */
-                'montoTotal'                                   => $total_b,
+                'montoTotal'                                   => $total,
                 'moneda'                                       => 'BOB',
                 'tipoCambioMoneda'                             => 1,
             ],
