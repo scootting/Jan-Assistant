@@ -37,7 +37,7 @@
       <!-- Tabla para dispositivos grandes -->
       <h2>seleccione metodo de pago</h2>
       <el-alert title="Importante" type="error" show-icon class="alert-space"
-        description="Por el momento solo se encuentra habilitado el pago mediante Qr, debido a un mantenimiento programado para el pago por CPT.">
+        description="el pago mediante Qr tiene un costo adicional de Bs.1, el pago por CPT tiene un costo adicional de Bs.3, a partir de la fecha.">
       </el-alert>
       <el-radio-group v-model="pago" size="medium" @change="handleChange">
         <el-radio-button label="1">pago mediante qr</el-radio-button>
