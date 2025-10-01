@@ -115,16 +115,7 @@ class TreasureController extends Controller
             $des_val = $item['des_val'];
             $can_val = 1;
             $pre_uni = $item['pre_uni'];
-            /*
-            if( $cod_val == '9999' and $tipo_pago = 'QR'){
-                $pre_uni = 1; //$item['pre_uni'];
-            }
-            if( $cod_val == '9999' and $tipo_pago = 'CPT'){
-                $pre_uni = 3;//$item['pre_uni'];                
-            }
-            $total_b = $total_b + $pre_uni;
-            */
-
+            
             $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
             array_push($array_products, ['actividadEconomica' => "1",
                 'codigo'                                          => $cod_val,

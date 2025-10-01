@@ -101,14 +101,19 @@ class GeneralController extends Controller
         \Log::info($request->get('estado'));
         */
         \Log::info($request);
-        $codigo_transaccion = $request->get('codigoSeguimiento'); 
-        $estado = $request->get('estado');
+        $finalizado = $request->get('finalizado'); 
+        $fuente = $request->get('fuente'); 
+        $estado = $request->get('estado'); 
+        $codigoSeguimiento = $request->get('codigoSeguimiento'); 
         $fecha = $request->get('fecha');
-        $codigo_orden = $request->get('detalle');
+        $mensaje = $request->get('mensaje');
+        $detalle = json_encode($request->get('detalle'));
+        //$codigo_orden = $request->get('detalle');
         //$codigo_orden = $codigo_orden['codigoOrden'];
         //\Log::info($codigo_orden);
         //guardamos las transacciones de acuerdo al codigo de transaccion
-        $data = General::SetValuesAndCptState($codigo_transaccion, $estado, $fecha);
+        $data = General::SetValuesAndCptState($codigoSeguimiento, $estado, $fecha);
+        $data = General::SetNotificationPPE($finalizado, $fuente, $estado, $codigoSeguimiento, $fecha, $mensaje, $detalle);
         return response()->json('Successfully', 200);
     }
 

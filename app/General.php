@@ -63,9 +63,18 @@ class General extends Model
         return $data;
     }
 
-    public static function SetValuesAndCptState($codigoTransaccion, $estado, $fecha)
+
+
+    public static function SetNotificationPPE($finalizado, $fuente, $estado, $codigoSeguimiento, $fecha, $mensaje, $detalle)
     {
-        $query = "select * from ppe.ff_registrar_transacciones('" . $codigoTransaccion . "', '" . $estado ."', '" . $fecha . "')";
+        $query = "select * from ppe.ff_registrar_notificaciones('" . $finalizado . "', '" . $fuente . "', '" . $estado . "', '" . $codigoSeguimiento . "', '" . $fecha ."', '" . $mensaje ."', '" . $detalle . "')";
+        $data = collect(DB::select(DB::raw($query)));
+        return $data;
+    }
+
+    public static function SetValuesAndCptState($codigoSeguimiento, $estado, $fecha)
+    {
+        $query = "select * from ppe.ff_registrar_transacciones('" . $codigoSeguimiento . "', '" . $estado ."', '" . $fecha . "')";
         $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
