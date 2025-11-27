@@ -15,8 +15,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
+*/
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap");
 /*
 @import url("https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700");
@@ -31,7 +32,8 @@ body {
   font-family: 'Source Sans 3', sans-serif;
   */
   font-family: "Roboto Condensed", sans-serif;
-  font-optical-sizing: auto;  
+  font-size: 14px;
+  line-height: 1.4;  
   background: #d7d9ce;
   margin: 0;
   padding: 0;
@@ -43,6 +45,8 @@ body {
   font-family: 'Source Sans 3', sans-serif;
   */
   font-family: "Roboto Condensed", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
