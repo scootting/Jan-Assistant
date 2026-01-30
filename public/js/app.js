@@ -8384,11 +8384,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.total += parseFloat(row.pre_uni);
       console.log(row);
 
-      if (row.cod_val == '9365') {
+      if (row.cod_val == '9365' || row.cod_val == '9732') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
       }
 
-      if (row.cod_val == '9366') {
+      if (row.cod_val == '9366' || row.cod_val == '9733') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
 
@@ -8400,18 +8400,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
 
+      if (row.cod_val == '9731') {
+        this.message = "Este valorado solo es para estudiantes y profesionales de MEDICINA, desea continuar?";
+      }
+
       if (this.message == '') {
-        this.acquired.push(row);
+        var contarCodigo = 0;
+        if (this.acquired.length === 0) contarCodigo = 0;else {
+          contarCodigo = this.acquired.filter(function (item) {
+            return item.cod_val === row.cod_val;
+          }).length;
+        }
+        if (row.cantidad > contarCodigo) this.acquired.push(row);else {
+          this.$confirm('Solo se permite ' + row.cantidad + ", desea agregar mas de este valorado?", 'Alerta', {
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar',
+            type: 'warning'
+          }).then(function () {
+            _this3.acquired.push(row);
+          })["catch"](function () {});
+          this.message = '';
+        }
       } else {
         this.$confirm(this.message, 'Alerta', {
           confirmButtonText: 'Agregar',
           cancelButtonText: 'Cancelar',
           type: 'warning'
         }).then(function () {
-          _this3.acquired.push(row);
+          var contarCodigo = 0;
+          if (_this3.acquired.length === 0) contarCodigo = 0;else {
+            contarCodigo = _this3.acquired.filter(function (item) {
+              return item.cod_val === row.cod_val;
+            }).length;
+          }
+          if (row.cantidad > contarCodigo) _this3.acquired.push(row);else {
+            _this3.$confirm('Solo se permite ' + row.cantidad + ", desea agregar mas de este valorado?", 'Alerta', {
+              confirmButtonText: 'Agregar',
+              cancelButtonText: 'Cancelar',
+              type: 'warning'
+            }).then(function () {
+              _this3.acquired.push(row);
+            })["catch"](function () {});
+
+            _this3.message = '';
+          }
         })["catch"](function () {});
         this.message = '';
       }
+
+      console.log(this.acquired);
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues: function initRemoveValues(index, row) {
@@ -8845,11 +8882,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.total += parseFloat(row.pre_uni);
       console.log(row);
 
-      if (row.cod_val == '9365') {
+      if (row.cod_val == '9365' || row.cod_val == '9732') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que cuentan con una MATRICULA VIGENTE en la U.A.T.F., desea continuar?";
       }
 
-      if (row.cod_val == '9366') {
+      if (row.cod_val == '9366' || row.cod_val == '9733') {
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE POTOSI y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
 
@@ -8861,18 +8898,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.message = "Este valorado solo es para estudiantes de la CUIDAD DE TUPIZA y que NO cuentan con una MATRICULA VIGENTE en la U.A.T.F(PERSONAS PARTICULARES), desea continuar?";
       }
 
+      if (row.cod_val == '9731') {
+        this.message = "Este valorado solo es para estudiantes y profesionales de MEDICINA, desea continuar?";
+      }
+
       if (this.message == '') {
-        this.acquired.push(row);
+        var contarCodigo = 0;
+        if (this.acquired.length === 0) contarCodigo = 0;else {
+          contarCodigo = this.acquired.filter(function (item) {
+            return item.cod_val === row.cod_val;
+          }).length;
+        }
+        if (row.cantidad > contarCodigo) this.acquired.push(row);else {
+          this.$confirm('Solo se permite ' + row.cantidad + ", desea agregar mas de este valorado?", 'Alerta', {
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar',
+            type: 'warning'
+          }).then(function () {
+            _this3.acquired.push(row);
+          })["catch"](function () {});
+          this.message = '';
+        }
       } else {
         this.$confirm(this.message, 'Alerta', {
           confirmButtonText: 'Agregar',
           cancelButtonText: 'Cancelar',
           type: 'warning'
         }).then(function () {
-          _this3.acquired.push(row);
+          var contarCodigo = 0;
+          if (_this3.acquired.length === 0) contarCodigo = 0;else {
+            contarCodigo = _this3.acquired.filter(function (item) {
+              return item.cod_val === row.cod_val;
+            }).length;
+          }
+          if (row.cantidad > contarCodigo) _this3.acquired.push(row);else {
+            _this3.$confirm('Solo se permite ' + row.cantidad + ", desea agregar mas de este valorado?", 'Alerta', {
+              confirmButtonText: 'Agregar',
+              cancelButtonText: 'Cancelar',
+              type: 'warning'
+            }).then(function () {
+              _this3.acquired.push(row);
+            })["catch"](function () {});
+
+            _this3.message = '';
+          }
         })["catch"](function () {});
         this.message = '';
       }
+
+      console.log(this.acquired);
     },
     // * FUNLOCAL. Quitar valores que se iban a comprar
     initRemoveValues: function initRemoveValues(index, row) {
