@@ -3,7 +3,7 @@
     <el-card style="margin-bottom: 50px;">
       <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
         <h3 class="card-title" style="margin: 10; font-weight: bold;">
-          Becas
+          Becas o cursos de auxiliatura
         </h3>
         <el-button type="primary" size="small" @click="test">
           ayuda

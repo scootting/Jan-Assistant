@@ -7,7 +7,7 @@
                 </h3>
                 <el-button type="primary" size="medium" icon="el-icon-plus" @click="initAddRequestInLine"
                     style="background-color: #ff5722; border-color: #ff5722; color: white; font-weight: bold;">
-                    Realice su Solicitud
+                    Realice su Solicitud del curso o beca
                 </el-button>
             </div>
             <!-- Mensajes -->

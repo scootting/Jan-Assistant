@@ -10987,10 +10987,10 @@ exports.push([module.i, "h3[data-v-331ad3a0] {\n  margin: 40px 0 0;\n}\nul[data-
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap\" rel=\"stylesheet);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');\r\n@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');\r\n@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');\r\n*/\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap\");\r\n@import url(\"https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700\");\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  font-family: \"Ubuntu+Condensed\", sans-serif;\r\n  font-family: 'Oswald', sans-serif;\r\n  font-family: 'Source Sans 3', sans-serif;\r\n  */\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  font-optical-sizing: auto;  \r\n  background: #d7d9ce;\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Ubuntu+Condensed\", sans-serif;  \r\n  font-family: 'Source Sans 3', sans-serif;\r\n  */\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #040404;\r\n  text-transform: uppercase;\n}\nbutton,\r\ninput,\r\n.el-dropdown-menu,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\r\n  text-transform: uppercase;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');\r\n@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');\r\n@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');\r\n@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');\r\n@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap\" rel=\"stylesheet');\r\n*/\r\n/*\r\n@import url(\"https://fonts.googleapis.com/css?family=Ubuntu+Condensed&display=swap\");\r\n@import url(\"https://fonts.googleapis.com/css?family=Ubuntu:wght@300;400;700\");\r\n*/\nhtml,\r\nbody {\r\n  /*\r\n  font-family: \"Roboto Slab\", serif;\r\n  font-family: 'Chelsea Market', cursive;\r\n  font-family: \"Ubuntu+Condensed\", sans-serif;\r\n  font-family: 'Oswald', sans-serif;\r\n  font-family: 'Source Sans 3', sans-serif;\r\n  */\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.4;  \r\n  background: #d7d9ce;\r\n  margin: 0;\r\n  padding: 0;\r\n  background-size: contain;\n}\n#app {\r\n  /*\r\n  font-family: \"Ubuntu+Condensed\", sans-serif;  \r\n  font-family: 'Source Sans 3', sans-serif;\r\n  */\r\n  font-family: \"Roboto Condensed\", sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.4;  \r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: left;\r\n  color: #040404;\r\n  text-transform: uppercase;\n}\nbutton,\r\ninput,\r\n.el-dropdown-menu,\r\nselect,\r\ntextarea {\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  color: inherit;\r\n  text-transform: uppercase;\n}\r\n", ""]);
 
 // exports
 
@@ -89024,7 +89024,7 @@ var render = function() {
                       attrs: { to: { name: "courses" }, tag: "span" },
                       on: { click: _vm.toggleMenu }
                     },
-                    [_vm._v("\n            becas Universitarias\n          ")]
+                    [_vm._v("\n            curso de auxiliares\n          ")]
                   )
                 ],
                 1
@@ -92366,7 +92366,11 @@ var render = function() {
                   },
                   on: { click: _vm.initAddRequestInLine }
                 },
-                [_vm._v("\n                Realice su Solicitud\n            ")]
+                [
+                  _vm._v(
+                    "\n                Realice su Solicitud del curso o beca\n            "
+                  )
+                ]
               )
             ],
             1
@@ -94611,7 +94615,7 @@ var render = function() {
                   staticClass: "card-title",
                   staticStyle: { margin: "10", "font-weight": "bold" }
                 },
-                [_vm._v("\n        Becas\n      ")]
+                [_vm._v("\n        Becas o cursos de auxiliatura\n      ")]
               ),
               _vm._v(" "),
               _c(

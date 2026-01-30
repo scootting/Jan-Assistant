@@ -56,7 +56,7 @@
           <el-menu-item index="4">
             <i class="el-icon-postcard"></i>
             <router-link :to="{ name: 'courses' }" @click="toggleMenu" tag="span">
-              becas Universitarias
+              curso de auxiliares
             </router-link>
           </el-menu-item>
           <!--
