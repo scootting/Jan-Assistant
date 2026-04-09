@@ -75,7 +75,7 @@ class TreasureController extends Controller
             $headers = [
                 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
                 'Content-Type'        => 'application/json',
-                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTc3NTE4ODc5OSwiaXNzIjoieG8xNDFYTUR5ZnVxQjd0anZidktkc214TzQ2TkFqblYifQ.arz3HIQx2hqmruQzcbUA1JcnKASFjYJuRkftQ75Zs1I',    
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',    
             ];
         }
 
