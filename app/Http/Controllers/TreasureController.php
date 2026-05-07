@@ -65,7 +65,7 @@ class TreasureController extends Controller
         $marker    = $request->get('marker');
 
         $id = $document['id'];
-        return $this->sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $total);
+        return $this->sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $importe);
     }
 
     /* Funcion general para el pago de servicios de la pasarela de pagos */
