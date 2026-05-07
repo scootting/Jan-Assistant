@@ -60,16 +60,16 @@ class TreasureController extends Controller
         $items    = $request->get('items');
         $document = $request->get('document');
 
-        $tipo_pago = $document['tipo_pago'];
-        $importe   = $document['importe'];
-        $marker    = $request->get('marker');
+        $tipo_pago      = $document['tipo_pago'];
+        $importe        = $document['importe'];
+        $tipo_documento = $document['tipo'];
 
         $id = $document['id'];
-        return $this->sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $importe);
+        return $this->sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $importe, $tipo_documento);
     }
 
     /* Funcion general para el pago de servicios de la pasarela de pagos */
-    public function sendCurlPaymentGateway($tipo_pago, $client, $items, $total)
+    public function sendCurlPaymentGateway($tipo_pago, $client, $items, $total, $marker)
     {
         switch ($tipo_pago) {
             case 'QR':
