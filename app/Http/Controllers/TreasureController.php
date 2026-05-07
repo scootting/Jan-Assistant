@@ -127,7 +127,7 @@ class TreasureController extends Controller
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
-            $pre_uni = $item['pre_uni'];
+            $pre_uni = $item['imp_val'];
             array_push($array_products, ['actividadEconomica' => "1",
                 'codigo'                                          => $cod_val,
                 'descripcion'                                     => $des_val,
