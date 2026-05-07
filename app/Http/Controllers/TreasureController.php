@@ -122,7 +122,7 @@ class TreasureController extends Controller
         }
 
         $array_products = [];
-        foreach ($acquired as $item) {
+        foreach ($items as $item) {
             # code...
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
