@@ -59,6 +59,12 @@
               curso de auxiliares
             </router-link>
           </el-menu-item>
+          <el-menu-item index="5">
+            <i class="el-icon-bank-card"></i>
+            <router-link :to="{ name: 'services' }" @click="toggleMenu" tag="span">
+              servicios
+            </router-link>
+          </el-menu-item>
           <!--
           <el-menu-item index="5">
             <i class="el-icon-set-up"></i>

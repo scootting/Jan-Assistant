@@ -13,14 +13,14 @@ class TreasureController extends Controller
     //  * {gestion: gestion de los valores disponibles}
     public function getValuesOffered(Request $request)
     {
-        $year  = $request->get('year');
-        $typea = $request->get('typea');
+        $year   = $request->get('year');
+        $typea  = $request->get('typea');
         $client = $request->get('client');
-        $nodip = $client['nodip'];
+        $nodip  = $client['nodip'];
 
         switch ($typea) {
             case "Course":
-                    $typed = 'B';
+                $typed = 'B';
                 /*
                 Gestion 2025. 
                 if(trim($nodip) == '8623347' or trim($nodip) == '10475961'  or trim($nodip) == '8655639'  or trim($nodip) == '8598295'  or trim($nodip) == '13165699' or
@@ -51,6 +51,116 @@ class TreasureController extends Controller
     //  *  T2. Guardar los valores para la venta en linea
     //  * {cliente: informacion del cliente}
     //  * {valores: valores seleccionados}
+
+    public function setPaymentServicies(Request $request)
+    {
+        $typea    = '';
+        $typeb    = '';
+        $client   = $request->get('client');
+        $items    = $request->get('list');
+        $document = $request->get('document');
+
+        $pago    = $document['pago'];
+        $importe = $document['importe'];
+        $marker  = $request->get('marker');
+
+        $id = $document['id'];
+        return sendCurlPaymentGateway($pago, $client, $id, $items, $total);
+    }
+
+    /* Funcion general para el pago de servicios de la pasarela de pagos */
+    public function sendCurlPaymentGateway($pago, $client, $items, $total)
+    {
+        if ($pago == 1) {
+            $tipo_pago = 'QR';
+            $headers   = [
+                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+                'Content-Type'        => 'application/json',
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
+            ];
+
+        } else {
+            $tipo_pago = 'CPT';
+            $headers   = [
+                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
+                'Content-Type'        => 'application/json',
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
+            ];
+        }
+
+        $descripcion = $client['descripcion'];
+        if ($client['paterno'] == "") {
+            $apellidos = $client['materno'];
+        } else {
+            $apellidos = $client['paterno'] . " " . $client['materno'];
+        }
+        $nombres = $client['nombres'];
+        $no_dip  = $client['nodip'];
+        $gestion = $client['gestion'];
+
+        switch ($marker) {
+            case "Course":
+                $typea = 'B';
+                $typeb = 'BU';
+                break;
+            case "Sale":
+                $typea = 'V';
+                $typeb = 'VU';
+                break;
+            case "Services":
+                $typea = 'S';
+                $typeb = 'SU';
+                break;
+            default:
+                $typea = 'A';
+                $typeb = 'AU';
+        }
+
+        $array_products = [];
+        foreach ($acquired as $item) {
+            # code...
+            $cod_val = $item['cod_val'];
+            $des_val = $item['des_val'];
+            $can_val = 1;
+            $pre_uni = $item['pre_uni'];
+            array_push($array_products, ['actividadEconomica' => "1",
+                'codigo'                                          => $cod_val,
+                'descripcion'                                     => $des_val,
+                'precioUnitario'                                  => (float) $pre_uni,
+                'unidadMedida'                                    => 1,
+                'cantidad'                                        => $can_val]);
+        }
+        $array_b = ['descripcion' => $typeb . ' - ' . $no_dip . ' - ' . $apellidos . ', ' . $nombres,
+            'codigoOrden'             => $typea . $id,
+            'datosPago'               => ['nombresCliente' => $nombres,
+                'apellidosCliente'                             => $apellidos,
+                'numeroDocumentoCliente'                       => $no_dip,
+                'fechaNacimientoCliente'                       => '2000-01-01',
+                'cuentaBancaria'                               => '10000006714592', /* produccion */
+                'montoTotal'                                   => $total,
+                'moneda'                                       => 'BOB',
+                'tipoCambioMoneda'                             => 1,
+            ],
+            "productos"               => $array_products,
+        ];
+        $apiURL   = 'https://ppe.agetic.gob.bo/transaccion/deuda';
+        $response = Http::withHeaders($headers)->post($apiURL, $array_b);
+
+        $statusCode   = $response->status();
+        $responseBody = json_decode($response->getBody(), true);
+        \Log::info($response);
+        \Log::info($statusCode);
+        \Log::info($responseBody);
+        if ($statusCode == 202) {
+            # Satisfactorio...
+            $codigoTransaccion = $responseBody['datos']['codigoTransaccion'];
+            \Log::info($responseBody['datos']['codigoTransaccion']);
+            \Log::info($responseBody);
+            $id = treasure::setIdCptRequest($codigoTransaccion, $id);
+        }
+        return json_encode($responseBody);
+    }
+
     public function setValuesAcquired(Request $request)
     {
         $id_tran  = 0;
@@ -59,23 +169,23 @@ class TreasureController extends Controller
         $client   = $request->get('client');
         $acquired = $request->get('acquired');
         $total    = $request->get('total');
-        $pago    = $request->get('pago');
+        $pago     = $request->get('pago');
         $marker   = $request->get('marker');
 
         if ($pago == 1) {
             $tipo_pago = 'QR';
-            $headers = [
+            $headers   = [
                 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
                 'Content-Type'        => 'application/json',
-                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',    
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
             ];
-    
+
         } else {
             $tipo_pago = 'CPT';
-            $headers = [
+            $headers   = [
                 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
                 'Content-Type'        => 'application/json',
-                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',    
+                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
             ];
         }
 
@@ -111,15 +221,15 @@ class TreasureController extends Controller
                 $typeb = 'AU';
         }
         $array_products = [];
-        $total_b = 0;
+        $total_b        = 0;
         foreach ($acquired as $item) {
             # code...
             $cod_val = $item['cod_val'];
             $des_val = $item['des_val'];
             $can_val = 1;
             $pre_uni = $item['pre_uni'];
-            
-            $data    = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
+
+            $data = Treasure::SetValuesAcquired($id_sol, $cod_val, $des_val, $can_val, $pre_uni);
             array_push($array_products, ['actividadEconomica' => "1",
                 'codigo'                                          => $cod_val,
                 'descripcion'                                     => $des_val,
@@ -148,26 +258,26 @@ class TreasureController extends Controller
         //$apiURL = 'https://ppe.demo.agetic.gob.bo/transaccion/deuda';
         $apiURL = 'https://ppe.agetic.gob.bo/transaccion/deuda';
 
-            // ----- LIONEL $headers = [
-            //pruebas
-            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgxODYyNTgsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTcifQ.xBwL9mzzV9o2EA3xXMo-xvd2TW5NmFiGsE9ijRjj_BY',
-            //preproduccion matricula
-            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
-            //produccion matricula
-            //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMTAxMzksImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU3In0.LN0FDsgyaujxVorWwybx2H0GE1v6R8d2S4JUT8Fhg3A
-            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMTAxMzksImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU3In0.LN0FDsgyaujxVorWwybx2H0GE1v6R8d2S4JUT8Fhg3A',
-            //produccion pruebas
-            //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM
-            //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM',
-            //produccion valores
-            //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM
-            // ----- LIONEL 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
-            // ----- LIONEL 'Content-Type'        => 'application/json',
-            //pruebas
-            //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
-            //produccion
-            // ----- LIONEL 'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
-            // ----- LIONEL ];
+        // ----- LIONEL $headers = [
+        //pruebas
+        //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgxODYyNTgsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTcifQ.xBwL9mzzV9o2EA3xXMo-xvd2TW5NmFiGsE9ijRjj_BY',
+        //preproduccion matricula
+        //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE2OTgyNDUxMzQsImlkVXN1YXJpb0FwbGljYWNpb24iOjQ5LCJpZFRyYW1pdGUiOiIyMTQifQ.Ab_RzAtWTzBB3oAqA7dOTMBa5eEwQedq1cW_WFm8TNg',
+        //produccion matricula
+        //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMTAxMzksImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU3In0.LN0FDsgyaujxVorWwybx2H0GE1v6R8d2S4JUT8Fhg3A
+        //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMTAxMzksImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU3In0.LN0FDsgyaujxVorWwybx2H0GE1v6R8d2S4JUT8Fhg3A',
+        //produccion pruebas
+        //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM
+        //'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDQyMjM4NjUsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDU4In0.EmpojyjhZsaGPROb4i2j8CnSFYN3ajmfRk7JcydKgDM',
+        //produccion valores
+        //JWT eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM
+        // ----- LIONEL 'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+        // ----- LIONEL 'Content-Type'        => 'application/json',
+        //pruebas
+        //'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODU5NTIwNCIsImV4cCI6MTc1ODg1OTE5OSwiaXNzIjoiU0hpN2xSaG9ldVgwQU1vaFIwR2k5MnVPd1l0dGFNQUgifQ.rVdcO_gsAbYzXiaV0Y8Bwhu6x8hzkOawH7wycF8J5UM',
+        //produccion
+        // ----- LIONEL 'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc2MzQzODM5OSwiaXNzIjoiQnF1ajRJc2xOQVFYNGYxUWxnVTc5WFlwTGFuYlNpR3EifQ.A4-dKXSu6MWsnZlxDomGb5a9qdY26Z5IaW5yyP8Z2x0',
+        // ----- LIONEL ];
 
         $response = Http::withHeaders($headers)->post($apiURL, $array_b);
 
@@ -196,17 +306,15 @@ class TreasureController extends Controller
         return json_encode($data);
     }
 
-
     //  *  T3. obtiene la informacion del comprobante de pago
     //  * {id: id de la transaccion }
     public function getDataTransactionById4(Request $request)
     {
         $id_transaction = $request->get('id');
         \Log::info($id_transaction);
-        $data           = treasure::GetDataTransactionById4($id_transaction);
+        $data = treasure::GetDataTransactionById4($id_transaction);
         return json_encode($data);
     }
-
 
     //  *  T4. obtiene el estado de los valores solicitados para la impresion del comprobante
     //  * {id: id de la transaccion }

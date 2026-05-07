@@ -26,8 +26,10 @@ import FinancialStatements from './views/application/FinancialStatements'
 //Tesoro: Modulo para seleccionar los valores en linea
 import SaleStudents from './views/treasure/SaleStudents'
 import CourseStudents from './views/treasure/CourseStudents'
+
 //Documento: Modulo para imprimir los comprobantes de pago por solicitud
 import SaleValuesDetails from './views/treasure/SaleValuesDetails'
+import ServiceValuesDetails from './views/treasure/ServiceValuesDetails'
 import InformationSaleDetails from './views/treasure/InformationSaleDetails'
 //ACTIVOS fijos
 import AssignmentDetails from './views/fixedasset/AssignmentDetails'
@@ -35,6 +37,7 @@ import AssignmentDetails from './views/fixedasset/AssignmentDetails'
 import Requests from './views/document/Requests'
 //Documento: Modulo para gestionar las solicitudes
 import Courses from './views/document/Courses'
+import Services from './views/document/Services'
 
 //Documento: Modulo para crear una nueva solicitud 
 //  |--------------------------------------------------------------------------
@@ -137,9 +140,11 @@ const router = new VueRouter({
                 //  |--------------------------------------------------------------------------    
                 { path: '/requests', name: 'requests', component: Requests },
                 { path: '/courses', name: 'courses', component: Courses },
+                { path: '/services', name: 'services', component: Services },
                 { path: '/salestudents', name: 'salestudents', component: SaleStudents },
                 { path: '/coursestudents', name: 'coursestudents', component: CourseStudents },
                 { path: '/salevaluesdetails/:id', name: 'salevaluesdetails', component: SaleValuesDetails },
+                { path: '/servicevaluesdetails/:id', name: 'servicevaluesdetails', component: ServiceValuesDetails },
                 //{ path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
 
                 //{ path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },

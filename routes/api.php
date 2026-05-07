@@ -61,6 +61,10 @@ Route::group([
     //  * {valores: valores seleccionados}
     Route::post('setValuesAcquired', 'TreasureController@setValuesAcquired');
 
+
+    //  *  T21. Realizar el pago de servicios
+    Route::post('setPaymentServicies', 'TreasureController@setPaymentServicies');
+    
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     Route::post('request', 'DocumentController@getRequests');
