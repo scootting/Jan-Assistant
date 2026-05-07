@@ -57,35 +57,40 @@ class TreasureController extends Controller
         $typea    = '';
         $typeb    = '';
         $client   = $request->get('client');
-        $items    = $request->get('list');
+        $items    = $request->get('items');
         $document = $request->get('document');
 
-        $pago    = $document['pago'];
-        $importe = $document['importe'];
-        $marker  = $request->get('marker');
+        $tipo_pago = $document['tipo_pago'];
+        $importe   = $document['importe'];
+        $marker    = $request->get('marker');
 
         $id = $document['id'];
-        return sendCurlPaymentGateway($pago, $client, $id, $items, $total);
+        return sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $total);
     }
 
     /* Funcion general para el pago de servicios de la pasarela de pagos */
-    public function sendCurlPaymentGateway($pago, $client, $items, $total)
+    public function sendCurlPaymentGateway($tipo_pago, $client, $items, $total)
     {
-        if ($pago == 1) {
-            $tipo_pago = 'QR';
-            $headers   = [
-                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
-                'Content-Type'        => 'application/json',
-                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
-            ];
-
-        } else {
-            $tipo_pago = 'CPT';
-            $headers   = [
-                'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
-                'Content-Type'        => 'application/json',
-                'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
-            ];
+        switch ($tipo_pago) {
+            case 'QR':
+                # code...
+                $headers = [
+                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+                    'Content-Type'        => 'application/json',
+                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
+                ];
+                break;
+            case 'CPT':
+                # code...
+                $headers = [
+                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
+                    'Content-Type'        => 'application/json',
+                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
+                ];
+                break;
+            default:
+                # code...
+                break;
         }
 
         $descripcion = $client['descripcion'];
