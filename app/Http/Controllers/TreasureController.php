@@ -69,7 +69,7 @@ class TreasureController extends Controller
     }
 
     /* Funcion general para el pago de servicios de la pasarela de pagos */
-    public function sendCurlPaymentGateway($tipo_pago, $client, $items, $total, $marker)
+    public function sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $total, $marker)
     {
         switch ($tipo_pago) {
             case 'QR':
