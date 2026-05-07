@@ -6,14 +6,16 @@
                     Servicios
                 </h3>
                 <el-button type="primary" size="medium" icon="el-icon-plus" @click="initAddRequestInLine"
-                    style="background-color: #ff5722; border-color: #ff5722; color: white; font-weight: bold;">
-                    Realice su Solicitud del curso o beca
+                 :disabled = true>
+                    Realizar reservas
                 </el-button>
             </div>
             <!-- Mensajes -->
             <div class="alerts-container">
+                <!--
                 <el-alert title="Seleccione el boton de color naranja si desea comprar valores en linea." type="error"
-                    show-icon class="alert-space" />
+                    show-icon class="alert-space" />                
+                -->
                 <el-alert
                     title="Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante."
                     type="success" show-icon />
@@ -43,7 +45,8 @@
                 -->
                 <el-table-column label="Acciones">
                     <template slot-scope="scope">
-                        <el-button type="info" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Realizar Pago</el-button>
+                        <el-button v-if="scope.row.estado == 'SOLICITADO'"  type="info" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Realizar Pago</el-button>
+                        <el-button v-else  type="info" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Imprimir comprobante</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -78,7 +81,8 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content">
-                            <el-button type="info" size="mini" @click="initPrintRequestReport(row.index, row)">Realizar Pago</el-button>
+                            <el-button v-if="row.estado == 'SOLICITADO'" type="info" size="mini" @click="initPrintRequestReport(row.index, row)">Realizar Pago</el-button>
+                            <el-button v-else type="info" size="mini" @click="initPrintRequestReport(row.index, row)">Imprimir comprobante</el-button>
                         </div>
                     </div>
                 </div>
@@ -143,6 +147,7 @@ export default {
         },
         async getRequests(page) {
             let app = this;
+
             try {
                 let response = await axios.post("/api/request", {
                     client: app.user,

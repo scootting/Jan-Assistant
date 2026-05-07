@@ -7641,6 +7641,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -94480,24 +94484,15 @@ var render = function() {
               _c(
                 "el-button",
                 {
-                  staticStyle: {
-                    "background-color": "#ff5722",
-                    "border-color": "#ff5722",
-                    color: "white",
-                    "font-weight": "bold"
-                  },
                   attrs: {
                     type: "primary",
                     size: "medium",
-                    icon: "el-icon-plus"
+                    icon: "el-icon-plus",
+                    disabled: true
                   },
                   on: { click: _vm.initAddRequestInLine }
                 },
-                [
-                  _vm._v(
-                    "\n                Realice su Solicitud del curso o beca\n            "
-                  )
-                ]
+                [_vm._v("\n                Realizar reservas\n            ")]
               )
             ],
             1
@@ -94507,16 +94502,6 @@ var render = function() {
             "div",
             { staticClass: "alerts-container" },
             [
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title:
-                    "Seleccione el boton de color naranja si desea comprar valores en linea.",
-                  type: "error",
-                  "show-icon": ""
-                }
-              }),
-              _vm._v(" "),
               _c("el-alert", {
                 attrs: {
                   title:
@@ -94613,28 +94598,44 @@ var render = function() {
                           key: "default",
                           fn: function(scope) {
                             return [
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "info", size: "mini" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.initPrintRequestReport(
-                                        scope.$index,
-                                        scope.row
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("Realizar Pago")]
-                              )
+                              scope.row.estado == "SOLICITADO"
+                                ? _c(
+                                    "el-button",
+                                    {
+                                      attrs: { type: "info", size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initPrintRequestReport(
+                                            scope.$index,
+                                            scope.row
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Realizar Pago")]
+                                  )
+                                : _c(
+                                    "el-button",
+                                    {
+                                      attrs: { type: "info", size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initPrintRequestReport(
+                                            scope.$index,
+                                            scope.row
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Imprimir comprobante")]
+                                  )
                             ]
                           }
                         }
                       ],
                       null,
                       false,
-                      2437945687
+                      2431669523
                     )
                   })
                 ],
@@ -94726,21 +94727,37 @@ var render = function() {
                           "div",
                           { staticClass: "item-content" },
                           [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { type: "info", size: "mini" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.initPrintRequestReport(
-                                      row.index,
-                                      row
-                                    )
-                                  }
-                                }
-                              },
-                              [_vm._v("Realizar Pago")]
-                            )
+                            row.estado == "SOLICITADO"
+                              ? _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "info", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.initPrintRequestReport(
+                                          row.index,
+                                          row
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Realizar Pago")]
+                                )
+                              : _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "info", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.initPrintRequestReport(
+                                          row.index,
+                                          row
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Imprimir comprobante")]
+                                )
                           ],
                           1
                         )
@@ -97209,18 +97226,20 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "small" },
-                  on: {
-                    click: function($event) {
-                      return _vm.initStoreCanceledService()
-                    }
-                  }
-                },
-                [_vm._v("\n                realizar pago\n            ")]
-              )
+              _vm.dataRequest.estado == "SOLICITADO"
+                ? _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary", size: "small" },
+                      on: {
+                        click: function($event) {
+                          return _vm.initStoreCanceledService()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                realizar pago\n            ")]
+                  )
+                : _vm._e()
             ],
             1
           ),
@@ -113931,7 +113950,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_treasure_SaleStudents__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/treasure/SaleStudents */ "./resources/js/views/treasure/SaleStudents.vue");
 /* harmony import */ var _views_treasure_CourseStudents__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/treasure/CourseStudents */ "./resources/js/views/treasure/CourseStudents.vue");
 /* harmony import */ var _views_treasure_SaleValuesDetails__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/treasure/SaleValuesDetails */ "./resources/js/views/treasure/SaleValuesDetails.vue");
-/* harmony import */ var _views_treasure_ServiceValuesDetails__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./views/treasure/ServiceValuesDetails */ "./resources/js/views/treasure/ServiceValuesDetails.vue");
+/* harmony import */ var _views_treasure_ServiceValuesDetails__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/treasure/ServiceValuesDetails */ "./resources/js/views/treasure/ServiceValuesDetails.vue");
 /* harmony import */ var _views_treasure_InformationSaleDetails__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./views/treasure/InformationSaleDetails */ "./resources/js/views/treasure/InformationSaleDetails.vue");
 /* harmony import */ var _views_fixedasset_AssignmentDetails__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/fixedasset/AssignmentDetails */ "./resources/js/views/fixedasset/AssignmentDetails.vue");
 /* harmony import */ var _views_document_Requests__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./views/document/Requests */ "./resources/js/views/document/Requests.vue");
@@ -114106,7 +114125,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: '/servicevaluesdetails/:id',
       name: 'servicevaluesdetails',
-      component: _views_treasure_ServiceValuesDetails__WEBPACK_IMPORTED_MODULE_31__["default"]
+      component: _views_treasure_ServiceValuesDetails__WEBPACK_IMPORTED_MODULE_17__["default"]
     }, //{ path: '/boucherofrequest/:id', name: 'boucherofrequest', component: BoucherOfRequest },
     //{ path: '/nuevaConvocatoria', name: 'nuevaConvocatoria', component: NuevaConvocatoria },
     //  |--------------------------------------------------------------------------

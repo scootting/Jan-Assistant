@@ -5,7 +5,7 @@
                 <h3 class="card-title" style="margin: 10; font-weight: bold;">
                     datos del comprobante de pago
                 </h3>
-                <el-button type="primary" size="small" @click="initStoreCanceledService()">
+                <el-button type="primary" size="small" @click="initStoreCanceledService()" v-if="dataRequest.estado == 'SOLICITADO'">
                     realizar pago
                 </el-button>
             </div>
