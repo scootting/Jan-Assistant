@@ -64,6 +64,10 @@ class TreasureController extends Controller
         $importe        = $document['importe'];
         $tipo_documento = $document['tipo'];
 
+
+        \Log::info($document);
+        \Log::info($items);
+        
         $id = $document['id'];
         return $this->sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $importe, $tipo_documento);
     }
