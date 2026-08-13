@@ -174,7 +174,7 @@ export default {
             console.log(row);
             let app = this;
             axios({
-                url: "/api/printComprobate",
+                url: "/api/printComprobateServices",
                 params: {
                     id: row.id_tran,
                     cod: row.cod_val,

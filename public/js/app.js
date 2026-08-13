@@ -9668,7 +9668,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(row);
                 app = _this2;
                 axios({
-                  url: "/api/printComprobate",
+                  url: "/api/printComprobateServices",
                   params: {
                     id: row.id_tran,
                     cod: row.cod_val

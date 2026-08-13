@@ -76,6 +76,9 @@ Route::group([
     //  *  D3. Imprimir los comprobantes de pago
     Route::get('printComprobate', 'TreasureController@printComprobate');
 
+    //  *  D3. Imprimir los comprobantes de pago de servicios
+    Route::get('printComprobateServices', 'TreasureController@printComprobateServices');
+
     //  *  D2. Guardar los boucher generados por cada solicitud
     //  * {boucher: imagen del boucher }
     //  * {request: informacion del boucher }

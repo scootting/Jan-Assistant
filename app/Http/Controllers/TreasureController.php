@@ -64,7 +64,6 @@ class TreasureController extends Controller
         $importe        = floatval($document['importe']);
         $tipo_documento = $document['tipo'];
 
-
         \Log::info($document);
         \Log::info($items);
 
@@ -357,4 +356,22 @@ class TreasureController extends Controller
         $report = JSRClient::GetReportWithParameters($nreport, $controls);
         return $report;
     }
+    public function printComprobateServices(Request $request)
+    {
+        $id      = $request->get('id');
+        $cod_val = $request->get('cod');
+        if ($cod_val == '9351') {
+            $nreport = 'Treasure_Values_Physical';
+        } else {
+            $nreport = 'TreasureServiceLetter';
+        }
+
+        $controls = [
+            'id_tran' => $id,
+            'id_papeleta' => 'ORIGINAL',
+        ];
+        $report = JSRClient::GetReportWithParameters($nreport, $controls);
+        return $report;
+    }
+
 }
