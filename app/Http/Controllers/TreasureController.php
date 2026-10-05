@@ -74,27 +74,9 @@ class TreasureController extends Controller
     /* Funcion general para el pago de servicios de la pasarela de pagos */
     public function sendCurlPaymentGateway($tipo_pago, $client, $id, $items, $total, $marker)
     {
-        switch ($tipo_pago) {
-            case 'QR':
-                # code...
-                $headers = [
-                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
-                    'Content-Type'        => 'application/json',
-                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
-                ];
-                break;
-            case 'CPT':
-                # code...
-                $headers = [
-                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
-                    'Content-Type'        => 'application/json',
-                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
-                ];
-                break;
-            default:
-                # code...
-                break;
-        }
+
+        #Ontenemos las cabeceras para el envio de la informacion correctamente
+        $headers = $this->getHeadersAuthorizationPPE($tipo_pago);
 
         $descripcion = $client['descripcion'];
         if ($client['paterno'] == "") {
@@ -156,17 +138,138 @@ class TreasureController extends Controller
 
         $statusCode   = $response->status();
         $responseBody = json_decode($response->getBody(), true);
-        \Log::info($response);
-        \Log::info($statusCode);
-        \Log::info($responseBody);
+        $finalizado   = $responseBody['finalizado'];
+        if ($statusCode == 400) {
+            #No Satisfactorio
+            $mensaje = $responseBody['mensaje'];
+        }
         if ($statusCode == 202) {
             # Satisfactorio...
             $codigoTransaccion = $responseBody['datos']['codigoTransaccion'];
-            \Log::info($responseBody['datos']['codigoTransaccion']);
-            \Log::info($responseBody);
-            $id = treasure::setIdCptRequest($codigoTransaccion, $id);
+            $id                = treasure::setIdCptRequest($codigoTransaccion, $id);
+            $id_transaction    = $this->getStateTransactionPPE($codigoTransaccion);
         }
         return json_encode($responseBody);
+    }
+
+    public function getRequestImageQr(Request $request)
+    {
+        $codigoTransaccion = $request->get('id');
+        $tipo_pago         = $request->get('tipo_pago');
+        switch ($tipo_pago) {
+            case 'QR':
+                # code...
+                $resultado = treasure::GetRequestImageQr($codigoTransaccion);
+                if (count($resultado) == 0) {
+                    return response()->json([
+                        'mensaje' => 'QR no encontrado',
+                    ], 404);
+                }
+                $qr = $resultado[0]->{'qr_base64'};
+                return response()->json([
+                    'imagen' => 'data:image/png;base64,' . $qr,
+                ]);
+                break;
+            case 'CPT':
+                # code...
+                $resultado = treasure::GetRequestDataCpt($codigoTransaccion);
+                if (count($resultado) == 0) {
+                    return response()->json([
+                        'mensaje' => 'CPT no encontrado',
+                    ], 404);
+                }
+                $cpt = $resultado[0]->{'cpt_base10'};
+                return response()->json([
+                    'codigo' => $cpt,
+                ]);
+                break;
+            default:
+                # code...
+                break;
+        }
+
+    }
+
+    //public function getStateTransactionPPE(Request $request)
+    public function getStateTransactionPPE($codigoTransaccion)
+    {
+        //$codigoTransaccion = $request->get('id');
+        $data = treasure::getDataRequestByTransaction($codigoTransaccion);
+
+        $tipo_pago = trim($data[0]->tipo_pago);
+        $headers   = $this->getHeadersAuthorizationPPE($tipo_pago);
+        $apiURL    = 'https://ppe.agetic.gob.bo/consulta/estado/' . $codigoTransaccion;
+
+        $response = Http::withHeaders($headers)->withoutVerifying()->get($apiURL);
+
+        if (! $response->successful()) {
+
+            return response()->json([
+                'finalizado' => false,
+                'mensaje'    => 'Error al consultar la API PPE.',
+                'status'     => $response->status(),
+                'respuesta'  => $response->json(),
+            ], 502);
+        }
+        $resultado = $response->json();
+
+        if ($resultado['finalizado'] && $resultado['datos']['estado'] == 'EN_PROCESO') {
+            #Tiene Qr o CPT valido
+            switch ($resultado['datos']['metodoPago']) {
+                case 'QR':
+                    # code...
+                    $detalleMedioPago = $resultado['datos']['detalleMedioPago'];
+                    $idQr             = $detalleMedioPago['idQr'];
+                    $codigoQrBase64   = $detalleMedioPago['codigoQr'] ?? null;
+                    if (strpos($codigoQrBase64, ',') !== false) {
+                        $codigoQrBase64 = explode(',', $codigoQrBase64, 2)[1];
+
+                    }
+                    $finVigencia = $detalleMedioPago['finVigencia'];
+                    $id          = treasure::storeDataQrTransaction($codigoTransaccion, $idQr, $codigoQrBase64, $finVigencia);
+                    break;
+                case 'PPTE':
+                    # code...
+                    $detalleMedioPago = $resultado['datos']['detalleMedioPago'];
+                    $idCpt            = $detalleMedioPago['idCpt'];
+                    $codigoCpt        = $detalleMedioPago['cpt'];
+                    $finVigencia      = $detalleMedioPago['finVigencia'];
+                    $id               = treasure::storeDataCptTransaction($codigoTransaccion, $idCpt, $codigoCpt, $finVigencia);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        } else {
+            $state = treasure::SetRequestState($codigoTransaccion, $resultado['datos']['estado']);
+        }
+    }
+
+    public function getHeadersAuthorizationPPE($tipo_pago)
+    {
+        switch ($tipo_pago) {
+            case 'QR':
+                # code...
+                $headers = [
+                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3MDU0NzkzMjMsImlkVXN1YXJpb0FwbGljYWNpb24iOjM5LCJpZFRyYW1pdGUiOiIxMDYxIn0.iFGuBmsIffgnJSLynYax3X87If-tFzgoJKmSltFhNWM',
+                    'Content-Type'        => 'application/json',
+                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI0MCIsImV4cCI6MTc5NDk3NDM5OSwiaXNzIjoiS3ZzMzh4cU44Vk9ETm1DOEZQczM0NTdDMU02U05Xc1kifQ.oVrtCB-p4zHvtbxXI_b7o1hpNXD13JYiOqJ19URl39E',
+                ];
+                break;
+            case 'CPT':
+                # code...
+                $headers = [
+                    'x-cpt-authorization' => 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBR0VUSUMiLCJpYXQiOjE3NDQ4MzczMTksImlkVXN1YXJpb0FwbGljYWNpb24iOjUxLCJpZFRyYW1pdGUiOiIxMTI3In0.GKXul_CEF71UYD8Yw6jqHn2R7FsaqOVtjugdV72MD90',
+                    'Content-Type'        => 'application/json',
+                    'Authorization'       => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDEwOTI1NCIsImV4cCI6MTgwNzMyOTU5OSwiaXNzIjoic2tKODR3dzhKYXlGUG5HN1JIaDMxM2wxQlA0czA4V2gifQ.LX5wQZri4UqF2LkbH6Egdey5cobuIxZ32LhGf1ou6tk',
+                ];
+                break;
+            default:
+                # code...
+                $headers = [];
+                break;
+        }
+        return $headers;
     }
 
     public function setValuesAcquired(Request $request)
@@ -367,7 +470,7 @@ class TreasureController extends Controller
         }
 
         $controls = [
-            'id_tran' => $id,
+            'id_tran'     => $id,
             'id_papeleta' => 'ORIGINAL',
         ];
         $report = JSRClient::GetReportWithParameters($nreport, $controls);

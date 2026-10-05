@@ -5,18 +5,26 @@
                 <h3 class="card-title" style="margin: 10; font-weight: bold;">
                     datos del comprobante de pago
                 </h3>
-                <el-button type="primary" size="small" @click="test">
-                    ayuda
+                <!--
+                    <el-button type="primary" size="small" @click="test">
+                        ayuda
+                    </el-button>                
+                -->
+                <el-button v-if="dataRequest.estado === 'EN PROCESO'" type="danger" size="small" :disabled="!dataRequest.notificacion"
+                    @click="getRequestImageQrOrDataCpt()">
+                    ver codigo generado
                 </el-button>
             </div>
             <!-- Mensajes -->
+            <!--
             <el-alert title="Cuanto tiempo dura verificar su pago?" type="error" show-icon class="alert-space"
                 description="Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago">
             </el-alert>
             <br>
             <el-alert title="Como saber si todo esta correcto?" type="success" show-icon class="alert-space"
                 description="El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas.">
-            </el-alert>
+            </el-alert>            
+             -->
 
             <!-- Tabla para dispositivos grandes -->
             <h2 v-if="!isSmallDevice">
@@ -50,8 +58,8 @@
                 <el-table-column prop="imp_val" label="precio" width="90" align="right"></el-table-column>
                 <el-table-column align="right" width="200" fixed="right">
                     <template slot-scope="scope" v-if="scope.row.cod_val !== '9999'">
-                        <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary" size="mini"
-                            :disabled="scope.row.id_tran === 0">imprimir comprobante
+                        <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="success" size="mini"
+                            :disabled="scope.row.id_tran === 0">imprimir comprobante de pago
                         </el-button>
                     </template>
                 </el-table-column>
@@ -95,14 +103,37 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content" v-if="row.cod_val !== '9999'">
-                            <el-button @click="initPrintComprobate(index, row)" type="primary" size="mini"
-                                :disabled="row.id_tran === 0">imprimir comprobante
+                            <el-button @click="initPrintComprobate(index, row)" type="success" size="mini"
+                                :disabled="row.id_tran === 0">imprimir comprobante de pago
                             </el-button>
                         </div>
                     </div>
                 </div>
             </div>
         </el-card>
+        <el-dialog title="CÓDIGO GENERADO PARA LA SOLICITUD" :visible.sync="dialogQrVisible" width="400px" center>
+            <div style="text-align: center;">
+                <template v-if="tipo_pago === 'QR'">
+                    <img v-if="qrImagen" :src="qrImagen" alt="Código QR"
+                        style="width: 280px; height: 280px; object-fit: contain;">
+                    <div v-else>
+                        No se encontró el código QR.
+                    </div>
+                </template>
+                <template v-else-if="tipo_pago === 'CPT'">
+                    <h1 v-if="cptTexto">{{ cptTexto }}</h1>
+                    <div v-else>
+                        No se encontró el código CPT.
+                    </div>
+                </template>
+            </div>
+            <span slot="footer">
+                <el-button @click="dialogQrVisible = false">
+                    Cerrar
+                </el-button>
+            </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -121,6 +152,13 @@ export default {
             dataRequest: {},
             dataRequestDetails: [],
             isSmallDevice: window.innerWidth <= 768,
+
+            // *** Variables para encontrar el Qr o Cpt
+            dialogQrVisible: false,
+            qrImagen: null,
+            cptTexto: null,
+            qrCargando: false,
+            tipo_pago: '',
         };
     },
     mounted() {
@@ -139,9 +177,9 @@ export default {
         },
         tagType(estado) {
             if (estado === "PROCESADO") return "success";
-            if (estado === "EN PROCESO") return "primary";
+            if (estado === "EN PROCESO") return "warning";
             if (estado === "CREADO") return "info";
-            if (estado === "EXPIRADO") return "info";
+            if (estado === "EXPIRADO") return "danger";
             if (estado === "FALLIDO") return "danger";
             if (estado === "ANULADO") return "danger";
             return "warning";
@@ -149,7 +187,6 @@ export default {
         responsiveRowClass({ rowIndex }) {
             return rowIndex % 2 === 0 ? "row-even" : "row-odd";
         },
-
         //  *  D3. Obtener la informacion por cada solicitud
         //  * {id: id de la solicitud }
         async getDataRequestById() {
@@ -190,7 +227,37 @@ export default {
                 let url = window.URL.createObjectURL(blob);
                 window.open(url);
             });
-        }
+        },
+
+        async getRequestImageQrOrDataCpt() {
+            let id = this.dataRequest.id_cpt;
+            this.tipo_pago = this.dataRequest.tipo_pago;
+            this.qrImagen = null;
+            this.dialogQrVisible = true;
+            this.qrCargando = true;
+            console.log(this.tipo_pago);
+            console.log(id);
+            try {
+                let response = await axios.post("/api/getRequestImageQr", {
+                    id: id,
+                    tipo_pago: this.tipo_pago,
+                });
+                if (this.tipo_pago != 'QR') {
+                    this.cptTexto = response.data.codigo;
+                    this.qrImagen = null;
+                }
+                else {
+                    this.qrImagen = response.data.imagen;
+                    this.cptTexto = null;
+                }
+
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
+        },
     },
 };
 </script>

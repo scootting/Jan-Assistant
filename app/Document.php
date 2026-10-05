@@ -38,8 +38,15 @@ class Document extends Model
     //  * {gestion: gestion activa}
     public static function GetRequests($id, $year, $typea)
     {
-        $query = "select * from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' and s.tipo = '" . $typea . "' order by fec_cre desc";
-        $data  = collect(DB::select(DB::raw($query)));
+        //$query = "select *, TO_CHAR(fecha, 'FMDD 'de' TMMonth 'de' YYYY') AS fecha_pago from linea.solicitudes s where s.ci_per ='" . $id . "' and s.gestion <= '" . $year . "' and s.tipo = '" . $typea . "' order by fec_cre desc";
+        $query = "SELECT *,
+        TO_CHAR(fecha, 'FMDD \"de\" TMMonth \"de\" YYYY') AS fecha_pago
+        FROM linea.solicitudes s
+        WHERE s.ci_per = '" . $id . "'
+        AND s.gestion <= '" . $year . "'
+        AND s.tipo = '" . $typea . "'
+        ORDER BY fec_cre DESC";
+        $data = collect(DB::select(DB::raw($query)));
         return $data;
     }
 

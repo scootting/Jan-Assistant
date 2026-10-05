@@ -7418,6 +7418,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7428,7 +7474,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       pagination: {
         page: 1
       },
-      isSmallDevice: window.innerWidth <= 768
+      isSmallDevice: window.innerWidth <= 768,
+      dialogQrVisible: false,
+      qrImagen: null,
+      cptTexto: null,
+      qrCargando: false,
+      tipo_pago: ''
     };
   },
   mounted: function mounted() {
@@ -7452,9 +7503,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     tagType: function tagType(estado) {
       if (estado === "PROCESADO") return "success";
-      if (estado === "EN PROCESO") return "primary";
+      if (estado === "EN PROCESO") return "warning";
       if (estado === "CREADO") return "info";
-      if (estado === "EXPIRADO") return "info";
+      if (estado === "EXPIRADO") return "danger";
       if (estado === "FALLIDO") return "danger";
       if (estado === "ANULADO") return "danger";
       return "warning";
@@ -7524,6 +7575,97 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           id: id
         }
       });
+    },
+    initPrintRequestReport2: function initPrintRequestReport2(idx, row) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var id, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                id = row.id_cpt;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.post("/api/getStateTransactionPPE", {
+                  id: id
+                });
+
+              case 4:
+                response = _context2.sent;
+                console.log(response);
+                _context2.next = 12;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                _this2.error = _context2.t0.response.data;
+                app.$alert(_this2.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    initPrintRequestReport3: function initPrintRequestReport3(idx, row) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var id, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                id = row.id_cpt;
+                _this3.tipo_pago = row.tipo_pago;
+                _this3.qrImagen = null;
+                _this3.dialogQrVisible = true;
+                _this3.qrCargando = true;
+                console.log(_this3.tipo_pago);
+                console.log(id);
+                _context3.prev = 7;
+                _context3.next = 10;
+                return axios.post("/api/getRequestImageQr", {
+                  id: id,
+                  tipo_pago: _this3.tipo_pago
+                });
+
+              case 10:
+                response = _context3.sent;
+
+                if (_this3.tipo_pago != 'QR') {
+                  _this3.cptTexto = response.data.codigo;
+                  _this3.qrImagen = null;
+                } else {
+                  _this3.qrImagen = response.data.imagen;
+                  _this3.cptTexto = null;
+                }
+
+                _context3.next = 18;
+                break;
+
+              case 14:
+                _context3.prev = 14;
+                _context3.t0 = _context3["catch"](7);
+                _this3.error = _context3.t0.response.data;
+                app.$alert(_this3.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 18:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[7, 14]]);
+      }))();
     }
   }
 });
@@ -9317,6 +9459,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -9329,7 +9502,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       total: 1.00,
       dataRequest: {},
       dataRequestDetails: [],
-      isSmallDevice: window.innerWidth <= 768
+      isSmallDevice: window.innerWidth <= 768,
+      // *** Variables para encontrar el Qr o Cpt
+      dialogQrVisible: false,
+      qrImagen: null,
+      cptTexto: null,
+      qrCargando: false,
+      tipo_pago: ''
     };
   },
   mounted: function mounted() {
@@ -9348,9 +9527,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     tagType: function tagType(estado) {
       if (estado === "PROCESADO") return "success";
-      if (estado === "EN PROCESO") return "primary";
+      if (estado === "EN PROCESO") return "warning";
       if (estado === "CREADO") return "info";
-      if (estado === "EXPIRADO") return "info";
+      if (estado === "EXPIRADO") return "danger";
       if (estado === "FALLIDO") return "danger";
       if (estado === "ANULADO") return "danger";
       return "warning";
@@ -9438,6 +9617,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    getRequestImageQrOrDataCpt: function getRequestImageQrOrDataCpt() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var id, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                id = _this3.dataRequest.id_cpt;
+                _this3.tipo_pago = _this3.dataRequest.tipo_pago;
+                _this3.qrImagen = null;
+                _this3.dialogQrVisible = true;
+                _this3.qrCargando = true;
+                console.log(_this3.tipo_pago);
+                console.log(id);
+                _context3.prev = 7;
+                _context3.next = 10;
+                return axios.post("/api/getRequestImageQr", {
+                  id: id,
+                  tipo_pago: _this3.tipo_pago
+                });
+
+              case 10:
+                response = _context3.sent;
+
+                if (_this3.tipo_pago != 'QR') {
+                  _this3.cptTexto = response.data.codigo;
+                  _this3.qrImagen = null;
+                } else {
+                  _this3.qrImagen = response.data.imagen;
+                  _this3.cptTexto = null;
+                }
+
+                _context3.next = 18;
+                break;
+
+              case 14:
+                _context3.prev = 14;
+                _context3.t0 = _context3["catch"](7);
+                _this3.error = _context3.t0.response.data;
+                app.$alert(_this3.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 18:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[7, 14]]);
       }))();
     }
   }
@@ -94166,32 +94398,6 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "alerts-container" },
-            [
-              _c("el-alert", {
-                staticClass: "alert-space",
-                attrs: {
-                  title:
-                    "Seleccione el boton de color naranja si desea comprar valores en linea.",
-                  type: "error",
-                  "show-icon": ""
-                }
-              }),
-              _vm._v(" "),
-              _c("el-alert", {
-                attrs: {
-                  title:
-                    "Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante.",
-                  type: "success",
-                  "show-icon": ""
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
           !_vm.isSmallDevice
             ? _c(
                 "el-table",
@@ -94233,7 +94439,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "fecha", label: "Fecha" }
+                    attrs: { prop: "fecha_pago", label: "Fecha" }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -94289,7 +94495,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Imprimir Comprobante")]
+                                [_vm._v("Detalles del pago")]
                               )
                             ]
                           }
@@ -94297,7 +94503,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      1464898111
+                      358871872
                     )
                   })
                 ],
@@ -94330,7 +94536,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "item-content" }, [
-                          _vm._v(_vm._s(row.fecha))
+                          _vm._v(_vm._s(row.fecha_pago))
                         ])
                       ]),
                       _vm._v(" "),
@@ -94340,7 +94546,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "item-content" }, [
-                          _vm._v(_vm._s(row.importe))
+                          _vm._v("Bs. " + _vm._s(row.importe))
                         ])
                       ]),
                       _vm._v(" "),
@@ -94402,7 +94608,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Imprimir Comprobante")]
+                              [
+                                _vm._v(
+                                  "Detalles del\n                            pago"
+                                )
+                              ]
                             )
                           ],
                           1
@@ -94427,6 +94637,79 @@ var render = function() {
           })
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "CÓDIGO GENERADO PARA LA SOLICITUD",
+            visible: _vm.dialogQrVisible,
+            width: "400px",
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogQrVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticStyle: { "text-align": "center" } },
+            [
+              _vm.tipo_pago === "QR"
+                ? [
+                    _vm.qrImagen
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "280px",
+                            height: "280px",
+                            "object-fit": "contain"
+                          },
+                          attrs: { src: _vm.qrImagen, alt: "Código QR" }
+                        })
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código QR.\n                "
+                          )
+                        ])
+                  ]
+                : _vm.tipo_pago === "CPT"
+                ? [
+                    _vm.cptTexto
+                      ? _c("h1", [_vm._v(_vm._s(_vm.cptTexto))])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código CPT.\n                "
+                          )
+                        ])
+                  ]
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogQrVisible = false
+                    }
+                  }
+                },
+                [_vm._v("\n                Cerrar\n            ")]
+              )
+            ],
+            1
+          )
+        ]
       )
     ],
     1
@@ -96799,41 +97082,31 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "small" },
-                  on: { click: _vm.test }
-                },
-                [_vm._v("\n                ayuda\n            ")]
-              )
+              _vm.dataRequest.estado === "EN PROCESO"
+                ? _c(
+                    "el-button",
+                    {
+                      attrs: {
+                        type: "danger",
+                        size: "small",
+                        disabled: !_vm.dataRequest.notificacion
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.getRequestImageQrOrDataCpt()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                ver codigo generado\n            "
+                      )
+                    ]
+                  )
+                : _vm._e()
             ],
             1
           ),
-          _vm._v(" "),
-          _c("el-alert", {
-            staticClass: "alert-space",
-            attrs: {
-              title: "Cuanto tiempo dura verificar su pago?",
-              type: "error",
-              "show-icon": "",
-              description:
-                "Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago"
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("el-alert", {
-            staticClass: "alert-space",
-            attrs: {
-              title: "Como saber si todo esta correcto?",
-              type: "success",
-              "show-icon": "",
-              description:
-                "El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas."
-            }
-          }),
           _vm._v(" "),
           !_vm.isSmallDevice
             ? _c("h2", [_c("p", [_vm._v("datos de la solicitud")])])
@@ -96974,7 +97247,7 @@ var render = function() {
                                     "el-button",
                                     {
                                       attrs: {
-                                        type: "primary",
+                                        type: "success",
                                         size: "mini",
                                         disabled: scope.row.id_tran === 0
                                       },
@@ -96989,7 +97262,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "imprimir comprobante\n                    "
+                                        "imprimir comprobante de pago\n                    "
                                       )
                                     ]
                                   )
@@ -97136,7 +97409,7 @@ var render = function() {
                                     "el-button",
                                     {
                                       attrs: {
-                                        type: "primary",
+                                        type: "success",
                                         size: "mini",
                                         disabled: row.id_tran === 0
                                       },
@@ -97151,7 +97424,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "imprimir comprobante\n                        "
+                                        "imprimir comprobante de pago\n                        "
                                       )
                                     ]
                                   )
@@ -97168,6 +97441,79 @@ var render = function() {
               )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "CÓDIGO GENERADO PARA LA SOLICITUD",
+            visible: _vm.dialogQrVisible,
+            width: "400px",
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogQrVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticStyle: { "text-align": "center" } },
+            [
+              _vm.tipo_pago === "QR"
+                ? [
+                    _vm.qrImagen
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "280px",
+                            height: "280px",
+                            "object-fit": "contain"
+                          },
+                          attrs: { src: _vm.qrImagen, alt: "Código QR" }
+                        })
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código QR.\n                "
+                          )
+                        ])
+                  ]
+                : _vm.tipo_pago === "CPT"
+                ? [
+                    _vm.cptTexto
+                      ? _c("h1", [_vm._v(_vm._s(_vm.cptTexto))])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código CPT.\n                "
+                          )
+                        ])
+                  ]
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogQrVisible = false
+                    }
+                  }
+                },
+                [_vm._v("\n                Cerrar\n            ")]
+              )
+            ],
+            1
+          )
+        ]
       )
     ],
     1

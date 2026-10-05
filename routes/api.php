@@ -64,7 +64,14 @@ Route::group([
 
     //  *  T21. Realizar el pago de servicios
     Route::post('setPaymentServicies', 'TreasureController@setPaymentServicies');
-    
+
+    //  *  T22. Realizar la recuperacion del Qr.
+    Route::post('getStateTransactionPPE', 'TreasureController@getStateTransactionPPE');
+
+    //  *  T23. Ver la imagen del Qr de la solicitud.    
+    Route::post('getRequestImageQr', 'TreasureController@getRequestImageQr');
+
+
     //  *  D1. Obtener la lista de las solicitadas en linea por persona
     //  * {gestion: gestion activa}
     Route::post('request', 'DocumentController@getRequests');

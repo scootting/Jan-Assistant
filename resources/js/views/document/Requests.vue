@@ -11,6 +11,7 @@
                 </el-button>
             </div>
             <!-- Mensajes -->
+            <!--
             <div class="alerts-container">
                 <el-alert title="Seleccione el boton de color naranja si desea comprar valores en linea." type="error"
                     show-icon class="alert-space" />
@@ -18,6 +19,7 @@
                     title="Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante."
                     type="success" show-icon />
             </div>
+            -->
 
             <!-- Tabla para dispositivos grandes -->
             <el-table v-if="!isSmallDevice" :data="requests" border style="width: 100%; margin-top: 15px">
@@ -29,9 +31,9 @@
                     </template>
                 </el-table-column>
                 <!--
-                <el-table-column prop="numero" label="Número" />
+                <el-table-column prop="id_cpt" label="Transaccion" />
                     -->
-                <el-table-column prop="fecha" label="Fecha" />
+                <el-table-column prop="fecha_pago" label="Fecha" />
                 <el-table-column prop="importe" label="Importe" />
                 <el-table-column prop="estado" label="Estado">
                     <template slot-scope="scope">
@@ -43,7 +45,15 @@
                 -->
                 <el-table-column label="Acciones">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Imprimir Comprobante</el-button>
+                        <el-button type="primary" size="mini"
+                            @click="initPrintRequestReport(scope.$index, scope.row)">Detalles del pago</el-button>
+                        <!--
+                        <el-button type="info" size="mini"
+                            @click="initPrintRequestReport2(scope.$index, scope.row)">Recuperar Qr</el-button>
+                        <el-button type="info" size="mini"
+                            @click="initPrintRequestReport3(scope.$index, scope.row)">Mostrar Codigo
+                            Generado</el-button>
+                            -->
                     </template>
                 </el-table-column>
             </el-table>
@@ -59,11 +69,17 @@
                     </div>
                     <div class="responsive-item">
                         <div class="item-title">Fecha</div>
-                        <div class="item-content">{{ row.fecha }}</div>
+                        <div class="item-content">{{ row.fecha_pago }}</div>
                     </div>
+                    <!--
+                    <div class="responsive-item">
+                        <div class="item-title">Transaccion</div>
+                        <div class="item-content">{{ row.id_cpt }}</div>
+                    </div>
+                    -->
                     <div class="responsive-item">
                         <div class="item-title">Importe</div>
-                        <div class="item-content">{{ row.importe }}</div>
+                        <div class="item-content">Bs. {{ row.importe }}</div>
                     </div>
                     <div class="responsive-item">
                         <div class="item-title">Estado</div>
@@ -78,17 +94,47 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content">
-                            <el-button type="primary" size="mini" @click="initPrintRequestReport(row.index, row)">Imprimir Comprobante</el-button>
+                            <el-button type="primary" size="mini"
+                                @click="initPrintRequestReport(row.index, row)">Detalles del
+                                pago</el-button>
+                            <!--
+                            <el-button type="info" size="mini"
+                                @click="initPrintRequestReport2(row.index, row)">Recuperar
+                                Qr</el-button>
+                            <el-button type="info" size="mini" @click="initPrintRequestReport3(row.index, row)">Mostrar
+                                Codigo</el-button>
+                                -->
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Paginación -->
             <el-pagination background layout="prev, pager, next" :page-size="pagination.per_page"
                 :current-page="pagination.current_page" :total="pagination.total" @current-change="getRequests"
                 class="pagination" />
         </el-card>
+        <el-dialog title="CÓDIGO GENERADO PARA LA SOLICITUD" :visible.sync="dialogQrVisible" width="400px" center>
+            <div style="text-align: center;">
+                <template v-if="tipo_pago === 'QR'">
+                    <img v-if="qrImagen" :src="qrImagen" alt="Código QR"
+                        style="width: 280px; height: 280px; object-fit: contain;">
+                    <div v-else>
+                        No se encontró el código QR.
+                    </div>
+                </template>
+                <template v-else-if="tipo_pago === 'CPT'">
+                    <h1 v-if="cptTexto">{{ cptTexto }}</h1>
+                    <div v-else>
+                        No se encontró el código CPT.
+                    </div>
+                </template>
+            </div>
+            <span slot="footer">
+                <el-button @click="dialogQrVisible = false">
+                    Cerrar
+                </el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -104,6 +150,11 @@ export default {
                 page: 1,
             },
             isSmallDevice: window.innerWidth <= 768,
+            dialogQrVisible: false,
+            qrImagen: null,
+            cptTexto: null,
+            qrCargando: false,
+            tipo_pago: '',
         };
     },
 
@@ -127,9 +178,9 @@ export default {
         },
         tagType(estado) {
             if (estado === "PROCESADO") return "success";
-            if (estado === "EN PROCESO") return "primary";
+            if (estado === "EN PROCESO") return "warning";
             if (estado === "CREADO") return "info";
-            if (estado === "EXPIRADO") return "info";
+            if (estado === "EXPIRADO") return "danger";
             if (estado === "FALLIDO") return "danger";
             if (estado === "ANULADO") return "danger";
             return "warning";
@@ -174,6 +225,50 @@ export default {
                     id: id,
                 },
             });
+        },
+        async initPrintRequestReport2(idx, row) {
+            let id = row.id_cpt;
+            try {
+                let response = await axios.post("/api/getStateTransactionPPE", {
+                    id: id,
+                });
+                console.log(response);
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
+        },
+        async initPrintRequestReport3(idx, row) {
+            let id = row.id_cpt;
+            this.tipo_pago = row.tipo_pago;
+            this.qrImagen = null;
+            this.dialogQrVisible = true;
+            this.qrCargando = true;
+
+            console.log(this.tipo_pago);
+            console.log(id);
+            try {
+                let response = await axios.post("/api/getRequestImageQr", {
+                    id: id,
+                    tipo_pago: this.tipo_pago,
+                });
+                if (this.tipo_pago != 'QR') {
+                    this.cptTexto = response.data.codigo;
+                    this.qrImagen = null;
+                }
+                else {
+                    this.qrImagen = response.data.imagen;
+                    this.cptTexto = null;
+                }
+
+            } catch (error) {
+                this.error = error.response.data;
+                app.$alert(this.error.message, "Gestor de errores", {
+                    dangerouslyUseHTMLString: true,
+                });
+            }
         },
     },
 };
