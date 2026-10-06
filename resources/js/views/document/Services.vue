@@ -6,7 +6,7 @@
                     Servicios
                 </h3>
                 <el-button type="primary" size="medium" icon="el-icon-plus" @click="initAddRequestInLine"
-                 :disabled = true>
+                    :disabled=true>
                     Realizar reservas
                 </el-button>
             </div>
@@ -15,10 +15,10 @@
                 <!--
                 <el-alert title="Seleccione el boton de color naranja si desea comprar valores en linea." type="error"
                     show-icon class="alert-space" />                
-                -->
                 <el-alert
                     title="Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante."
                     type="success" show-icon />
+                -->
             </div>
 
             <!-- Tabla para dispositivos grandes -->
@@ -33,8 +33,13 @@
                 <!--
                 <el-table-column prop="numero" label="Número" />
                     -->
-                <el-table-column prop="fecha" label="Fecha" />
-                <el-table-column prop="importe" label="Importe" />
+                <el-table-column prop="fecha_pago" label="Fecha" />
+                <el-table-column prop="importe" label="Importe">
+                    <template slot-scope="scope">
+                        Bs. {{ Number(scope.row.importe).toFixed(2) }}
+                    </template>
+                </el-table-column>
+
                 <el-table-column prop="estado" label="Estado">
                     <template slot-scope="scope">
                         <el-tag :type="tagType(scope.row.estado)" effect="dark">{{ scope.row.estado }}</el-tag>
@@ -45,8 +50,10 @@
                 -->
                 <el-table-column label="Acciones">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.estado == 'SOLICITADO'"  type="info" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Realizar Pago</el-button>
-                        <el-button v-else  type="info" size="mini" @click="initPrintRequestReport(scope.$index, scope.row)">Imprimir comprobante</el-button>
+                        <el-button v-if="scope.row.estado == 'SOLICITADO'" type="info" size="mini"
+                            @click="initPrintRequestReport(scope.$index, scope.row)">Realizar Pago</el-button>
+                        <el-button v-else type="primary" size="mini"
+                            @click="initPrintRequestReport(scope.$index, scope.row)">detalles del pago</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -62,7 +69,7 @@
                     </div>
                     <div class="responsive-item">
                         <div class="item-title">Fecha</div>
-                        <div class="item-content">{{ row.fecha }}</div>
+                        <div class="item-content">{{ row.fecha_pago }}</div>
                     </div>
                     <div class="responsive-item">
                         <div class="item-title">Importe</div>
@@ -81,8 +88,10 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content">
-                            <el-button v-if="row.estado == 'SOLICITADO'" type="info" size="mini" @click="initPrintRequestReport(row.index, row)">Realizar Pago</el-button>
-                            <el-button v-else type="info" size="mini" @click="initPrintRequestReport(row.index, row)">Imprimir comprobante</el-button>
+                            <el-button v-if="row.estado == 'SOLICITADO'" type="info" size="mini"
+                                @click="initPrintRequestReport(row.index, row)">Realizar Pago</el-button>
+                            <el-button v-else type="primary" size="mini"
+                                @click="initPrintRequestReport(row.index, row)">Detalles del pago</el-button>
                         </div>
                     </div>
                 </div>
@@ -131,10 +140,10 @@ export default {
         },
         tagType(estado) {
             if (estado === "PROCESADO") return "success";
-            if (estado === "EN PROCESO") return "primary";
+            if (estado === "EN PROCESO") return "warning";
             if (estado === "CREADO") return "info";
-            if (estado === "EXPIRADO") return "info";
             if (estado === "SOLICITADO") return "info";
+            if (estado === "EXPIRADO") return "danger";
             if (estado === "FALLIDO") return "danger";
             if (estado === "ANULADO") return "danger";
             return "warning";
@@ -152,7 +161,7 @@ export default {
                 let response = await axios.post("/api/request", {
                     client: app.user,
                     year: app.user.gestion,
-                    typea: 'Services',  
+                    typea: 'Services',
                     page: page,
                 });
                 app.loading = false;

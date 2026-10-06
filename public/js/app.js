@@ -7464,6 +7464,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7787,6 +7791,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "lista_de_solicitudes_para_la_venta_en_linea",
   data: function data() {
@@ -7821,10 +7834,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     tagType: function tagType(estado) {
       if (estado === "PROCESADO") return "success";
-      if (estado === "EN PROCESO") return "primary";
+      if (estado === "EN PROCESO") return "warning";
       if (estado === "CREADO") return "info";
-      if (estado === "EXPIRADO") return "info";
       if (estado === "SOLICITADO") return "info";
+      if (estado === "EXPIRADO") return "danger";
       if (estado === "FALLIDO") return "danger";
       if (estado === "ANULADO") return "danger";
       return "warning";
@@ -9490,6 +9503,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -9802,6 +9819,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "",
   data: function data() {
@@ -9814,7 +9865,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       total: 1.00,
       dataRequest: {},
       dataRequestDetails: [],
-      isSmallDevice: window.innerWidth <= 768
+      isSmallDevice: window.innerWidth <= 768,
+      // *** Variables para encontrar el Qr o Cpt
+      dialogQrVisible: false,
+      qrImagen: null,
+      cptTexto: null,
+      qrCargando: false,
+      tipo_pago: ''
     };
   },
   mounted: function mounted() {
@@ -9833,9 +9890,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     tagType: function tagType(estado) {
       if (estado === "PROCESADO") return "success";
-      if (estado === "EN PROCESO") return "primary";
+      if (estado === "EN PROCESO") return "warning";
       if (estado === "CREADO") return "info";
-      if (estado === "EXPIRADO") return "info";
+      if (estado === "EXPIRADO") return "danger";
       if (estado === "FALLIDO") return "danger";
       if (estado === "ANULADO") return "danger";
       return "warning";
@@ -9968,6 +10025,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3, null, [[2, 12]]);
+      }))();
+    },
+    getRequestImageQrOrDataCpt: function getRequestImageQrOrDataCpt() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var id, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                id = _this4.dataRequest.id_cpt;
+                _this4.tipo_pago = _this4.dataRequest.tipo_pago;
+                _this4.qrImagen = null;
+                _this4.dialogQrVisible = true;
+                _this4.qrCargando = true;
+                console.log(_this4.tipo_pago);
+                console.log(id);
+                _context4.prev = 7;
+                _context4.next = 10;
+                return axios.post("/api/getRequestImageQr", {
+                  id: id,
+                  tipo_pago: _this4.tipo_pago
+                });
+
+              case 10:
+                response = _context4.sent;
+
+                if (_this4.tipo_pago != 'QR') {
+                  _this4.cptTexto = response.data.codigo;
+                  _this4.qrImagen = null;
+                } else {
+                  _this4.qrImagen = response.data.imagen;
+                  _this4.cptTexto = null;
+                }
+
+                _context4.next = 18;
+                break;
+
+              case 14:
+                _context4.prev = 14;
+                _context4.t0 = _context4["catch"](7);
+                _this4.error = _context4.t0.response.data;
+                app.$alert(_this4.error.message, "Gestor de errores", {
+                  dangerouslyUseHTMLString: true
+                });
+
+              case 18:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[7, 14]]);
       }))();
     }
   }
@@ -12284,7 +12394,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.alert-space[data-v-47ce5410] {\r\n    margin-bottom: 15px;\n}\n.header-container[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.add-request-btn[data-v-47ce5410] {\r\n    align-self: center;\n}\n.alerts-container[data-v-47ce5410] {\r\n    margin-bottom: 20px;\n}\n.responsive-container[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 15px;\r\n    /* Espacio entre las filas */\n}\n.responsive-row[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 15px;\r\n    border: 1px solid #ddd;\r\n    border-radius: 5px;\r\n    background-color: white;\r\n    gap: 10px;\r\n    /* Espacio entre los elementos */\n}\n.responsive-item[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin-bottom: 5px;\n}\n.item-title[data-v-47ce5410] {\r\n    font-weight: bold;\r\n    color: #555;\r\n    flex: 1;\n}\n.item-content[data-v-47ce5410] {\r\n    flex: 2;\n}\n.pagination[data-v-47ce5410] {\r\n    margin-top: 15px;\r\n    text-align: right;\n}\n@media (max-width: 768px) {\n.header-container[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        align-items: flex-start;\r\n        gap: 10px;\n}\n.responsive-row[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n.responsive-item[data-v-47ce5410] {\r\n        flex-direction: row;\r\n        gap: 10px;\n}\n.alerts-container[data-v-47ce5410] {\r\n        margin-bottom: 30px;\r\n        /* Espacio extra para dispositivos pequeños */\n}\n.header[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        text-align: center;\n}\n.card-title[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.alert-space[data-v-47ce5410] {\r\n    margin-bottom: 15px;\n}\n.header-container[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.add-request-btn[data-v-47ce5410] {\r\n    align-self: center;\n}\n.alerts-container[data-v-47ce5410] {\r\n    margin-bottom: 20px;\n}\n.responsive-container[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 15px;\r\n    /* Espacio entre las filas */\n}\n.responsive-row[data-v-47ce5410] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 15px;\r\n    border: 1px solid #ddd;\r\n    border-radius: 5px;\r\n    background-color: white;\r\n    gap: 10px;\r\n    /* Espacio entre los elementos */\n}\n.responsive-item[data-v-47ce5410] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin-bottom: 5px;\n}\n.item-title[data-v-47ce5410] {\r\n    font-weight: bold;\r\n    color: #555;\r\n    flex: 1;\n}\n.item-content[data-v-47ce5410] {\r\n    flex: 2;\n}\n.pagination[data-v-47ce5410] {\r\n    margin-top: 15px;\r\n    text-align: right;\n}\n.texto-justificado[data-v-47ce5410] {\r\n    text-align: justify;\r\n    word-break: normal;\r\n    overflow-wrap: normal;\n}\n@media (max-width: 768px) {\n.header-container[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        align-items: flex-start;\r\n        gap: 10px;\n}\n.responsive-row[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n.responsive-item[data-v-47ce5410] {\r\n        flex-direction: row;\r\n        gap: 10px;\n}\n.alerts-container[data-v-47ce5410] {\r\n        margin-bottom: 30px;\r\n        /* Espacio extra para dispositivos pequeños */\n}\n.header[data-v-47ce5410] {\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        text-align: center;\n}\n.card-title[data-v-47ce5410] {\r\n        margin-bottom: 10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -94443,7 +94553,26 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "importe", label: "Importe" }
+                    attrs: { prop: "importe", label: "Importe" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              _vm._v(
+                                "\n                    Bs. " +
+                                  _vm._s(Number(scope.row.importe).toFixed(2)) +
+                                  "\n                "
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      443802568
+                    )
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -94781,21 +94910,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "alerts-container" },
-            [
-              _c("el-alert", {
-                attrs: {
-                  title:
-                    "Mientras no se verifique su pago (tarda entre 5 a 30 minutos ya que el proceso es automático), el estado de su solicitud estará en proceso. Si cambia el estado a procesado puede imprimir su comprobante de pago en: imprimir comprobante.",
-                  type: "success",
-                  "show-icon": ""
-                }
-              })
-            ],
-            1
-          ),
+          _c("div", { staticClass: "alerts-container" }),
           _vm._v(" "),
           !_vm.isSmallDevice
             ? _c(
@@ -94838,11 +94953,30 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "fecha", label: "Fecha" }
+                    attrs: { prop: "fecha_pago", label: "Fecha" }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "importe", label: "Importe" }
+                    attrs: { prop: "importe", label: "Importe" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              _vm._v(
+                                "\n                    Bs. " +
+                                  _vm._s(Number(scope.row.importe).toFixed(2)) +
+                                  "\n                "
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      443802568
+                    )
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -94900,7 +95034,7 @@ var render = function() {
                                 : _c(
                                     "el-button",
                                     {
-                                      attrs: { type: "info", size: "mini" },
+                                      attrs: { type: "primary", size: "mini" },
                                       on: {
                                         click: function($event) {
                                           return _vm.initPrintRequestReport(
@@ -94910,7 +95044,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Imprimir comprobante")]
+                                    [_vm._v("detalles del pago")]
                                   )
                             ]
                           }
@@ -94918,7 +95052,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      2431669523
+                      267433998
                     )
                   })
                 ],
@@ -94951,7 +95085,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "item-content" }, [
-                          _vm._v(_vm._s(row.fecha))
+                          _vm._v(_vm._s(row.fecha_pago))
                         ])
                       ]),
                       _vm._v(" "),
@@ -95029,7 +95163,7 @@ var render = function() {
                               : _c(
                                   "el-button",
                                   {
-                                    attrs: { type: "info", size: "mini" },
+                                    attrs: { type: "primary", size: "mini" },
                                     on: {
                                       click: function($event) {
                                         return _vm.initPrintRequestReport(
@@ -95039,7 +95173,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Imprimir comprobante")]
+                                  [_vm._v("Detalles del pago")]
                                 )
                           ],
                           1
@@ -97212,7 +97346,7 @@ var render = function() {
                     attrs: {
                       prop: "des_val",
                       label: "descripcion",
-                      width: "950"
+                      width: "900"
                     }
                   }),
                   _vm._v(" "),
@@ -97235,7 +97369,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { align: "right", width: "200", fixed: "right" },
+                    attrs: { align: "right", width: "220", fixed: "right" },
                     scopedSlots: _vm._u(
                       [
                         {
@@ -97247,7 +97381,7 @@ var render = function() {
                                     "el-button",
                                     {
                                       attrs: {
-                                        type: "success",
+                                        type: "primary",
                                         size: "mini",
                                         disabled: scope.row.id_tran === 0
                                       },
@@ -97409,7 +97543,7 @@ var render = function() {
                                     "el-button",
                                     {
                                       attrs: {
-                                        type: "success",
+                                        type: "primary",
                                         size: "mini",
                                         disabled: row.id_tran === 0
                                       },
@@ -97447,7 +97581,7 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "CÓDIGO GENERADO PARA LA SOLICITUD",
+            title: "CÓDIGO GENERADO",
             visible: _vm.dialogQrVisible,
             width: "400px",
             center: ""
@@ -97474,6 +97608,14 @@ var render = function() {
                           },
                           attrs: { src: _vm.qrImagen, alt: "Código QR" }
                         })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.qrImagen
+                      ? _c("p", { staticClass: "texto-justificado" }, [
+                          _vm._v(
+                            "puede realizar el pago utilizando cualquier aplicacion\n                    de banca movil escaneando este codigo Qr."
+                          )
+                        ])
                       : _c("div", [
                           _vm._v(
                             "\n                    No se encontró el código QR.\n                "
@@ -97484,6 +97626,14 @@ var render = function() {
                 ? [
                     _vm.cptTexto
                       ? _c("h1", [_vm._v(_vm._s(_vm.cptTexto))])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.cptTexto
+                      ? _c("p", { staticClass: "texto-justificado" }, [
+                          _vm._v(
+                            "puede realizar el pago en cualquier central o\n                    sucursal del Banco Union S.A. o traves de Uninet\n                    Plus a traves de la opcion pagos del estado usando este codigo."
+                          )
+                        ])
                       : _c("div", [
                           _vm._v(
                             "\n                    No se encontró el código CPT.\n                "
@@ -97585,34 +97735,33 @@ var render = function() {
                     },
                     [_vm._v("\n                realizar pago\n            ")]
                   )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.dataRequest.estado === "EN PROCESO"
+                ? _c(
+                    "el-button",
+                    {
+                      attrs: {
+                        type: "danger",
+                        size: "small",
+                        disabled: !_vm.dataRequest.notificacion
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.getRequestImageQrOrDataCpt()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                ver codigo generado\n            "
+                      )
+                    ]
+                  )
                 : _vm._e()
             ],
             1
           ),
-          _vm._v(" "),
-          _c("el-alert", {
-            staticClass: "alert-space",
-            attrs: {
-              title: "Cuanto tiempo dura verificar su pago?",
-              type: "error",
-              "show-icon": "",
-              description:
-                "Despues de realizado el pago, toma de 10 a 30 minutos verificarlo ya que este proceso es automatico, en cuanto se haga efectivo, el estado de la solicitud cambiara a procesado, y se le habilitara la opcion para imprimir su comprobante de pago"
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("el-alert", {
-            staticClass: "alert-space",
-            attrs: {
-              title: "Como saber si todo esta correcto?",
-              type: "success",
-              "show-icon": "",
-              description:
-                "El comprobante de pago impreso cuenta con un codigo Qr Unico, al escanearlo le redireccionara a nuestro servicio de verificacion, se le recomienda no compartir esta informacion ya que la falsificacion de este documento esta castigado de acuerdo a normas internas."
-            }
-          }),
           _vm._v(" "),
           !_vm.isSmallDevice
             ? _c("h2", [_c("p", [_vm._v("datos de la solicitud")])])
@@ -97947,6 +98096,95 @@ var render = function() {
               )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "CÓDIGO GENERADO",
+            visible: _vm.dialogQrVisible,
+            width: "400px",
+            center: ""
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogQrVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticStyle: { "text-align": "center" } },
+            [
+              _vm.tipo_pago === "QR"
+                ? [
+                    _vm.qrImagen
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "280px",
+                            height: "280px",
+                            "object-fit": "contain"
+                          },
+                          attrs: { src: _vm.qrImagen, alt: "Código QR" }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.qrImagen
+                      ? _c("p", { staticClass: "texto-justificado" }, [
+                          _vm._v(
+                            "puede realizar el pago utilizando cualquier aplicacion\n                    de banca movil escaneando este codigo Qr."
+                          )
+                        ])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código QR.\n                "
+                          )
+                        ])
+                  ]
+                : _vm.tipo_pago === "CPT"
+                ? [
+                    _vm.cptTexto
+                      ? _c("h1", [_vm._v(_vm._s(_vm.cptTexto))])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.cptTexto
+                      ? _c("p", { staticClass: "texto-justificado" }, [
+                          _vm._v(
+                            "puede realizar el pago en cualquier central o\n                    sucursal del Banco Union S.A. o traves de Uninet\n                    Plus a traves de la opcion pagos del estado usando este codigo."
+                          )
+                        ])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    No se encontró el código CPT.\n                "
+                          )
+                        ])
+                  ]
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { attrs: { slot: "footer" }, slot: "footer" },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogQrVisible = false
+                    }
+                  }
+                },
+                [_vm._v("\n                Cerrar\n            ")]
+              )
+            ],
+            1
+          )
+        ]
       )
     ],
     1

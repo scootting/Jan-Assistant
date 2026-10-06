@@ -34,7 +34,11 @@
                 <el-table-column prop="id_cpt" label="Transaccion" />
                     -->
                 <el-table-column prop="fecha_pago" label="Fecha" />
-                <el-table-column prop="importe" label="Importe" />
+                <el-table-column prop="importe" label="Importe">
+                    <template slot-scope="scope">
+                        Bs. {{ Number(scope.row.importe).toFixed(2) }}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="estado" label="Estado">
                     <template slot-scope="scope">
                         <el-tag :type="tagType(scope.row.estado)" effect="dark">{{ scope.row.estado }}</el-tag>

@@ -10,8 +10,8 @@
                         ayuda
                     </el-button>                
                 -->
-                <el-button v-if="dataRequest.estado === 'EN PROCESO'" type="danger" size="small" :disabled="!dataRequest.notificacion"
-                    @click="getRequestImageQrOrDataCpt()">
+                <el-button v-if="dataRequest.estado === 'EN PROCESO'" type="danger" size="small"
+                    :disabled="!dataRequest.notificacion" @click="getRequestImageQrOrDataCpt()">
                     ver codigo generado
                 </el-button>
             </div>
@@ -52,13 +52,13 @@
             </h2>
             <el-table v-if="!isSmallDevice" :data="dataRequestDetails" border style="width: 100%; margin-top: 15px"
                 show-summary sum-text="importe total">
-                <el-table-column prop="des_val" label="descripcion" width="950"
+                <el-table-column prop="des_val" label="descripcion" width="900"
                     style="text-align: center !important;"></el-table-column>
                 <el-table-column prop="can_val" label="cantidad" width="90" align="right"></el-table-column>
                 <el-table-column prop="imp_val" label="precio" width="90" align="right"></el-table-column>
-                <el-table-column align="right" width="200" fixed="right">
+                <el-table-column align="right" width="220" fixed="right">
                     <template slot-scope="scope" v-if="scope.row.cod_val !== '9999'">
-                        <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="success" size="mini"
+                        <el-button @click="initPrintComprobate(scope.$index, scope.row)" type="primary" size="mini"
                             :disabled="scope.row.id_tran === 0">imprimir comprobante de pago
                         </el-button>
                     </template>
@@ -103,7 +103,7 @@
                     <div class="responsive-item">
                         <div class="item-title">Acciones</div>
                         <div class="item-content" v-if="row.cod_val !== '9999'">
-                            <el-button @click="initPrintComprobate(index, row)" type="success" size="mini"
+                            <el-button @click="initPrintComprobate(index, row)" type="primary" size="mini"
                                 :disabled="row.id_tran === 0">imprimir comprobante de pago
                             </el-button>
                         </div>
@@ -111,17 +111,22 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog title="CÓDIGO GENERADO PARA LA SOLICITUD" :visible.sync="dialogQrVisible" width="400px" center>
+        <el-dialog title="CÓDIGO GENERADO" :visible.sync="dialogQrVisible" width="400px" center>
             <div style="text-align: center;">
                 <template v-if="tipo_pago === 'QR'">
                     <img v-if="qrImagen" :src="qrImagen" alt="Código QR"
                         style="width: 280px; height: 280px; object-fit: contain;">
+                    <p class="texto-justificado" v-if="qrImagen">puede realizar el pago utilizando cualquier aplicacion
+                        de banca movil escaneando este codigo Qr.</p>
                     <div v-else>
                         No se encontró el código QR.
                     </div>
                 </template>
                 <template v-else-if="tipo_pago === 'CPT'">
                     <h1 v-if="cptTexto">{{ cptTexto }}</h1>
+                    <p class="texto-justificado" v-if="cptTexto">puede realizar el pago en cualquier central o
+                        sucursal del Banco Union S.A. o traves de Uninet
+                        Plus a traves de la opcion pagos del estado usando este codigo.</p>
                     <div v-else>
                         No se encontró el código CPT.
                     </div>
@@ -133,7 +138,6 @@
                 </el-button>
             </span>
         </el-dialog>
-
     </div>
 </template>
 
@@ -320,6 +324,14 @@ export default {
     margin-top: 15px;
     text-align: right;
 }
+
+.texto-justificado {
+    text-align: justify;
+    word-break: normal;
+    overflow-wrap: normal;
+}
+
+
 
 @media (max-width: 768px) {
     .header-container {
